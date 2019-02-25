@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MessageList from './components/MessageList';
+import Messages from "./components/Messages";
 import './App.css';
 
 class App extends Component {
