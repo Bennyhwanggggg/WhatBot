@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Messages from "./components/Messages";
+import Messages from './components/Messages';
+import Input from './components/Input';
 import './App.css';
 
 // Test data
@@ -32,12 +33,24 @@ class App extends Component {
     }
   }
 
+  onSendMessage = (message) => {
+    const messages = this.state.messages;
+    messages.push({
+      text: message,
+      member: this.state.member
+    })
+    this.setState({messages: messages})
+  }
+
   render() {
     return (
       <div className="app">
         <Messages 
           messages={this.state.messages}
           currentMember={this.state.member}
+        />
+        <Input
+          onSendMessage={this.onSendMessage}
         />
       </div>
     );
