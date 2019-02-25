@@ -4,7 +4,7 @@ class Messages extends Component {
     render() {
         const {messages} = this.props;
         return (
-            <ul className="Message-list">
+            <ul className="Messages-list">
                 {messages.map(m => this.renderMsg(m))}
             </ul>
         );
