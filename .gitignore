@@ -1,5 +1,5 @@
 # pycharm
-.idea/
+**/.idea
 
 # MacOS
-.DS_Store/
+**/.DS_Store
