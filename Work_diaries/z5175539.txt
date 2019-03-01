@@ -1,2 +1,9 @@
 Week 1
-Group formed. Help setup the Github repository and project board. Had a meeting with all the team members on our business model and tech stack that we would use. Also discussed on our tasks to for the first sprint and project proposal that is due in week 3.
+Group formed. Help setup the Github repository and project board. Had a meeting with 
+all the team members on our business model and tech stack that we would use. Also 
+discussed on our tasks to for the first sprint and project proposal that is due in week 3.
+
+Week 2
+Completed the task for a simple frontend demo and had team meetings to discuss the requirements
+for the project proposal. Completed the technical scope and development methodlogies section of 
+the project proposal.
