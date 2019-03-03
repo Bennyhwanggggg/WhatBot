@@ -38,7 +38,6 @@ class App extends Component {
         <Input
           onSendMessage={this.onSendMessage}
         />
-        <p>My token = (window.token)</p>
       </div>
     );
   }
