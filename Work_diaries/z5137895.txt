@@ -1,6 +1,11 @@
 Week 1:
-I joined the team which is called Whatbot and did preparations such as github and communication app.
+I joined the team which is called Whatbot and did preparations such as github and communication app (Slack).
+I wrote the proposal of technical depeth and scale with Mingyue Wei. 
+I drew the software design model and list out the tools that we will use. 
 
 
 Week 2:
-I wrote the proposal of technical depeth and scale with Mingyue Wei. I drew the software design model and list out the tools that we will use.  
+Writing proposal, the aim part and software architecture design.
+Give the feedback to teammates, help to enrich epic part.
+Search material about cognitive services and how to use Dialogflow Apis.
+
