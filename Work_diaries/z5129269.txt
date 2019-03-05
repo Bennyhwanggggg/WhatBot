@@ -5,6 +5,6 @@ I prepared for technical depth and its scale of the system
 
 Week2:
 Review for the frontend demo, and having a brainstorm with members to fulfil the final proposal.
-Worked for technical depth and its scale and listed out some team skill set.
-Also set up the backend with python flask.
+Worked for technical depth and its scale and listed out some team skill set, as well as the background.
+Also set up the backend with python flask, created a team email account for signing up the diagflow.
 
