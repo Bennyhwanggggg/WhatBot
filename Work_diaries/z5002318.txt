@@ -1,0 +1,10 @@
+## week1
+
+Team up with 3 other classmates, drafted our proposal idea and acquired agile software dev process:
+* github issue as unit of TODO, feature request, bug report and tec.
+* github project as kanban.
+* standup should be talked on top of the code, issues and project kanban.
+
+## week2
+
+Writing up the epics part for proposal. And at the same time, dig into the service process of each epic.
