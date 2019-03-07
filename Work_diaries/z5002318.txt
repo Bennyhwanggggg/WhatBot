@@ -7,4 +7,8 @@ Team up with 3 other classmates, drafted our proposal idea and acquired agile so
 
 ## week2
 
-Writing up the epics part for proposal. And at the same time, dig into the service process of each epic.
+Writing up the epics part for proposal and digging into the service process of each epic by answering these questions:
+* how will the user interact with chatbot in each epic
+* what is the underlying technical detail for uppper actions.
+
+
