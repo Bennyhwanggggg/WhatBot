@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-      <div className="ui pointing menu">
+      <div className="ui pointing menu App-header">
         <div class="header item">
             WhatBot
         </div>

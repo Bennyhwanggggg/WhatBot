@@ -29,9 +29,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {/* <div className="App-header">
-          <h1>WhatBot</h1>
-        </div> */}
         <Header/>
         <Messages 
           messages={this.state.messages}

@@ -3,6 +3,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 2px;
+  border-color: lightgray;
 }
 
 .App-header {
