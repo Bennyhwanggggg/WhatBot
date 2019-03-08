@@ -2,10 +2,11 @@ import React from 'react';
 
 const Header = () => {
     return (
-      <div className="ui secondary pointing menu">
-          WhatBot
-
-        <div className="right menu">
+      <div className="ui pointing menu">
+        <div class="header item">
+            WhatBot
+        </div>
+        <div className="right item">
             Login
         </div>
       </div>
