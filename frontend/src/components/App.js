@@ -4,16 +4,13 @@ import Messages from './Messages';
 import Input from './Input';
 import './App.css';
 
-function randomColor() {
-  return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
-}
 
 class App extends React.Component {
   state = {
     messages: [],
     member: {
       username: "You",
-      color: randomColor(),
+      color: "#fb7f0a"
     }
   }
 
