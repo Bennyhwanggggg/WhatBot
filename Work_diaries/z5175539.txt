@@ -7,3 +7,8 @@ Week 2
 Completed the task for a simple frontend demo and had team meetings to discuss the requirements
 for the project proposal. Completed the technical scope and development methodlogies section of 
 the project proposal.
+
+Week 3
+Worked on the project propsal mostly this week. Wrote the section for some epics, improved the
+aim and background section of the proposal. Also formatted the report. Assigned tasks for the 
+first sprint.
