@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import Messages from './components/Messages';
-import Input from './components/Input';
+import React from 'react';
+import Header from './Header';
+import Messages from './Messages';
+import Input from './Input';
 import './App.css';
 
-function randomColor() {
-  return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
-}
 
-class App extends Component {
+class App extends React.Component {
   state = {
     messages: [],
     member: {
       username: "You",
-      color: randomColor(),
+      color: "#fb7f0a"
     }
   }
 
@@ -28,9 +26,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h1>WhatBot</h1>
-        </div>
+        <Header/>
         <Messages 
           messages={this.state.messages}
           currentMember={this.state.member}
