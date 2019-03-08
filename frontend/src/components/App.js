@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Messages from './components/Messages';
-import Input from './components/Input';
+import React from 'react';
+import Messages from './Messages';
+import Input from './Input';
 import './App.css';
 
 function randomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
-class App extends Component {
+class App extends React.Component {
   state = {
     messages: [],
     member: {
