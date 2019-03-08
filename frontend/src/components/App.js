@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header';
 import Messages from './Messages';
 import Input from './Input';
 import './App.css';
@@ -28,9 +29,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
+        {/* <div className="App-header">
           <h1>WhatBot</h1>
-        </div>
+        </div> */}
+        <Header/>
         <Messages 
           messages={this.state.messages}
           currentMember={this.state.member}
