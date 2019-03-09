@@ -5,6 +5,8 @@ const INTIAL_STATE = {
   userId: null
 };
 
+/**Let this action creator be the only thing responsible for all 
+login components */
 export default (state = INTIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_IN:
