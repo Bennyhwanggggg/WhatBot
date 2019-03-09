@@ -7,13 +7,13 @@ class ChatRoom extends React.Component {
     render() {
         return (
             <div className="ui container">
-                <Header/>
+                {/* <Header/>
                 <Messages 
                 messages={this.state.messages}
                 currentMember={this.state.member}
-                />
+                /> */}
                 <Input
-                onSendMessage={this.onSendMessage}
+                // onSendMessage={this.onSendMessage}
                 />
             </div>
         );
