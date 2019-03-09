@@ -30,6 +30,7 @@ class Input extends React.Component {
         // TODO: if no value, just do nothing
         // this.setState({text: ""}); // TODO: Check this
         this.props.sendMessage(formValues);
+        console.log(this.props);
     }
 
     render() {
