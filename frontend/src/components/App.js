@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from './Header';
 import Messages from './Messages';
 import Input from './Input';
+import { sendMessage } from '../actions';
 import './App.css';
 
 
@@ -21,6 +23,7 @@ class App extends React.Component {
       member: this.state.member
     })
     this.setState({messages: messages})
+    this.props.sendMessage(message)
   }
 
   render() {
@@ -39,4 +42,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(
+  null,
+  { sendMessage }
+)(App);
+
