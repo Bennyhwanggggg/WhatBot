@@ -3,17 +3,24 @@ import React, { Component } from 'react';
 class Messages extends Component {
     render() {
         const {messages} = this.props;
-        return (
-            <ul className="Messages-list">
-                {messages.map(m => this.renderMsg(m))}
-            </ul>
-        );
+        if (messages){
+            return (
+                <ul className="Messages-list">
+                    {messages.map(m => this.renderMsg(m))}
+                </ul>
+            );
+        } else {
+            return (
+                <ul className="Messages-list">
+                </ul>
+            );
+        }
     }
 
     renderMsg(message) {
         const {member, text} = message;
         const {currentMember} = this.props;
-        const messageFromMe = member.id === currentMember.id;
+        const messageFromMe = currentMember.username === member.username;
         const className = messageFromMe ?  "Messages-message currentMember" : "Messages-message";
         return (
             <li className={className}>
