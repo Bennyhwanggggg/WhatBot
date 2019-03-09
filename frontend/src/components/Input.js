@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Field, reduxForm } from 'redux-form';
 
 class Input extends Component {
     state = {
@@ -23,14 +24,15 @@ class Input extends Component {
     }
 
     /* Events */
-    onChange(e) {
+    onChange = (e) => {
         this.setState({text: e.target.value});
     }
 
-    onSubmit(e) {
-        e.preventDefault(); // Prevent default so it doesn't refresh
+    onSubmit = (formValues) => {
+        // e.preventDefault(); // Prevent default so it doesn't refresh
+        console.log(formValues);
         this.setState({text: ""});
-        this.props.onSendMessage(this.state.text);
+        this.props.onSendMessage(formValues);
     }
 }
 
