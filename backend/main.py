@@ -5,6 +5,8 @@ import uuid
 app = Flask(__name__)
 
 users = []
+# holds message ids in order
+chat = []
 messages = dict()
 
 @app.route('/')
@@ -48,6 +50,22 @@ def send():
 
     chat.append(id)
     return jsonify(messages)
+
+
+@app.route('/get/<last_id>', methods = ["GET"])
+def get(last_id):
+    if chat is None or len(chat) == 0:
+        return []
+    index = 0
+    if last_id:
+        try:
+            index = chat.index(last_id) + 1
+        except ValueError as e:
+            abort(400)
+
+    ids_to_return = chat[index:]
+    results = map(lambda x: messages[x], ids_to_return)
+    return jsonify(list(results))
 
 
 
