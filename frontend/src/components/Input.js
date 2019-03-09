@@ -6,6 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 class Input extends Component {
 
     renderInput({input}) {
+        // destructure input and load its props into input
         return (
             <div>
                 <input {...input}/>
@@ -14,29 +15,26 @@ class Input extends Component {
         );
     };
 
+    // redux-form uses handleSubmit which already calls e.preventDefault
+    onSubmit(formValues) {
+        console.log(formValues);
+        // send message
+        this.setState({text: ""}); // TODO: Check this
+        this.props.onSendMessage(formValues); // TODO: change this to an action?
+    }
+
     render() {
         return (
             <div className="Input">
-                <form>
-                    <Field name="inputValue" 
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <Field 
+                        name="inputValue" 
                         component={this.renderInput} 
                         placeholder="Enter message here and press ENTER to send"
                     />
                 </form>
             </div>
         );
-    }
-
-    /* Events */
-    onChange = (e) => {
-        this.setState({text: e.target.value});
-    }
-
-    onSubmit = (formValues) => {
-        // e.preventDefault(); // Prevent default so it doesn't refresh
-        console.log(formValues);
-        this.setState({text: ""});
-        this.props.onSendMessage(formValues);
     }
 }
 
