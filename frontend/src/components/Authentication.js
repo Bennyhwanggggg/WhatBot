@@ -3,60 +3,53 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
 
 class Authentication extends React.Component {
-  componentDidMount() {
-    window.gapi.load('client:auth2', () => {
-      window.gapi.client
-        .init({
-          clientId:
-            '797401886567-9cumct9mrt3v2va409rasa7fa6fq02hh.apps.googleusercontent.com',
-          scope: 'email'
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
 
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
+    componentDidMount() {
+        // TODO: FIX
+        this.onAuthChange(this.state.isSignedIn); // Detect current status #219 
   }
 
-  onAuthChange = isSignedIn => {
-    if (isSignedIn) {
-      this.props.signIn(this.auth.currentUser.get().getId());
-    } else {
-      this.props.signOut();
+    // this is called when authentication status changes
+    // TODO: FIX  
+    onAuthChange = isSignedIn => {
+        if (isSignedIn) {
+            this.props.signIn(); // pass in credentials here? # 217
+        } else {
+            this.props.signOut();
+        }
+    };
+
+    // TODO: FIX
+    onSignInClick = () => {
+        console.log("Replace this with login api")
+    };
+
+    // TODO: FIX
+    onSignOutClick = () => {
+        console.log("Replace this with login api")
+    };
+
+    renderAuthButton() {
+        if (this.props.isSignedIn === null) {
+        return null;
+        } else if (this.props.isSignedIn) {
+        return (
+            <button onClick={this.onSignOutClick} className="ui button">
+            Sign out
+            </button>
+        );
+        } else {
+        return (
+            <button onClick={this.onSignInClick} className="ui button">
+            Sign in
+            </button>
+        );
+        }
     }
-  };
 
-  onSignInClick = () => {
-    console.log("Replace this with login api")
-  };
-
-  onSignOutClick = () => {
-    console.log("Replace this with login api")
-  };
-
-  renderAuthButton() {
-    if (this.props.isSignedIn === null) {
-      return null;
-    } else if (this.props.isSignedIn) {
-      return (
-        <button onClick={this.onSignOutClick} className="ui button">
-          Sign out
-        </button>
-      );
-    } else {
-      return (
-        <button onClick={this.onSignInClick} className="ui button">
-          Sign in
-        </button>
-      );
+    render() {
+        return <div>{this.renderAuthButton()}</div>;
     }
-  }
-
-  render() {
-    return <div>{this.renderAuthButton()}</div>;
-  }
 }
 
 const mapStateToProps = state => {
@@ -66,4 +59,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { signIn, signOut }
-)(GoogleAuth);
+)(Authentication);
