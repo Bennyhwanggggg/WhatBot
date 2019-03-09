@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+
+// redux-form #224, redux-form.com for docs
 class Input extends Component {
-    state = {
-        text: ""
-    }
+
+    renderInput({input}) {
+        return (
+            <div>
+                <input {...input}/>
+                <button>Send</button>
+            </div>
+        );
+    };
 
     render() {
         return (
             <div className="Input">
-                <form onSubmit={e => this.onSubmit(e)}>
-                    <input
-                        onChange={e => this.onChange(e)}
-                        value={this.state.text}
-                        type="text"
+                <form>
+                    <Field name="inputValue" 
+                        component={this.renderInput} 
                         placeholder="Enter message here and press ENTER to send"
-                        autoFocus={true}
                     />
-                    <button>Send</button>
                 </form>
             </div>
         );
@@ -36,4 +40,6 @@ class Input extends Component {
     }
 }
 
-export default Input;
+export default reduxForm({
+    form: formValues
+})(Input);
