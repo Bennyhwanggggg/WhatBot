@@ -1,9 +1,10 @@
 import React from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
-import Messages from './Messages';
-import Input from './Input';
-import { sendMessage } from '../actions';
+import ChatRoom from './ChatRoom';
+
+import history from '../history';
 import './App.css';
 
 
@@ -27,23 +28,21 @@ class App extends React.Component {
   }
 
   render() {
+    // Add login page to route later
     return (
       <div className="App">
-        <Header/>
-        <Messages 
-          messages={this.state.messages}
-          currentMember={this.state.member}
-        />
-        <Input
-          onSendMessage={this.onSendMessage}
-        />
+        <Router history={history}>
+          <div>
+            <Header/>
+            <Switch>
+              <Route path="/" exact component={ChatRoom} />
+            </Switch>
+          </div>
+        </Router>
       </div>
     );
   }
 }
 
-export default connect(
-  null,
-  { sendMessage }
-)(App);
+export default App;
 
