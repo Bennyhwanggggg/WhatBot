@@ -21,12 +21,8 @@ class Input extends React.Component {
 
     // redux-form uses handleSubmit which already calls e.preventDefault #238 send req
     onSubmit = (formValues) => {
-        // send message, 
-        // TODO: if no value, just do nothing
-        // this.setState({text: ""}); // TODO: Check this
         this.props.sendMessage(formValues);
         this.props.reset();
-        console.log(this.props);
     }
 
     render() {
@@ -48,6 +44,7 @@ class Input extends React.Component {
 const formWrapped = reduxForm({
                         form: "formValues"
                     })(Input);
+
 
 export default connect(
     null,
