@@ -6,15 +6,10 @@ import Input from './Input';
 class ChatRoom extends React.Component {
     render() {
         return (
-            <div className="ui container">
-                {/* <Header/>
-                <Messages 
-                messages={this.state.messages}
-                currentMember={this.state.member}
-                /> */}
+            <React.Fragment>
                 <Messages/>
                 <Input/>
-            </div>
+            </React.Fragment>
         );
     }
 }
