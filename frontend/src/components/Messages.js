@@ -9,7 +9,7 @@ class Messages extends Component {
             // TODO: remove hardcoded classname by getting them from msg data
             // These are "Messages-message currentMember" and username, color
             return (
-                <li className="Messages-message currentMember"> 
+                <li className="Messages-message currentMember" key={message.id}> 
                     <span className="avatar" 
                     style={{backgroundColor: "red"}}/>
                     <div className="Message-content">
@@ -25,10 +25,9 @@ class Messages extends Component {
 
     render() {
         console.log(this.props);
-        // console.log(this.props)
         return (
             <ul className="Messages-list">
-                {/* {this.renderMessages()} */}
+                {this.renderMessages()}
             </ul>
         );  
         // const {messages} = this.props;
