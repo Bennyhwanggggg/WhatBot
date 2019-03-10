@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { sendMessage } from '../actions';
 
@@ -10,22 +10,17 @@ class Input extends React.Component {
 
     renderInput = ({input}) => {
         // destructure input and load its props into input
-        console.log(input)
         return (
-            <div>
                 <input 
                     {...input} 
                     placeholder="Enter message here and press ENTER to send"
                     autoComplete="off"
                 />
-                <button>Send</button>
-            </div>
         );
     };
 
     // redux-form uses handleSubmit which already calls e.preventDefault #238 send req
     onSubmit = (formValues) => {
-        console.log(formValues);
         // send message, 
         // TODO: if no value, just do nothing
         // this.setState({text: ""}); // TODO: Check this
@@ -36,19 +31,26 @@ class Input extends React.Component {
     render() {
         return (
             <div className="Input">
-                <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                <form name="Input-box" onSubmit={this.props.handleSubmit(this.onSubmit)}>
                     <Field 
                         name="inputValue" 
                         component={this.renderInput} 
                     />
+                    <button>Send</button>
                 </form>
             </div>
         );
     }
 }
 
+const afterSubmit = (result, dispatch) => {
+    console.log("reset called");
+    dispatch(reset('Input-box'));
+}
+
 const formWrapped = reduxForm({
-                        form: "formValues"
+                        form: "formValues",
+                        onSubmitSuccess: afterSubmit
                     })(Input);
 
 export default connect(

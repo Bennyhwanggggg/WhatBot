@@ -3,7 +3,7 @@ import { SIGN_IN, SIGN_OUT, MESSAGE_SENT } from './types'
 
 export const sendMessage = message => async dispatch => {
     // const response = await backend.post('send', message);
-    console.log(message)
+    console.log('action: ',message)
     dispatch({type: MESSAGE_SENT}) // TODO: add response.data later
 }
 

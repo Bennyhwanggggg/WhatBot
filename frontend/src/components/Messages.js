@@ -16,7 +16,7 @@ class Messages extends Component {
             );
         }
     }
-
+    // get list of message from redux store?
     renderMsg(message) {
         const {member, text} = message;
         const {currentMember} = this.props;
