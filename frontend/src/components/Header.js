@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './Login';
 
 const Header = () => {
     return (
@@ -7,7 +6,9 @@ const Header = () => {
         <div class="header item">
             WhatBot
         </div>
-        <Login/>
+        <div className="right item">
+            Login
+        </div>
       </div>
     );
   };
