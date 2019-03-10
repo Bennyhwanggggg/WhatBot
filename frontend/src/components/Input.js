@@ -25,6 +25,7 @@ class Input extends React.Component {
         // TODO: if no value, just do nothing
         // this.setState({text: ""}); // TODO: Check this
         this.props.sendMessage(formValues);
+        this.props.reset();
         console.log(this.props);
     }
 
@@ -43,14 +44,9 @@ class Input extends React.Component {
     }
 }
 
-const afterSubmit = (result, dispatch) => {
-    console.log("reset called");
-    dispatch(reset('Input-box'));
-}
 
 const formWrapped = reduxForm({
-                        form: "formValues",
-                        onSubmitSuccess: afterSubmit
+                        form: "formValues"
                     })(Input);
 
 export default connect(
