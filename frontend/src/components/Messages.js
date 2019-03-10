@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 
 class Messages extends Component {
+
+    renderMessages() {
+        return this.props.messages.map( message => {
+            // TODO: remove hardcoded classname by getting them from msg data
+            // These are "Messages-message currentMember" and username, color
+            return (
+                <li className="Messages-message currentMember"> 
+                    <span className="avatar" 
+                    style={{backgroundColor: "red"}}/>
+                    <div className="Message-content">
+                        <div className="username">
+                            You
+                        </div>
+                        <div className="text">{message.inputValue}</div>
+                    </div>
+                </li>
+            )
+        });
+    }
+
     render() {
-        console.log(this.props)
-        return <div>temp</div>;
+        console.log(this.props);
+        // console.log(this.props)
+        return (
+            <ul className="Messages-list">
+                {/* {this.renderMessages()} */}
+            </ul>
+        );  
         // const {messages} = this.props;
         // if (messages){
         //     return (
@@ -40,4 +66,8 @@ class Messages extends Component {
     // }
 }
 
-export default Messages;
+const mapStateToProps = (state) => {
+    return {messages: Object.values(state.messages) }
+}
+
+export default connect(mapStateToProps)(Messages);

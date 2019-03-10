@@ -6,5 +6,5 @@ import messagesReducer from './messagesReducer'
 export default combineReducers({
   auth: authReducer,
   form: formReducer,
-  message: messagesReducer 
+  messages: messagesReducer 
 });
