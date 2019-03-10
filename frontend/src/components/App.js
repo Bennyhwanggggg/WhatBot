@@ -1,10 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Header from './Header';
 import ChatRoom from './ChatRoom';
-import Messages from './Messages';
-import Input from './Input';
 
 import history from '../history';
 import './App.css';
