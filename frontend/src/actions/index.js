@@ -5,7 +5,7 @@ export const sendMessage = message => async dispatch => {
     // const response = await backend.post('send', message);
     console.log('action: ',message)
     dispatch({type: MESSAGE_SENT, payload: message}) 
-    dispatch({type: MESSAGE_RECIEVED, payload: message}) // TODO: change to response.data later
+    // dispatch({type: MESSAGE_RECIEVED, payload: message}) // TODO: change to response.data later
 }
 
 export const signIn = userId => {

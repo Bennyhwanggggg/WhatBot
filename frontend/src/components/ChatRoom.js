@@ -12,6 +12,7 @@ class ChatRoom extends React.Component {
                 messages={this.state.messages}
                 currentMember={this.state.member}
                 /> */}
+                <Messages/>
                 <Input/>
             </div>
         );
