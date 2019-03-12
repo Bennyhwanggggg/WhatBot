@@ -31,20 +31,6 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4()) if request.json.get('id', None) is None else str(uuid.uuid4())
 
-@app.route('/messages', methods = ["post"])
-def send():
-    username = request.json.get('username', None)
-    message = request.json.get('message', None)
-
-    if username is None or username not in users:
-        abort(401)
-
-    #'messsage is None' is allowed message to be empty, so need to check the empty
-
-    if not message:
-        abort(401)
-
-    # id = str(uuid.uuid4())
     response = {
         # 'username': username,
         'message': 'This is the response to {}'.format(message),
