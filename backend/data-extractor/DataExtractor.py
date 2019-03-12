@@ -41,6 +41,6 @@ class DataExtractor:
 
 
 if __name__ == '__main__':
-	data = Data(sys.argv[1], sys.argv[2])
+	data = DataExtractor(sys.argv[1], sys.argv[2])
 	data.extractor()
 	# data.extractor(sys.argv[1], sys.argv[2])
