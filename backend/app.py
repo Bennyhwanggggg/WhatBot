@@ -1,25 +1,23 @@
 from flask import (Flask, request, abort, jsonify)
+from flask_cors import CORS
 from datetime import datetime
 import uuid
+from query_module import query
 
 app = Flask(__name__)
+CORS(app)
 
 users = []
 # holds message ids in order
 chat = []
 messages = dict()
 
-@app.route('/')
-def my_index():
-    #return flask.render_template("index.html", token="Hello Flask+React")
-    return "hello"
 
-
-@app.route('/login', methods = ["post"])
+@app.route('/login', methods=["post"])
 def login():
     #if you do not pass username, then the default will be None
     username = request.json.get('username', None)
-    if username is None or username in users:
+    if username is None or username not in users:
         abort(401)
     else:
         users.append(username)
@@ -27,29 +25,24 @@ def login():
         return jsonify({'status': 'OK', 'message': 'Successfully logged in'})
 
 
-
-@app.route('/messages', methods = ["post"])
-def send():
-    username = request.json.get('username', None)
-    message = request.json.get('message', None)
-
-    if username is None or username not in users:
-        abort(401)
-
-    #'messsage is None' is allowed message to be empty, so need to check the empty
-    if message is None or message == '':
-        abort(401)
-
+@app.route('/message', methods=["post"])
+def message():
+    # turning off authentication for now...
+    # username = request.json.get('username', None)
+    message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
-    messages[id] = {
-        'username': username,
-        'message': message,
+
+    reply = query.get_reply(message)
+
+    response = {
+        # 'username': username,
+        'message': reply,
         'timestamp': datetime.now(),
         'id': id
     }
 
     chat.append(id)
-    return jsonify(messages)
+    return jsonify(response)
 
 
 @app.route('/get/<last_id>', methods = ["GET"])
@@ -78,6 +71,7 @@ def updates(last_id):
         result['new_messages'] = True
     return jsonify(result)
 
+
 def get_next_index(last_id):
     try:
         return chat.index(last_id) + 1
@@ -86,4 +80,4 @@ def get_next_index(last_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='localhost', port=9999)
