@@ -24,7 +24,6 @@ class Messages extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <ul className="Messages-list">
                 {this.renderMessages()}
