@@ -6,17 +6,20 @@ class Messages extends Component {
 
     renderMessages() {
         return this.props.messages.map( message => {
-            // TODO: remove hardcoded classname by getting them from msg data
-            // These are "Messages-message currentMember" and username, color
+            const isUser = message.inputValue != null;
+            const currentMember = isUser ?  "Messages-message currentMember" : "Messages-message";
+            const currentMemberColor = isUser ? "blue" : "red";
+            const currentUserName = isUser ? "You" : "WhatBot";
+            const msg = isUser ? message.inputValue : message.message;
             return (
-                <li className="Messages-message currentMember" key={message.id}> 
+                <li className={currentMember} key={message.id}> 
                     <span className="avatar" 
-                    style={{backgroundColor: "red"}}/>
+                    style={{backgroundColor: {currentMemberColor}}}/>
                     <div className="Message-content">
                         <div className="username">
-                            You
+                            {currentUserName}
                         </div>
-                        <div className="text">{message.inputValue}</div>
+                        <div className="text">{msg}</div>
                     </div>
                 </li>
             )
@@ -29,19 +32,6 @@ class Messages extends Component {
                 {this.renderMessages()}
             </ul>
         );  
-        // const {messages} = this.props;
-        // if (messages){
-        //     return (
-        //         <ul className="Messages-list">
-        //             {messages.map(m => this.renderMsg(m))}
-        //         </ul>
-        //     );
-        // } else {
-        //     return (
-        //         <ul className="Messages-list">
-        //         </ul>
-        //     );
-        // }
     }
     // // get list of message from redux store?
     // renderMsg(message) {
