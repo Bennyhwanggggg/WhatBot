@@ -11,18 +11,20 @@ class Messages extends Component {
             const currentMemberColor = isUser ? "blue" : "red";
             const currentUserName = isUser ? "You" : "WhatBot";
             const msg = isUser ? message.inputValue : message.message;
-            return (
-                <li className={currentMember} key={message.id}> 
-                    <span className="avatar" 
-                    style={{backgroundColor: {currentMemberColor}}}/>
-                    <div className="Message-content">
-                        <div className="username">
-                            {currentUserName}
+            if (msg) {
+                return (
+                    <li className={currentMember} key={message.id}> 
+                        <span className="avatar" 
+                        style={{backgroundColor: {currentMemberColor}}}/>
+                        <div className="Message-content">
+                            <div className="username">
+                                {currentUserName}
+                            </div>
+                            <div className="text">{msg}</div>
                         </div>
-                        <div className="text">{msg}</div>
-                    </div>
-                </li>
-            )
+                    </li>
+                )
+            }
         });
     }
 
