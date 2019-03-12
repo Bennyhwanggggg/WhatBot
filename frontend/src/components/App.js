@@ -27,7 +27,7 @@ class App extends React.Component {
   }
 
   render() {
-    // Add login page to route later
+    // TODO: Add login page to route later
     return (
       <div className="App">
         <Router history={history}>

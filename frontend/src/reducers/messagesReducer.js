@@ -6,7 +6,6 @@ export default (state = {}, action) => {
     switch (action.type) {
         case MESSAGE_SENT:
             console.log(MESSAGE_SENT, action.payload)
-            // assign id here
             const id = uuid.v4();
             action.payload.id = id;
             return { ...state, [id]: action.payload }
