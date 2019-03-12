@@ -1,40 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import ScrollableFeed from 'react-scrollable-feed'
 
 class Messages extends Component {
-    render() {
-        const {messages} = this.props;
-        if (messages){
-            return (
-                <ul className="Messages-list">
-                    {messages.map(m => this.renderMsg(m))}
-                </ul>
-            );
-        } else {
-            return (
-                <ul className="Messages-list">
-                </ul>
-            );
-        }
+
+    renderMessages() {
+        return this.props.messages.map( message => {
+            const isUser = message.inputValue != null;
+            const currentMember = isUser ?  "Messages-message currentMember" : "Messages-message";
+            const currentMemberColor = isUser ? "blue" : "red";
+            const currentUserName = isUser ? "You" : "WhatBot";
+            const msg = isUser ? message.inputValue : message.message;
+            if (msg) {
+                return (
+                    <li className={currentMember} key={message.id}> 
+                        <span className="avatar" 
+                        style={{backgroundColor: {currentMemberColor}}}/>
+                        <div className="Message-content">
+                            <div className="username">
+                                {currentUserName}
+                            </div>
+                            <div className="text">{msg}</div>
+                        </div>
+                    </li>
+                )
+            }
+        });
     }
 
-    renderMsg(message) {
-        const {member, text} = message;
-        const {currentMember} = this.props;
-        const messageFromMe = currentMember.username === member.username;
-        const className = messageFromMe ?  "Messages-message currentMember" : "Messages-message";
+    render() {
         return (
-            <li className={className}>
-                <span className="avatar" 
-                style={{backgroundColor: member.color}}/>
-                <div className="Message-content">
-                    <div className="username">
-                        {member.username}
-                    </div>
-                    <div className="text">{text}</div>
-                </div>
-            </li>
-        )
+            <ScrollableFeed forceScroll={true}>
+                <ul className="Messages-list">
+                    {this.renderMessages()}
+                </ul>
+            </ScrollableFeed>
+        );  
     }
 }
 
-export default Messages;
+const mapStateToProps = (state) => {
+    return {messages: Object.values(state.messages) }
+}
+
+export default connect(mapStateToProps)(Messages);

@@ -3,3 +3,9 @@
 
 # MacOS
 **/.DS_Store
+
+# Backend virtual environment
+**/venv
+
+# Python cache
+**/__pycache__

@@ -3,6 +3,11 @@ This package contains the frontend of WhatBot.
 
 ## Quick Overview
 In the project directory:
+Setup:
+```
+npm install
+```
+Start:
 ```
 npm start
 ```

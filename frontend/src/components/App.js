@@ -1,7 +1,9 @@
 import React from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
 import Header from './Header';
-import Messages from './Messages';
-import Input from './Input';
+import ChatRoom from './ChatRoom';
+
+import history from '../history';
 import './App.css';
 
 
@@ -21,22 +23,25 @@ class App extends React.Component {
       member: this.state.member
     })
     this.setState({messages: messages})
+    this.props.sendMessage(message)
   }
 
   render() {
+    // TODO: Add login page to route later
     return (
       <div className="App">
-        <Header/>
-        <Messages 
-          messages={this.state.messages}
-          currentMember={this.state.member}
-        />
-        <Input
-          onSendMessage={this.onSendMessage}
-        />
+        <Router history={history}>
+          <React.Fragment>
+            <Header/>
+            <Switch>
+              <Route path="/" exact component={ChatRoom} />
+            </Switch>
+          </React.Fragment>
+        </Router>
       </div>
     );
   }
 }
 
 export default App;
+
