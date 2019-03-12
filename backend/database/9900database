@@ -1,0 +1,25 @@
+-- 9900 database
+There are 2 databases in total. 
+One is for the consultation reservation. 
+The other one is used for knowledge base of handbook.
+
+
+Instruction of database:
+Example:
+INSERT:
+INSERT INTO Lecturer (LID, firstname, lastname) VALUES
+    ('001', 'Sam', 'Smith');
+
+
+INSERT INTO Student (SID, firstname, lastname) VALUES
+    ('z5137895', 'Sam', 'Smith');
+
+
+INSERT INTO Timeslot(tid, start_time, end_time, available) VALUES (1, '2019-03-12 19:10:25', '2019-03-13 19:10:25', True);
+
+INSERT INTO Appointment (sid, tid, starttime, endtime) VALUES ('z5137895', 1, '2019-03-12 19:10:25','2019-03-13 19:10:25');
+
+
+Update:
+
+UPDATE Timeslot SET available = False WHERE tid = 1 ;

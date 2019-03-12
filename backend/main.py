@@ -28,7 +28,7 @@ def login():
 
 
 
-@app.route('/send', methods = ["post"])
+@app.route('/messages', methods = ["post"])
 def send():
     username = request.json.get('username', None)
     message = request.json.get('message', None)

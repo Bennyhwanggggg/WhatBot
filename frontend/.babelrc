@@ -1,0 +1,10 @@
+{
+    "presets": [
+        "react-app"
+    ],
+    "plugins": [
+        "@babel/plugin-transform-modules-commonjs",
+        "inline-react-svg",
+        "react-html-attrs"
+    ]
+}
