@@ -6,3 +6,6 @@
 
 # Backend virtual environment
 **/venv
+
+# Python cache
+**/__pycache__
