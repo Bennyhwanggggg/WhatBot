@@ -9,17 +9,12 @@ users = []
 chat = []
 messages = dict()
 
-@app.route('/')
-def my_index():
-    #return flask.render_template("index.html", token="Hello Flask+React")
-    return "hello"
-
 
 @app.route('/login', methods = ["post"])
 def login():
     #if you do not pass username, then the default will be None
     username = request.json.get('username', None)
-    if username is None or username in users:
+    if username is None or username not in users:
         abort(401)
     else:
         users.append(username)
@@ -27,8 +22,7 @@ def login():
         return jsonify({'status': 'OK', 'message': 'Successfully logged in'})
 
 
-
-@app.route('/send/messags', methods = ["post"])
+@app.route('/message', methods = ["post"])
 def send():
     username = request.json.get('username', None)
     message = request.json.get('message', None)
@@ -37,7 +31,7 @@ def send():
         abort(401)
 
     #'messsage is None' is allowed message to be empty, so need to check the empty
-    if message is None or message == '':
+    if not message:
         abort(401)
 
     id = str(uuid.uuid4())
@@ -86,4 +80,4 @@ def get_next_index(last_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='localhost')
