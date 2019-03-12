@@ -2,6 +2,7 @@ from flask import (Flask, request, abort, jsonify)
 from flask_cors import CORS
 from datetime import datetime
 import uuid
+from query_module import query
 
 app = Flask(__name__)
 CORS(app)
@@ -31,9 +32,11 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4()) if request.json.get('id', None) is None else str(uuid.uuid4())
 
+    reply = query.get_reply(message)
+
     response = {
         # 'username': username,
-        'message': 'This is the response to {}'.format(message),
+        'message': reply,
         'timestamp': datetime.now(),
         'id': id
     }
