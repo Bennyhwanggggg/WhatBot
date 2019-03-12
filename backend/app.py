@@ -72,6 +72,7 @@ def updates(last_id):
         result['new_messages'] = True
     return jsonify(result)
 
+
 def get_next_index(last_id):
     try:
         return chat.index(last_id) + 1
@@ -80,4 +81,4 @@ def get_next_index(last_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='localhost')
+    app.run(debug=True, host='localhost', port=9999)
