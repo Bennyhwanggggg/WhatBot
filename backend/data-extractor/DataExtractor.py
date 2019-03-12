@@ -5,10 +5,23 @@ from bs4 import BeautifulSoup
 
 class DataExtractor:
     def __init__(self, level, course):
-        self.level = level
-        self.course = course
+    	self.level = level
+    	self.course = course
 
-    def storeDetails(soup):
+    def storeDetails(details):
+        #generate the csv
+        with open('Handbook.csv', "w") as output:
+            writer = csv.writer(output, lineterminator='\n')
+            writer.writerows(details.items())
+
+    def extractor(self):
+    	# undergraduate and comp3900 are parameters
+        url = requests.get("https://www.handbook.unsw.edu.au/"+self.level+"/courses/2019/"+self.course+"/")
+        htmltext = url.text
+
+    	#read the html
+        soup = BeautifulSoup(htmltext, 'lxml')
+
         #create a dict
         details = {}
         #store the data we need
@@ -26,20 +39,7 @@ class DataExtractor:
         details["Domestic Student"] = soup.select('.a-column-sm-12')[10].p.string.strip()
         details["International Student"] = soup.select('.a-column-sm-12')[12].p.string.strip()
 
-        #generate the csv
-        with open('Handbook.csv', "w") as output:
-            writer = csv.writer(output, lineterminator='\n')
-            writer.writerows(details.items())
-
-    def extractor(self):
-        # undergraduate and comp3900 are parameters
-        url = requests.get("https://www.handbook.unsw.edu.au/"+self.level+"/courses/2019/"+self.course+"/")
-        htmltext = url.text
-
-        #read the html
-        soup = BeautifulSoup(htmltext, 'lxml')
-
-        DataExtractor.storeDetails(soup)
+        DataExtractor.storeDetails(details)
 
         return soup
 
