@@ -4,15 +4,15 @@ import csv
 from bs4 import BeautifulSoup
 
 class DataExtractor:
-    def __init__(self, level, course):
-    	self.level = level
+    def __init__(self, study_level, course):
+    	self.study_level = study_level
     	self.course = course
         self.details = dict()
 
 
     def extract(self):
     	# undergraduate and comp3900 are parameters
-        url = "https://www.handbook.unsw.edu.au/{}/courses/2019/{}/".format(self.level, self.course)
+        url = "https://www.handbook.unsw.edu.au/{}/courses/2019/{}/".format(self.study_level, self.course)
         url = requests.get(url)
         htmltext = url.text
 
@@ -40,7 +40,7 @@ class DataExtractor:
         self.details["International Student"] = soup.select('.a-column-sm-12')[12].p.string.strip()
 
 
-    def save(self):
+    def save(self): # TODO: Link to database
         #generate the csv
         with open("Handbook.csv", "w") as output:
             writer = csv.writer(output, lineterminator='\n')
