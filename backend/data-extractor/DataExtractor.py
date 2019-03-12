@@ -26,6 +26,7 @@ class DataExtractor:
         details = {}
         #store the data we need
         details["Title"] = soup.title.string
+        details["Description"] = soup.find(id="readMoreIntro").div.p.string
         details["Credit"] = soup.find_all('strong')[1].string
         details["Prerequisite"] = soup.find(id="readMoreSubjectConditions").div.div.string
         details["Course Outline"] = soup.find(id="subject-outline").div.a.attrs['href']
@@ -34,10 +35,16 @@ class DataExtractor:
         details["School"] = soup.select('.o-attributes-table-item ')[1].a.attrs['href']
         details["Offering Terms"] = soup.select('.o-attributes-table-item ')[3].p.string
         details["Campus"] = soup.select('.o-attributes-table-item ')[4].p.string.replace(" ", "").strip()
+
+        for value in soup.select('.p-all-1')[0].children:
+            if (soup.select('.p-all-1')[0].index(value) == 3):
+                details["PDF"] = value.a.attrs['href']
+
         details["Indicative contact hours"] = soup.select('.o-attributes-table-item ')[5].p.string
         details["Commonwealth Supported Student"] = soup.select('.a-column-sm-12')[8].p.string.strip()
         details["Domestic Student"] = soup.select('.a-column-sm-12')[10].p.string.strip()
         details["International Student"] = soup.select('.a-column-sm-12')[12].p.string.strip()
+
 
         DataExtractor.storeDetails(details)
 
