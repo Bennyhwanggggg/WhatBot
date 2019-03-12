@@ -29,7 +29,7 @@ def message():
     # turning off authentication for now...
     # username = request.json.get('username', None)
     message = request.json.get('inputValue', None)
-    id = str(uuid.uuid4()) if request.json.get('id', None) is None else str(uuid.uuid4())
+    id = str(uuid.uuid4())
 
     response = {
         # 'username': username,
