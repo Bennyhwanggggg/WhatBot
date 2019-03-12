@@ -2,10 +2,11 @@ import backend from '../apis/backend'
 import { SIGN_IN, SIGN_OUT, MESSAGE_SENT, MESSAGE_RECIEVED } from './types'
 
 export const sendMessage = message => async dispatch => {
-    // const response = await backend.post('send', message);
-    console.log('action: ',message)
+    console.log('message to be sent: ',message)
+    const response = await backend.post('message', message);
+    console.log('response: ',response.data)
     dispatch({type: MESSAGE_SENT, payload: message}) 
-    // dispatch({type: MESSAGE_RECIEVED, payload: message}) // TODO: change to response.data later
+    dispatch({type: MESSAGE_RECIEVED, payload: response.data}) 
 }
 
 export const signIn = userId => {

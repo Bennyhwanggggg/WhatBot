@@ -1,8 +1,10 @@
 from flask import (Flask, request, abort, jsonify)
+from flask_cors import CORS
 from datetime import datetime
 import uuid
 
 app = Flask(__name__)
+CORS(app)
 
 users = []
 # holds message ids in order
@@ -10,7 +12,7 @@ chat = []
 messages = dict()
 
 
-@app.route('/login', methods = ["post"])
+@app.route('/login', methods=["post"])
 def login():
     #if you do not pass username, then the default will be None
     username = request.json.get('username', None)
@@ -22,28 +24,30 @@ def login():
         return jsonify({'status': 'OK', 'message': 'Successfully logged in'})
 
 
-@app.route('/message', methods = ["post"])
-def send():
-    username = request.json.get('username', None)
-    message = request.json.get('message', None)
+@app.route('/message', methods=["post"])
+def message():
+    # turning off authentication for now...
+    # username = request.json.get('username', None)
+    message = request.json.get('inputValue', None)
 
-    if username is None or username not in users:
-        abort(401)
+    # if username is None or username not in users:
+    #     abort(401)
 
     #'messsage is None' is allowed message to be empty, so need to check the empty
+
     if not message:
         abort(401)
 
     id = str(uuid.uuid4())
-    messages[id] = {
-        'username': username,
-        'message': message,
+    response = {
+        # 'username': username,
+        'message': 'This is the response to {}'.format(message),
         'timestamp': datetime.now(),
         'id': id
     }
 
     chat.append(id)
-    return jsonify(messages)
+    return jsonify(response)
 
 
 @app.route('/get/<last_id>', methods = ["GET"])
