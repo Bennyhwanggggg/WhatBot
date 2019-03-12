@@ -71,6 +71,7 @@
   background-color: rgb(243, 45, 10);
   color: white;
   display: inline-block;
+  word-wrap: break-word;
 }
 
 .currentMember > .Message-content .text {
