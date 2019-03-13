@@ -3,9 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { configure, shallow, mount } from 'enzyme';
 import chai, { expect } from 'chai';
 import App from '../src/components/App';
-import Input from '../src/components/Input';
 import Header from '../src/components/Header';
-import Messages from '../src/components/Messages';
 import chaiEnzyme from 'chai-enzyme';
 
 import Adapter from 'enzyme-adapter-react-16';
