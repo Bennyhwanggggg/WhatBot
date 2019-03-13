@@ -3,9 +3,13 @@ I joined the team which is called Whatbot and did preparations such as github an
 I wrote the proposal of technical depeth and scale with Mingyue Wei. 
 I drew the software design model and list out the tools that we will use. 
 
-
 Week 2:
 Writing proposal, the aim part and software architecture design.
 Give the feedback to teammates, help to enrich epic part.
 Search material about cognitive services and how to use Dialogflow Apis.
 
+Week 3:
+This week I have created two databases and its execution python functions. 
+One is for consultation reservation, there are 4 tables, they are student, lecturer, time slot and Appointment.
+The other is for handbook. There are 2 tables which are Info_handbook and course list.
+The functions include insert data, show table and update one row.
