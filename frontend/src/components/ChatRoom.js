@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header';
 import Messages from './Messages';
 import Input from './Input';
 
