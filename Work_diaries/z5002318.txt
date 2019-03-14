@@ -14,8 +14,16 @@ Writing up the epics part for proposal and digging into the service process of e
 
 ## week3
 
-Polishing the epics by: 
+Polishing the epics: 
 
 * Analyzing the backend parsing details for consultation booking.
 * Design UI for admin & data dashboard.
-* draw technical sequence diagram for each epics. [TODO]
+* draw technical sequence diagram for each epics.
+
+## week4
+
+Make the simple demo works:
+
+* research into dialogflow, see how the SDK works.
+* connect our backend to dialogflow.
+* add more training to dialogflow [TODO]
