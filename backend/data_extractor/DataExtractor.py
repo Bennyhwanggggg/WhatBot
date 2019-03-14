@@ -48,6 +48,6 @@ class DataExtractor:
 
 
 if __name__ == '__main__':
-	data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
+    data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
     data_extractor.extract()
     data_extractor.save()
