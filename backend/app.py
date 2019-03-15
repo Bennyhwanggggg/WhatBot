@@ -2,7 +2,11 @@ from flask import (Flask, request, abort, jsonify)
 from flask_cors import CORS
 from datetime import datetime
 import uuid
-from query_module import query
+from query_module import QueryModule
+from response_module import ResponseModule
+
+query_module = QueryModule.QueryModule()
+response_module = ResponseModule.ResponseModule()
 
 app = Flask(__name__)
 CORS(app)
@@ -11,6 +15,14 @@ users = []
 # holds message ids in order
 chat = []
 messages = dict()
+
+
+def process_dialogFlow_reply(message):
+    try:
+        message_type, entity = message.split(':')
+        response_module.respond(message_type)
+    except:
+        return message
 
 
 @app.route('/login', methods=["post"])
@@ -32,7 +44,9 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
 
-    reply = query.get_reply(message)
+    reply = query_module.detect_intent_texts([message])
+    reply = process_dialogFlow_reply(reply)
+
 
     response = {
         # 'username': username,
