@@ -1,23 +1,24 @@
 import requests
 import sys
-import csv
 from bs4 import BeautifulSoup
+from database import DataBaseManager
+
 
 class DataExtractor:
-    def __init__(self, study_level, course):
-    	self.study_level = study_level
-    	self.course = course
+    def __init__(self, study_level='postgraduate', course='COMP9900'):
+        self.study_level = study_level
+        self.course = course
         self.details = dict()
-
+        self.data_base_manager = DataBaseManager.DataBaseManager()
 
     def extract(self):
-    	# undergraduate and comp3900 are parameters
+        # undergraduate and comp3900 are parameters
         url = "https://www.handbook.unsw.edu.au/{}/courses/2019/{}/".format(self.study_level, self.course)
         url = requests.get(url)
         htmltext = url.text
 
-    	#read the html
-        soup = BeautifulSoup(htmltext, 'lxml')
+        #read the html
+        soup = BeautifulSoup(htmltext, 'html.parser')
 
         #store the data we need
         self.details["Title"] = soup.title.string
@@ -39,17 +40,24 @@ class DataExtractor:
         self.details["Domestic Student"] = soup.select('.a-column-sm-12')[10].p.string.strip()
         self.details["International Student"] = soup.select('.a-column-sm-12')[12].p.string.strip()
 
-
-    def save(self): # TODO: Link to database
-        #generate the csv
-        with open("Handbook.csv", "w") as output:
-            writer = csv.writer(output, lineterminator='\n')
-            writer.writerows(self.details.items())
+    def save(self):
+        self.data_base_manager.add_handbook_entry(self.course, self.details["Title"], self.details["Description"],
+                                                  self.details["Credit"], self.details["Prerequisite"],
+                                                  self.details["Course Outline"], self.details["Faculty"],
+                                                  self.details["School"], self.details["Offering Terms"],
+                                                  self.details["Campus"], self.details["PDF"],
+                                                  self.details["Indicative contact hours"],
+                                                  self.details["Commonwealth Supported Student"],
+                                                  self.details["Domestic Student"],
+                                                  self.details["International Student"])
 
 
 
 
 if __name__ == '__main__':
-    data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
+    if len(sys.argv) > 1:
+        data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
+    else:
+        data_extractor = DataExtractor()
     data_extractor.extract()
     data_extractor.save()
