@@ -1,3 +1,4 @@
+# from database import psql_execute
 
 class ResponseModule():
     def __init__(self):
@@ -9,7 +10,7 @@ class ResponseModule():
         return self.queryMap[queryType]()
 
 
-    def respond_to_course_outline_queries(self):
+    def respond_to_course_outline_queries(self, cid):
         return """
                 A capstone software project. 
                 Students work in teams to define, 

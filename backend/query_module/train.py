@@ -19,9 +19,9 @@ import os
 import re
 import random
 
+PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
 GOOGLE_APPLICATION_CREDENTIALS = 'whatbot-v1-7a84dc8485c1.json'
-PATH = os.path.dirname(os.path.realpath(__file__))
 
 
 class QueryModuleTrainer:
