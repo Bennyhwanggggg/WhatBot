@@ -14,7 +14,7 @@ aim and background section of the proposal. Also formatted the report. Assigned 
 first sprint.
 
 Week 4
-This week I started by moving the frontend to use react-redux insteadof just pure redux. 
+This week I started by moving the frontend to use react-redux instead of just pure redux. 
 After I finished that, I updated the unit tests for frontend and then worked on the query module
 and the NLP trainer for dialogflow. I completed the trainer such that we can now easily
 train the agent through code instead of using console on Dialogflow. The aim of this is so
