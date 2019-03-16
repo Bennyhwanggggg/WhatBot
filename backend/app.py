@@ -2,11 +2,11 @@ from flask import (Flask, request, abort, jsonify)
 from flask_cors import CORS
 from datetime import datetime
 import uuid
-from query_module import QueryModule
-from response_module import ResponseModule
+from query_module.QueryModule import QueryModule
+from response_module.ResponseModule import ResponseModule
 
-query_module = QueryModule.QueryModule()
-response_module = ResponseModule.ResponseModule()
+query_module = QueryModule()
+response_module = ResponseModule()
 
 app = Flask(__name__)
 CORS(app)

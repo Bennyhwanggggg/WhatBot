@@ -1,7 +1,7 @@
 import requests
 import sys
 from bs4 import BeautifulSoup
-from database import DataBaseManager
+from database.DataBaseManager import DataBaseManager
 
 
 class DataExtractor:
@@ -9,7 +9,7 @@ class DataExtractor:
         self.study_level = study_level
         self.course = course
         self.details = dict()
-        self.data_base_manager = DataBaseManager.DataBaseManager()
+        self.data_base_manager = DataBaseManager()
 
     def extract(self):
         # undergraduate and comp3900 are parameters
