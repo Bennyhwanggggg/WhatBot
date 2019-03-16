@@ -34,11 +34,11 @@ def get_course_outline(cid):
 # select the data from lecturer table
 def connect_lecturer():
     try:
-        connection = psycopg2.connect(user = "",
-                                  password = "",
-                                  host = "127.0.0.1",
-                                  port = "5432",
-                                  database = "user")
+        connection = psycopg2.connect(user = "Master9900",
+                                    password = "12345678",
+                                    host = "master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com",
+                                    port = "5432",
+                                    database = "Master9900")
         cursor = connection.cursor()
         print ( connection.get_dsn_parameters(),"\n")
 
@@ -58,11 +58,11 @@ def connect_lecturer():
 #set time slot as booked by tid
 def set_time_avail(tid):
     try:
-        connection = psycopg2.connect(user = "",
-                                  password = "",
-                                  host = "127.0.0.1",
-                                  port = "5432",
-                                  database = "user")
+        connection = psycopg2.connect(user = "Master9900",
+                                    password = "12345678",
+                                    host = "master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com",
+                                    port = "5432",
+                                    database = "Master9900")
         cursor = connection.cursor()
         print(tid)
         cursor.execute("UPDATE Timeslot SET available = %s  WHERE tid = %s",(False,tid))
@@ -137,11 +137,11 @@ def add_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, sch
 #get the data from course_list
 def connect_course_list(cid):
     try:
-        connection = psycopg2.connect(user = "",
-                                  password = "",
-                                  host = "127.0.0.1",
-                                  port = "5432",
-                                  database = "handbook")
+        connection = psycopg2.connect(user = "Master9900",
+                                    password = "12345678",
+                                    host = "master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com",
+                                    port = "5432",
+                                    database = "Master9900")
         cursor = connection.cursor()
         print ( connection.get_dsn_parameters(),"\n")
 
