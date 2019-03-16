@@ -76,6 +76,31 @@ def add_handbook_course_list(Course_code, Course_name, Timetable, ADK, Comment):
                 print("PostgreSQL connection is closed")
     return None
 
+
+#add data into course list table
+def add_handbook_course_list(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std):
+    try:
+        connection = psycopg2.connect(user = "",
+                                  password = "",
+                                  host = "127.0.0.1",
+                                  port = "5432",
+                                  database = "handbook")
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO info_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std))
+
+        connection.commit()
+        print("add data into course_list successfully!!")
+
+    except (Exception, psycopg2.Error) as error :
+        print ("Error while connecting to PostgreSQL", error)
+    finally:
+        #closing database connection.
+            if(connection):
+                cursor.close()
+                connection.close()
+                print("PostgreSQL connection is closed")
+    return None
+
 #get the data from course_list
 def connect_course_list(cid):
     try:
