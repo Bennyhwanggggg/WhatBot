@@ -53,7 +53,7 @@ def set_time_avail(tid):
     return result
 
 #add data into course list table
-def add_handbook_course_list(Course_code, Course_name, Timetable, ADK, Comment):
+def add_courselist(Course_code, Course_name, Timetable, ADK, Comment):
     try:
         connection = psycopg2.connect(user = "",
                                   password = "",
@@ -78,7 +78,7 @@ def add_handbook_course_list(Course_code, Course_name, Timetable, ADK, Comment):
 
 
 #add data into course list table
-def add_handbook_course_list(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std):
+def add_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std):
     try:
         connection = psycopg2.connect(user = "",
                                   password = "",
