@@ -1,5 +1,5 @@
 display_name prerequisites_queries
-message_texts prerequisites_queries: $course
+message_texts $course
 intent_types prerequisites
 What classes do I need to take before doing {course code}?
 What are the prerequisites for {course code}?

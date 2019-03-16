@@ -1,26 +1,24 @@
-# from database import psql_execute
+from database.DataBaseManager import DataBaseManager
+from conf.Error import ErrorMessages
 
-class ResponseModule():
+
+class ResponseModule:
     def __init__(self):
-        self.queryMap = {
+        self.data_base_manager = DataBaseManager()
+        self.query_map = {
             'course_outline': self.respond_to_course_outline_queries
         }
 
-    def respond(self, queryType):
-        return self.queryMap[queryType]()
-
+    def respond(self, message):
+        if message['Intent'] not in self.query_map.keys():
+            return ErrorMessages.UNKNOWN_QUERY_TYPE
+        return self.query_map[message['Intent']](message)
 
     def respond_to_course_outline_queries(self, cid):
-        return """
-                A capstone software project. 
-                Students work in teams to define, 
-                implement and evaluate a real-world software system. 
-                Most of the work in this course is team-based project work, 
-                although there are some introductory lectures on software project management and teamwork strategies. 
-                Project teams meet fortnightly with project mentors to report on the progress of the project. 
-                Assessment is based on a project proposal, 
-                a final project demonstration and report, 
-                and on the quality of the software system 
-                for more details, goto outline {url}
-                """
+        response = self.data_base_manager.get_course_outline(cid)
+        # TODO: format result
+        return response
 
+
+if __name__ == '__main__':
+    response_module = ResponseModule()

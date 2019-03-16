@@ -1,5 +1,5 @@
 display_name offering_term_queries
-message_texts offering_term_queries: $course
+message_texts $course
 intent_types offering_term
 Which semester is {course code} offered in?
 Is {course code} offered in semester 1?

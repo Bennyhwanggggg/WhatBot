@@ -20,37 +20,34 @@ class QueryModule():
         self.session = self.session_client.session_path(project_id, session_id)
         print('Session path: {}\n'.format(self.session))
 
-    def detect_intent_texts(self, texts, language_code='en'):
+    def detect_intent_texts(self, text, language_code='en'):
         """Returns the result of detect intent with texts as inputs.
 
         Using the same `session_id` between requests allows continuation
         of the conversation.
-        :param texts: list of messages
-        :type list
+        :param texts: message
+        :type str
         :param language_code: the language code of the language
         :type: str
         """
 
-        for text in texts:
-            text_input = dialogflow.types.TextInput(
-                text=text, language_code=language_code)
+        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
 
-            query_input = dialogflow.types.QueryInput(text=text_input)
+        query_input = dialogflow.types.QueryInput(text=text_input)
 
-            response = self.session_client.detect_intent(
-                session=self.session, query_input=query_input)
+        response = self.session_client.detect_intent(session=self.session, query_input=query_input)
 
-            print('=' * 20)
-            print('Query text: {}'.format(response.query_result.query_text))
-            print('Detected intent: {} (confidence: {})\n'.format(
-                response.query_result.intent.display_name,
-                response.query_result.intent_detection_confidence))
-            print('Fulfillment text: {}\n'.format(
-                response.query_result.fulfillment_text))
+        print('=' * 20)
+        print('Query text: {}'.format(response.query_result.query_text))
+        print('Detected intent: {} (confidence: {})\n'.format(
+            response.query_result.intent.display_name,
+            response.query_result.intent_detection_confidence))
+        print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
-            return response.query_result.fulfillment_text
+        return {'Intent': response.query_result.intent.display_name,
+                'response': response.query_result.fulfillment_text}
 
 
 if __name__ == '__main__':
     query_module = QueryModule()
-    query_module.detect_intent_texts(['Can I have the outline for COMP9900?'])
+    query_module.detect_intent_texts('this should fial')
