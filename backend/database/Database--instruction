@@ -23,3 +23,8 @@ INSERT INTO Appointment (sid, tid, starttime, endtime) VALUES ('z5137895', 1, '2
 Update:
 
 UPDATE Timeslot SET available = False WHERE tid = 1 ;
+
+
+Delete:
+
+delete from course_list where course_code like '%COMP9900';
