@@ -30,11 +30,8 @@ class QueryModule():
         :param language_code: the language code of the language
         :type: str
         """
-
         text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
-
         query_input = dialogflow.types.QueryInput(text=text_input)
-
         response = self.session_client.detect_intent(session=self.session, query_input=query_input)
 
         print('=' * 20)
