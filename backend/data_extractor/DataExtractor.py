@@ -47,6 +47,8 @@ class DataExtractor:
             writer.writerows(self.details.items())
 
 
+
+
 if __name__ == '__main__':
     data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
     data_extractor.extract()

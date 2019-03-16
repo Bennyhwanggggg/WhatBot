@@ -1,6 +1,36 @@
 #!/usr/bin/python
 import psycopg2
 
+def get_data(query):
+    try:
+        connection = psycopg2.connect(
+            database="Master9900",
+            user="master9900",
+            password="12345678",
+            host="master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com",
+            port='5432'
+        )
+        cursor = connection.cursor()
+        print("query:", query)
+        cursor.execute(query)
+        result=cursor.fetchall()
+    except (Exception, psycopg2.Error) as error :
+        print ("Error while connecting to PostgreSQL", error)
+    finally:
+        #closing database connection.
+            if(connection):
+                cursor.close()
+                connection.close()
+                print("PostgreSQL connection is closed")
+    return result
+
+def get_course_outline(cid):
+    key_part = '%' + cid
+    # "SELECT * from course_list where course_code like '%COMP9900'"
+    query = "SELECT description,outline_url from info_handbook where CID like '%s'"%key_part
+    print("query: ", query)
+    return get_data(query)
+
 # select the data from lecturer table
 def connect_lecturer():
     try:
@@ -53,16 +83,19 @@ def set_time_avail(tid):
     return result
 
 #add data into course list table
-def add_courselist(Course_code, Course_name, Timetable, ADK, Comment):
+def add_courselist(course_code, course_name, timetable, ADK, comment):
     try:
-        connection = psycopg2.connect(user = "",
-                                  password = "",
-                                  host = "127.0.0.1",
+        connection = psycopg2.connect(user = "Master9900",
+                                  password = "12345678",
+                                  host = "master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com",
                                   port = "5432",
-                                  database = "handbook")
+                                  database = "Master9900")
+        print("23434")
+        print(connection)
+        print("lllaaaa")
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO course_list(Course_code, Course_name, Timetable, ADK, Comment) VALUES (%s,%s,%s,%s,%s)",(Course_code, Course_name, Timetable, ADK, Comment))
-       
+        cursor.execute("INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES (%s,%s,%s,%s,%s)",(course_code, course_name, timetable, ADK, comment))
+
         connection.commit()
         print("add data into course_list successfully!!")
         
@@ -128,6 +161,7 @@ def connect_course_list(cid):
 
  
 if __name__ == '__main__':
+    #add_courselist("COMP9321", "Software Service Design and Engineering", "http://timetable.unsw.edu.au/2019/COMP9322.html", "X", "hello")
     result = connect_course_list(cid)
     print("data in course list: ", result)
 #     app.run(debug=True, host='0.0.0.0')
