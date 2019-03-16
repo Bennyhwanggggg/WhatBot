@@ -50,4 +50,4 @@ class QueryModule():
 
 if __name__ == '__main__':
     query_module = QueryModule()
-    query_module.detect_intent_texts('this should fial')
+    query_module.detect_intent_texts('hi')

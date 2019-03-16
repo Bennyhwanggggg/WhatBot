@@ -104,7 +104,7 @@ class QueryModuleTrainer:
         data_file.close()
         display_name, message_texts, intent_types, clean_data = None, [], [], []
         if not data or not data[0]:
-            print('Empty intents data file: {}'.format(data_file))
+            print('Empty intents data file:\n{}\n'.format(data_file))
             return None, [], [], []
         data = deque(data)
         while data:
