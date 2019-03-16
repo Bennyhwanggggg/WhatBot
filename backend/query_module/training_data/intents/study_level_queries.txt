@@ -1,0 +1,16 @@
+display_name study_level_queries
+message_texts study_level_queries: $course
+intent_types study_level
+Is {course code} for undergraduate?
+is {course code} for postgraduate?
+Which study level is {course code}?
+Who can take {course code}?
+Who is {course code} offered to?
+What study level is {course code} offered at?
+Can postgraduate study {course code}?
+Can undergraduate study {course code}?
+Tell me the study level for {course code}
+Give me the study level for {course code}
+{course code} study level
+study level for {course code}
+study level of {course code}

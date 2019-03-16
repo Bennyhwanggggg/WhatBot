@@ -1,0 +1,17 @@
+display_name indicative_hours_queries
+message_texts indicative_hours_queries: $course
+intent_types indicative_hours
+What is the indicative hours for {course code}?
+Tell me the indicative hours for {course code}
+Give me the indicative hours for {course code}
+How many hours are there for {course code}?
+How much time will I spend on {course code}?
+I want to know the indicative hour for {course code}
+{course code} indicative hours
+How long will I spend on {course code}?
+What is the expected work load for {course code}?
+I want to know the work load for {course code}
+How many hours of lectures are there for {course code}?
+How many hours a week are there for {course code}?
+Will I need to spend lots of time on {course code}?
+Give me the work load for {course code}

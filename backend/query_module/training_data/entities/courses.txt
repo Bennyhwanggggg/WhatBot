@@ -1,0 +1,66 @@
+course
+COMP6441@@@Security Engineering and Cyber Security
+COMP9020@@@Foundations of Computer Science
+COMP9021@@@Principles of Programming
+COMP9032@@@Microprocessors and Interfacing
+COMP9311@@@Database Systems
+COMP9414@@@Artificial Intelligence
+COMP9814@@@Extended Artificial Intelligence
+COMP9511@@@Human Computer Interaction
+COMP4418@@@Knowledge Representation and Reasoning
+COMP6451@@@Cryptocurrency and Distributed Ledger Technologies
+COMP6324@@@Internet of Things Service Design and Engineering
+COMP9024@@@Data Structures and Algorithms
+COMP9041@@@Software Construction: Techniques and Tools
+COMP9101@@@Design & Analysis of Algorithms
+COMP9801@@@Extended Design & Analysis of Algorithms
+COMP9222@@@Digital Circuits and Systems
+COMP9321@@@Data Services Engineering
+COMP9322@@@Software Service Design and Engineering
+COMP9331@@@Computer Networks and Applications
+COMP9334@@@System Capacity Planning
+COMP9415@@@Computer Graphics
+COMP9447@@@Security Engineering Workshop
+COMP4141@@@Theory of Computation
+COMP4161@@@Advanced Topics in Software Verification
+COMP6452@@@Software Architecture for Blockchain Applications
+COMP6714@@@Information Retrieval and Web Search
+COMP6721@@@InFormal Methods: The Lost Art
+COMP6733@@@Internet of Things Experimental Design Studio
+COMP6752@@@Modelling Concurrent Systems
+COMP6771@@@Advanced C++ Programming
+COMP6841@@@Extended Security Engineering and Cyber Security
+COMP9102@@@Programming Languages and Compilers
+COMP9151@@@Foundations of Concurrency
+COMP9161@@@Concepts of Programming Languages
+COMP9153@@@Algorithmic Verification
+COMP9201@@@Operating Systems
+COMP9283@@@Extended Operating Systems
+COMP9211@@@Computer Architecture
+COMP9313@@@Big Data Management
+COMP9315@@@Database Systems Implementation
+COMP9318@@@Data Warehousing and Data Mining
+COMP9319@@@Web Data Compression and Search
+COMP9332@@@Network Routing and Switching
+COMP9333@@@Advanced Computer Networks
+COMP9336@@@Mobile Data Networking
+COMP9337@@@Securing Wireless Networks
+COMP9417@@@Machine Learning and Data Mining
+COMP9431@@@Robotic Software Architecture
+COMP9444@@@Neural Networks
+COMP9517@@@Computer Vision
+COMP4121@@@Advanced and Parallel Algorithms
+COMP6443@@@Web Application Security Testing
+COMP6445@@@Digital Forensics
+COMP6447@@@System and Software Security Assessment
+COMP6448@@@Security Engineering Masterclass
+COMP6741@@@Parameterized and Exact Computation
+COMP6843@@@Extended Web Application Security and Testing
+COMP6845@@@Extended Digital Forensics and Incident Response
+COMP9242@@@Advanced Operating Systems
+COMP9243@@@Distributed Systems
+COMP9323@@@Software as a Service Project
+COMP9418@@@Advanced Topics in Statistical Machine Learning
+COMP9596@@@Research Project
+COMP9900@@@Information Technology Project
+COMP9945@@@Research Project

@@ -1,0 +1,18 @@
+display_name course_outline_queries
+message_texts course_outline_queries: $course
+intent_types course_outline
+What is {course code} about?
+Tell me more about {course code}
+What can I learn in {course code}
+Description of {course code}
+Course outline for {course code}
+Give me the course outline of {course code}
+Give me a description of {course code}
+I want to know what {course code} is about
+Describe {course code} for me
+I want to see the course outline for {course code}
+Show me the course outline for {course code}
+I want the outline for {course code}
+Give me the outline for {course code}
+{course code} outline
+{course code} course outline

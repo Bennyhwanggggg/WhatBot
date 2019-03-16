@@ -1,3 +1,6 @@
+display_name course_fee_queries
+message_texts course_fee_queries: $course
+intent_types course_fee
 How much does {course code} cost?
 How much does {course code} cost to do?
 What is the cost of {course code}?
@@ -11,3 +14,4 @@ Give me the course fee for {course code}
 I want to know the course fee for {course code}
 Tell me the cost for {course code}
 Do I need to pay for {course code}?
+{course code} fees

@@ -1,0 +1,12 @@
+display_name course_location_queries
+message_texts course_location_queries: $course
+intent_types course_location
+Where is {course code} offered at?
+Which campus is {course code} going to be in?
+Which campus is {course code} gonna be in?
+Which campus do I go to for {course code}?
+Where do I go to for {course code}?
+What is the campus for {course code}?
+Tell me the campus where {course code} will be held in
+I want to know the campus for {course code}
+{course code} location

@@ -1,0 +1,15 @@
+display_name offering_term_queries
+message_texts offering_term_queries: $course
+intent_types offering_term
+Which semester is {course code} offered in?
+Is {course code} offered in semester 1?
+Is {course code} offered in semester 2?
+Is {course code} offered in semester 3?
+When can I take {course code}?
+When can I do {course code}?
+Tell me when is {course code} offered?
+Tell me which semesters are {course code} offered in?
+Give me the semester offering information about {course code}
+I want to know when {course code} is offered
+When is {course code} offered?
+offering term {course code}

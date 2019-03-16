@@ -1,0 +1,20 @@
+display_name prerequisites_queries
+message_texts prerequisites_queries: $course
+intent_types prerequisites
+What classes do I need to take before doing {course code}?
+What are the prerequisites for {course code}?
+What courses do I need to take before doing {course code}?
+Give me the prerequisites for {course code}.
+Are there any courses I need to do before doing {course code}?
+Are there any prerequisites for {course code}?
+What is the condition for enrolment for {course code}?
+Are there any condition for enrolment for {course code}?
+Tell me the prerequisites for {course code}
+What courses do I need to take to be eligible for {course code}?
+What courses do I need to take to do {course code}?
+Are there any classes I need to take before doing {course code}?
+I want to know what classes I need to take before doing {course code}
+I want to know what courses I need to take before doing {course code}
+What are the requirements for {course code}?
+What are the requirements to do {course code}?
+{course code} prerequisites
