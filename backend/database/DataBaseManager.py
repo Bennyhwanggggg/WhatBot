@@ -6,7 +6,7 @@ PASSWORD='12345678'
 DATABASE = "Master9900"
 PORT = '5432'
 
-# TODO: Make this a super class and separate into knowledgebase and query result database?
+
 class DataBaseManager:
     def __init__(self, host=HOST, port=PORT, database_name=DATABASE):
         self.host, self.port, self.database_name = host, port, database_name
