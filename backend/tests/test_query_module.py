@@ -4,7 +4,7 @@ import time
 TIME_BETWEEN_API = 2
 
 
-def test_query_module_clean_message():
+def test_clean_message():
     query_module = QueryModule()
     test_messages = ['COMP9900?',
                      'Comp9?900?',
@@ -21,7 +21,7 @@ def test_query_module_clean_message():
         assert result.upper() == 'COMP9900'
 
 
-def test_query_module_course_outline_queries():
+def test_course_outline_queries():
     query_module = QueryModule()
     test_messages = ['What is the outline for COMP9900?',
                      'What is COMP9900 about?',
@@ -37,7 +37,7 @@ def test_query_module_course_outline_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_query_module_send_outline_queries():
+def test_send_outline_queries():
     query_module = QueryModule()
     test_messages = ['Can I have the outline for COMP9331?',
                      'Email me the outline for COMP9331',
@@ -53,7 +53,7 @@ def test_query_module_send_outline_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_query_module_offering_term_queries():
+def test_offering_term_queries():
     query_module = QueryModule()
     test_messages = ['When is COMP9101 offered?',
                      'When can I take COMP9101',
@@ -69,7 +69,7 @@ def test_query_module_offering_term_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_query_module_course_location_queries():
+def test_course_location_queries():
     query_module = QueryModule()
     test_messages = ['Where is COMP9321?',
                      'Where is COMP9321 at?',
@@ -85,7 +85,7 @@ def test_query_module_course_location_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_query_module_course_fee_queries():
+def test_course_fee_queries():
     query_module = QueryModule()
     test_messages = ['How much is COMP9318?',
                      'Cost of COMP9318??',
@@ -98,5 +98,29 @@ def test_query_module_course_fee_queries():
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'course_fee_queries'
         assert result.message.upper() == 'COMP9318'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_consultation_booking_command():
+    query_module = QueryModule()
+    test_messages = ['Show me the available time slot on 06/09/19 18:13 for COMP9334',
+                     'May I book the time slot starts from 06/09/19 18:13 for COMP9334?',
+                     'May I book the time slot starts from 18:13 on 06/09/19 for COMP9334?',
+                     'Show me the available time slot on 06/09/19 at 18:13 for COMP9334',
+                     'Reserve the time slot starts from 06/09/19 18:13 for COMP9334',
+                     'Book an consultation for COMP9334 on 06/09/19 at 18:13',
+                     'Make an consultation booking for COMP9334 on 06/09/19 at 18:13',
+                     'Make an consultation booking on 06/09/19 at 18:13 for COMP9334',
+                     'Make an consultation booking for COMP9334 on 06/09/19 at 18:13',
+                     'May I book the time slot starts from 06/09/2019 18:13 for COMP9334?',
+                     'Book an consultation for COMP9334 on 06/09/2019 at 18:13',
+                     'May I book an consultation for COMP9334 at 06/09/2019 18:13',
+                     'May I book an consultation for COMP9334 from 06/09/2019 18:13',
+                     'May I book an consultation for COMP9334 on 06/09/2019 at 18:13',
+                     'Reserve an course consultation for COmp9334 on 06/09/2019 at 18:13']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'consultation_booking'
+        assert result.message.upper() == 'COMP9334 @@@ 18:13:00 @@@ 2019-09-06'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
