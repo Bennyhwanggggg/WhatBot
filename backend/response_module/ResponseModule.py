@@ -1,5 +1,5 @@
 from database.DataBaseManager import DataBaseManager
-from conf.Error import ErrorMessages
+from conf.Error import QueryError
 
 
 class ResponseModule:
@@ -29,12 +29,11 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        if message['Intent'] not in self.query_map.keys():
-            return ErrorMessages.UNKNOWN_QUERY_TYPE
-        elif message['Intent'] == 'Default Welcome Intent' or \
-            message['Intent'] == 'Default Fallback Intent':
-            return message['response']
-        return self.query_map[message['Intent']](message['response'])
+        if message.intent not in self.query_map.keys():
+            return QueryError.UNKNOWN_QUERY_TYPE
+        elif message.intent == 'Default Welcome Intent' or message.intent == 'Default Fallback Intent':
+            return message.message
+        return self.query_map[message.intent](message.message)
 
     def respond_to_course_outline_queries(self, cid):
         response = self.data_base_manager.get_course_outline(cid)

@@ -1,6 +1,8 @@
+import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
-import os
+from conf.Response import IntentResponse
+
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -41,8 +43,8 @@ class QueryModule():
             response.query_result.intent_detection_confidence))
         print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
-        return {'Intent': response.query_result.intent.display_name,
-                'response': response.query_result.fulfillment_text}
+        return IntentResponse(intent=response.query_result.intent.display_name,
+                              message=response.query_result.fulfillment_text)
 
 
 if __name__ == '__main__':
