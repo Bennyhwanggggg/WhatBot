@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 class DataExtractor:
     def __init__(self, study_level, course):
-    	self.study_level = study_level
-    	self.course = course
+        self.study_level = study_level
+        self.course = course
         self.details = dict()
 
 
