@@ -1,0 +1,9 @@
+display_name consultation_booking
+message_texts $course @@@ $time @@@ $date
+intent_types consultation_booking
+Show me the available time slot on {time} for {course code}
+May I book the time slot starts from {time} for {course code}
+Reserve the time slot starts from {time} for {course code}
+Book the time slot starts from {time} for {course code}
+May I cancel the time slot on {time} for {course code}
+Make an consultation booking for {course code} on {time}

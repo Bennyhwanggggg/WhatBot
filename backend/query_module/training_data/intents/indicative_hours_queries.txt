@@ -1,5 +1,5 @@
 display_name indicative_hours_queries
-message_texts indicative_hours_queries: $course
+message_texts $course
 intent_types indicative_hours
 What is the indicative hours for {course code}?
 Tell me the indicative hours for {course code}

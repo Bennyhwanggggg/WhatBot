@@ -18,10 +18,11 @@ import dialogflow_v2 as dialogflow
 import os
 import re
 import random
+import datetime
 
+PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
 GOOGLE_APPLICATION_CREDENTIALS = 'whatbot-v1-7a84dc8485c1.json'
-PATH = os.path.dirname(os.path.realpath(__file__))
 
 
 class QueryModuleTrainer:
@@ -52,7 +53,9 @@ class QueryModuleTrainer:
         self.entity_types_parent = self.entity_types_client.project_agent_path(project_id)
 
         self.data_map = {
-            'course code': self._get_training_course_codes
+            'course code': self._get_training_course_codes,
+            'time': self._set_training_time,
+            'date': self._set_training_time
         }
 
         # the information regarding this map should match what is on DialogFlow setup
@@ -65,13 +68,20 @@ class QueryModuleTrainer:
             'offering_term': {'parse_key': ['course code']},
             'course_location': {'parse_key': ['course code']},
             'indicative_hours': {'parse_key': ['course code']},
-            'send_outline': {'parse_key': ['course code']}
+            'send_outline': {'parse_key': ['course code']},
+            'consultation_booking': {'parse_key': ['course code', 'time', 'date']}
         }
 
         self.entity_map = {
             'course code': {'regex': re.compile('^COMP\d{4}', re.IGNORECASE),
                             'entity_type': '@course',
-                            'alias': 'course'}
+                            'alias': 'course'},
+            'date': {'regex': re.compile('\d{1,4}\/\d{1,2}\/\d{1,4}'),
+                     'entity_type': '@sys.date',
+                     'alias': 'date'},
+            'time': {'regex': re.compile('\d{1,2}:\d{1,2}|\d(pm|am)'),
+                     'entity_type': '@sys.time',
+                     'alias': 'time'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
@@ -104,7 +114,7 @@ class QueryModuleTrainer:
         data_file.close()
         display_name, message_texts, intent_types, clean_data = None, [], [], []
         if not data or not data[0]:
-            print('Empty intents data file: {}'.format(data_file))
+            print('Empty intents data file:\n{}\n'.format(data_file))
             return None, [], [], []
         data = deque(data)
         while data:
@@ -125,6 +135,16 @@ class QueryModuleTrainer:
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
 
+    def _set_training_time(self, size):
+        def random_date(start, l):
+            current = start
+            for i in range(l):
+                curr = current + datetime.timedelta(days=random.randrange(200),
+                                                    hours=random.randrange(24),
+                                                    minutes=random.randrange(60))
+                yield curr
+        return [x.strftime("%d/%m/%y %H:%M") for x in random_date(datetime.datetime.now(), size)]
+
     def parse_data(self, data, types):
         """ Randomize the data with different entity types. Like changing the course
         codes for the training data. It will randomize the contents inside the training
@@ -142,14 +162,16 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
-        new_data = []
+        size = 15//len(types) + 1
         for type in types:
             sub_string = '{%s}' % type
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
+            new_data = []
             for line in data:
-                samples = self.data_map[type](15)
+                samples = self.data_map[type](size)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
-        return new_data
+            data = new_data
+        return data
 
     def create_intent(self, display_name, training_data, message_texts, intent_types, data_is_parsed=False):
         """ Method for creating an intent. However, if the display_name already exist
@@ -188,7 +210,7 @@ class QueryModuleTrainer:
         for training_phrases_part in training_phrases_parts:
             parts = []
             for word in training_phrases_part.split():
-                is_entity = False
+                is_entity, part = False, None
                 for training_data_entities_parse_key in training_data_entities_parse_keys:
                     entity = self.entity_map[training_data_entities_parse_key]
                     regex, entity_type, alias = entity['regex'], entity['entity_type'], entity['alias']
@@ -306,7 +328,7 @@ class QueryModuleTrainer:
         :type list
         :return: None
         """
-        entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP')
+        entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP', auto_expansion_mode=True)
         response = self.entity_types_client.create_entity_type(self.entity_types_parent, entity_type)
         print('Entity type created: \n{}'.format(response))
         entity_type_ids = self._get_entity_ids(display_name)
@@ -377,8 +399,7 @@ if __name__ == '__main__':
     parser.add_argument("--retrain_all", default=False,
                         help="Retrain Dialogflow agent completely by retraining the entities first then the intents")
 
-    # By default, we only train intents.
-    parser.add_argument("--retrain_intents", default=True,
+    parser.add_argument("--retrain_intents", default=False,
                         help="Retrain all of Dialogflow agent's intents")
 
     parser.add_argument("--retrain_entities", default=False,
@@ -394,3 +415,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_intents()
     elif args.retrain_entities:
         query_module_trainer.retrain_entities()
+    else:
+        # For development use
+        display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
+        query_module_trainer.create_intent(display_name=display_name, message_texts=message_texts, intent_types=intent_types, training_data=data, data_is_parsed=True)

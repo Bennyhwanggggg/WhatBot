@@ -1,5 +1,5 @@
 display_name school_and_faculty_queries
-message_texts school_and_faculty_queries: $course
+message_texts $course
 intent_types school_and_faculty
 Which school runs {course code}?
 Which faculty runs {course code}?
