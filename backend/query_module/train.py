@@ -7,7 +7,7 @@
         To train just intents: python3 train.py --retrain_intents True
         To train just entities: python3 train.py --retrain_entities True
 
-        If no arguments is passed in, --retrain_intents is used
+        If no arguments is passed in, development purpose code is used
 
     Note: If just training entities and an entity being trained is currently being used
           by another intent, Dialogflow will throw an error, so make sure you delete that
