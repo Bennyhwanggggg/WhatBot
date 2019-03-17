@@ -18,6 +18,7 @@ import dialogflow_v2 as dialogflow
 import os
 import re
 import random
+import datetime
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -52,7 +53,8 @@ class QueryModuleTrainer:
         self.entity_types_parent = self.entity_types_client.project_agent_path(project_id)
 
         self.data_map = {
-            'course code': self._get_training_course_codes
+            'course code': self._get_training_course_codes,
+            'time': self._set_training_time
         }
 
         # the information regarding this map should match what is on DialogFlow setup
@@ -124,6 +126,16 @@ class QueryModuleTrainer:
 
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
+
+    def _set_training_time(self, size):
+        def random_date(start, l):
+            current = start
+            for i in range(l):
+                curr = current + datetime.timedelta(days=random.randrange(200),
+                                                    hours=random.randrange(24),
+                                                    minutes=random.randrange(60))
+                yield curr
+        return [x.strftime("%d/%m/%y %H:%M") for x in random_date(datetime.datetime.now(), size)]
 
     def parse_data(self, data, types):
         """ Randomize the data with different entity types. Like changing the course
@@ -377,8 +389,7 @@ if __name__ == '__main__':
     parser.add_argument("--retrain_all", default=False,
                         help="Retrain Dialogflow agent completely by retraining the entities first then the intents")
 
-    # By default, we only train intents.
-    parser.add_argument("--retrain_intents", default=True,
+    parser.add_argument("--retrain_intents", default=False,
                         help="Retrain all of Dialogflow agent's intents")
 
     parser.add_argument("--retrain_entities", default=False,
@@ -394,3 +405,9 @@ if __name__ == '__main__':
         query_module_trainer.retrain_intents()
     elif args.retrain_entities:
         query_module_trainer.retrain_entities()
+    else:
+        # For development use
+        print(query_module_trainer._set_training_time(10))
+        # display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
+        # res = query_module_trainer.parse_data(data, ['course code', 'time'])
+        # print(res)
