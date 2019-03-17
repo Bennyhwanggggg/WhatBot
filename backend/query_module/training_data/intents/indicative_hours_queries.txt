@@ -15,3 +15,7 @@ How many hours of lectures are there for {course code}?
 How many hours a week are there for {course code}?
 Will I need to spend lots of time on {course code}?
 Give me the work load for {course code}
+Expected work load for {course code}
+Expected wordload for {course code}
+{course code}'s work load
+{course code}'s workload

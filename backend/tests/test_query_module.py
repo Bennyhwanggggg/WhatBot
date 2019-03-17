@@ -124,3 +124,19 @@ def test_consultation_booking_command():
         assert result.message.upper() == 'COMP9334 @@@ 18:13:00 @@@ 2019-09-06'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
+
+def test_indicative_hours_queries():
+    query_module = QueryModule()
+    test_messages = ['How long will I spend on COMP9517?',
+                     'Indicative hour for COMP9517??',
+                     'Work load for COMP9517??',
+                     'Number of hours for COMP9517',
+                     'Expected workload for COMP9517',
+                     'Give me the indicative hours for COMP9517',
+                     'How many hours a week for COMP9517']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'indicative_hours_queries'
+        assert result.message.upper() == 'COMP9517'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
