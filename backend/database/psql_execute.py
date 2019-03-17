@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import psycopg2
 
 def get_data(query):
