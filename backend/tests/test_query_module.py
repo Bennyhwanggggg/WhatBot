@@ -10,9 +10,13 @@ def test_query_module_clean_message():
                      'Comp9900??',
                      'COmp9900!!!!',
                      'Comp~!9+900?',
-                     '>COMP9900?[<']
+                     '>COMP9900?[<',
+                     "comp9900's",
+                     "comp9900's's",
+                     "COMP9900''s"]
     for test_message in test_messages:
         result = query_module.clean_message(test_message)
+        print(test_message.upper(), result.upper())
         assert result.upper() == 'COMP9900'
 
 

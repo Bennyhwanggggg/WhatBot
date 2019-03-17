@@ -2,7 +2,6 @@ import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
 from conf.Response import IntentResponse
-import string
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -11,7 +10,7 @@ GOOGLE_APPLICATION_CREDENTIALS = 'whatbot-v1-7a84dc8485c1.json'
 GOOGLE_APPLICATION_CREDENTIALS_PATH = os.path.join(PATH, GOOGLE_APPLICATION_CREDENTIALS)
 
 
-class QueryModule():
+class QueryModule:
     def __init__(self, project_id=DIALOGFLOW_PROJECT_ID,
                  session_id=uuid4(),
                  credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
@@ -48,7 +47,8 @@ class QueryModule():
                               message=self.clean_message(response.query_result.fulfillment_text))
 
     def clean_message(self, message):
-        translator = str.maketrans('', '', '#!?()[]{}=+`~$%&*,.\|><')
+        message = message.replace("'s", '')
+        translator = str.maketrans('', '', "#!?()[]{}=+`~$%&*,.'\\|><")
         message = message.translate(translator)
         return message
 
