@@ -1,5 +1,5 @@
 display_name study_level_queries
-message_texts study_level_queries: $course
+message_texts $course
 intent_types study_level
 Is {course code} for undergraduate?
 is {course code} for postgraduate?

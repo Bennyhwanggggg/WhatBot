@@ -1,8 +1,11 @@
 display_name send_outline_queries
-message_texts send_outline_queries: $course
+message_texts $course
 intent_types send_outline
 Send me the course outline for {course code}
 Email me the course outline for {course code}
 Can I have the course outline for {course code}?
 Send me the pdf of course outline for {course code}
 Provide me the course outline's pdf for {course code}
+Send me {course code}'s course outline pdf
+Send me {course code}'s course outline
+Provide me the course outline for {course code} thanks

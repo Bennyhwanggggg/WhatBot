@@ -2,39 +2,19 @@ from flask import (Flask, request, abort, jsonify)
 from flask_cors import CORS
 from datetime import datetime
 import uuid
-from query_module import QueryModule
-from response_module import ResponseModule
+from query_module.QueryModule import QueryModule
+from response_module.ResponseModule import ResponseModule
 
-query_module = QueryModule.QueryModule()
-response_module = ResponseModule.ResponseModule()
+query_module = QueryModule()
+response_module = ResponseModule()
 
 app = Flask(__name__)
 CORS(app)
 
-users = []
-# holds message ids in order
-chat = []
-messages = dict()
-
-
-def process_dialogFlow_reply(message):
-    try:
-        message_type, entity = message.split(':')
-        response_module.respond(message_type)
-    except:
-        return message
-
 
 @app.route('/login', methods=["post"])
 def login():
-    #if you do not pass username, then the default will be None
-    username = request.json.get('username', None)
-    if username is None or username not in users:
-        abort(401)
-    else:
-        users.append(username)
-        print(users)
-        return jsonify({'status': 'OK', 'message': 'Successfully logged in'})
+    pass
 
 
 @app.route('/message', methods=["post"])
@@ -44,53 +24,15 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
 
-    reply = query_module.detect_intent_texts([message])
-    reply = process_dialogFlow_reply(reply)
-
+    dialog_flow_result = query_module.detect_intent_texts(message)
+    return_message = response_module.respond(dialog_flow_result)
 
     response = {
-        # 'username': username,
-        'message': reply,
+        'message': return_message,
         'timestamp': datetime.now(),
         'id': id
     }
-
-    chat.append(id)
-    return jsonify(response)
-
-
-@app.route('/get/<last_id>', methods = ["GET"])
-def get(last_id):
-    if chat is None or len(chat) == 0:
-        return []
-    index = get_next_index(last_id) if last_id else 0
-    print(index)
-
-    ids_to_return = chat[index:]
-    print(ids_to_return)
-    results = map(lambda x: messages[x], ids_to_return)
-    print(results)
-    return jsonify(list(results))
-
-
-@app.route('/updates/<last_id>', methods = ["GET"])
-def updates(last_id):
-    index = get_next_index(last_id) if last_id else 0
-
-    result = {
-        'new_messages': False
-    }
-
-    if index < len(chat):
-        result['new_messages'] = True
-    return jsonify(result)
-
-
-def get_next_index(last_id):
-    try:
-        return chat.index(last_id) + 1
-    except ValueError as e:
-        abort(400)
+    return jsonify(response), 200
 
 
 if __name__ == '__main__':
