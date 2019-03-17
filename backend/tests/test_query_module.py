@@ -1,6 +1,8 @@
 from query_module.QueryModule import QueryModule
 import time
 
+TIME_BETWEEN_API = 2
+
 
 def test_query_module_clean_message():
     query_module = QueryModule()
@@ -16,7 +18,6 @@ def test_query_module_clean_message():
                      "COMP9900''s"]
     for test_message in test_messages:
         result = query_module.clean_message(test_message)
-        print(test_message.upper(), result.upper())
         assert result.upper() == 'COMP9900'
 
 
@@ -33,7 +34,7 @@ def test_query_module_course_outline_queries():
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'course_outline_queries'
         assert result.message.upper() == 'COMP9900'
-        time.sleep(3)  # set gap so Google API doesn't get overloaded
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
 def test_query_module_send_outline_queries():
@@ -49,6 +50,23 @@ def test_query_module_send_outline_queries():
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'send_outline_queries'
         assert result.message.upper() == 'COMP9331'
-        time.sleep(3)  # set gap so Google API doesn't get overloaded
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
+def test_query_module_offering_term_queries():
+    query_module = QueryModule()
+    test_messages = ['When is COMP9101 offered?',
+                     'When can I take COMP9101',
+                     "What are COMP9101's offering term",
+                     'Which semester can I take comp9101?',
+                     'Which semester is comp9101 offered in',
+                     'Can I take COMP9101 in semester 1?',
+                     'When Can I enroll in COMP9101?']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'offering_term_queries'
+        assert result.message.upper() == 'COMP9101'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+# def test_query_module_offering_term_queries():
