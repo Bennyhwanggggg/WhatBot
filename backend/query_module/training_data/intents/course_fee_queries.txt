@@ -7,6 +7,9 @@ What is the cost of {course code}?
 Cost of {course code}
 Cost of {course code}?
 Cost of {course code}??
+The cost of {course code}??
+The cost of {course code}?
+The cost of {course code}
 How expensive is {course code}?
 How much do I need to pay for {course code}?
 What is the cost of doing {course code}?

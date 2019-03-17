@@ -7,3 +7,4 @@ Reserve the time slot starts from {time} for {course code}
 Book the time slot starts from {time} for {course code}
 May I cancel the time slot on {time} for {course code}
 Make an consultation booking for {course code} on {time}
+May I book the time slot starts from {time} on {date} for COMP9334?

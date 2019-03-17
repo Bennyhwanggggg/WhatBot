@@ -1,7 +1,7 @@
 from query_module.QueryModule import QueryModule
 import time
 
-TIME_BETWEEN_API = 2
+TIME_BETWEEN_API = 1
 
 
 def test_clean_message():
@@ -101,7 +101,7 @@ def test_course_fee_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_consultation_booking_command():
+def test_consultation_booking_command_1():
     query_module = QueryModule()
     test_messages = ['Show me the available time slot on 06/09/19 18:13 for COMP9334',
                      'May I book the time slot starts from 06/09/19 18:13 for COMP9334?',
@@ -125,6 +125,54 @@ def test_consultation_booking_command():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
+def test_consultation_booking_command_2():
+    query_module = QueryModule()
+    test_messages = ['Show me the available time slot on 11/11/19 06:13 for COMP9334',
+                     'May I book the time slot starts from 11/11/19 06:13 for COMP9334?',
+                     'May I book the time slot starts from 06:13 on 11/11/19 for COMP9334?',
+                     'Show me the available time slot on 11/11/2019 at 06:13 for COMP9334',
+                     'Reserve the time slot starts from 2019/11/11 6:13 for COMP9334',
+                     'Book an consultation for COMP9334 on 11/11/2019 at 6:13',
+                     'Make an consultation booking for COMP9334 on 11/11/19 at 6:13',
+                     'Make an consultation booking on 2019/11/11 at 6:13 for COMP9334',
+                     'Make an consultation booking for COMP9334 on 11/11/19 at 6:13',
+                     'May I book the time slot starts from 11/11/2019 6:13 for COMP9334?',
+                     'Book an consultation for COMP9334 on 11/11/2019 at 6:13',
+                     'May I book an consultation for COMP9334 at 11/11/2019 6:13',
+                     'May I book an consultation for COMP9334 from 11/11/2019 6:13',
+                     'May I book an consultation for COMP9334 on 2019/11/11 at 6:13',
+                     'Reserve an course consultation for COmp9334 on 11/11/2019 at 6:13']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'consultation_booking'
+        assert result.message.upper() == 'COMP9334 @@@ 06:13:00 @@@ 2019-11-11'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_consultation_booking_command_3():
+    query_module = QueryModule()
+    test_messages = ['Show me the available time slot on 1/11/19 06:13 for COMP9334',
+                     'May I book the time slot starts from 1/11/19 06:13 for COMP9334?',
+                     'May I book the time slot starts from 06:13 on 1/11/19 for COMP9334?',
+                     'Show me the available time slot on 1/11/2019 at 06:13 for COMP9334',
+                     'Reserve the time slot starts from 2019/11/1 6:13 for COMP9334',
+                     'Book an consultation for COMP9334 on 1/11/2019 at 6:13',
+                     'Make an consultation booking for COMP9334 on 1/11/19 at 6:13',
+                     'Make an consultation booking on 2019/11/1 at 6:13 for COMP9334',
+                     'Make an consultation booking for COMP9334 on 1/11/19 at 6:13',
+                     'May I book the time slot starts from 1/11/2019 6:13 for COMP9334?',
+                     'Book an consultation for COMP9334 on 1/11/2019 at 6:13',
+                     'May I book an consultation for COMP9334 at 1/11/2019 6:13',
+                     'May I book an consultation for COMP9334 from 1/11/2019 6:13',
+                     'May I book an consultation for COMP9334 on 2019/11/1 at 6:13',
+                     'Reserve an course consultation for COmp9334 on 1/11/2019 at 6:13']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'consultation_booking'
+        assert result.message.upper() == 'COMP9334 @@@ 06:13:00 @@@ 2019-11-01'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
 def test_indicative_hours_queries():
     query_module = QueryModule()
     test_messages = ['How long will I spend on COMP9517?',
@@ -140,3 +188,22 @@ def test_indicative_hours_queries():
         assert result.message.upper() == 'COMP9517'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
+
+def test_prerequisites_queries():
+    query_module = QueryModule()
+    test_messages = ['Prerequisites for COMP9444',
+                     'Prerequisites for COMP9444??',
+                     'What courses do I need to take before COMP9444??',
+                     "COMP9444's prerequisites",
+                     'What are the prerequisites for COMP9444',
+                     'Requirements for COMP9444',
+                     "COMP9444's requirements",
+                     'Are there any classes I need to take before doing COMP9444?',
+                     'Give me the prerequisites for COMP9444',
+                     'What are the prerequisites for COMP9444??',
+                     'What are the requirements for COMP9444??']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'prerequisites_queries'
+        assert result.message.upper() == 'COMP9444'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
