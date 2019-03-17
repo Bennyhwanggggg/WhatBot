@@ -7,6 +7,17 @@
         To train just intents: python3 train.py --retrain_intents True
         To train just entities: python3 train.py --retrain_entities True
 
+        To train a single intent:
+            display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data({Path to training data})
+            query_module_trainer.create_intent(display_name=display_name, message_texts=message_texts,
+                                              intent_types=intent_types, training_data=data, data_is_parsed=True)
+            Note: Will throw an error if entity already exist, so make sure you call query_module_trainer.delete_intent(display_name)
+
+        To train a single entity:
+            display_name, entity_values, synonyms = query_module_trainer.read_entities_data({Path to training data})
+            query_module_trainer.create_entity(self, display_name=display_name, entity_values=entity_values, synonyms=synonyms)
+            Note: Will throw an error if entity already exist, so make sure you call query_module_trainer.delete_entity(display_name)
+
         If no arguments is passed in, development purpose code is used
 
     Note: If just training entities and an entity being trained is currently being used
