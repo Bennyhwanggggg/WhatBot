@@ -1,6 +1,5 @@
 display_name consultation_booking
-message_texts $course
-message_texts $time
+message_texts $course @@@ $time @@@ $date
 intent_types consultation_booking
 Show me the available time slot on {time} for {course code}
 May I book the time slot starts from {time} for {course code}

@@ -54,7 +54,8 @@ class QueryModuleTrainer:
 
         self.data_map = {
             'course code': self._get_training_course_codes,
-            'time': self._set_training_time
+            'time': self._set_training_time,
+            'date': self._set_training_time
         }
 
         # the information regarding this map should match what is on DialogFlow setup
@@ -67,13 +68,20 @@ class QueryModuleTrainer:
             'offering_term': {'parse_key': ['course code']},
             'course_location': {'parse_key': ['course code']},
             'indicative_hours': {'parse_key': ['course code']},
-            'send_outline': {'parse_key': ['course code']}
+            'send_outline': {'parse_key': ['course code']},
+            'consultation_booking': {'parse_key': ['course code', 'time', 'date']}
         }
 
         self.entity_map = {
             'course code': {'regex': re.compile('^COMP\d{4}', re.IGNORECASE),
                             'entity_type': '@course',
-                            'alias': 'course'}
+                            'alias': 'course'},
+            'date': {'regex': re.compile('\d{1,4}\/\d{1,2}\/\d{1,4}'),
+                     'entity_type': '@sys.date',
+                     'alias': 'date'},
+            'time': {'regex': re.compile('\d{1,2}:\d{1,2}|\d(pm|am)'),
+                     'entity_type': '@sys.time',
+                     'alias': 'time'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
@@ -154,12 +162,13 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
+        size = 15//len(types) + 1
         for type in types:
             sub_string = '{%s}' % type
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
             new_data = []
             for line in data:
-                samples = self.data_map[type](15)
+                samples = self.data_map[type](size)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
             data = new_data
         return data
@@ -201,7 +210,7 @@ class QueryModuleTrainer:
         for training_phrases_part in training_phrases_parts:
             parts = []
             for word in training_phrases_part.split():
-                is_entity = False
+                is_entity, part = False, None
                 for training_data_entities_parse_key in training_data_entities_parse_keys:
                     entity = self.entity_map[training_data_entities_parse_key]
                     regex, entity_type, alias = entity['regex'], entity['entity_type'], entity['alias']
@@ -319,7 +328,7 @@ class QueryModuleTrainer:
         :type list
         :return: None
         """
-        entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP')
+        entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP', auto_expansion_mode=True)
         response = self.entity_types_client.create_entity_type(self.entity_types_parent, entity_type)
         print('Entity type created: \n{}'.format(response))
         entity_type_ids = self._get_entity_ids(display_name)
@@ -409,5 +418,4 @@ if __name__ == '__main__':
     else:
         # For development use
         display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
-        res = query_module_trainer.parse_data(data, ['course code', 'time'])
-        print(res)
+        query_module_trainer.create_intent(display_name=display_name, message_texts=message_texts, intent_types=intent_types, training_data=data, data_is_parsed=True)
