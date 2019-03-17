@@ -3,9 +3,9 @@
     in the training_data folder. It can train intents and entities using different
     command line arguments.
     Usage:
-        To train entities and intents: python3 train.py --retrain_all
-        To train just intents: python3 train.py --retrain_intents
-        To train just entities: python3 train.py --retrain_entities
+        To train entities and intents: python3 train.py --retrain_all True
+        To train just intents: python3 train.py --retrain_intents True
+        To train just entities: python3 train.py --retrain_entities True
 
         If no arguments is passed in, --retrain_intents is used
 
@@ -23,10 +23,11 @@ import datetime
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
 GOOGLE_APPLICATION_CREDENTIALS = 'whatbot-v1-7a84dc8485c1.json'
+GOOGLE_APPLICATION_CREDENTIALS_PATH = os.path.join(PATH, GOOGLE_APPLICATION_CREDENTIALS)
 
 
 class QueryModuleTrainer:
-    def __init__(self, project_id, credentials=GOOGLE_APPLICATION_CREDENTIALS):
+    def __init__(self, project_id, credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
         """ Initialise the query module trainer that trains NLP intents on Dialogflow.
         To retrain the whole model, must retrain entities first before intents. Otherwise,
         issue with entities being used will arise.

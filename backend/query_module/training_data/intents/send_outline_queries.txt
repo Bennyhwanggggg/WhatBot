@@ -6,3 +6,6 @@ Email me the course outline for {course code}
 Can I have the course outline for {course code}?
 Send me the pdf of course outline for {course code}
 Provide me the course outline's pdf for {course code}
+Send me {course code}'s course outline pdf
+Send me {course code}'s course outline
+Provide me the course outline for {course code} thanks

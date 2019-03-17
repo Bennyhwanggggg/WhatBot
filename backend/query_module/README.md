@@ -7,15 +7,15 @@ The Dialogflow agent can be trained using the supplied data inside `training_dat
 
 To train an entity:
 ```
-python3 train.py --retrain_entities
+python3 train.py --retrain_entities True
 ```
 To train an intent:
 ```
-python3 train.py --retrain_intents
+python3 train.py --retrain_intents True
 ```
 To train the agent completely:
 ```
-python3 train.py --retrain_all
+python3 train.py --retrain_all True
 ```
 
 Note: If just training entities and an entity being trained is currently being used by another intent, Dialogflow will throw an error, so make sure you delete that intent first.

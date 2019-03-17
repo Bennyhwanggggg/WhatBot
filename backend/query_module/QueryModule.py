@@ -2,6 +2,7 @@ import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
 from conf.Response import IntentResponse
+import string
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -44,7 +45,12 @@ class QueryModule():
         print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
         return IntentResponse(intent=response.query_result.intent.display_name,
-                              message=response.query_result.fulfillment_text)
+                              message=self.clean_message(response.query_result.fulfillment_text))
+
+    def clean_message(self, message):
+        translator = str.maketrans('', '', '#!?()[]{}=+`~$%&*,.\|><')
+        message = message.translate(translator)
+        return message
 
 
 if __name__ == '__main__':
