@@ -25,7 +25,7 @@ class QueryModule():
 
         Using the same `session_id` between requests allows continuation
         of the conversation.
-        :param texts: message
+        :param text: message
         :type str
         :param language_code: the language code of the language
         :type: str
