@@ -5,6 +5,8 @@ How much does {course code} cost?
 How much does {course code} cost to do?
 What is the cost of {course code}?
 Cost of {course code}
+Cost of {course code}?
+Cost of {course code}??
 How expensive is {course code}?
 How much do I need to pay for {course code}?
 What is the cost of doing {course code}?
@@ -15,3 +17,6 @@ I want to know the course fee for {course code}
 Tell me the cost for {course code}
 Do I need to pay for {course code}?
 {course code} fees
+{course code}'s cost
+{course code}'s fees
+{course code}'s course fees

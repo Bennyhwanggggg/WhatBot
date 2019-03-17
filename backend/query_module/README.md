@@ -1,6 +1,6 @@
 # Query Module
 
-The query module is reponsible for all communication related with Dialogflow. Messages are passed into this module for it to be processed by Dialogflow such that the intent and entites detected will be returned in the response, which will be used by the response module to do further processing.
+The query module is responsible for all communication related with Dialogflow. Messages are passed into this module for it to be processed by Dialogflow such that the intent and entites detected will be returned in the response, which will be used by the response module to do further processing.
 
 ## How to train
 The Dialogflow agent can be trained using the supplied data inside `training_data` folder.
@@ -24,7 +24,7 @@ Note: If just training entities and an entity being trained is currently being u
 #### Intents
 Intents training data should have the following lines:
 `display_name` : The name of the intent
-`message_texts` : How the intent should respond
+`message_texts` : How the intent should respond. If returning multiple entities, each field should be separated by ` @@@ `. e.g `$course @@@ $time`
 `intent_type` : The type of intent. This should match a key in `self.intent_entity_map` and is an indication of what type of entities will be inside the intent.
 The entities inside data themselves should also be wrapped with curly brackets `{}`.
 

@@ -69,4 +69,34 @@ def test_query_module_offering_term_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-# def test_query_module_offering_term_queries():
+def test_query_module_course_location_queries():
+    query_module = QueryModule()
+    test_messages = ['Where is COMP9321?',
+                     'Where is COMP9321 at?',
+                     "COMP9321's campus?",
+                     'Where is COMP9321 offered?',
+                     'Which campus is COMP9321 going to be in?',
+                     'Where to go for COMP9321',
+                     'Campus for COMP9321?']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'course_location_queries'
+        assert result.message.upper() == 'COMP9321'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_query_module_course_fee_queries():
+    query_module = QueryModule()
+    test_messages = ['How much is COMP9318?',
+                     'Cost of COMP9318??',
+                     "COMP9318's cost?",
+                     "How much is COMP9318's course fee?",
+                     'How much do I need to pay for COMP9318',
+                     'The cost of COMP9318???',
+                     'Course fee for COMP9318 thanks']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'course_fee_queries'
+        assert result.message.upper() == 'COMP9318'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+

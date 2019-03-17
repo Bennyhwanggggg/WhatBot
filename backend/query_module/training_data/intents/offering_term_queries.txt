@@ -20,3 +20,6 @@ Can I enroll in {course code} in semester 1?
 Can I enroll in {course code} in semester 2?
 Can I enroll in {course code} in semester 3?
 When can I enroll in {course code}?
+What are {course code}'s offering term?
+What are {course code} offering terms?
+What are {course code}'s offering semesters?

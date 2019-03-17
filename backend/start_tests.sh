@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pytest -p no:warnings
+pytest -v -p no:warnings
