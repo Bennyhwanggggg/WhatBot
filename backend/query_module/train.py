@@ -154,14 +154,15 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
-        new_data = []
         for type in types:
             sub_string = '{%s}' % type
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
+            new_data = []
             for line in data:
                 samples = self.data_map[type](15)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
-        return new_data
+            data = new_data
+        return data
 
     def create_intent(self, display_name, training_data, message_texts, intent_types, data_is_parsed=False):
         """ Method for creating an intent. However, if the display_name already exist
@@ -407,7 +408,6 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        print(query_module_trainer._set_training_time(10))
-        # display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
-        # res = query_module_trainer.parse_data(data, ['course code', 'time'])
-        # print(res)
+        display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
+        res = query_module_trainer.parse_data(data, ['course code', 'time'])
+        print(res)
