@@ -1,7 +1,7 @@
 from query_module.QueryModule import QueryModule
 import time
 
-TIME_BETWEEN_API = 1
+TIME_BETWEEN_API = 1.5
 
 
 def test_clean_message():

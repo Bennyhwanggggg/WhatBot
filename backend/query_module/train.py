@@ -56,7 +56,7 @@ class QueryModuleTrainer:
         self.data_map = {
             'course code': self._get_training_course_codes,
             'time': self._set_training_time,
-            'date': self._set_training_time
+            'date': self._set_training_date
         }
 
         # the information regarding this map should match what is on DialogFlow setup
@@ -144,9 +144,19 @@ class QueryModuleTrainer:
                                                     hours=random.randrange(24),
                                                     minutes=random.randrange(60))
                 yield curr
-        return [x.strftime("%d/%m/%y %H:%M") for x in random_date(datetime.datetime.now(), size)]
+        return [x.strftime("%H:%M") for x in random_date(datetime.datetime.now(), size)]
 
-    def parse_data(self, data, types):
+    def _set_training_date(self, size):
+        def random_date(start, l):
+            current = start
+            for i in range(l):
+                curr = current + datetime.timedelta(days=random.randrange(200),
+                                                    hours=random.randrange(24),
+                                                    minutes=random.randrange(60))
+                yield curr
+        return [x.strftime("%d/%m/%y") for x in random_date(datetime.datetime.now(), size)]
+
+    def parse_data(self, data, parse_keys, size=30):
         """ Randomize the data with different entity types. Like changing the course
         codes for the training data. It will randomize the contents inside the training
         data themselves.
@@ -158,21 +168,23 @@ class QueryModuleTrainer:
 
         :param data: data to parse
         :type: list
-        :param types: entities to change.
+        :param parse_keys: entities to change.
         :type: list
+        :param size: size of sample entities to generate
+        :type: int
         :return: new_data
         :rtype: list
         """
-        size = 15//len(types) + 1
-        for type in types:
-            sub_string = '{%s}' % type
+        for parse_key in parse_keys:
+            sub_string = '{%s}' % parse_key
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
             new_data = []
             for line in data:
-                samples = self.data_map[type](size)
+                samples = self.data_map[parse_key](size)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
             data = new_data
-        return data
+        k = len(data) if len(data) < 2000 else 2000
+        return random.choices(data, k=k)  # Dialogflow has a limit of 2000 training data
 
     def create_intent(self, display_name, training_data, message_texts, intent_types, data_is_parsed=False):
         """ Method for creating an intent. However, if the display_name already exist
