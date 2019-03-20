@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import psycopg2
 
-def get_data(query):
+def execute_data(query):
     try:
         connection = psycopg2.connect(
             user = "whatbot",
@@ -27,9 +27,10 @@ def get_data(query):
 def get_course_outline(cid):
     key_part = '%' + cid
     # "SELECT * from course_list where course_code like '%COMP9900'"
-    query = "SELECT description,outline_url from info_handbook where CID like '%s'"%key_part
+    query = "SELECT description,outline_url from info_handbook where cid like '%s'"%key_part
     print("query: ", query)
-    return get_data(query)
+    result_arr = execute_data(query)
+    return result_arr[0][0] + "for more information go to " + result_arr[0][1]
 
 # select the data from lecturer table
 def connect_lecturer():
@@ -161,7 +162,7 @@ def connect_course_list(cid):
 
  
 if __name__ == '__main__':
-    #add_courselist("COMP9222", "Digital Circuits and Systems", "http://timetable.unsw.edu.au/2019/COMP9222.html", "", "")
+    #add_courselist("COMP9311", "Database Systems", "http://timetable.unsw.edu.au/2019/COMP9311.html", "", "")
     # add_handbook("COMP3900",
     #             "Handbook 2019 - Course - Computer Science Project - COMP3900",
     #             "6 Units of Credit",
@@ -179,6 +180,6 @@ if __name__ == '__main__':
     #             "$5790")
     # a = connect_course_list("COMP9321")
     # print(a)
-    result = connect_course_list(cid)
-    #print("data in course list: ", result)
-    app.run(debug=True, host='0.0.0.0')
+    result = get_course_outline("COMP3900")
+    print("outline: ", result)
+    #app.run(debug=True, host='0.0.0.0')
