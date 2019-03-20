@@ -26,4 +26,9 @@ Make the simple demo works:
 
 * research into dialogflow, see how the SDK works.
 * connect our backend to dialogflow.
-* add more training to dialogflow [TODO]
+* add more training to dialogflow
+
+## week5
+
+* Setup team AWS account
+* Research on how to solve the context problem
