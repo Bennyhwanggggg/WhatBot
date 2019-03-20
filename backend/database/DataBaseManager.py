@@ -1,9 +1,9 @@
 import psycopg2
 
-HOST = 'master9900.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
-USERNAME = 'master9900'
+HOST = 'whatbot.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
+USERNAME = 'whatbot'
 PASSWORD='12345678'
-DATABASE = "Master9900"
+DATABASE = "postgres"
 PORT = '5432'
 
 
@@ -43,9 +43,15 @@ class DataBaseManager:
         print('Query is: {}\nResult is: {}'.format(query, result))
         return result
 
+    #def get_course_outline(self, cid):
+        #query = "SELECT description,outline_url from info_handbook where cid like '{}'".format('%{}'.format(cid))
+        #return self.execute_query(query)
+
     def get_course_outline(self, cid):
-        query = "SELECT description,outline_url from info_handbook where CID like '{}'".format('%{}'.format(cid))
-        return self.execute_query(query)
+        key_part = '%' + cid
+        query = "SELECT description,outline_url from info_handbook where cid like '%s'"%key_part
+        result_arr = self.execute_query(query)
+        return result_arr[0][0] + "for more information go to " + result_arr[0][1]
 
     def get_all_lecturers(self):
         query = "SELECT * from lecturer"
@@ -60,17 +66,17 @@ class DataBaseManager:
         return self.execute_query(query)
 
     def add_course(self, course_code, course_name, timetable, ADK, comment):
-        "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES ({},{},{},{},{})".format(
+        query = "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES ({},{},{},{},{})".format(
         course_code, course_name, timetable, ADK, comment)
         return self.execute_query(query)
 
-    def add_handbook_entry(self, CID, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term,
+    def add_handbook_entry(self, cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term,
                            campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std,
                            international_std):
-        query = "INSERT INTO info_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, " \
+        query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, " \
         "Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
         "international_std) VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(
-        CID, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description,
+        cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description,
         pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std)
         return self.execute_query(query)
 
@@ -81,4 +87,7 @@ class DataBaseManager:
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
+    #result = data_base_manager.get_course_outline("COMP3900")
+    #print("outline: ", result)
+
 
