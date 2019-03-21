@@ -26,8 +26,7 @@ def message():
     id = str(uuid.uuid4())
 
     query_result = query_module.detect_intent_texts(message)
-    return_message = response_module.respond(query_result) if not isinstance(query_result,
-                                                                         FallbackResponse) else query_result.message
+    return_message = response_module.respond(query_result)
     response = {
         'message': return_message,
         'timestamp': datetime.now(),
