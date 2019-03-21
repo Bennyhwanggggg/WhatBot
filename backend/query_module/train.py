@@ -288,7 +288,7 @@ class QueryModuleTrainer:
         :return: None
         """
         intents = self.intents_client.list_intents(self.intents_parent)
-        intent_names = [intent.name for intent in intents]
+        intent_names = [intent.name for intent in intents if 'follow_up' in intent.name]
         intent_ids = [intent_name.split('/')[-1] for intent_name in intent_names]
         for intent_id in intent_ids:
             intent_path = self.intents_client.intent_path(self.project_id, intent_id)
