@@ -1,5 +1,11 @@
 #!/usr/bin/python
 import psycopg2
+import xlrd
+
+COURSE = '../data_extractor/courselist.xlsx'
+
+
+
 
 def execute_data(query):
     try:
@@ -162,6 +168,23 @@ def connect_course_list(cid):
 
  
 if __name__ == '__main__':
+
+    print("12345678")
+    print(COURSE)
+    wb = xlrd.open_workbook(COURSE)
+    sheet = wb.sheet_by_index(0)
+
+    sheet.cell_value(0, 0)
+    #print(sheet.row_values(1))
+
+    for i in range(1, 103):
+        row = sheet.row_values(i)
+        print(row)
+        add_courselist(row[0], row[1], row[2], row[3], row[4])
+        #for column in row:
+         #   print(column)
+            #add_courselist(column[0], column[1], column[2], column[3], column[4])
+
     #add_courselist("COMP9311", "Database Systems", "http://timetable.unsw.edu.au/2019/COMP9311.html", "", "")
     # add_handbook("COMP3900",
     #             "Handbook 2019 - Course - Computer Science Project - COMP3900",
