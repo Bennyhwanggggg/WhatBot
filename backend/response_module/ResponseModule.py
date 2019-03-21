@@ -29,10 +29,10 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        if message.intent not in self.query_map.keys():
-            return QueryError.UNKNOWN_QUERY_TYPE
-        elif message.intent == 'Default Welcome Intent' or message.intent == 'Default Fallback Intent':
+        if message.intent == 'Default Welcome Intent' or message.intent == 'Default Fallback Intent':
             return message.message
+        elif message.intent not in self.query_map.keys():
+            return QueryError.UNKNOWN_QUERY_TYPE
         return self.query_map[message.intent](message.message)
 
     def respond_to_course_outline_queries(self, cid):

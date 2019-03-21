@@ -87,7 +87,7 @@ class DataBaseManager:
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
-    #result = data_base_manager.get_course_outline("COMP3900")
-    #print("outline: ", result)
+    result = data_base_manager.get_course_outline("COMP3900")
+    print("outline: ", result)
 
 
