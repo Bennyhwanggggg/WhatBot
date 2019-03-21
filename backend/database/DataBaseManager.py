@@ -46,10 +46,6 @@ class DataBaseManager:
         print('Query is: {}\nResult is: {}'.format(query, result))
         return result
 
-    #def get_course_outline(self, cid):
-        #query = "SELECT description,outline_url from info_handbook where cid like '{}'".format('%{}'.format(cid))
-        #return self.execute_query(query)
-
     def get_course_outline(self, cid):
         key_part = '%' + cid
         query = "SELECT description,outline_url from info_handbook where cid like '%s'"%key_part
@@ -68,9 +64,9 @@ class DataBaseManager:
         query = "SELECT tid, start_time, end_time, available from Timeslot Where tid = {}".format(tid)
         return self.execute_query(query)
 
-    def add_course(self, course_code, course_name, timetable, ADK, comment):
+    def add_course(self, course_code, course_name, timetable, adk, comment):
         query = "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES ({},{},{},{},{})".format(
-        course_code, course_name, timetable, ADK, comment)
+        course_code, course_name, timetable, adk, comment)
         return self.execute_query(query)
 
     def add_handbook_entry(self, cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term,
