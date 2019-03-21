@@ -36,13 +36,8 @@ class DataBaseManager:
             if not self.connection and not self.cursor:
                 self.connect()
             self.cursor.execute(query)
-
-
-            regrexp_1, regrexp_2 = re.compile(r'select'), re.compile(r'SELECT')
-            if regrexp_1.search(query) or regrexp_2.search(query):
-                result = self.cursor.fetchall()
-            else:
-                result = "execute successfully"
+            regrex = re.compile(r'SELECT', re.IGNORECASE)
+            result = self.cursor.fetchall() if regrex.search(query) else "execute successfully"
 
         except (Exception, psycopg2.Error) as e:
             print("Error executing query:\n{}".format(str(e)))
@@ -50,10 +45,6 @@ class DataBaseManager:
             self.disconnect()
         print('Query is: {}\nResult is: {}'.format(query, result))
         return result
-
-    #def get_course_outline(self, cid):
-        #query = "SELECT description,outline_url from info_handbook where cid like '{}'".format('%{}'.format(cid))
-        #return self.execute_query(query)
 
     def get_course_outline(self, cid):
         key_part = '%' + cid
@@ -73,9 +64,9 @@ class DataBaseManager:
         query = "SELECT tid, start_time, end_time, available from Timeslot Where tid = {}".format(tid)
         return self.execute_query(query)
 
-    def add_course(self, course_code, course_name, timetable, ADK, comment):
+    def add_course(self, course_code, course_name, timetable, adk, comment):
         query = "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES ({},{},{},{},{})".format(
-        course_code, course_name, timetable, ADK, comment)
+        course_code, course_name, timetable, adk, comment)
         return self.execute_query(query)
 
     def add_handbook_entry(self, cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term,

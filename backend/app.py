@@ -26,7 +26,6 @@ def message():
 
     dialog_flow_result = query_module.detect_intent_texts(message)
     return_message = response_module.respond(dialog_flow_result)
-
     response = {
         'message': return_message,
         'timestamp': datetime.now(),
