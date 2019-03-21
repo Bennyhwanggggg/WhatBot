@@ -1,7 +1,7 @@
 import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
-from conf.Response import IntentResponse
+from conf.Response import IntentResponse, FallbackResponse
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -21,6 +21,10 @@ class QueryModule:
         self.session_client = dialogflow.SessionsClient()
         self.session = self.session_client.session_path(project_id, session_id)
         print('Session path: {}\n'.format(self.session))
+
+        self.fall_backs = {
+            '$course': self.course_missing_fallback
+        }
 
     def detect_intent_texts(self, text, language_code='en'):
         """Returns the result of detect intent with texts as inputs.
@@ -43,8 +47,52 @@ class QueryModule:
             response.query_result.intent_detection_confidence))
         print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
-        return IntentResponse(intent=response.query_result.intent.display_name,
-                              message=self.clean_message(response.query_result.fulfillment_text))
+        query_response = IntentResponse(intent=response.query_result.intent.display_name,
+                                        message=self.clean_message(response.query_result.fulfillment_text))
+
+        if '$' not in response.query_result.fulfillment_text:
+            return query_response
+
+        else:
+            return self.fall_backs[response.query_result.fulfillment_text](query_response)
+
+    def course_missing_fallback(self, query_response):
+        if query_response.intent == 'course_fee_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Please tell me the course code of the course "
+                                            "you would like to know the course fee for")
+        elif query_response.intent == 'course_outline_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Which course's course outline would you like to know?")
+        elif query_response.intent == 'course_location_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Which course's course location would you like to know?")
+        elif query_response.intent == 'indicative_hours_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Please tell me the course code of the course you would like "
+                                            "to know the amount of indicative hours for")
+        elif query_response.intent == 'offering_term_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Please tell me the course code of the course you would like "
+                                            "to know the offering term for")
+        elif query_response.intent == 'prerequisites_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="What is the course code of the course you would like to know"
+                                            "the prerequisites for")
+        elif query_response.intent == 'school_and_faculty_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="What is the course code of the course you would like to know"
+                                            "the school and faculty for")
+        elif query_response.intent == 'send_outline_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="What is the course code of the course you would like me to send outline"
+                                            "for?")
+        elif query_response.intent == 'study_level_queries':
+            return FallbackResponse(intent=query_response.intent,
+                                    message="Could you please tell me the course you would like to know "
+                                            "the study level for?")
+        return FallbackResponse(intent=query_response.intent,
+                                message='Sorry, I am not sure how to helpe you with that.')
 
     def clean_message(self, message):
         message = message.replace("'s", '')

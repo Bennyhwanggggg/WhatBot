@@ -4,6 +4,7 @@ from datetime import datetime
 import uuid
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
+from conf.Response import IntentResponse, FallbackResponse
 
 query_module = QueryModule()
 response_module = ResponseModule()
@@ -24,8 +25,9 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
 
-    dialog_flow_result = query_module.detect_intent_texts(message)
-    return_message = response_module.respond(dialog_flow_result)
+    query_result = query_module.detect_intent_texts(message)
+    return_message = response_module.respond(query_result) if not isinstance(query_result,
+                                                                         FallbackResponse) else query_result.message
     response = {
         'message': return_message,
         'timestamp': datetime.now(),
