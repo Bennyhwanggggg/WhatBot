@@ -32,3 +32,5 @@ Make the simple demo works:
 
 * Setup team AWS account
 * Research on how to solve the context problem
+  * by our own mechanism
+  * by dialogflow context

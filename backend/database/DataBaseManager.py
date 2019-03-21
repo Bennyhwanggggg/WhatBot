@@ -1,4 +1,5 @@
 import psycopg2
+import re
 
 HOST = 'whatbot.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
 USERNAME = 'whatbot'
@@ -35,7 +36,14 @@ class DataBaseManager:
             if not self.connection and not self.cursor:
                 self.connect()
             self.cursor.execute(query)
-            result = self.cursor.fetchall()
+
+
+            regrexp_1, regrexp_2 = re.compile(r'select'), re.compile(r'SELECT')
+            if regrexp_1.search(query) or regrexp_2.search(query):
+                result = self.cursor.fetchall()
+            else:
+                result = "execute successfully"
+
         except (Exception, psycopg2.Error) as e:
             print("Error executing query:\n{}".format(str(e)))
         finally:
