@@ -36,13 +36,8 @@ class DataBaseManager:
             if not self.connection and not self.cursor:
                 self.connect()
             self.cursor.execute(query)
-
-
-            regrexp_1, regrexp_2 = re.compile(r'select'), re.compile(r'SELECT')
-            if regrexp_1.search(query) or regrexp_2.search(query):
-                result = self.cursor.fetchall()
-            else:
-                result = "execute successfully"
+            regrex = re.compile(r'SELECT', re.IGNORECASE)
+            result = self.cursor.fetchall() if regrex.search(query) else "execute successfully"
 
         except (Exception, psycopg2.Error) as e:
             print("Error executing query:\n{}".format(str(e)))
