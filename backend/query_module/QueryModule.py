@@ -30,18 +30,18 @@ class QueryModule:
 
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_regex_map = {
-            'course_fee_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'course_outline_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'course_location_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'indicative_hours_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'offering_term_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'prerequisites_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'school_and_faculty_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'send_outline_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'study_level_queries': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)}],
-            'consultation_booking': [{'$course': re.compile('COMP\d{4}', re.IGNORECASE)},
-                                     {'$date': re.compile('\d{1,4}\/\d{1,2}\/\d{1,4}')},
-                                     {'$time': re.compile('\d{1,2}:\d{1,2}|\d(pm|am)')}]
+            'course_fee_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'course_outline_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'course_location_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'indicative_hours_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'offering_term_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'prerequisites_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'school_and_faculty_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'send_outline_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'study_level_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
+            'consultation_booking': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)},
+                                     {'$date': re.compile('.*\d{4}-\d{2}-\d{2}.*')},
+                                     {'$time': re.compile('.*\d{2}:\d{2}:\d{2}.*')}]
         }
 
     def query(self, text):
