@@ -50,10 +50,15 @@ class QueryModule:
         if isinstance(result, FallbackResponse):
             self.state.append(result)
         else:
-            if result.confidence < 0.6 and self.state:
-                prev = self.state.pop()
-                if self.check_relevance_to_state(prev, result):
-                    result.intent = prev.intent
+            if result.confidence < 0.6:
+                if self.state:
+                    prev = self.state.pop()
+                    if self.check_relevance_to_state(prev, result):
+                        result.intent = prev.intent
+                else:
+                    result = FallbackResponse(intent='Default Fallback Intent',
+                                              message='Sorry, I am not sure how I can help you with that.',
+                                              confidence=result.confidence)
         print('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
