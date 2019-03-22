@@ -340,6 +340,7 @@ class QueryModuleTrainer:
         :param display_name: name of the intent
         :return: id of the intent in a list
         """
+        print('Getting {} intent id'.format(display_name))
         intents = self.intents_client.list_intents(self.intents_parent)
         intent_names = [intent.name for intent in intents if intent.display_name == display_name]
         # This gets the intent_ids
