@@ -44,6 +44,24 @@ class QueryModule:
                                      {'$time': re.compile('.*\d{2}:\d{2}:\d{2}.*')}]
         }
 
+        self.intent_fall_backs = {
+            'course_fee_queries': "Please tell me the course code of the course "
+                                  "you would like to know the course fee for?",
+            'course_outline_queries': "Which course's course outline would you like to know?",
+            'course_location_queries': "Which course's course location would you like to know?",
+            'indicative_hours_queries': "Please tell me the course code of the course you "
+                                        "would like to know the amount of indicative hours for?",
+            'offering_term_queries': "Please tell me the course code of the course you "
+                                     "would like to know the offering term for?",
+            'prerequisites_queries': "What is the course code of the course you "
+                                     "would like to know the prerequisites for?",
+            'school_and_faculty_queries': "What is the course code of the course you "
+                                          "would like to know the school and faculty for?",
+            'send_outline_queries': "What is the course code of the course you would like me to send outline for?",
+            'study_level_queries': "Could you please tell me the course you would like to know the study level for?",
+            'consultation_booking': "Could you please tell me the course you would like to know the study level for?"
+        }
+
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
@@ -117,48 +135,9 @@ class QueryModule:
         return missing
 
     def course_missing_fallback(self, query_response):
-        if query_response.intent == 'course_fee_queries':
+        if query_response.intent in self.intent_fall_backs.keys():
             return FallbackResponse(intent=query_response.intent,
-                                    message="Please tell me the course code of the course "
-                                            "you would like to know the course fee for",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'course_outline_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="Which course's course outline would you like to know?",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'course_location_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="Which course's course location would you like to know?",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'indicative_hours_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="Please tell me the course code of the course you would like "
-                                            "to know the amount of indicative hours for",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'offering_term_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="Please tell me the course code of the course you would like "
-                                            "to know the offering term for",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'prerequisites_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="What is the course code of the course you would like to know"
-                                            "the prerequisites for",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'school_and_faculty_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="What is the course code of the course you would like to know"
-                                            "the school and faculty for",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'send_outline_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="What is the course code of the course you would like me to send outline"
-                                            "for?",
-                                    confidence=query_response.confidence)
-        elif query_response.intent == 'study_level_queries':
-            return FallbackResponse(intent=query_response.intent,
-                                    message="Could you please tell me the course you would like to know "
-                                            "the study level for?",
+                                    message=self.intent_fall_backs[query_response.intent],
                                     confidence=query_response.confidence)
         return FallbackResponse(intent=query_response.intent,
                                 message='Sorry, I am not sure how to help you with that.',
