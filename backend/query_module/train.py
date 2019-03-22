@@ -151,7 +151,7 @@ class QueryModuleTrainer:
         if not clean_data or not display_name or not message_texts or not intent_types:
             print('Error in intents data file configuration: {}'.format(data_file))
             return None, [], [], [], [], [], []
-        return display_name, message_texts, intent_types, parent_followup, output_contexts, input_contexts, clean_data
+        return display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, clean_data
 
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
@@ -267,16 +267,18 @@ class QueryModuleTrainer:
         message = dialogflow.types.Intent.Message(text=text)
 
         if parent_followup and output_contexts and input_contexts:
+            print('Creating parent_followup and output_contexts and input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
                                                  self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             input_context_names=[self.create_context(context) for context in
+                                             input_context_names=[self.create_context(context).name for context in
                                                                   input_contexts],
                                              output_contexts=[self.create_context(context) for context in
                                                               output_contexts],
                                              messages=[message])
         elif parent_followup and output_contexts and not input_contexts:
+            print('Creating parent_followup and output_contexts and not input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
@@ -285,40 +287,46 @@ class QueryModuleTrainer:
                                                               output_contexts],
                                              messages=[message])
         elif parent_followup and not output_contexts and input_contexts:
+            print('Creating parent_followup and not output_contexts and input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
                                                  self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             input_context_names=[self.create_context(context) for context in
+                                             input_context_names=[self.create_context(context).name for context in
                                                                   input_contexts],
                                              messages=[message])
         elif not parent_followup and output_contexts and input_contexts:
+            print('Creating not parent_followup and output_contexts and input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
-                                             input_context_names=[self.create_context(context) for context in
+                                             input_context_names=[self.create_context(context).name for context in
                                                                   input_contexts],
                                              output_contexts=[self.create_context(context) for context in
                                                               output_contexts],
                                              messages=[message])
         elif parent_followup and not output_contexts and not input_contexts:
+            print('Creating parent_followup and not output_contexts and not input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
                                                  self.project_id, self._get_intent_ids(parent_followup[0])[0]),
                                              messages=[message])
         elif not parent_followup and output_contexts and not input_contexts:
+            print('Creating not parent_followup and output_contexts and not input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              output_contexts=[self.create_context(context) for context in
                                                               output_contexts],
                                              messages=[message])
         elif not parent_followup and not output_contexts and input_contexts:
+            print('Creating not parent_followup and not output_contexts and input_contexts')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
-                                             input_context_names=[self.create_context(context) for context in
+                                             input_context_names=[self.create_context(context).name for context in
                                                                   input_contexts],
                                              messages=[message])
         else:
+            print('Creating else')
             intent = dialogflow.types.Intent(display_name=display_name,
                                              training_phrases=training_phrases,
                                              messages=[message])
