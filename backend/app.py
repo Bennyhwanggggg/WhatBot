@@ -25,7 +25,7 @@ def message():
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
 
-    query_result = query_module.detect_intent_texts(message)
+    query_result = query_module.query(message)
     return_message = response_module.respond(query_result)
     response = {
         'message': return_message,

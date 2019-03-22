@@ -32,6 +32,8 @@ class ResponseModule:
         :return: response
         :rtype str
         """
+        print('Response module recieved:')
+        print('\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or message.intent == 'Default Fallback Intent':
             return message.message
         elif isinstance(message, FallbackResponse):
