@@ -1,6 +1,7 @@
 display_name course_location_queries_with_followup
 message_texts Okay! What is the course code of the course you want to know the location for?
 intent_types course_location
+output_context course_location_queries_with_followup-followup
 I want to find out the course location for a course
 I have a question about course location
 I have a query regarding course location
