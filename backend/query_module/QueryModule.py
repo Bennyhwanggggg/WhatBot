@@ -25,7 +25,7 @@ class QueryModule:
         self.state = []
 
         self.fall_backs = {
-            '$course': self.course_missing_fallback
+            '$course': self.single_entity_missing_fall_back
         }
 
         # the information regarding this map should match what is on DialogFlow setup
@@ -44,7 +44,7 @@ class QueryModule:
                                      {'$time': re.compile('.*\d{2}:\d{2}:\d{2}.*')}]
         }
 
-        self.intent_fall_backs = {
+        self.single_entity_intent_fall_backs = {
             'course_fee_queries': "Please tell me the course code of the course "
                                   "you would like to know the course fee for?",
             'course_outline_queries': "Which course's course outline would you like to know?",
@@ -58,25 +58,24 @@ class QueryModule:
             'school_and_faculty_queries': "What is the course code of the course you "
                                           "would like to know the school and faculty for?",
             'send_outline_queries': "What is the course code of the course you would like me to send outline for?",
-            'study_level_queries': "Could you please tell me the course you would like to know the study level for?",
-            'consultation_booking': "Could you please tell me the course you would like to know the study level for?"
+            'study_level_queries': "Could you please tell me the course you would like to know the study level for?"
         }
 
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
-        if isinstance(result, FallbackResponse):
-            self.state.append(result)
-        else:
-            if result.confidence < 0.6:
-                if self.state:
-                    prev = self.state.pop()
-                    if self.check_relevance_to_state(prev, result):
-                        result.intent = prev.intent
-                else:
-                    result = FallbackResponse(intent='Default Fallback Intent',
-                                              message='Sorry, I am not sure how I can help you with that.',
-                                              confidence=result.confidence)
+        # if isinstance(result, FallbackResponse):
+        #     self.state.append(result)
+        # else:
+        #     if result.confidence < 0.6:
+        #         if self.state:
+        #             prev = self.state.pop()
+        #             if self.check_relevance_to_state(prev, result):
+        #                 result.intent = prev.intent
+        #         else:
+        #             result = FallbackResponse(intent='Default Fallback Intent',
+        #                                       message='Sorry, I am not sure how I can help you with that.',
+        #                                       confidence=result.confidence)
         print('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
@@ -105,15 +104,14 @@ class QueryModule:
                                         message=self.clean_message(response.query_result.fulfillment_text),
                                         confidence=response.query_result.intent_detection_confidence)
 
-        if '$' in response.query_result.fulfillment_text:
-            return self.fall_backs[response.query_result.fulfillment_text](query_response)
-        else:
-            missing = self.detect_missing_parameters(response.query_result.intent.display_name,
-                                                     response.query_result.fulfillment_text)
-            if missing:
-                return self.fall_backs[missing[0]](query_response) if len(missing) == 1 else \
-                        self.handle_multiple_missing()
-            return query_response
+        # missing_parameters = self.detect_missing_parameters(response.query_result.intent.display_name,
+        #                                                     response.query_result.fulfillment_text)
+        # if missing_parameters:
+        #     if len(missing_parameters) == 1 and missing_parameters[0] in self.single_entity_intent_fall_backs.keys():
+        #         return self.fall_backs[missing_parameters[0]](query_response)
+        #     else:
+        #         return self.handle_multiple_missing(missing_parameters=missing_parameters, query_response=query_response)
+        return query_response
 
     def check_relevance_to_state(self, prev, new):
         regexs = self.intent_regex_map[prev.intent]
@@ -134,17 +132,38 @@ class QueryModule:
                     missing.append(key)
         return missing
 
-    def course_missing_fallback(self, query_response):
-        if query_response.intent in self.intent_fall_backs.keys():
+    def single_entity_missing_fall_back(self, query_response):
+        if query_response.intent in self.single_entity_intent_fall_backs.keys():
             return FallbackResponse(intent=query_response.intent,
-                                    message=self.intent_fall_backs[query_response.intent],
+                                    message=self.single_entity_intent_fall_backs[query_response.intent],
                                     confidence=query_response.confidence)
         return FallbackResponse(intent=query_response.intent,
                                 message='Sorry, I am not sure how to help you with that.',
                                 confidence=query_response.confidence)
 
-    def handle_multiple_missing(self):
-        pass
+    def handle_multiple_missing(self, missing_parameters, query_response):
+        if query_response.intent == 'consultation_booking':
+            if len(missing_parameters) == 1:
+                if missing_parameters[0] == '$course':
+                    message = 'Which course would you like to book consultation for?'
+                elif missing_parameters[0] == '$time':
+                    message = 'What time would you like to book?'
+                elif missing_parameters == '$date':
+                    message = 'Which date would you like to book?'
+            elif len(missing_parameters) == 2:
+                if set(missing_parameters) == set(['$course', '$time']):
+                    message = 'Which course and time would you like to book it for?'
+                elif set(missing_parameters) == set(['$date', '$time']):
+                    message = 'Which date and time would you like to book it for?'
+                elif set(missing_parameters) == set(['$course', '$date']):
+                    message = 'Which course and time would you like to book it for?'
+            elif len(missing_parameters) == 3:
+                message = 'Could you please tell me the course code of the course, ' \
+                          'time and date you would like to book your consultation for?'
+        return FallbackResponse(intent=query_response.intent,
+                                message=message,
+                                confidence=query_response.confidence)
+
 
     def clean_message(self, message):
         message = message.replace("'s", '')

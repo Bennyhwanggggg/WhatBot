@@ -124,10 +124,10 @@ class QueryModuleTrainer:
         data_file = open(data_file, 'r')
         data = data_file.read().split('\n')
         data_file.close()
-        display_name, message_texts, intent_types, clean_data = None, [], [], []
+        display_name, message_texts, intent_types, parent_followup, clean_data = None, [], [], [], []
         if not data or not data[0]:
             print('Empty intents data file:\n{}\n'.format(data_file))
-            return None, [], [], []
+            return None, [], [], [], []
         data = deque(data)
         while data:
             line = data.popleft()
@@ -137,12 +137,14 @@ class QueryModuleTrainer:
                 message_texts.append(' '.join(line.split()[1:]))
             elif line.startswith('intent_type'):
                 intent_types.append(' '.join(line.split()[1:]))
+            elif line.startswith('parent_followup'):
+                parent_followup.append(' '.join(line.split()[1:]))
             else:
                 clean_data.append(line)
         if not clean_data or not display_name or not message_texts or not intent_types:
             print('Error in intents data file configuration: {}'.format(data_file))
-            return None, [], [], []
-        return display_name, message_texts, intent_types, clean_data
+            return None, [], [], [], []
+        return display_name, message_texts, intent_types, parent_followup, clean_data
 
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
@@ -197,7 +199,8 @@ class QueryModuleTrainer:
         k = len(data) if len(data) < 2000 else 2000
         return random.choices(data, k=k)  # Dialogflow has a limit of 2000 training data
 
-    def create_intent(self, display_name, training_data, message_texts, intent_types, data_is_parsed=False):
+    def create_intent(self, display_name, training_data, message_texts,
+                      intent_types, data_is_parsed=False, parent_followup=[]):
         """ Method for creating an intent. However, if the display_name already exist
         in dialogflow, it will be run into an error
 
@@ -255,7 +258,16 @@ class QueryModuleTrainer:
         text = dialogflow.types.Intent.Message.Text(text=message_texts)
         message = dialogflow.types.Intent.Message(text=text)
 
-        intent = dialogflow.types.Intent(display_name=display_name, training_phrases=training_phrases, messages=[message])
+        if not parent_followup:
+            intent = dialogflow.types.Intent(display_name=display_name,
+                                             training_phrases=training_phrases,
+                                             messages=[message])
+        else:
+            parent_followup_intent_id = self._get_intent_ids(parent_followup[0])[0]
+            intent = dialogflow.types.Intent(display_name=display_name,
+                                             training_phrases=training_phrases,
+                                             parent_followup_intent_name='projects/{}/agent/intents/{}'.format(self.project_id, parent_followup_intent_id),
+                                             messages=[message])
 
         response = self.intents_client.create_intent(self.intents_parent, intent)
         print('Intent created: {}'.format(response))
@@ -441,5 +453,10 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_commands.txt')
-        query_module_trainer.create_intent(display_name=display_name, message_texts=message_texts, intent_types=intent_types, training_data=data, data_is_parsed=True)
+        display_name, message_texts, intent_types, parent_followup, data = query_module_trainer.read_intents_data('./training_data/intents/course_fee_queries_with_followup-user_input_course_code.txt')
+        query_module_trainer.create_intent(display_name=display_name,
+                                           message_texts=message_texts,
+                                           intent_types=intent_types,
+                                           training_data=data,
+                                           data_is_parsed=True,
+                                           parent_followup=parent_followup)
