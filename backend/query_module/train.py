@@ -416,6 +416,7 @@ class QueryModuleTrainer:
         """
         training_data_folder = os.path.join(PATH, training_data_folder)
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
+            print('\n', '=' * 30, )
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, entity_values, synonyms = self.read_entities_data(path_to_read)
             if not entity_values:
@@ -425,7 +426,8 @@ class QueryModuleTrainer:
                     self.delete_entity(display_name)
                 self.create_entity(display_name, entity_values, synonyms)
             except Exception as e:
-                print(str(e))
+                print('Error occurred with {}: {}'.format(display_name, str(e)))
+            print('\n', '=' * 30)
 
 
 if __name__ == '__main__':
