@@ -1,0 +1,41 @@
+display_name indicative_hours_queries_with_followup
+message_texts Of course! What is the course code of the course you want to know the indicative hours for?
+intent_types indicative_hours
+I want to find out the indicative hour for a course
+I have a question about indicative hour
+I have a query regarding indicative hour
+I have a query regarding indicative hour for a course
+indicative hour question
+I want to know a course's Indicative hour
+I want to ask about a indicative hour
+I want to find information about a indicative hour
+I want to find information about a course's Indicative hour
+Find information about indicative hour
+indicative hour info
+indicative hour info please
+indicative hour info thanks
+indicative hour information thanks
+Can I get some indicative hour information?
+Can I get indicative hour information?
+Question about indicative hour?
+I want to ask about indicative hour
+Tell me about indicative hour
+I need to know the indicative hour for a course
+Indicative hour information for a course
+Indicative hour information for a course please
+Indicative hour info for a course thanks
+I want to know a course's Indicative hour
+Information for indicative hour please
+Information for indicative hour thanks
+Info for indicative hour
+Info for a course's indicative hour
+I want to know the work load for a course
+Work load for a course
+I want to know how much work I need to do for a course
+Workload information for a course please
+Workload information for a course
+Work load information for a course
+Work load information for a course please
+Work load for a course
+Workload for a course
+A course's indicative hour

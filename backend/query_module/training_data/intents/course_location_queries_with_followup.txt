@@ -1,0 +1,28 @@
+display_name course_location_queries_with_followup
+message_texts Okay! What is the course code of the course you want to know the location for?
+intent_types course_location
+I want to find out the course location for a course
+I have a question about course location
+I have a query regarding course location
+Course location question
+I want to find information about a course location
+I want to find information about a course's location
+Find information about course location
+Course location info
+Course location info please
+Course location info thanks
+Course location information thanks
+Can I get some course location information?
+Can I get course location information?
+Question about course location?
+I want to ask about course location
+Tell me about course location
+I need to know the course location for a course
+Location information for a course
+Location information for a course please
+Location info for a course thanks
+I want to know a course's location
+Information for course location please
+Information for course location thanks
+Info for course location
+Info for a course's location

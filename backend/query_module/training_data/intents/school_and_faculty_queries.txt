@@ -5,9 +5,12 @@ Which school runs {course code}?
 Which faculty runs {course code}?
 Which school and faculty runs {course code}?
 Who can I talk to about {course code}?
+Who should I speak to about {course code}?
 Which school do I talk to about {course code}?
 Which faculty do I talk to about {course code}?
 Who manages {course code}?
 Tell me who runs {course code}?
 Tell me which school is responsible for {course code}
 {course code} school and faculty
+School and faculty that runs {course code}
+School and faculty that runs {course code} please

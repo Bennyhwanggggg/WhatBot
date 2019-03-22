@@ -1,0 +1,18 @@
+display_name school_and_faculty_queries_with_followup
+message_texts Sure! Please tell me the course code of the course you want to find out the managing school and faculty for.
+intent_types school_and_faculty
+I want to find out the school and faculty for a course
+I want to know which school runs a course
+I want to know which school runs a class
+Information about which school runs a course
+Information about which school runs a class
+I want to know which faculty runs a course
+I want to know which faculty runs a class
+Information about which faculty runs a course
+Information about which faculty runs a class
+Can I find out which school runs a class?
+Can I find out which school runs a course?
+Can I find out which school and faculty runs a class?
+Can I find out which school and faculty runs a course?
+I want to know which school and faculty runs a course
+I want to know which school and faculty runs a class

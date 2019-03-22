@@ -1,0 +1,23 @@
+display_name course_fee_queries_with_followup
+message_texts Sure! What is the course code of the course you want to know course fee for?
+intent_types course_fee
+I want to find out the course fee for a course
+I have a question about course fee
+I have a query regarding course fee
+Course fee question
+I want to find information about course fee
+I want information for course fee
+Information for course fee
+Information for course fee please
+Information for course fee thanks
+Find information about course fee
+Course fee info
+Course fee info please
+Course fee info thanks
+Course fee information thanks
+Can I get some course fee information?
+Can I get course fee information?
+Question about course fee?
+I want to ask about course fee
+Tell me about course fee
+I need to know the course fee for a course

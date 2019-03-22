@@ -1,0 +1,30 @@
+display_name study_level_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types study_level
+parent_followup study_level_queries_with_followup
+{course code}
+{course code} please
+{course code} thanks
+I want to get the study level for {course code}
+I want to get the level for {course code} thanks
+I want to get the study level for {course code} please
+Study level for {course code} please
+Study level for {course code} thanks
+{course code}'s level
+I want to know the study level for {course code}
+I want to know the study level {course code} thanks
+I want to know the study level {course code} please
+Level for {course code} please
+Level for {course code} thanks
+{course code}'s study level
+Get me the study level for {course code}
+Get me the study level for {course code} please
+Get me the study level for {course code} thanks
+Get me {course code}'s study level thanks
+Information for {course code}
+Information for {course code}'s study level
+Information for {course code} please
+Information for {course code} thanks
+Show me the study level for {course code}
+Show me the level for {course code} please
+Show me the study level for {course code} thanks

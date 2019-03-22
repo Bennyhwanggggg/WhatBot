@@ -314,17 +314,19 @@ class QueryModuleTrainer:
         :return: None
         """
         training_data_folder = os.path.join(PATH, training_data_folder)
-        for training_data_file in os.listdir(training_data_folder):
+        for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
+            print('\n', '=' * 30, )
             path_to_read = os.path.join(training_data_folder, training_data_file)
-            display_name, message_texts, intent_types, data = self.read_intents_data(path_to_read)
+            display_name, message_texts, intent_types, parent_followup, data = self.read_intents_data(path_to_read)
             if not data:
                 continue
             try:
                 if self._get_intent_ids(display_name):
                     self.delete_intent(display_name)
-                self.create_intent(display_name, data, message_texts, intent_types, data_is_parsed=True)
+                self.create_intent(display_name, data, message_texts, intent_types, parent_followup=parent_followup, data_is_parsed=True)
             except Exception as e:
-                print(str(e))
+                print('Error occurred with {}: {}'.format(display_name, str(e)))
+            print('\n', '=' * 30)
 
     def read_entities_data(self, data_file):
         from collections import deque
@@ -413,7 +415,7 @@ class QueryModuleTrainer:
         :return: None
         """
         training_data_folder = os.path.join(PATH, training_data_folder)
-        for training_data_file in os.listdir(training_data_folder):
+        for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, entity_values, synonyms = self.read_entities_data(path_to_read)
             if not entity_values:
@@ -439,7 +441,7 @@ if __name__ == '__main__':
                         help="Retrain all of Dialogflow agent's intents")
 
     parser.add_argument("--retrain_entities", default=False,
-                        help="Retrain all of Dialogflow agent's entties")
+                        help="Retrain all of Dialogflow agent's entities")
 
     args = parser.parse_args()
 

@@ -1,0 +1,28 @@
+display_name school_and_faculty_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types school_and_faculty
+parent_followup school_and_faculty_queries_with_followup
+{course code}
+{course code} please
+{course code} thanks
+I want to know which school runs {course code}
+I want to know which school runs {course code} thanks
+I want to know which school runs {course code} please
+I want to know which faculty runs {course code}
+I want to know which faculty runs {course code} thanks
+I want to know which faculty runs {course code} please
+I want to know which school and faculty runs {course code}
+I want to know which school and faculty runs {course code} thanks
+I want to know which school and faculty runs {course code} please
+School that runs {course code} please
+School that runs {course code} thanks
+Faculty that runs {course code} please
+Faculty that runs {course code} thanks
+School and faculty that runs {course code}
+{course code}'s managing school
+{course code}'s managing school and faculty
+{course code}'s managing faculty
+Who should I speak to about {course code}
+Tell me the school and faculty that runs {course code}
+Tell me which school runs {course code}
+Tell me which faculty manages {course code}

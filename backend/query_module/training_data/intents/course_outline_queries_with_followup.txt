@@ -1,0 +1,30 @@
+display_name course_outline_queries_with_followup
+message_texts Of course! What is the course code of the course you want to know the outline for?
+intent_types course_outline
+I want to find out the course outline for a course
+I have a question about course outline
+I have a query regarding course outline
+Course outline question
+I want to know a course's outline
+I want to ask about a course outline
+I want to find information about a course outline
+I want to find information about a course's outline
+Find information about course outline
+Course outline info
+Course outline info please
+Course outline info thanks
+Course outline information thanks
+Can I get some course outline information?
+Can I get course outline information?
+Question about course outline?
+I want to ask about course outline
+Tell me about course outline
+I need to know the course outline for a course
+outline information for a course
+outline information for a course please
+outline info for a course thanks
+I want to know a course's outline
+Information for course outline please
+Information for course outline thanks
+Info for course outline
+Info for a course's outline
