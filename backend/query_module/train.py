@@ -203,6 +203,8 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
+        if len(parse_keys) > 2:
+            size = 15
         for parse_key in parse_keys:
             sub_string = '{%s}' % parse_key
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)

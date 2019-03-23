@@ -41,8 +41,12 @@ I want to make an appointment with the LiC for {course code} at {date} {time}
 Make appoint with a lecturer for {course code} at {date} {time}
 Make course consultation appointment for {course code} at {date} {time}
 Make a consultation booking for {course code} at {date} {time}
+Make a consultation booking for {course code} on {date} on {time}
+Make a consultation booking for {course code} on {date} at {time}
 Make consultation booking for {course code} at {date} {time}
 Make an appointment for course consultation for {course code} at {date} {time}
 On {date} at {time} make a course consultation booking for {course code}
 On {date} at {time} make a course consultation booking with the lecturer in charge for {course code}
 On {date} at {time} make a course consultation booking with the LiC for {course code}
+Available time slots for consultation for {course code} on {date} at {time}
+Available time slots for course consultation for {course code} on {date} at {time}
