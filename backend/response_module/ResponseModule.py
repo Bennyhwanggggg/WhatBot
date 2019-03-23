@@ -1,5 +1,6 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Error import QueryError
+from conf.Response import FallbackResponse
 
 
 class ResponseModule:
@@ -19,6 +20,8 @@ class ResponseModule:
             'study_level_queries': self.respond_to_course_study_level_queries
         }
 
+        self.state = []  # TODO: We will keep state using this?
+
     def respond(self, message):
         """ This function should be the entry point into ResponseModule.
         Messages from the query module is passed into here for information search
@@ -29,8 +32,16 @@ class ResponseModule:
         :return: response
         :rtype str
         """
+        print('Response module recieved:')
+        print('\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or message.intent == 'Default Fallback Intent':
             return message.message
+        elif isinstance(message, FallbackResponse):
+            current_state = self.state.pop() if self.state else None
+            if not current_state:
+                # if no current state, this will be the first fall back so just return the message
+                return message.message
+            # TODO: Check state and do checking stuff?
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE
         return self.query_map[message.intent](message.message)

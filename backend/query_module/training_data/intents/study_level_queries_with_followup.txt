@@ -1,0 +1,44 @@
+display_name study_level_queries_with_followup
+message_texts Sure! What is the course code of the course you would like to find study level for?
+intent_types study_level
+output_context study_level_queries_with_followup-followup
+I want to find out the study level for a course
+I have a question about study level
+I have a query regarding study level
+study level  question
+I want to know a course's study level
+I want to ask about a study level
+I want to find information about a study level
+I want to find information about a course's study level
+Find information about study level
+Find information about study level  for a class
+Find information about study level  for a course
+study level  info
+study level  info please
+study level  info thanks
+study level  information thanks
+Can I get some study level information?
+Can I get study level information?
+Question about study level?
+I want to ask about study level
+Tell me about study level
+I need to know the study level for a course
+study level information for a course
+study level information for a course please
+study level info for a course thanks
+I want to know a course's study level
+Information for study level please
+Information for study level thanks
+Info for study level
+Info for a course's study level
+Find study level for a course
+I want to find information about a class's study level
+I want to know what are the study level for a course
+study level for a course
+study level for a course please
+study level for a course thanks
+Information about course study level
+Class study level info
+Class study level information
+Course study level info
+Course study level information

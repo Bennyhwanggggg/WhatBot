@@ -1,0 +1,37 @@
+display_name indicative_hours_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types indicative_hours
+parent_followup indicative_hours_queries_with_followup
+input_context indicative_hours_queries_with_followup-followup
+{course code}
+{course code} please
+{course code} thanks
+I want to get the indicative hours for {course code}
+I want to get the indicative hours for {course code} thanks
+I want to get the indicative hours for {course code} please
+indicative hours for {course code} please
+indicative hours for {course code} thanks
+{course code}'s indicative hours
+I want to get the hours for {course code}
+I want to get the hours for {course code} thanks
+I want to get the hours for {course code} please
+hours for {course code} please
+hours for {course code} thanks
+{course code}'s hours
+Get me the hours for {course code}
+Get me the hours for {course code} please
+Get me the hours for {course code} thanks
+Get me the indicative hours for {course code} thanks
+Information for {course code}
+Information for {course code} please
+Information for {course code} thanks
+Show me the hours for {course code}
+Show me the hours for {course code} please
+Show me the hours for {course code} thanks
+Show me the indicative hours for {course code} thanks
+Workload for {course code}
+Workload for {course code} please
+Workload for {course code} thanks
+Work load for {course code}
+Work load for {course code} please
+Work load for {course code} thanks

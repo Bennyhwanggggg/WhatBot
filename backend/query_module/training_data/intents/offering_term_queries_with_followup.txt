@@ -1,0 +1,39 @@
+display_name offering_term_queries_with_followup
+message_texts Of course! What is the course code of the course you want to know the offering terms for?
+intent_types offering_term
+output_context offering_term_queries_with_followup-followup
+I want to find out the offering term for a course
+I have a question about offering term
+I have a query regarding offering term
+offering term question
+I want to know a course's offering term
+I want to ask about a offering term
+I want to find information about a offering term
+I want to find information about a course's offering term
+Find information about offering term
+offering term info
+offering term info please
+offering term info thanks
+offering term information thanks
+Can I get some offering term information?
+Can I get offering term information?
+Question about offering term?
+I want to ask about offering term
+Tell me about offering term
+I need to know the offering term for a course
+offering term information for a course
+offering term information for a course please
+offering term info for a course thanks
+I want to know a course's offering term
+Information for offering term please
+Information for offering term thanks
+Info for offering term
+Info for a course's offering term
+I want to find out when a course will be held
+Can I get information on when a course will be held?
+Can I get information on when a class will be held?
+I want to find information about a class's offering term
+I want to know when a course will be offered
+Information about course offering
+Class offering time info
+Class offering time information

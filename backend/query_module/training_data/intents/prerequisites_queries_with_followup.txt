@@ -1,0 +1,46 @@
+display_name prerequisites_queries_with_followup
+message_texts Sure! Please tell me the course code of the course you want to find out prerequisites for.
+intent_types prerequisites
+output_context prerequisites_queries_with_followup-followup
+I want to find out the prerequisites for a course
+I have a question about prerequisites
+I have a query regarding prerequisites
+prerequisites question
+I want to know a course's prerequisites
+I want to ask about a prerequisites
+I want to find information about a prerequisites
+I want to find information about a course's prerequisites
+Find information about prerequisites
+Find information about prerequisites for a class
+Find information about prerequisites for a course
+prerequisites info
+prerequisites info please
+prerequisites info thanks
+prerequisites information thanks
+Can I get some prerequisites information?
+Can I get prerequisites information?
+Question about prerequisites?
+I want to ask about prerequisites
+Tell me about prerequisites
+I need to know the prerequisites for a course
+prerequisites information for a course
+prerequisites information for a course please
+prerequisites info for a course thanks
+I want to know a course's prerequisites
+Information for prerequisites please
+Information for prerequisites thanks
+Info for prerequisites
+Info for a course's prerequisites
+Find prerequisites for a course
+Can I get information on when a course will be held?
+Can I get information on when a class will be held?
+I want to find information about a class's prerequisites
+I want to know what are the prerequisites for a course
+Prerequisites for a course
+Prerequisites for a course please
+Prerequisites for a course thanks
+Information about course prerequisites
+Class prerequisites info
+Class prerequisites information
+Course prerequisites info
+Course prerequisites information

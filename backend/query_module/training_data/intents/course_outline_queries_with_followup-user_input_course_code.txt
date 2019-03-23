@@ -1,0 +1,31 @@
+display_name course_outline_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types course_outline
+parent_followup course_outline_queries_with_followup
+input_context course_outline_queries_with_followup-followup
+{course code}
+{course code} please
+{course code} thanks
+I want to get the course outline for {course code}
+I want to get the course outline for {course code} thanks
+I want to get the course outline for {course code} please
+course outline for {course code} please
+course outline for {course code} thanks
+{course code}'s course outline
+I want to get the outline for {course code}
+I want to get the outline for {course code} thanks
+I want to get the outline for {course code} please
+outline for {course code} please
+outline for {course code} thanks
+{course code}'s outline
+Get me the outline for {course code}
+Get me the outline for {course code} please
+Get me the outline for {course code} thanks
+Get me the course outline for {course code} thanks
+Information for {course code}
+Information for {course code} please
+Information for {course code} thanks
+Show me the outline for {course code}
+Show me the outline for {course code} please
+Show me the outline for {course code} thanks
+Show me the course outline for {course code} thanks

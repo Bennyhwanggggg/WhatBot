@@ -16,5 +16,7 @@ Location of {course code}
 {course code}'s campus
 {course code}'s location
 {course code} location
+{course code} location please
+{course code} location thanks
 Where to go for {course code}?
 Which campus to go for {course code}?
