@@ -18,4 +18,9 @@ This week I started by moving the frontend to use react-redux instead of just pu
 After I finished that, I updated the unit tests for frontend and then worked on the query module
 and the NLP trainer for dialogflow. I completed the trainer such that we can now easily
 train the agent through code instead of using console on Dialogflow. The aim of this is so
-we can collect user data and use it to enhance our models even further. 
+we can collect user data and use it to enhance our models even further.
+
+Week 5
+Update the dialogflow trainer to be able to do follow ups and use contexts. Also updated training
+data and test cases for it to ensure accurate intent and entity detection. I also started working
+on the CI/CD build pipeline using Circle CI 
