@@ -127,7 +127,7 @@ def test_consultation_booking_command_1():
 
 def test_consultation_booking_command_2():
     query_module = QueryModule()
-    test_messages = ['Show me the available time slot on 11/11/19 06:13 for COMP9334',
+    test_messages = ['May I book the a course consultation on 11/11/19 06:13 for COMP9334?',
                      'May I book the time slot starts from 11/11/19 06:13 for COMP9334?',
                      'May I book the time slot starts from 06:13 on 11/11/19 for COMP9334?',
                      'Show me the available time slot on 11/11/2019 at 06:13 for COMP9334',
@@ -151,7 +151,7 @@ def test_consultation_booking_command_2():
 
 def test_consultation_booking_command_3():
     query_module = QueryModule()
-    test_messages = ['Show me the available time slot on 1/11/19 06:13 for COMP9334',
+    test_messages = ['I want to book a course consultation on 1/11/19 at 06:13 for COMP9334?',
                      'May I book the time slot starts from 1/11/19 06:13 for COMP9334?',
                      'May I book the time slot starts from 06:13 on 1/11/19 for COMP9334?',
                      'Show me the available time slot on 1/11/2019 at 06:13 for COMP9334',
