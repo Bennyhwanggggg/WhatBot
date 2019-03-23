@@ -338,7 +338,7 @@ class QueryModuleTrainer:
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.read_intents_data(path_to_read)
-            if not data or training_data_file in self.rules.restricted:
+            if not data: # or training_data_file in self.rules.restricted:
                 print('Skipping: {} due to restriction or no data'.format(training_data_file))
                 continue
             try:
@@ -501,7 +501,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_only.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_with_followup.txt')
         # query_module_trainer.create_intent(display_name=display_name,
         #                                    message_texts=message_texts,
         #                                    intent_types=intent_types,
