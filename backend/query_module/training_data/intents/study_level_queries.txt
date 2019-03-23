@@ -15,3 +15,11 @@ Give me the study level for {course code}
 {course code} study level
 study level for {course code}
 study level of {course code}
+Is {course code} for postgraduate?
+Is {course code} for undergraduate?
+Is {course code} for postgrad?
+Is {course code} for undergrad?
+Is {course code} for postgraduate??
+Is {course code} for undergraduate??
+Is {course code} for postgrad??
+Is {course code} for undergrad??

@@ -30,3 +30,5 @@ Show me the outline for {course code}
 Show me the outline for {course code} please
 Show me the outline for {course code} thanks
 Show me the course outline for {course code} thanks
+Show me {course code} thanks
+
