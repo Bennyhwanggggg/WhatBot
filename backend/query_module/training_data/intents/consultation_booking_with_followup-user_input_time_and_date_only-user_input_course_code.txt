@@ -4,6 +4,7 @@ intent_types consultation_booking
 parent_followup consultation_booking_with_followup-user_input_time_and_date_only
 input_context consultation_booking_with_followup-user_input_time_and_date_only-followup
 action consultation_booking_with_followup.consultation_booking_with_followup-user_input_time_and_date_only
+reset_contexts
 {course code}
 {course code} please
 {course code} thanks

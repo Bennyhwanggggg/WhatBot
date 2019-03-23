@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run: 
+          name: Install python dependencies
+          command: |
+            sudo pip install -r ./backend/requirements.txt
+      - run: 
+          name: Unit testing
+          command: |
+            ./backend/start_tests.sh

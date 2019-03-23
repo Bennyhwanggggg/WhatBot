@@ -1,6 +1,7 @@
 display_name school_and_faculty_queries
 message_texts $course
 intent_types school_and_faculty
+reset_contexts
 Which school runs {course code}?
 Which faculty runs {course code}?
 Which school and faculty runs {course code}?

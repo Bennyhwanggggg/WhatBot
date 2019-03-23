@@ -62,6 +62,7 @@ class QueryModuleTrainer:
         self.entity_types_client = dialogflow.EntityTypesClient()
         self.contexts_client = dialogflow.ContextsClient()
         self.session_id = '-'
+        self.rules = Rules()
 
         self.intents_parent = self.intents_client.project_agent_path(self.project_id)
         self.entity_types_parent = self.entity_types_client.project_agent_path(project_id)
@@ -128,10 +129,11 @@ class QueryModuleTrainer:
         data_file.close()
         display_name, message_texts, intent_types, parent_followup, clean_data = None, [], [], [], []
         output_contexts, input_contexts, action = [], [], []
+        reset_context = False
         if not data or not data[0]:
             print('Empty intents data file:\n{}\n'.format(data_file))
             return display_name, message_texts, intent_types, parent_followup, \
-                   input_contexts, output_contexts, action, clean_data
+                   input_contexts, output_contexts, action, clean_data, reset_context
         data = deque(data)
         while data:
             line = data.popleft()
@@ -149,13 +151,15 @@ class QueryModuleTrainer:
                 output_contexts.append(' '.join(line.split()[1:]))
             elif line.startswith('action'):
                 action.append(' '.join(line.split()[1:]))
+            elif line.startswith('reset_contexts'):
+                reset_context = True
             else:
                 clean_data.append(line)
         if not clean_data or not display_name or not message_texts or not intent_types:
             print('Error in intents data file configuration: {}'.format(data_file))
-            return None, [], [], [], [], [], [], []
+            return None, [], [], [], [], [], [], [], False
         return display_name, message_texts, intent_types, parent_followup, \
-               input_contexts, output_contexts, action, clean_data
+               input_contexts, output_contexts, action, clean_data, reset_context
 
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
@@ -199,6 +203,8 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
+        if len(parse_keys) > 2:
+            size = 15
         for parse_key in parse_keys:
             sub_string = '{%s}' % parse_key
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
@@ -212,7 +218,7 @@ class QueryModuleTrainer:
 
     def create_intent(self, display_name, training_data, message_texts,
                       intent_types, data_is_parsed=False, parent_followup=[],
-                      input_contexts=[], output_contexts=[], action=[]):
+                      input_contexts=[], output_contexts=[], action=[], reset_contexts=False):
         """ Method for creating an intent. However, if the display_name already exist
         in dialogflow, it will be run into an error
 
@@ -271,7 +277,6 @@ class QueryModuleTrainer:
         message = dialogflow.types.Intent.Message(text=text)
 
         action = action[0] if action else None
-        # parameters = [dialogflow.types.Intent.Parameter(display_name=param, is_list=True) for param in ['course', 'time', 'date']] if action else None
         parent_followup = 'projects/{}/agent/intents/{}'.format(self.project_id,
                                                                 self._get_intent_ids(parent_followup[0])[0]) if parent_followup else None
         intent = dialogflow.types.Intent(display_name=display_name,
@@ -282,6 +287,7 @@ class QueryModuleTrainer:
                                          output_contexts=[self.create_context(context) for context in
                                                           output_contexts],
                                          action=action,
+                                         reset_contexts=reset_contexts,
                                          messages=[message])
 
         response = self.intents_client.create_intent(self.intents_parent, intent)
@@ -331,15 +337,17 @@ class QueryModuleTrainer:
         training_data_folder = os.path.join(PATH, training_data_folder)
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
-            display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = self.read_intents_data(path_to_read)
-            if not data or training_data_file in Rules.restricted:
+            display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.read_intents_data(path_to_read)
+            if not data or training_data_file in self.rules.restricted:
+                print('Skipping: {} due to restriction or no data'.format(training_data_file))
                 continue
             try:
                 if self._get_intent_ids(display_name):
                     self.delete_intent(display_name)
                 self.create_intent(display_name, data, message_texts, intent_types,
                                    input_contexts=input_contexts, output_contexts=output_contexts,
-                                   parent_followup=parent_followup, action=action, data_is_parsed=True)
+                                   parent_followup=parent_followup, action=action, reset_contexts=reset_contexts,
+                                   data_is_parsed=True)
             except Exception as e:
                 print('Error occurred with {}: {}'.format(display_name, str(e)))
             print('\n', '=' * 30)
@@ -434,7 +442,8 @@ class QueryModuleTrainer:
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, entity_values, synonyms = self.read_entities_data(path_to_read)
-            if not entity_values or training_data_file in Rules.restricted:
+            if not entity_values or training_data_file in self.rules.restricted:
+                print('Skipping: {}'.format(training_data_file))
                 continue
             try:
                 if self._get_entity_ids(display_name):
@@ -492,7 +501,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_only.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_only.txt')
         # query_module_trainer.create_intent(display_name=display_name,
         #                                    message_texts=message_texts,
         #                                    intent_types=intent_types,
@@ -501,6 +510,7 @@ if __name__ == '__main__':
         #                                    output_contexts=output_contexts,
         #                                    action=action,
         #                                    data_is_parsed=True,
+        #                                    reset_contexts=reset_contexts
         #                                    parent_followup=parent_followup)
-        query_module_trainer.create_context(output_contexts[0])
-        print(query_module_trainer.find_context(display_name=output_contexts[0]))
+        # query_module_trainer.create_context(output_contexts[0])
+        # print(query_module_trainer.find_context(display_name=output_contexts[0]))
