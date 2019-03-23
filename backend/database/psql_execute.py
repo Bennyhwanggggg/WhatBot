@@ -118,7 +118,7 @@ def add_courselist(course_code, course_name, timetable, ADK, comment):
 
 
 #add data into course list table
-def add_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std):
+def add_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std):
     try:
         connection = psycopg2.connect(user = "whatbot",
                                   password = "12345678",
@@ -126,7 +126,7 @@ def add_handbook(CID, title, credit, prerequisite, outline_url, faculty_url, sch
                                   port = "5432",
                                   database = "postgres")
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(CID, title, credit, prerequisite, outline_url, faculty_url, school_url, Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std))
+        cursor.execute("INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std))
 
         connection.commit()
         print("add data into course_list successfully!!")
@@ -171,22 +171,23 @@ if __name__ == '__main__':
 
     print("12345678")
     print(COURSE)
-    wb = xlrd.open_workbook(COURSE)
-    sheet = wb.sheet_by_index(0)
-
-    sheet.cell_value(0, 0)
+    # wb = xlrd.open_workbook(COURSE)
+    # sheet = wb.sheet_by_index(0)
+    #
+    # sheet.cell_value(0, 0)
     #print(sheet.row_values(1))
 
-    for i in range(1, 103):
-        row = sheet.row_values(i)
-        print(row)
-        add_courselist(row[0], row[1], row[2], row[3], row[4])
+    # for i in range(1, 103):
+    #     row = sheet.row_values(i)
+    #     print(row)
+    #     add_courselist(row[0], row[1], row[2], row[3], row[4])
         #for column in row:
          #   print(column)
             #add_courselist(column[0], column[1], column[2], column[3], column[4])
 
     #add_courselist("COMP9311", "Database Systems", "http://timetable.unsw.edu.au/2019/COMP9311.html", "", "")
-    # add_handbook("COMP3900",
+
+    # add_handbook("COMP9900",
     #             "Handbook 2019 - Course - Computer Science Project - COMP3900",
     #             "6 Units of Credit",
     #             "Prerequisite: COMP1531, and COMP2521 or COMP1927, and enrolled in a BSc Computer Science major with completion of 120 uoc",
@@ -203,6 +204,6 @@ if __name__ == '__main__':
     #             "$5790")
     # a = connect_course_list("COMP9321")
     # print(a)
-    result = get_course_outline("COMP3900")
-    print("outline: ", result)
+    # result = get_course_outline("COMP3900")
+    # print("outline: ", result)
     #app.run(debug=True, host='0.0.0.0')

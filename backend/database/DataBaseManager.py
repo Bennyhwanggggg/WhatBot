@@ -73,11 +73,20 @@ class DataBaseManager:
                            campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std,
                            international_std):
         query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, " \
-        "Offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
+        "offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
         "international_std) VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(
         cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description,
         pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std)
+
+        # query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (
+        # cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description,
+        # pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std)
+
+        # query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"%(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std)
+
+
         return self.execute_query(query)
+
 
     def get_course(self, cid):
         query = "SELECT * from course_list where course_code like {}".format('%{}'.format(cid))
@@ -86,7 +95,7 @@ class DataBaseManager:
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
-    result = data_base_manager.get_course_outline("COMP3900")
+    result = data_base_manager.get_course_outline("COMP9900")
     print("outline: ", result)
 
 
