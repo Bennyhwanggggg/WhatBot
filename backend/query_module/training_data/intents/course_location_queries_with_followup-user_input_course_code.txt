@@ -1,0 +1,28 @@
+display_name course_location_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types course_location
+parent_followup course_location_queries_with_followup
+input_context course_location_queries_with_followup-followup
+reset_contexts
+{course code}
+{course code} please
+{course code} thanks
+I want to get the course location for {course code}
+I want to get the course location for {course code} thanks
+I want to get the course location for {course code} please
+course location for {course code} please
+course location for {course code} thanks
+{course code}'s course location
+I want to get the location for {course code}
+I want to get the location for {course code} thanks
+I want to get the location for {course code} please
+Location for {course code} please
+Location for {course code} thanks
+{course code}'s location
+Get me the location for {course code}
+Get me the location for {course code} please
+Get me the location for {course code} thanks
+Get me the course location for {course code} thanks
+Information for {course code}
+Information for {course code} please
+Information for {course code} thanks

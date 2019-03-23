@@ -49,8 +49,8 @@ class DataBaseManager:
     def get_course_outline(self, cid):
         key_part = '%' + cid
         query = "SELECT description,outline_url from info_handbook where cid like '%s'"%key_part
-        result_arr = self.execute_query(query)
-        return result_arr[0][0] + "for more information go to " + result_arr[0][1]
+        return self.execute_query(query)
+
 
     def get_all_lecturers(self):
         query = "SELECT * from lecturer"

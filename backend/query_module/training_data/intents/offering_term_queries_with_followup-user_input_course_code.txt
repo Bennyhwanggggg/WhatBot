@@ -1,0 +1,33 @@
+display_name offering_term_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types offering_term
+parent_followup offering_term_queries_with_followup
+input_context offering_term_queries_with_followup-followup
+reset_contexts
+{course code}
+{course code} please
+{course code} thanks
+I want to get the offering time for {course code}
+I want to get the offering time for {course code} thanks
+I want to get the offering time for {course code} please
+offering time for {course code} please
+offering time for {course code} thanks
+{course code}'s offering time
+I want to get the offering term for {course code}
+I want to get the offering term for {course code} thanks
+I want to get the offering term for {course code} please
+offering term for {course code} please
+offering term for {course code} thanks
+{course code}'s offering term
+Get me the offering term for {course code}
+Get me the offering term for {course code} please
+Get me the offering term for {course code} thanks
+Get me the offering time for {course code} thanks
+Information for {course code}
+Information for {course code} please
+Information for {course code} thanks
+Show me the offering term for {course code}
+Show me the offering term for {course code} please
+Show me the offering term for {course code} thanks
+Show me the offering time for {course code} thanks
+

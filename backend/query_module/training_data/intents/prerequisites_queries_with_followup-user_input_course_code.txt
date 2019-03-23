@@ -1,0 +1,32 @@
+display_name prerequisites_queries_with_followup-user_input_course_code
+message_texts $course
+intent_types prerequisites
+parent_followup prerequisites_queries_with_followup
+input_context prerequisites_queries_with_followup-followup
+reset_contexts
+{course code}
+{course code} please
+{course code} thanks
+I want to get the prerequisites for {course code}
+I want to get the prerequisites for {course code} thanks
+I want to get the prerequisites for {course code} please
+prerequisites for {course code} please
+prerequisites for {course code} thanks
+{course code}'s prerequisites
+I want to get the prerequisite for {course code}
+I want to get the prerequisite for {course code} thanks
+I want to get the prerequisite for {course code} please
+prerequisite for {course code} please
+prerequisite for {course code} thanks
+{course code}'s prerequisite
+Get me the prerequisite for {course code}
+Get me the prerequisite for {course code} please
+Get me the prerequisite for {course code} thanks
+Get me the prerequisites for {course code} thanks
+Information for {course code}
+Information for {course code} please
+Information for {course code} thanks
+Show me the prerequisite for {course code}
+Show me the prerequisite for {course code} please
+Show me the prerequisite for {course code} thanks
+Show me the prerequisites for {course code} thanks

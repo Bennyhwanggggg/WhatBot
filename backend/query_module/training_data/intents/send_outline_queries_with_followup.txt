@@ -1,0 +1,19 @@
+display_name send_outline_queries_with_followup
+message_texts Sure! What is the course code of the course you want me to send outline for?
+intent_types send_outline
+output_context send_outline_queries_with_followup-followup
+I want to get a course outline for a course
+I want to receive the a course outline
+Send me a course outline
+Send me information about a course
+Send me a course's course outline
+Receive a course outline
+Receive a course information
+I want to get a pdf of a course outline
+Get a course outline's pdf
+Get a course outline pdf
+Get pdf for a course outline
+Send me the pdf of a course outline
+Send me a course outline in pdf
+Send me course outline in pdf format
+Send me course outline in pdf format thanks

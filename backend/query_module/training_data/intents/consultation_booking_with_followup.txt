@@ -1,0 +1,30 @@
+display_name consultation_booking_with_followup
+message_texts Sure! What is the course code of the course you would like to book it for? Also, what time and date?
+intent_types consultation_booking
+I want to book a consultation
+I want to book a course consultation
+Book course consultation
+Make a course consultation booking
+Book a course consultation
+Book a consultation
+Please make a course consultation booking
+Make course consultation booking
+I want to have an appointment with the lecturer
+I want to have an appointment with the lecturer in charge
+I want to have an appointment with the LiC
+Make appointment with LiC
+Make appointment with lecturer
+Make appointment with lecturer in charge
+I want to make an appointment with the lecturer
+I want to make an appointment with the lecturer in charge
+I want to make an appointment with the LiC
+Make appoint with a lecturer
+Make course consultation appointment
+Make a consultation booking
+Make consultation booking
+Make an appointment for course consultation
+Reserve course consultation booking
+Reserve course consultation time
+Reserve a course consultation booking
+Reserve a course consultation time
+Reserve a course consultation time with a lecturer in charge

@@ -1,0 +1,25 @@
+display_name consultation_booking_with_followup-user_input_time_and_date_only-user_input_course_code
+message_texts $course @@@ #consultation_booking_with_followup-user_input_time_and_date_only-followup.time @@@ #consultation_booking_with_followup-user_input_time_and_date_only-followup.date
+intent_types consultation_booking
+parent_followup consultation_booking_with_followup-user_input_time_and_date_only
+input_context consultation_booking_with_followup-user_input_time_and_date_only-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_input_time_and_date_only
+reset_contexts
+{course code}
+{course code} please
+{course code} thanks
+I want book for {course code}
+I want to book for {course code} thanks
+I want to book for {course code} please
+I want book consultation for {course code}
+I want to book course consultation for {course code} thanks
+I want to book course consultation for {course code} please
+Book for {course code} please
+Book consultation for {course code} please
+Book consultation for {course code} thanks
+Book course consultation for {course code} please
+Book course consultation for {course code} thanks
+Please make an booking for {course code}
+Please make an booking for {course code} thanks
+Make an booking for {course code} thanks
+make an booking for {course code} please

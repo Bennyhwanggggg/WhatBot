@@ -1,6 +1,7 @@
 display_name course_outline_queries
 message_texts $course
 intent_types course_outline
+reset_contexts
 What is {course code} about?
 Tell me more about {course code}
 What can I learn in {course code}
@@ -16,3 +17,9 @@ I want the outline for {course code}
 Give me the outline for {course code}
 {course code} outline
 {course code} course outline
+Course description for {course code} please
+Course description for {course code}
+Course description for {course code} thanks
+Course description for {course code} thank you
+I want to see the course outline for {course code}
+I want to see the course description for {course code}
