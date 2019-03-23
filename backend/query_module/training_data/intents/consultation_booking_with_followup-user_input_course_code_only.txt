@@ -2,8 +2,8 @@ display_name consultation_booking_with_followup-user_input_course_code_only
 message_texts Sure! Please tell me which date and time you would like to book a course consultation for $course.
 intent_types consultation_booking
 parent_followup consultation_booking_with_followup
-input_context consultation_booking_with_followup-followup
 output_context consultation_booking_with_followup-user_input_course_code_only-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_course_code_only
 {course code}
 {course code} please
 {course code} thanks

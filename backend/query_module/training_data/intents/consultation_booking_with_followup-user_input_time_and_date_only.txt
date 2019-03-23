@@ -2,8 +2,8 @@ display_name consultation_booking_with_followup-user_input_time_and_date_only
 message_texts Sure! Please tell me the course code of the course you want to book consultation for?
 intent_types consultation_booking
 parent_followup consultation_booking_with_followup
-input_context consultation_booking_with_followup-followup
 output_context consultation_booking_with_followup-user_input_time_and_date_only-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_input_time_and_date_only
 I want to book on {date} at {time}
 I want to book at {time} at {date}
 Book on {date} at {time}

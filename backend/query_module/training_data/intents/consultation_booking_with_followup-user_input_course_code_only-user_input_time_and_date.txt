@@ -3,6 +3,7 @@ message_texts #consultation_booking_with_followup-user_input_course_code_only-fo
 intent_types consultation_booking
 parent_followup consultation_booking_with_followup-user_input_course_code_only
 input_context consultation_booking_with_followup-user_input_course_code_only-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_course_code_only
 I want to book on {date} at {time}
 I want to book at {time} at {date}
 Book on {date} at {time}

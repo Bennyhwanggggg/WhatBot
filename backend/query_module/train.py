@@ -127,10 +127,11 @@ class QueryModuleTrainer:
         data = data_file.read().split('\n')
         data_file.close()
         display_name, message_texts, intent_types, parent_followup, clean_data = None, [], [], [], []
-        output_contexts, input_contexts = [], []
+        output_contexts, input_contexts, action = [], [], []
         if not data or not data[0]:
             print('Empty intents data file:\n{}\n'.format(data_file))
-            return None, [], [], [], [], [], []
+            return display_name, message_texts, intent_types, parent_followup, \
+                   input_contexts, output_contexts, action, clean_data
         data = deque(data)
         while data:
             line = data.popleft()
@@ -146,12 +147,15 @@ class QueryModuleTrainer:
                 input_contexts.append(' '.join(line.split()[1:]))
             elif line.startswith('output_context'):
                 output_contexts.append(' '.join(line.split()[1:]))
+            elif line.startswith('action'):
+                action.append(' '.join(line.split()[1:]))
             else:
                 clean_data.append(line)
         if not clean_data or not display_name or not message_texts or not intent_types:
             print('Error in intents data file configuration: {}'.format(data_file))
-            return None, [], [], [], [], [], []
-        return display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, clean_data
+            return None, [], [], [], [], [], [], []
+        return display_name, message_texts, intent_types, parent_followup, \
+               input_contexts, output_contexts, action, clean_data
 
     def _get_training_course_codes(self, size):
         return [random.choice(self.course_codes) for _ in range(size)]
@@ -208,7 +212,7 @@ class QueryModuleTrainer:
 
     def create_intent(self, display_name, training_data, message_texts,
                       intent_types, data_is_parsed=False, parent_followup=[],
-                      input_contexts=[], output_contexts=[]):
+                      input_contexts=[], output_contexts=[], action=[]):
         """ Method for creating an intent. However, if the display_name already exist
         in dialogflow, it will be run into an error
 
@@ -266,62 +270,19 @@ class QueryModuleTrainer:
         text = dialogflow.types.Intent.Message.Text(text=message_texts)
         message = dialogflow.types.Intent.Message(text=text)
 
-        if parent_followup and output_contexts and input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
-                                                 self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             input_context_names=[self.create_context(context).name for context in
-                                                                  input_contexts],
-                                             output_contexts=[self.create_context(context) for context in
-                                                              output_contexts],
-                                             messages=[message])
-        elif parent_followup and output_contexts and not input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
-                                                 self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             output_contexts=[self.create_context(context) for context in
-                                                              output_contexts],
-                                             messages=[message])
-        elif parent_followup and not output_contexts and input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
-                                                 self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             input_context_names=[self.create_context(context).name for context in
-                                                                  input_contexts],
-                                             messages=[message])
-        elif not parent_followup and output_contexts and input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             input_context_names=[self.create_context(context).name for context in
-                                                                  input_contexts],
-                                             output_contexts=[self.create_context(context) for context in
-                                                              output_contexts],
-                                             messages=[message])
-        elif parent_followup and not output_contexts and not input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             parent_followup_intent_name='projects/{}/agent/intents/{}'.format(
-                                                 self.project_id, self._get_intent_ids(parent_followup[0])[0]),
-                                             messages=[message])
-        elif not parent_followup and output_contexts and not input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             output_contexts=[self.create_context(context) for context in
-                                                              output_contexts],
-                                             messages=[message])
-        elif not parent_followup and not output_contexts and input_contexts:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             input_context_names=[self.create_context(context).name for context in
-                                                                  input_contexts],
-                                             messages=[message])
-        else:
-            intent = dialogflow.types.Intent(display_name=display_name,
-                                             training_phrases=training_phrases,
-                                             messages=[message])
+        action = action[0] if action else None
+        # parameters = [dialogflow.types.Intent.Parameter(display_name=param, is_list=True) for param in ['course', 'time', 'date']] if action else None
+        parent_followup = 'projects/{}/agent/intents/{}'.format(self.project_id,
+                                                                self._get_intent_ids(parent_followup[0])[0]) if parent_followup else None
+        intent = dialogflow.types.Intent(display_name=display_name,
+                                         training_phrases=training_phrases,
+                                         parent_followup_intent_name=parent_followup,
+                                         input_context_names=[self.create_context(context).name for context in
+                                                              input_contexts],
+                                         output_contexts=[self.create_context(context) for context in
+                                                          output_contexts],
+                                         action=action,
+                                         messages=[message])
 
         response = self.intents_client.create_intent(self.intents_parent, intent)
         print('Intent created: {}'.format(response))
@@ -354,7 +315,7 @@ class QueryModuleTrainer:
         :return: None
         """
         intents = self.intents_client.list_intents(self.intents_parent)
-        intent_names = [intent.name for intent in intents if 'follow_up' in intent.name]
+        intent_names = [intent.name for intent in intents]
         intent_ids = [intent_name.split('/')[-1] for intent_name in intent_names]
         for intent_id in intent_ids:
             intent_path = self.intents_client.intent_path(self.project_id, intent_id)
@@ -370,7 +331,7 @@ class QueryModuleTrainer:
         training_data_folder = os.path.join(PATH, training_data_folder)
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
-            display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, data = self.read_intents_data(path_to_read)
+            display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = self.read_intents_data(path_to_read)
             if not data:
                 continue
             try:
@@ -378,7 +339,7 @@ class QueryModuleTrainer:
                     self.delete_intent(display_name)
                 self.create_intent(display_name, data, message_texts, intent_types,
                                    input_contexts=input_contexts, output_contexts=output_contexts,
-                                   parent_followup=parent_followup, data_is_parsed=True)
+                                   parent_followup=parent_followup, action=action, data_is_parsed=True)
             except Exception as e:
                 print('Error occurred with {}: {}'.format(display_name, str(e)))
             print('\n', '=' * 30)
@@ -483,14 +444,22 @@ class QueryModuleTrainer:
                 print('Error occurred with {}: {}'.format(display_name, str(e)))
             print('\n', '=' * 30)
 
-    def create_context(self, display_name, lifespan_count=4):
-        session_id = '-'
+    def create_context(self, display_name, session_id='-', lifespan_count=4):
+        existing_context = self.find_context(display_name)
+        if existing_context:
+            return existing_context[0]
         session_path = self.contexts_client.session_path(self.project_id, session_id)
         context_name = self.contexts_client.context_path(self.project_id, session_id, display_name)
         context = dialogflow.types.Context(name=context_name, lifespan_count=lifespan_count)
         response = self.contexts_client.create_context(session_path, context)
         print('Context created: \n{}'.format(response))
         return context
+
+    def find_context(self, display_name, session_id='-'):
+        session_path = self.contexts_client.session_path(self.project_id, session_id)
+        contexts = self.contexts_client.list_contexts(session_path)
+        return [context for context in contexts if context.name == display_name]
+
 
 
 if __name__ == '__main__':
@@ -520,13 +489,14 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, data = query_module_trainer.read_intents_data('./training_data/intents/course_fee_queries_with_followup-user_input_course_code.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = query_module_trainer.read_intents_data('./training_data/intents/course_fee_queries_with_followup-user_input_course_code.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                            message_texts=message_texts,
                                            intent_types=intent_types,
                                            training_data=data,
                                            input_contexts=input_contexts,
                                            output_contexts=output_contexts,
+                                           action=action,
                                            data_is_parsed=True,
                                            parent_followup=parent_followup)
         # query_module_trainer.create_context(display_name=123)
