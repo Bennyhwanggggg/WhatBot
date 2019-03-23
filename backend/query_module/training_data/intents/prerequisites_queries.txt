@@ -1,6 +1,7 @@
 display_name prerequisites_queries
 message_texts $course
 intent_types prerequisites
+reset_contexts
 What classes do I need to take before doing {course code}?
 What are the prerequisites for {course code}?
 What courses do I need to take before doing {course code}?
@@ -18,3 +19,8 @@ I want to know what courses I need to take before doing {course code}
 What are the requirements for {course code}?
 What are the requirements to do {course code}?
 {course code} prerequisites
+What courses do I need to take before {course code}?
+{course code}'s prerequisites
+{course code}'s requirements
+prerequisites for {course code}
+Requirements for {course code}

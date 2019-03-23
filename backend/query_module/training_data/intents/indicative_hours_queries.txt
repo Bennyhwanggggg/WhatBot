@@ -1,6 +1,7 @@
 display_name indicative_hours_queries
 message_texts $course
 intent_types indicative_hours
+reset_contexts
 What is the indicative hours for {course code}?
 Tell me the indicative hours for {course code}
 Give me the indicative hours for {course code}
@@ -19,3 +20,11 @@ Expected work load for {course code}
 Expected wordload for {course code}
 {course code}'s work load
 {course code}'s workload
+Number of hours for {course code}
+Number of hours for {course code}?
+Indicative hours for {course code}?
+Work load for {course code}??
+Work load for {course code}?
+Work load for {course code}
+Workload for {course code}??
+Workload for {course code}??

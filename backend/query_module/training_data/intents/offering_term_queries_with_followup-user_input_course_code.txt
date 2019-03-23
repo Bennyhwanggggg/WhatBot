@@ -3,6 +3,7 @@ message_texts $course
 intent_types offering_term
 parent_followup offering_term_queries_with_followup
 input_context offering_term_queries_with_followup-followup
+reset_contexts
 {course code}
 {course code} please
 {course code} thanks
