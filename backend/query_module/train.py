@@ -30,7 +30,6 @@ import os
 import re
 import random
 import datetime
-from uuid import uuid4
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -62,6 +61,7 @@ class QueryModuleTrainer:
         self.intents_client = dialogflow.IntentsClient()
         self.entity_types_client = dialogflow.EntityTypesClient()
         self.contexts_client = dialogflow.ContextsClient()
+        self.session_id = '-'
 
         self.intents_parent = self.intents_client.project_agent_path(self.project_id)
         self.entity_types_parent = self.entity_types_client.project_agent_path(project_id)
@@ -444,21 +444,24 @@ class QueryModuleTrainer:
                 print('Error occurred with {}: {}'.format(display_name, str(e)))
             print('\n', '=' * 30)
 
-    def create_context(self, display_name, session_id='-', lifespan_count=4):
+    def create_context(self, display_name, lifespan_count=4):
         existing_context = self.find_context(display_name)
         if existing_context:
+            print('Context already exist:\n{}'.format(existing_context[0]))
             return existing_context[0]
-        session_path = self.contexts_client.session_path(self.project_id, session_id)
-        context_name = self.contexts_client.context_path(self.project_id, session_id, display_name)
+        session_path = self.contexts_client.session_path(self.project_id, self.session_id)
+        context_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)
         context = dialogflow.types.Context(name=context_name, lifespan_count=lifespan_count)
         response = self.contexts_client.create_context(session_path, context)
-        print('Context created: \n{}'.format(response))
+        print('Context created:\n{}'.format(response))
         return context
 
-    def find_context(self, display_name, session_id='-'):
-        session_path = self.contexts_client.session_path(self.project_id, session_id)
+    def find_context(self, display_name):
+        session_path = self.contexts_client.session_path(self.project_id, self.session_id)
         contexts = self.contexts_client.list_contexts(session_path)
-        return [context for context in contexts if context.name == display_name]
+        target_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)
+        return [context for context in contexts if context.name == target_name]
+
 
 
 
@@ -489,14 +492,15 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = query_module_trainer.read_intents_data('./training_data/intents/course_fee_queries_with_followup-user_input_course_code.txt')
-        query_module_trainer.create_intent(display_name=display_name,
-                                           message_texts=message_texts,
-                                           intent_types=intent_types,
-                                           training_data=data,
-                                           input_contexts=input_contexts,
-                                           output_contexts=output_contexts,
-                                           action=action,
-                                           data_is_parsed=True,
-                                           parent_followup=parent_followup)
-        # query_module_trainer.create_context(display_name=123)
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_only.txt')
+        # query_module_trainer.create_intent(display_name=display_name,
+        #                                    message_texts=message_texts,
+        #                                    intent_types=intent_types,
+        #                                    training_data=data,
+        #                                    input_contexts=input_contexts,
+        #                                    output_contexts=output_contexts,
+        #                                    action=action,
+        #                                    data_is_parsed=True,
+        #                                    parent_followup=parent_followup)
+        query_module_trainer.create_context(output_contexts[0])
+        print(query_module_trainer.find_context(display_name=output_contexts[0]))
