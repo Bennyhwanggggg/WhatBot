@@ -30,15 +30,17 @@ class DataBaseManager:
             print('Connection to AWS closed')
         self.connection, self.cursor = None, None
 
-    def execute_query(self, query):
+    def execute_query(self, query, *args):
         result = None
         try:
             if not self.connection and not self.cursor:
                 self.connect()
-            self.cursor.execute(query)
-            regrex = re.compile(r'SELECT', re.IGNORECASE)
-            result = self.cursor.fetchall() if regrex.search(query) else "execute successfully"
-
+            if args:
+                self.cursor.execute(query, (args[0]))
+            else:
+                self.cursor.execute(query)
+            regex = re.compile(r'SELECT', re.IGNORECASE)
+            result = self.cursor.fetchall() if regex.search(query) else "execute successfully"
         except (Exception, psycopg2.Error) as e:
             print("Error executing query:\n{}".format(str(e)))
         finally:
@@ -48,44 +50,49 @@ class DataBaseManager:
 
     def get_course_outline(self, cid):
         key_part = '%' + cid
-        query = "SELECT description,outline_url from info_handbook where cid like '%s'"%key_part
-        return self.execute_query(query)
+        query = "SELECT description,outline_url from info_handbook where cid like '%s'"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
 
     def get_all_lecturers(self):
         query = "SELECT * from lecturer"
         return self.execute_query(query)
 
     def make_consultation_booking(self, tid):
-        query = "UPDATE Timeslot SET available = {}  WHERE tid = {}".format('False', tid)
-        return self.execute_query(query)
+        query = "UPDATE Timeslot SET available = %s  WHERE tid = %s"
+        inputs = ('False', tid, )
+        return self.execute_query(query, inputs)
 
     def get_consultation_timeslots(self, tid):
-        query = "SELECT tid, start_time, end_time, available from Timeslot Where tid = {}".format(tid)
-        return self.execute_query(query)
+        query = "SELECT tid, start_time, end_time, available from Timeslot Where tid = %s"
+        inputs = (tid, )
+        return self.execute_query(query, inputs)
 
     def add_course(self, course_code, course_name, timetable, adk, comment):
-        query = "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES ({},{},{},{},{})".format(
-        course_code, course_name, timetable, adk, comment)
-        return self.execute_query(query)
+        query = "INSERT INTO courselist(course_code, course_name, timetable, ADK, comment) VALUES (%s, %s, %s, %s, %s)"
+        inputs = (course_code, course_name, timetable, adk, comment, )
+        return self.execute_query(query, inputs)
 
     def add_handbook_entry(self, cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term,
                            campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std,
                            international_std):
         query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, " \
         "offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
-        "international_std) VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(
-        cid, title, credit, prerequisite, outline_url, faculty_url, school_url, offer_term, campus, description,
-        pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, international_std)
-        return self.execute_query(query)
+        "international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        inputs = (cid, title, credit, prerequisite, outline_url, faculty_url,
+                  school_url, offer_term, campus, description, pdf_url,
+                  indicative_contact_hr, commonwealth_std, domestic_std, international_std, )
+        return self.execute_query(query, inputs)
 
     def get_course(self, cid):
-        query = "SELECT * from course_list where course_code like {}".format('%{}'.format(cid))
-        return self.execute_query(query)
+        key_part = '%' + cid
+        query = "SELECT * from course_list where course_code like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
 
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
     result = data_base_manager.get_course_outline("COMP9900")
-    print("outline: ", result)
 
 
