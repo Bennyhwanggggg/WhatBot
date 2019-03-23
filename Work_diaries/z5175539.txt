@@ -22,5 +22,5 @@ we can collect user data and use it to enhance our models even further.
 
 Week 5
 Update the dialogflow trainer to be able to do follow ups and use contexts. Also updated training
-data and test cases for it to ensure accurate intent and entity detection. I also started working
+data and test cases for it to ensure accurate intent and entity detection. I also finished setting up
 on the CI/CD build pipeline using Circle CI 
