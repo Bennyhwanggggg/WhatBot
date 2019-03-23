@@ -17,3 +17,28 @@ Book course consultation for {course code} on {date} {time}
 Reserve course consultation for {course code} at {time} on {date}
 Reserve course consultation for {course code} at {time} {date}
 Reserve course consultation for {course code} at {date} {time}
+I want to book a consultation for {course code} at {date} {time}
+I want to book a course consultation at {date} {time}
+Book course consultation for {course code} at {date} {time}
+Make a course consultation booking for {course code} at {date} {time}
+Book a course consultation for {course code} at {date} {time}
+Book a consultation for {course code} at {date} {time}
+Please make a course consultation booking for {course code} at {date} {time}
+Make course consultation booking for {course code} at {date} {time}
+I want to have an appointment with the lecturer for {course code} at {date} {time}
+I want to have an appointment with the lecturer in charge for {course code} at {date} {time}
+I want to have an appointment with the LiC for {course code} at {date} {time}
+Make appointment with LiC for {course code} at {date} {time}
+Make appointment with lecturer for {course code} at {date} {time}
+Make appointment with lecturer in charge for {course code} at {date} {time}
+I want to make an appointment with the lecturer for {course code} at {date} {time}
+I want to make an appointment with the lecturer in charge for {course code} at {date} {time}
+I want to make an appointment with the LiC for {course code} at {date} {time}
+Make appoint with a lecturer for {course code} at {date} {time}
+Make course consultation appointment for {course code} at {date} {time}
+Make a consultation booking for {course code} at {date} {time}
+Make consultation booking for {course code} at {date} {time}
+Make an appointment for course consultation for {course code} at {date} {time}
+On {date} at {time} make a course consultation booking for {course code}
+On {date} at {time} make a course consultation booking with the lecturer in charge for {course code}
+On {date} at {time} make a course consultation booking with the LiC for {course code}
