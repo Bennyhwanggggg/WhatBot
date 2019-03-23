@@ -24,12 +24,12 @@
           by another intent, Dialogflow will throw an error, so make sure you delete that
           intent first.
 """
-
 import dialogflow_v2 as dialogflow
 import os
 import re
 import random
 import datetime
+from conf.Restriction import Rules
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -332,7 +332,7 @@ class QueryModuleTrainer:
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data = self.read_intents_data(path_to_read)
-            if not data:
+            if not data or training_data_file in Rules.restricted:
                 continue
             try:
                 if self._get_intent_ids(display_name):
@@ -434,7 +434,7 @@ class QueryModuleTrainer:
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, entity_values, synonyms = self.read_entities_data(path_to_read)
-            if not entity_values:
+            if not entity_values or training_data_file in Rules.restricted:
                 continue
             try:
                 if self._get_entity_ids(display_name):
