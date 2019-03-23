@@ -1,9 +1,9 @@
 display_name consultation_booking_with_followup-user_input_course_code_only-user_input_time_and_date
 message_texts #consultation_booking_with_followup-user_input_course_code_only-followup.course  @@@ $time @@@ $date
 intent_types consultation_booking
-parent_followup consultation_booking_with_followup-user_input_course_code_only
-input_context consultation_booking_with_followup-user_input_course_code_only-followup
-action consultation_booking_with_followup.consultation_booking_with_followup-user_course_code_only
+parent_followup consultation_booking_with_followup-user_input_course_code_only_with_followup
+input_context consultation_booking_with_followup-user_input_course_code_only_with_followup-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_course_code_only_with_followup
 reset_contexts
 I want to book on {date} at {time}
 I want to book at {time} at {date}
