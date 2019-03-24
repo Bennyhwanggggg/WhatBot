@@ -20,26 +20,6 @@ class DataExtractor:
         #read the html
         soup = BeautifulSoup(htmltext, 'html.parser')
 
-        #store the data we need
-        # self.details["Title"] = soup.title.string
-        # self.details["Description"] = soup.find(id="readMoreIntro").div.p.string
-        # self.details["Credit"] = soup.find_all('strong')[1].string
-        # self.details["Prerequisite"] = soup.find(id="readMoreSubjectConditions").div.div.string
-        # self.details["Course Outline"] = soup.find(id="subject-outline").div.a.attrs['href']
-        # self.details["Faculty"] = soup.select('.o-attributes-table-item ')[0].a.attrs['href']
-        # self.details["School"] = soup.select('.o-attributes-table-item ')[1].a.attrs['href']
-        # self.details["Offering Terms"] = soup.select('.o-attributes-table-item ')[3].p.string
-        # self.details["Campus"] = soup.select('.o-attributes-table-item ')[4].p.string.replace(" ", "").strip()
-        #
-        # for value in soup.select('.p-all-1')[0].children:
-        #     if soup.select('.p-all-1')[0].index(value) == 3:
-        #         self.details["PDF"] = value.a.attrs['href']
-        #
-        # self.details["Indicative contact hours"] = soup.select('.o-attributes-table-item ')[5].p.string
-        # self.details["Commonwealth Supported Student"] = soup.select('.a-column-sm-12')[8].p.string.strip()
-        # self.details["Domestic Student"] = soup.select('.a-column-sm-12')[10].p.string.strip()
-        # self.details["International Student"] = soup.select('.a-column-sm-12')[12].p.string.strip()
-
         if soup.title.string:
             self.details["Title"] = soup.title.string
         else:
@@ -102,21 +82,6 @@ class DataExtractor:
             self.details["International Student"] = ""
 
     def save(self):
-        # print(self.course)
-        # print(self.details["Title"])
-        # print(self.details["Credit"])
-        # print(self.details["Prerequisite"])
-        # print(self.details["Course Outline"])
-        # print(self.details["Faculty"])
-        # print(self.details["School"])
-        # print(self.details["Offering Terms"])
-        # print(self.details["Campus"])
-        # print(self.details["Description"])
-        # print(self.details["PDF"])
-        # print(self.details["Indicative contact hours"])
-        # print(self.details["Commonwealth Supported Student"])
-        # print(self.details["Domestic Student"])
-        # print(self.details["International Student"])
         self.data_base_manager.add_handbook_entry(self.course, self.details["Title"], self.details["Credit"],
                                                   self.details["Prerequisite"],self.details["Course Outline"],
                                                   self.details["Faculty"],
@@ -126,10 +91,6 @@ class DataExtractor:
                                                   self.details["Commonwealth Supported Student"],
                                                   self.details["Domestic Student"],
                                                   self.details["International Student"])
-
-
-
-
 
 
 if __name__ == '__main__':
