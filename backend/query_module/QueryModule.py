@@ -22,10 +22,6 @@ class QueryModule:
         self.session = self.session_client.session_path(project_id, session_id)
         print('Session path: {}\n'.format(self.session))
 
-        self.fall_backs = {
-            '$course': self.single_entity_missing_fall_back
-        }
-
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_regex_map = {
             'course_fee_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
@@ -68,13 +64,9 @@ class QueryModule:
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
-        if isinstance(result, FallbackResponse):
-            pass
-            # TODO: Find out what to do with Fallback..
-        else:
-            if self.detect_missing_parameters(result.intent, result.message):
+        if not isinstance(result, FallbackResponse):
+            if self.detect_missing_parameters(result.intent, result.message) or result.confidence < 0.5:
                 result = self.handle_missing_parameters(result)
-            # TODO: Do something if confidence is low..?
         print('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
