@@ -10,3 +10,10 @@ Provide me the course outline's pdf for {course code}
 Send me {course code}'s course outline pdf
 Send me {course code}'s course outline
 Provide me the course outline for {course code} thanks
+Send me {course code}'s course description pdf
+Send me {course code}'s course description
+Send {course code}'s course outline pdf
+Send {course code}'s course outline
+Provide the course outline for {course code} thanks
+Send {course code}'s course description pdf
+Send {course code}'s course description
