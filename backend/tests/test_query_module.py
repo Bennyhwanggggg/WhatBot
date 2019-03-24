@@ -114,9 +114,9 @@ def test_consultation_booking_command_1():
                      'Make an consultation booking for COMP9334 on 06/09/19 at 18:13',
                      'May I book the time slot starts from 06/09/2019 18:13 for COMP9334?',
                      'Book an consultation for COMP9334 on 06/09/2019 at 18:13',
-                     'May I book an consultation for COMP9334 at 06/09/2019 18:13',
-                     'May I book an consultation for COMP9334 from 06/09/2019 18:13',
-                     'May I book an consultation for COMP9334 on 06/09/2019 at 18:13',
+                     'May I book a consultation for COMP9334 at 06/09/2019 18:13',
+                     'May I book a consultation for COMP9334 from 06/09/2019 18:13',
+                     'May I book a consultation for COMP9334 on 06/09/2019 at 18:13',
                      'Reserve an course consultation for COmp9334 on 06/09/2019 at 18:13']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
@@ -138,9 +138,9 @@ def test_consultation_booking_command_2():
                      'Make an consultation booking for COMP9334 on 11/11/19 at 6:13',
                      'May I book the time slot starts from 11/11/2019 6:13 for COMP9334?',
                      'Book an consultation for COMP9334 on 11/11/2019 at 6:13',
-                     'May I book an consultation for COMP9334 at 11/11/2019 6:13',
-                     'May I book an consultation for COMP9334 from 11/11/2019 6:13',
-                     'May I book an consultation for COMP9334 on 2019/11/11 at 6:13',
+                     'May I book a consultation for COMP9334 at 11/11/2019 6:13',
+                     'May I book a consultation for COMP9334 from 11/11/2019 6:13',
+                     'May I book consultation for COMP9334 on 2019/11/11 at 6:13',
                      'Reserve an course consultation for COmp9334 on 11/11/2019 at 6:13']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
@@ -162,9 +162,9 @@ def test_consultation_booking_command_3():
                      'Make an consultation booking for COMP9334 on 1/11/19 at 6:13',
                      'May I book the time slot starts from 1/11/2019 6:13 for COMP9334?',
                      'Book an consultation for COMP9334 on 1/11/2019 at 6:13',
-                     'May I book an consultation for COMP9334 at 1/11/2019 6:13',
-                     'May I book an consultation for COMP9334 from 1/11/2019 6:13',
-                     'May I book an consultation for COMP9334 on 2019/11/1 at 6:13',
+                     'May I book a consultation for COMP9334 at 1/11/2019 6:13',
+                     'May I book consultation for COMP9334 from 1/11/2019 6:13',
+                     'May I book a consultation for COMP9334 on 2019/11/1 at 6:13',
                      'Reserve an course consultation for COmp9334 on 1/11/2019 at 6:13']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
