@@ -1,5 +1,15 @@
 # WhatBot Backend
 
+## Setup, build and run
+Setup and build the packages
+```
+python3 setup.py install
+```
+Running
+```
+python3 app.py
+```
+
 ## Testing
 Pytest is the chosen testing module for our backend. All test cases are inside the `tests` folder.
 
