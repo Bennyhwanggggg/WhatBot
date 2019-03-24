@@ -237,7 +237,7 @@ def test_consultation_booking_user_input_time_date_first_followup_1():
     test_message = "COMP9336"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
-    assert result.message == 'COMP6774 @@@ 10:15:00 @@@ 2019-03-02'
+    assert result.message == 'COMP9336 @@@ 10:15:00 @@@ 2019-03-02'
 
     time.sleep(TIME_BETWEEN_API)
 
