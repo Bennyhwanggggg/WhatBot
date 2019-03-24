@@ -209,6 +209,8 @@ def test_consultation_booking_user_input_time_date_first_followup_1():
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
 
+    time.sleep(TIME_BETWEEN_API)
+
     test_message = "COMP6774"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
@@ -229,6 +231,8 @@ def test_consultation_booking_user_input_time_date_first_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
+
+    time.sleep(TIME_BETWEEN_API)
 
     test_message = "COMP9020"
     result = query_module.detect_intent_texts(test_message)
