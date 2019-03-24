@@ -32,3 +32,7 @@ I want to find out how much a class cost
 Class fee question
 Question about how much a class cost
 I want to find information about how much a class cost
+I want to know how much a course cost
+I want to know how much I need to pay for a course
+Tell me how much a course cost
+Tell me how much I need to pay for a course

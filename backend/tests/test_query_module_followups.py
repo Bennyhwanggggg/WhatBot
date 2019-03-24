@@ -129,7 +129,7 @@ def test_study_level_queries_followup_1():
     test_message = "COMP9322"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'study_level_queries_with_followup-user_input_course_code'
-    assert result.message == 'COMP9332'
+    assert result.message == 'COMP9322'
 
 
 def test_study_level_queries_followup_2():
