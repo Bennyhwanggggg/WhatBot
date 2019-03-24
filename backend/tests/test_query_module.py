@@ -39,8 +39,7 @@ def test_course_outline_queries():
 
 def test_send_outline_queries():
     query_module = QueryModule()
-    test_messages = ['Can I have the outline for COMP9331?',
-                     'Email me the outline for COMP9331',
+    test_messages = ['Email me the outline for COMP9331',
                      'Send me the pdf outline for Comp9331',
                      "Send me comp9331's course outline pdf",
                      'Provide me the outline for COMP9331',
@@ -61,7 +60,7 @@ def test_offering_term_queries():
                      'Which semester can I take comp9101?',
                      'Which semester is comp9101 offered in',
                      'Can I take COMP9101 in semester 1?',
-                     'When Can I enroll in COMP9101?']
+                     'When can I enroll in COMP9101?']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'offering_term_queries'
