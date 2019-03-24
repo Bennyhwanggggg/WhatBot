@@ -22,12 +22,6 @@ class QueryModule:
         self.session = self.session_client.session_path(project_id, session_id)
         print('Session path: {}\n'.format(self.session))
 
-        self.state = []
-
-        self.fall_backs = {
-            '$course': self.single_entity_missing_fall_back
-        }
-
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_regex_map = {
             'course_fee_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
@@ -44,40 +38,35 @@ class QueryModule:
                                      {'$time': re.compile('.*\d{2}:\d{2}:\d{2}.*')}]
         }
 
-        self.single_entity_intent_fall_backs = {
-            'course_fee_queries': "Please tell me the course code of the course "
+        self.entity_intent_fall_backs = {
+            'course_fee_queries': "My apologise, could you rephrase and tell me again tell me the course code of the course "
                                   "you would like to know the course fee for?",
-            'course_outline_queries': "Which course's course outline would you like to know?",
-            'course_location_queries': "Which course's course location would you like to know?",
-            'indicative_hours_queries': "Please tell me the course code of the course you "
+            'course_outline_queries': "Sorry, I didn't quite understand that. Could you rephrase and tell me "
+                                      "again which course's course outline would you like to know?",
+            'course_location_queries': "My apologise, could you rephrase and tell me again which course's "
+                                       "course location would you like to know?",
+            'indicative_hours_queries': "Sorry, could you rephrase and tell me again and tell me the course code of the course you "
                                         "would like to know the amount of indicative hours for?",
-            'offering_term_queries': "Please tell me the course code of the course you "
+            'offering_term_queries': "My apologise, could you please rephrase and tell me again the course code of the course you "
                                      "would like to know the offering term for?",
-            'prerequisites_queries': "What is the course code of the course you "
+            'prerequisites_queries': "Sorry, could you rephrase and tell me again what is the course code of the course you "
                                      "would like to know the prerequisites for?",
-            'school_and_faculty_queries': "What is the course code of the course you "
+            'school_and_faculty_queries': "My apologise, could you rephrase and tell me again what is the course code of the course you "
                                           "would like to know the school and faculty for?",
-            'send_outline_queries': "What is the course code of the course you would like me to send outline for?",
-            'study_level_queries': "Could you please tell me the course you would like to know the study level for?"
+            'send_outline_queries': "Sorry, could you rephrase and tell me again what is the course code of the course "
+                                    "you would like me to send outline for?",
+            'study_level_queries': "Sorry, could you please rephrase and tell me the course code of the course "
+                                   "you would like to know the study level for?",
+            'consultation_booking': "Sorry, could you please rephrase your sentence and tell me what is the course code, "
+                                    "time and date of the course consultation you want to book?"
         }
 
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
-        if result.intent.endswith('with_followup'):
-            result.message = self.clean_message(result)
-        # if isinstance(result, FallbackResponse):
-        #     self.state.append(result)
-        # else:
-        #     if result.confidence < 0.6:
-        #         if self.state:
-        #             prev = self.state.pop()
-        #             if self.check_relevance_to_state(prev, result):
-        #                 result.intent = prev.intent
-        #         else:
-        #             result = FallbackResponse(intent='Default Fallback Intent',
-        #                                       message='Sorry, I am not sure how I can help you with that.',
-        #                                       confidence=result.confidence)
+        if not isinstance(result, FallbackResponse):
+            if self.detect_missing_parameters(result.intent, result.message) or result.confidence < 0.5:
+                result = self.handle_missing_parameters(result)
         print('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
@@ -101,6 +90,11 @@ class QueryModule:
             response.query_result.intent.display_name,
             response.query_result.intent_detection_confidence))
         print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
+
+        if response.query_result.intent.display_name == 'Default Fallback Intent':
+            return FallbackResponse(intent=response.query_result.intent.display_name,
+                                    message=response.query_result.fulfillment_text,
+                                    confidence=response.query_result.intent_detection_confidence)
 
         if not response.query_result.intent.display_name.endswith('with_followup'):
             query_response_message = self.clean_message(response.query_result.fulfillment_text)
@@ -132,38 +126,14 @@ class QueryModule:
                     missing.append(key)
         return missing
 
-    def single_entity_missing_fall_back(self, query_response):
-        if query_response.intent in self.single_entity_intent_fall_backs.keys():
-            return FallbackResponse(intent=query_response.intent,
-                                    message=self.single_entity_intent_fall_backs[query_response.intent],
-                                    confidence=query_response.confidence)
-        return FallbackResponse(intent=query_response.intent,
-                                message='Sorry, I am not sure how to help you with that.',
-                                confidence=query_response.confidence)
-
-    def handle_multiple_missing(self, missing_parameters, query_response):
-        if query_response.intent == 'consultation_booking':
-            if len(missing_parameters) == 1:
-                if missing_parameters[0] == '$course':
-                    message = 'Which course would you like to book consultation for?'
-                elif missing_parameters[0] == '$time':
-                    message = 'What time would you like to book?'
-                elif missing_parameters == '$date':
-                    message = 'Which date would you like to book?'
-            elif len(missing_parameters) == 2:
-                if set(missing_parameters) == set(['$course', '$time']):
-                    message = 'Which course and time would you like to book it for?'
-                elif set(missing_parameters) == set(['$date', '$time']):
-                    message = 'Which date and time would you like to book it for?'
-                elif set(missing_parameters) == set(['$course', '$date']):
-                    message = 'Which course and time would you like to book it for?'
-            elif len(missing_parameters) == 3:
-                message = 'Could you please tell me the course code of the course, ' \
-                          'time and date you would like to book your consultation for?'
-        return FallbackResponse(intent=query_response.intent,
-                                message=message,
-                                confidence=query_response.confidence)
-
+    def handle_missing_parameters(self, response):
+        if response.intent in self.entity_intent_fall_backs:
+            return FallbackResponse(intent=response.intent,
+                                    message=self.entity_intent_fall_backs[response.intent],
+                                    confidence=response.confidence)
+        return FallbackResponse(intent=response.intent,
+                                message="Sorry, I didn't quite understand that. Could you please rephrase your question?",
+                                confidence=response.confidence)
 
     def clean_message(self, message):
         message = message.replace("'s", '')
