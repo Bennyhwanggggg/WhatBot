@@ -44,3 +44,5 @@ Class prerequisites info
 Class prerequisites information
 Course prerequisites info
 Course prerequisites information
+I want to see the requirements for a course
+I want to see the prerequisites for a course

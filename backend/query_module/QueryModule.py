@@ -64,6 +64,8 @@ class QueryModule:
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
+        if result.intent.endswith('with_followup'):
+            result.message = self.clean_message(result)
         # if isinstance(result, FallbackResponse):
         #     self.state.append(result)
         # else:
@@ -100,17 +102,15 @@ class QueryModule:
             response.query_result.intent_detection_confidence))
         print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
+        if not response.query_result.intent.display_name.endswith('with_followup'):
+            query_response_message = self.clean_message(response.query_result.fulfillment_text)
+        else:
+            query_response_message = response.query_result.fulfillment_text
+
         query_response = IntentResponse(intent=response.query_result.intent.display_name,
-                                        message=self.clean_message(response.query_result.fulfillment_text),
+                                        message=query_response_message,
                                         confidence=response.query_result.intent_detection_confidence)
 
-        # missing_parameters = self.detect_missing_parameters(response.query_result.intent.display_name,
-        #                                                     response.query_result.fulfillment_text)
-        # if missing_parameters:
-        #     if len(missing_parameters) == 1 and missing_parameters[0] in self.single_entity_intent_fall_backs.keys():
-        #         return self.fall_backs[missing_parameters[0]](query_response)
-        #     else:
-        #         return self.handle_multiple_missing(missing_parameters=missing_parameters, query_response=query_response)
         return query_response
 
     def check_relevance_to_state(self, prev, new):
