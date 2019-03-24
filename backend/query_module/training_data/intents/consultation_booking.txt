@@ -50,4 +50,19 @@ On {date} at {time} make a course consultation booking with the lecturer in char
 On {date} at {time} make a course consultation booking with the LiC for {course code}
 Available time slots for consultation for {course code} on {date} at {time}
 Available time slots for course consultation for {course code} on {date} at {time}
-May I book a consultation for COMP9334 from 06/09/2019 18:13
+May I book a consultation for {course code} from {date} {time}
+May I book a consultation for {course code} from {date} {time}?
+May I book a consultation for {course code} on {date} {time}
+May I book a consultation for {course code} on {date} {time}?
+May I book a consultation for {course code} on {date} at {time}
+May I book a consultation for {course code} on {date} at {time}?
+May I book a consultation for {course code} at {time} on {date}
+May I book a consultation for {course code} at {time} on {date}?
+Please book a consultation for {course code} from {date} {time}
+Please book a consultation for {course code} from {date} {time}?
+Please book a consultation for {course code} on {date} {time}
+Please book a consultation for {course code} on {date} {time}?
+Please book a consultation for {course code} on {date} at {time}
+Please book a consultation for {course code} on {date} at {time}?
+Please book a consultation for {course code} at {time} on {date}
+Please book a consultation for {course code} at {time} on {date}?

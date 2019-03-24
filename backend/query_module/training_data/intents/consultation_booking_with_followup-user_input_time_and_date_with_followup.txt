@@ -25,3 +25,5 @@ Make a consultation booking on {date} at {time}
 Make a consultation booking at {time} at {date}
 Book consultation on {date} at {time}
 Book consultation at {time} on {date}
+Book for {date} {time}
+Book for {time} {date}
