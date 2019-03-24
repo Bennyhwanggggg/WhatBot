@@ -2,6 +2,7 @@ from query_module.QueryModule import QueryModule
 import time
 
 TIME_BETWEEN_API = 1.5
+TIME_BETWEEN_CONTEXT = 1
 
 
 def test_course_fee_queries_followup_1():
@@ -12,7 +13,7 @@ def test_course_fee_queries_followup_1():
     assert result.intent == 'course_fee_queries_with_followup'
     assert result.message == 'Sure! What is the course code of the course you want to know course fee for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = 'COMP9900 thanks'
     result = query_module.detect_intent_texts(test_message)
@@ -30,7 +31,7 @@ def test_course_fee_queries_followup_2():
     assert result.intent == 'course_fee_queries_with_followup'
     assert result.message == 'Sure! What is the course code of the course you want to know course fee for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = 'COMP9321 please'
     result = query_module.detect_intent_texts(test_message)
@@ -48,7 +49,7 @@ def test_course_outline_queries_followup_1():
     assert result.intent == 'course_outline_queries_with_followup'
     assert result.message == 'Of course! What is the course code of the course you want to know the outline for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9444's outline please"
     result = query_module.detect_intent_texts(test_message)
@@ -66,7 +67,7 @@ def test_course_outline_queries_followup_2():
     assert result.intent == 'course_outline_queries_with_followup'
     assert result.message == 'Of course! What is the course code of the course you want to know the outline for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = 'Show me COMP9415 thanks'
     result = query_module.detect_intent_texts(test_message)
@@ -84,7 +85,7 @@ def test_indicative_hours_queries_followup():
     assert result.intent == 'indicative_hours_queries_with_followup'
     assert result.message == 'Of course! What is the course code of the course you want to know the indicative hours for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = 'COMP9517'
     result = query_module.detect_intent_texts(test_message)
@@ -102,7 +103,7 @@ def test_offering_term_queries_followup():
     assert result.intent == 'offering_term_queries_with_followup'
     assert result.message == 'Of course! What is the course code of the course you want to know the offering terms for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = 'COMP9318'
     result = query_module.detect_intent_texts(test_message)
@@ -120,7 +121,7 @@ def test_prerequisites_queries_followup():
     assert result.intent == 'prerequisites_queries_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to find out prerequisites for.'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9331's requirements thanks"
     result = query_module.detect_intent_texts(test_message)
@@ -156,7 +157,7 @@ def test_study_level_queries_followup_2():
     assert result.intent == 'study_level_queries_with_followup'
     assert result.message == 'Sure! What is the course code of the course you would like to find study level for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9323 please"
     result = query_module.detect_intent_texts(test_message)
@@ -174,14 +175,14 @@ def test_consultation_booking_user_input_course_code_first_followup_1():
     assert result.intent == 'consultation_booking_with_followup'
     assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9334 please"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup'
     assert result.message == 'Sure! Please tell me which date and time you would like to book a course consultation for COMP9334.'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "3pm on 2/11/2019 thanks"
     result = query_module.detect_intent_texts(test_message)
@@ -199,14 +200,14 @@ def test_consultation_booking_user_input_course_code_first_followup_2():
     assert result.intent == 'consultation_booking_with_followup'
     assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9101"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup'
     assert result.message == 'Sure! Please tell me which date and time you would like to book a course consultation for COMP9101.'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "3:30pm on 2/11/2019"
     result = query_module.detect_intent_texts(test_message)
@@ -224,16 +225,16 @@ def test_consultation_booking_user_input_time_date_first_followup_1():
     assert result.intent == 'consultation_booking_with_followup'
     assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "Book 10:15 on 2/3/2019"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
-    test_message = "COMP6774"
+    test_message = "COMP9336"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
     assert result.message == 'COMP6774 @@@ 10:15:00 @@@ 2019-03-02'
@@ -249,14 +250,14 @@ def test_consultation_booking_user_input_time_date_first_followup_2():
     assert result.intent == 'consultation_booking_with_followup'
     assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "Make a booking at 11am on 04/09/19"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
 
-    time.sleep(TIME_BETWEEN_API)
+    time.sleep(TIME_BETWEEN_CONTEXT)
 
     test_message = "COMP9020"
     result = query_module.detect_intent_texts(test_message)
