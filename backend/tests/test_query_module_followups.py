@@ -146,3 +146,91 @@ def test_study_level_queries_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'study_level_queries_with_followup-user_input_course_code'
     assert result.message == 'COMP9323'
+
+
+def test_consultation_booking_user_input_course_code_first_followup_1():
+    query_module = QueryModule()
+
+    test_message = 'I want to book a course consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "COMP9334 please"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup'
+    assert result.message == 'Sure! Please tell me which date and time you would like to book a course consultation for COMP9334.'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "3pm on 2/11/2019 thanks"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
+    assert result.message == 'COMP9334 @@@ 15:00:00 @@@ 2019-11-02'
+
+
+def test_consultation_booking_user_input_course_code_first_followup_2():
+    query_module = QueryModule()
+
+    test_message = 'Book a course consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "COMP9101"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup'
+    assert result.message == 'Sure! Please tell me which date and time you would like to book a course consultation for COMP9101.'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "3:30pm on 2/11/2019"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
+    assert result.message == 'COMP9101 @@@ 15:30:00 @@@ 2019-11-02'
+
+
+def test_consultation_booking_user_input_time_date_first_followup_1():
+    query_module = QueryModule()
+
+    test_message = 'Book a consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "Book for 10:15 on 2/3/2019"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
+    assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
+
+    test_message = "COMP6774"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
+    assert result.message == 'COMP6774 @@@ 10:15:00 @@@ 2019-03-02'
+
+
+def test_consultation_booking_user_input_time_date_first_followup_2():
+    query_module = QueryModule()
+
+    test_message = 'Please book a course consultation for me'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to book it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_API)
+
+    test_message = "Book for 11am on 04/09/19"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
+    assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
+
+    test_message = "COMP9020"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
+    assert result.message == 'COMP9020 @@@ 11:00:00 @@@ 2019-09-04'

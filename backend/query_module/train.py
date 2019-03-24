@@ -338,7 +338,7 @@ class QueryModuleTrainer:
         for training_data_file in sorted(os.listdir(training_data_folder), key=lambda k: len(k)):
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.read_intents_data(path_to_read)
-            if not data: # or training_data_file in self.rules.restricted:
+            if not data or training_data_file in self.rules.restricted:
                 print('Skipping: {} due to restriction or no data'.format(training_data_file))
                 continue
             try:

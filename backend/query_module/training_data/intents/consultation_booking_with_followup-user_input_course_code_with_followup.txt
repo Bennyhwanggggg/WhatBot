@@ -1,0 +1,34 @@
+display_name consultation_booking_with_followup-user_input_course_code_with_followup
+message_texts Sure! Please tell me which date and time you would like to book a course consultation for $course.
+intent_types consultation_booking
+parent_followup consultation_booking_with_followup
+output_context consultation_booking_with_followup-user_input_course_code_with_followup-followup
+action consultation_booking_with_followup.consultation_booking_with_followup-user_course_code_with_followup
+{course code}
+{course code} please
+{course code} thanks
+I want to book {course code}
+I want to book for {course code}
+I want to book consultation for {course code}
+I want to book course consultation for {course code}
+book {course code}
+book for {course code}
+book consultation for {course code}
+book course consultation for {course code}
+Make booking for {course code}
+Make consultation booking for {course code}
+Make course consultation booking for {course code}
+I want to book {course code} please
+I want to book for {course code} thanks
+I want to book consultation for {course code} please
+I want to book course consultation for {course code} please
+book {course code} thanks
+book for {course code} please
+book consultation for {course code} please
+book course consultation for {course code} thanks
+Make booking for {course code} please
+Make consultation booking for {course code} thanks
+Make course consultation booking for {course code} please
+Please book a consultation for {course code}
+Please book for {course code}
+Please book a course consultation for {course code}
