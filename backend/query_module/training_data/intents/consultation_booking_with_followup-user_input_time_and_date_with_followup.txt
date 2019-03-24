@@ -27,3 +27,8 @@ Book consultation on {date} at {time}
 Book consultation at {time} on {date}
 Book for {date} {time}
 Book for {time} {date}
+Book {time} on {date}
+Book {time} {date}
+Book {date} {time}
+Book on {date} at {time}
+Book {date} at {time}

@@ -226,7 +226,7 @@ def test_consultation_booking_user_input_time_date_first_followup_1():
 
     time.sleep(TIME_BETWEEN_API)
 
-    test_message = "Book for 10:15 on 2/3/2019"
+    test_message = "Book 10:15 on 2/3/2019"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to book consultation for?'
