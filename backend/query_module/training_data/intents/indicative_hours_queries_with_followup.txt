@@ -40,3 +40,6 @@ Work load information for a course please
 Work load for a course
 Workload for a course
 A course's indicative hour
+I want to find the workload for a course
+I want to find the work load for a course
+Tell me the workload for a course

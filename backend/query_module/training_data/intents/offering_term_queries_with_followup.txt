@@ -37,3 +37,8 @@ I want to know when a course will be offered
 Information about course offering
 Class offering time info
 Class offering time information
+I want to know when I can take a course
+when I can take a course
+when I can take a course?
+I want to know when a course will be offered
+Show me the offering term for a course

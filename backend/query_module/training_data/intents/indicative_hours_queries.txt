@@ -5,6 +5,9 @@ reset_contexts
 What is the indicative hours for {course code}?
 Tell me the indicative hours for {course code}
 Give me the indicative hours for {course code}
+How many hours a week for {course code}
+How many hours a week for {course code}?
+How many hours a week for {course code}??
 How many hours are there for {course code}?
 How much time will I spend on {course code}?
 I want to know the indicative hour for {course code}
@@ -28,3 +31,7 @@ Work load for {course code}?
 Work load for {course code}
 Workload for {course code}??
 Workload for {course code}??
+Indicative hours for {course code}??
+Indicative hours for {course code}???
+Number of hours a week for {course code}
+Indicative hours a week for {course code}

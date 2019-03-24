@@ -1,6 +1,7 @@
 display_name consultation_booking_with_followup
 message_texts Sure! What is the course code of the course you would like to book it for? Also, what time and date?
 intent_types consultation_booking
+output_context consultation_booking_with_followup-followup
 I want to book a consultation
 I want to book a course consultation
 Book course consultation

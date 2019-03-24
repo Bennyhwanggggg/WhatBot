@@ -203,6 +203,8 @@ class QueryModuleTrainer:
         :return: new_data
         :rtype: list
         """
+        if len(parse_keys) > 2:
+            size = 15
         for parse_key in parse_keys:
             sub_string = '{%s}' % parse_key
             regex = re.compile("{}".format(sub_string), re.IGNORECASE)
@@ -499,7 +501,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_only.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_with_followup.txt')
         # query_module_trainer.create_intent(display_name=display_name,
         #                                    message_texts=message_texts,
         #                                    intent_types=intent_types,

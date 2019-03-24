@@ -42,3 +42,7 @@ Class study level info
 Class study level information
 Course study level info
 Course study level information
+I want to know if a class is for postgraduate
+I want to know if a class is for undergraduate
+Find out if a class is for postgrad
+Find out if a class is for undergrad

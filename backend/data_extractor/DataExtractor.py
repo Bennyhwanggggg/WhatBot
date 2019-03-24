@@ -1,22 +1,13 @@
 import requests
 import sys
 from bs4 import BeautifulSoup
-# print(sys.path)
-# sys.path.insert(0, 'kl;Users/wayne/Desktop/comp9900/capstone-project-whatbot/backend/data_extractor')
-# import DataBaseManager
-sys.path.append("..")
 from database.DataBaseManager import DataBaseManager
-# from database.psql_execute import add_handbook
-
-
 
 
 class DataExtractor:
     def __init__(self, study_level='postgraduate', course='COMP9900'):
         self.study_level = study_level
         self.course = course
-        print(study_level)
-        print(course)
         self.details = dict()
         self.data_base_manager = DataBaseManager()
 
