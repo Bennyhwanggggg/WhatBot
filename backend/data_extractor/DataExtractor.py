@@ -19,7 +19,6 @@ class DataExtractor:
         print(course)
         self.details = dict()
         self.data_base_manager = DataBaseManager()
-        self.add_handbook = add_handbook
 
     def extract(self):
         # undergraduate and comp3900 are parameters
@@ -54,8 +53,8 @@ class DataExtractor:
             self.details["Title"] = soup.title.string
         else:
             self.details["Title"] = ""
-        if soup.find(id="readMoreIntro").div:
-            self.details["Description"] = soup.find(id="readMoreIntro").div.p
+        if soup.find(id="readMoreIntro").div.p:
+            self.details["Description"] = soup.find(id="readMoreIntro").div.p.string
         else:
             self.details["Description"] = ""
         if soup.find_all('strong')[1]:
@@ -66,7 +65,7 @@ class DataExtractor:
             self.details["Prerequisite"] = soup.find(id="readMoreSubjectConditions").div.div.string
         else:
             self.details["Prerequisite"] = ""
-        if soup.find(id="subject-outline").div.a:
+        if soup.find(id="subject-outline"):
             self.details["Course Outline"] = soup.find(id="subject-outline").div.a.attrs['href']
         else:
             self.details["Course Outline"] = ""
@@ -112,26 +111,6 @@ class DataExtractor:
             self.details["International Student"] = ""
 
     def save(self):
-        # self.data_base_manager.add_handbook_entry(self.course, self.details["Title"], self.details["Credit"],
-        #                                           self.details["Prerequisite"],self.details["Course Outline"],
-        #                                           self.details["Faculty"],
-        #                                           self.details["School"], self.details["Offering Terms"],
-        #                                           self.details["Campus"], self.details["Description"], self.details["PDF"],
-        #                                           self.details["Indicative contact hours"],
-        #                                           self.details["Commonwealth Supported Student"],
-        #                                           self.details["Domestic Student"],
-        #                                           self.details["International Student"])
-
-        self.add_handbook(self.course, self.details["Title"], self.details["Credit"],
-                                                  self.details["Prerequisite"],self.details["Course Outline"],
-                                                  self.details["Faculty"],
-                                                  self.details["School"], self.details["Offering Terms"],
-                                                  self.details["Campus"], self.details["Description"], self.details["PDF"],
-                                                  self.details["Indicative contact hours"],
-                                                  self.details["Commonwealth Supported Student"],
-                                                  self.details["Domestic Student"],
-                                                  self.details["International Student"])
-
         # print(self.course)
         # print(self.details["Title"])
         # print(self.details["Credit"])
@@ -147,6 +126,17 @@ class DataExtractor:
         # print(self.details["Commonwealth Supported Student"])
         # print(self.details["Domestic Student"])
         # print(self.details["International Student"])
+        self.data_base_manager.add_handbook_entry(self.course, self.details["Title"], self.details["Credit"],
+                                                  self.details["Prerequisite"],self.details["Course Outline"],
+                                                  self.details["Faculty"],
+                                                  self.details["School"], self.details["Offering Terms"],
+                                                  self.details["Campus"], self.details["Description"], self.details["PDF"],
+                                                  self.details["Indicative contact hours"],
+                                                  self.details["Commonwealth Supported Student"],
+                                                  self.details["Domestic Student"],
+                                                  self.details["International Student"])
+
+        #
 
 
 
