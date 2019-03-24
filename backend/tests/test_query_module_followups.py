@@ -19,6 +19,8 @@ def test_course_fee_queries_followup_1():
     assert result.intent == 'course_fee_queries_with_followup-user_input_course_code' or 'course_fee_queries'
     assert result.message == 'COMP9900'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_course_fee_queries_followup_2():
     query_module = QueryModule()
@@ -34,6 +36,8 @@ def test_course_fee_queries_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'course_fee_queries_with_followup-user_input_course_code' or 'course_fee_queries'
     assert result.message == 'COMP9321'
+
+    time.sleep(TIME_BETWEEN_API)
 
 
 def test_course_outline_queries_followup_1():
@@ -51,6 +55,8 @@ def test_course_outline_queries_followup_1():
     assert result.intent == 'course_outline_queries_with_followup-user_input_course_code' or 'course_outline_queries'
     assert result.message == 'COMP9444'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_course_outline_queries_followup_2():
     query_module = QueryModule()
@@ -66,6 +72,8 @@ def test_course_outline_queries_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'course_outline_queries_with_followup-user_input_course_code' or 'course_outline_queries'
     assert result.message == 'COMP9415'
+
+    time.sleep(TIME_BETWEEN_API)
 
 
 def test_indicative_hours_queries_followup():
@@ -83,6 +91,8 @@ def test_indicative_hours_queries_followup():
     assert result.intent == 'indicative_hours_queries_with_followup-user_input_course_code' or 'indicative_hours_queries'
     assert result.message == 'COMP9517'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_offering_term_queries_followup():
     query_module = QueryModule()
@@ -98,6 +108,8 @@ def test_offering_term_queries_followup():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'offering_term_queries_with_followup-user_input_course_code' or 'offering_term_queries'
     assert result.message == 'COMP9318'
+
+    time.sleep(TIME_BETWEEN_API)
 
 
 def test_prerequisites_queries_followup():
@@ -115,6 +127,8 @@ def test_prerequisites_queries_followup():
     assert result.intent == 'prerequisites_queries_with_followup-user_input_course_code' or 'prerequisites_queries'
     assert result.message == 'COMP9331'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_study_level_queries_followup_1():
     query_module = QueryModule()
@@ -131,6 +145,8 @@ def test_study_level_queries_followup_1():
     assert result.intent == 'study_level_queries_with_followup-user_input_course_code' or 'study_level_queries'
     assert result.message == 'COMP9322'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_study_level_queries_followup_2():
     query_module = QueryModule()
@@ -146,6 +162,8 @@ def test_study_level_queries_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'study_level_queries_with_followup-user_input_course_code' or 'study_level_queries'
     assert result.message == 'COMP9323'
+
+    time.sleep(TIME_BETWEEN_API)
 
 
 def test_consultation_booking_user_input_course_code_first_followup_1():
@@ -170,6 +188,8 @@ def test_consultation_booking_user_input_course_code_first_followup_1():
     assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
     assert result.message == 'COMP9334 @@@ 15:00:00 @@@ 2019-11-02'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_consultation_booking_user_input_course_code_first_followup_2():
     query_module = QueryModule()
@@ -192,6 +212,8 @@ def test_consultation_booking_user_input_course_code_first_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
     assert result.message == 'COMP9101 @@@ 15:30:00 @@@ 2019-11-02'
+
+    time.sleep(TIME_BETWEEN_API)
 
 
 def test_consultation_booking_user_input_time_date_first_followup_1():
@@ -216,6 +238,8 @@ def test_consultation_booking_user_input_time_date_first_followup_1():
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
     assert result.message == 'COMP6774 @@@ 10:15:00 @@@ 2019-03-02'
 
+    time.sleep(TIME_BETWEEN_API)
+
 
 def test_consultation_booking_user_input_time_date_first_followup_2():
     query_module = QueryModule()
@@ -238,3 +262,5 @@ def test_consultation_booking_user_input_time_date_first_followup_2():
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
     assert result.message == 'COMP9020 @@@ 11:00:00 @@@ 2019-09-04'
+
+    time.sleep(TIME_BETWEEN_API)
