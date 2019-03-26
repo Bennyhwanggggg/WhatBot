@@ -16,3 +16,8 @@ Week4:
 Finished the testing file for data extractor, listing all the postgraduate courses of master we have in the UNSW.
 Set up AWS(RDS) for connecting with database and created some tables for testing connection.
 We also discussed the idea for implementing consultation.
+
+Week5:
+Fix the codes for data extractor for course handbook. Store course handbook into database. Working on database funtions with Steve.
+Discussing with team members on how to design for the consultation. We might set the timeslot in advance like per hour for each consultation with
+specific lecturer. Catch up the codes updated by Benny for the Dialogflow with our backend.
