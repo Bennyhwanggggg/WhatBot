@@ -40,14 +40,17 @@ class DataExtractor:
             self.details["Course Outline"] = soup.find(id="subject-outline").div.a.attrs['href']
         else:
             self.details["Course Outline"] = ""
+
         if soup.select('.o-attributes-table-item ')[0].a:
-            self.details["Faculty"] = soup.select('.o-attributes-table-item ')[0].a.attrs['href']
+            self.details["Faculty"] = soup.select('.o-attributes-table-item ')[0].a.string
         else:
             self.details["Faculty"] = ""
+
         if soup.select('.o-attributes-table-item ')[1].a:
-            self.details["School"] = soup.select('.o-attributes-table-item ')[1].a.attrs['href']
+            self.details["School"] = soup.select('.o-attributes-table-item ')[1].a.string
         else:
             self.details["School"] = ""
+
         if soup.select('.o-attributes-table-item ')[3].p:
             self.details["Offering Terms"] = soup.select('.o-attributes-table-item ')[3].p.string
         else:

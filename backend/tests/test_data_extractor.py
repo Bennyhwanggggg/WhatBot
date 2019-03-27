@@ -25,9 +25,9 @@ def test_data_extractor():
         if key == 'Course Outline':
             assert value == "https://www.engineering.unsw.edu.au/computer-science-engineering"
         if key == 'Faculty':
-            assert value == "http://www.eng.unsw.edu.au"
+            assert value == "Faculty of Engineering"
         if key == 'School':
-            assert value == "http://www.cse.unsw.edu.au/"
+            assert value == "School of Computer Science and Engineering"
         if key == 'Offering Terms':
             assert value == "Term 1, Term 2, Term 3"
         if key == 'Campus':
