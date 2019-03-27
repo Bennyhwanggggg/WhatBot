@@ -1,6 +1,6 @@
 Data scheme
 
-
+```
 Database 1: postgres
     -| table 1: courselist 
         --| Attributes: (
@@ -39,3 +39,4 @@ Database 1: postgres
                      type)
 
 Database 2: 
+```

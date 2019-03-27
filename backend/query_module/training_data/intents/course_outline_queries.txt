@@ -23,3 +23,9 @@ Course description for {course code} thanks
 Course description for {course code} thank you
 I want to see the course outline for {course code}
 I want to see the course description for {course code}
+outline for {course code}
+Course outline {course code}
+I want to know about {course code}
+I want to find out more about {course code}
+Tell me about {course code}
+{course code} description

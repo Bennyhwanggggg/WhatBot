@@ -66,3 +66,8 @@ Please book a consultation for {course code} on {date} at {time}
 Please book a consultation for {course code} on {date} at {time}?
 Please book a consultation for {course code} at {time} on {date}
 Please book a consultation for {course code} at {time} on {date}?
+book consultation for {course code} at {time} on {date}?
+book consultation at {time} on {date} for {course code}?
+book consultation on {date} at {time} for {course code}?
+book consultation on {date} {time} for {course code}?
+book consultation {date} {time} for {course code}?

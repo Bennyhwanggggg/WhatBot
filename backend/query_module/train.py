@@ -162,7 +162,7 @@ class QueryModuleTrainer:
                input_contexts, output_contexts, action, clean_data, reset_context
 
     def _get_training_course_codes(self, size):
-        return [random.choice(self.course_codes) for _ in range(size)]
+        return random.choices(self.course_codes, k=int(size*3))
 
     def _set_training_time(self, size):
         def random_date(start, l):

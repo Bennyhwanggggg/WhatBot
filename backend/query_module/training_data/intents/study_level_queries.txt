@@ -23,3 +23,8 @@ Is {course code} for postgraduate??
 Is {course code} for undergraduate??
 Is {course code} for postgrad??
 Is {course code} for undergrad??
+{course code}'s study level
+{course code} for postgrad?
+{course code} for undergrad?
+{course code} for postgraduate?
+{course code} for undergraduate?
