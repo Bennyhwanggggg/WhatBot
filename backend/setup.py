@@ -8,5 +8,6 @@ setup(
               'data_extractor',
               'database',
               'query_module',
-              'response_module']
+              'response_module',
+              'consultation']
 )
