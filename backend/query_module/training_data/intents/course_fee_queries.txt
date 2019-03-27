@@ -48,3 +48,6 @@ Please tell me the cost of {course code}
 {course code}'s cost please
 {course code}'s fees please
 {course code}'s course fees please
+Tell me about the fees for {course code}
+Tell me about the cost for {course code}
+I want to know the cost of {course code}
