@@ -30,11 +30,11 @@ class ConsultationManager:
         return avail_timeslot
     
     def update_consultation(self):#update the consultation database everyday
-        date = datetime.datetime.today().strftime('%Y-%m-%d')#2019-03-28
+        date = datetime.datetime.today().strftime('%Y-%m-%d')#eg. 2019-03-28
         key_part = '%' + date
         query = "DELETE FROM consultation WHERE date < %s"
-        inputs = (key_part, date)
-        self.execute_query(query, inputs)
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
 
 
 if __name__ == "__main__":
