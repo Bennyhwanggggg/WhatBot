@@ -1,9 +1,8 @@
 version: 2
 jobs:
-  build:
+  backend:
     docker:
       - image: circleci/python:3.6
-      - image: circleci/node:8.12.0
     steps:
       - checkout
       - run:
@@ -14,7 +13,11 @@ jobs:
           name: Backend unit testing
           command: |
             ./backend/start_tests.sh
-      - run:
+  frontend:
+    docker:
+      - image: circleci/node:8.12.0
+    steps:
+      - checkout
           name: Install frontend dependencies
           command: |
             cd frontend
@@ -24,3 +27,10 @@ jobs:
           command: |
             ls
             npm test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - backend
+      - frontend
