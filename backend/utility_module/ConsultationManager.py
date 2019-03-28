@@ -1,4 +1,5 @@
 from database.DataBaseManager import DataBaseManager
+import datetime
 
 
 class ConsultationManager:
