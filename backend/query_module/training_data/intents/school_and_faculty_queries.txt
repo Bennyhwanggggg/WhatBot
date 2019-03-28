@@ -15,3 +15,9 @@ Tell me which school is responsible for {course code}
 {course code} school and faculty
 School and faculty that runs {course code}
 School and faculty that runs {course code} please
+School that runs {course code}
+Faculty that runs {course code}
+School that runs {course code} thanks
+{course code}'s school and faculty
+{course code}'s school
+{course code}'s faculty

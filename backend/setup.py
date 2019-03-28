@@ -9,5 +9,5 @@ setup(
               'database',
               'query_module',
               'response_module',
-              'consultation']
+              'utility_module']
 )

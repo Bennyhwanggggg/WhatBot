@@ -1,6 +1,6 @@
 Data scheme
 
-
+```
 Database 1: postgres
     -| table 1: courselist 
         --| Attributes: (
@@ -26,5 +26,17 @@ Database 1: postgres
                 commonwealth_std, 
                 domestic_std,
                 international_std)
+    -| table 3: consultation:
+            --| Attributes:
+                    (cid,
+                     sid,
+                     time,
+                     date)
+    -| table 4: users:
+            --| Attributes:
+                    (username,
+                     password,
+                     type)
 
 Database 2: 
+```

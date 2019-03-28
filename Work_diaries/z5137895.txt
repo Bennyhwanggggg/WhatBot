@@ -18,3 +18,7 @@ Week 4:
 This week is mainly about the AWS RDS stuff. I created security group and its inbound value on my own AWS service in order to connect with the public PSQL which is created by Wayne.
 Improved the function part of executing the database on AWS to response frontend request.
 Design the consultation booking system.
+
+Week 5:
+I mainly work on the DataBaseManager and responseModule this week.
+And write the backend function of consultation module.
