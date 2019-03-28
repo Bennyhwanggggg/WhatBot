@@ -1,27 +1,34 @@
+"""
+    This class contains the main Utility Module. It will be responsible
+    for managing the classes that provide its features.
+    Features include:
+        - A WAM calculator
+        - Get lecturer announcements.
+        - Classroom and tutorial locator
+        - Consultation Booking
+"""
 from utility_module.WamCalculator import WamCalculator
 from utility_module.ConsultationManager import ConsultationManager
 from utility_module.ClassRoomFinder import ClassRoomFinder
+from database.DataBaseManager import DataBaseManager
 
-"""
-A WAM calculator
-Assignments and projects due date tracker
-Latest progress made in lecture.
-Get lecturer announcements. 
-Classroom and tutorial locator
-
-"""
 
 class UtilityModule:
     def __init__(self):
         """
-            Initialise the UtilityModule class. This module should contain
-            the following features:
-                1. Consultation booking calendar
-                2. WAM Calculator
-                3. Class room finder TODO: Can someone clarify how this should be done..?
-                And possibly more
+            Initialise the UtilityModule class. This uses a single data base manager instance to manage
+            all database connection related work.
         """
-        self.courses = dict()  # TODO: Will this be based on some user in the database? @Wayne can you confirm?
-        self.wam_calculator = WamCalculator()
-        self.consultation_manager = ConsultationManager()
+        self.data_base_manager = DataBaseManager()
+        self.wam_calculator = WamCalculator(courses=self.get_student_academic_results())
+        self.consultation_manager = ConsultationManager(data_base_manager=self.data_base_manager)
         self.class_room_finder = ClassRoomFinder()
+
+    def get_student_academic_results(self):
+        """ Get a list of course name and their result for a student
+
+        :return: course result list
+        :type: [{course_name: string, number_of_credits: int, score: float}, {course_name: string, number_of_credits: int, score: float}]
+        """
+        # TODO: get student courses and results from database
+        pass
