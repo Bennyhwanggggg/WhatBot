@@ -7,6 +7,7 @@
         - Latest progress made in lecture.
         - Get lecturer announcements.
         - Classroom and tutorial locator
+        - Consultation Booking
 """
 from utility_module.WamCalculator import WamCalculator
 from utility_module.ConsultationManager import ConsultationManager
@@ -26,7 +27,7 @@ class UtilityModule:
         """
         self.data_base_manager = DataBaseManager()
         self.wam_calculator = WamCalculator()
-        self.consultation_manager = ConsultationManager()
+        self.consultation_manager = ConsultationManager(data_base_manager=self.data_base_manager)
         self.class_room_finder = ClassRoomFinder()
 
     def get_student_academic_results(self):
