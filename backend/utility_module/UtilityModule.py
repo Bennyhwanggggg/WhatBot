@@ -3,8 +3,6 @@
     for managing the classes that provide its features.
     Features include:
         - A WAM calculator
-        - Assignments and projects due date tracker
-        - Latest progress made in lecture.
         - Get lecturer announcements.
         - Classroom and tutorial locator
         - Consultation Booking
