@@ -24,10 +24,15 @@ class UtilityModule:
                 And possibly more
         """
         self.data_base_manager = DataBaseManager()
-        self.wam_calculator = WamCalculator()
+        self.wam_calculator = WamCalculator(courses=self.get_student_academic_results())
         self.consultation_manager = ConsultationManager(data_base_manager=self.data_base_manager)
         self.class_room_finder = ClassRoomFinder()
 
     def get_student_academic_results(self):
+        """ Get a list of course name and their result for a student
+
+        :return: course result list
+        :type: [{course_name: string, number_of_credits: int, score: float}, {course_name: string, number_of_credits: int, score: float}]
+        """
         # TODO: get student courses and results from database
         pass
