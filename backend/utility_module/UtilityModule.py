@@ -28,3 +28,7 @@ class UtilityModule:
         self.wam_calculator = WamCalculator()
         self.consultation_manager = ConsultationManager()
         self.class_room_finder = ClassRoomFinder()
+
+    def get_student_academic_results(self):
+        # TODO: get student courses and results from database
+        pass
