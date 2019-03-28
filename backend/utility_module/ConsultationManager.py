@@ -35,4 +35,6 @@ class ConsultationManager:
                 avail_time_slots.append(time)
         return avail_time_slots
 
-    # TODO: time rounding, input of time is 06:13:00
+    def round_time(self, time):
+        # TODO: time rounding, input of time is 06:13:00
+        return time

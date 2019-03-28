@@ -16,12 +16,8 @@ from database.DataBaseManager import DataBaseManager
 class UtilityModule:
     def __init__(self):
         """
-            Initialise the UtilityModule class. This module should contain
-            the following features:
-                1. Consultation booking calendar
-                2. WAM Calculator
-                3. Class room finder
-                And possibly more
+            Initialise the UtilityModule class. This uses a single data base manager instance to manage
+            all database connection related work.
         """
         self.data_base_manager = DataBaseManager()
         self.wam_calculator = WamCalculator(courses=self.get_student_academic_results())
