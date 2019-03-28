@@ -6,10 +6,23 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Install python dependencies
+          name: Install backend dependencies
           command: |
             sudo pip install -r ./backend/requirements.txt
       - run: 
           name: Unit testing
           command: |
             ./backend/start_tests.sh
+    docker:
+      - image: circleci/node:8.12.0
+    steps:
+      - run: 
+          name: Install frontend dependencies
+          command: |
+            cd frontend
+            npm install
+      - run: 
+          name: Unit testing
+          command: |
+            ls
+            npm test
