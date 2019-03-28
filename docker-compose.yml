@@ -15,8 +15,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     image: docker.whatbot/backend:latest
-    environment:
-      - ROSBRIDGE_PORT=${ROSBRIDGE_PORT}
     networks:
       - main     
     ports:
