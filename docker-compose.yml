@@ -1,0 +1,26 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: docker.whatbot/frontend:latest     
+    networks:
+      - main
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: docker.whatbot/backend:latest
+    environment:
+      - ROSBRIDGE_PORT=${ROSBRIDGE_PORT}
+    networks:
+      - main     
+    ports:
+      - "9999:9999"
+
+networks:
+  main:
