@@ -47,6 +47,11 @@ jobs:
               echo "Heroku is already installed. No operation was performed."
             fi
       - run:
+          name: Setup Heroku
+          command: |
+          chmod +x ./setup-heroku.sh
+          ./setup-heroku.sh
+      - run:
           name: "Heroku login"
           command: |
             docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
