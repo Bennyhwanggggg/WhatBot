@@ -5,6 +5,7 @@ import uuid
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from conf.Response import IntentResponse, FallbackResponse
+import os
 
 query_module = QueryModule()
 response_module = ResponseModule()
@@ -16,6 +17,10 @@ CORS(app)
 @app.route('/login', methods=["post"])
 def login():
     pass
+
+@app.route('/', methods=["post"])
+def test():
+    return jsonify({'test': 'success'}), 200
 
 
 @app.route('/message', methods=["post"])
@@ -36,4 +41,7 @@ def message():
 
 
 if __name__ == '__main__':
+    # if os.environ['BACKEND_NAME']:
+    #     app.run(debug=True, host=os.environ['BACKEND_NAME'], port=9999)
+    # else:
     app.run(debug=True, host='localhost', port=9999)

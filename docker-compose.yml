@@ -4,21 +4,29 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: docker.whatbot/frontend:latest     
+    image: docker.registry.whatbot/frontend:latest     
     networks:
       - main
     ports:
-      - "3000:3000"
+      - "3000:80"
+    environment:
+      - FRONTEND_NAME=${FRONTEND_NAME}
+      - BACKEND_NAME=${BACKEND_NAME}
+    links:
+      - backend
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: docker.whatbot/backend:latest
+    image: docker.registry.whatbot/backend:latest
     networks:
-      - main     
-    ports:
-      - "9999:9999"
+      main:
+        aliases:
+          - whatbot   
+    environment:
+      - FRONTEND_NAME=${FRONTEND_NAME}
+      - BACKEND_NAME=${BACKEND_NAME}
 
 networks:
   main:

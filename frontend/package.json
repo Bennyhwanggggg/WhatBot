@@ -26,6 +26,7 @@
     "extends": "react-app"
   },
   "homepage": "https://whatbot9900.herokuapp.com/",
+  "proxy": "http://backend:9999",
   "browserslist": [
     ">0.2%",
     "not dead",
