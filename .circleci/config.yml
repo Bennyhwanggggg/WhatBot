@@ -1,6 +1,4 @@
 version: 2
-orbs:
-  heroku: circleci/heroku@1.0.0
 jobs:
   frontend_build_and_test:
     docker:
@@ -51,7 +49,7 @@ jobs:
       - run:
           name: "Heroku login"
           command: |
-            heroku container:login --username=$HEROKU_USERNAME --password=$HEROKU_PASSWORD
+            docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       - run:
           name: Deploy frontend
           command: |
@@ -69,6 +67,4 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - frontend_build_and_test
-      - backend_build_and_test
       - deploy
