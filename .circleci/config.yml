@@ -1,37 +1,17 @@
 version: 2
 jobs:
-  backend:
-    docker:
-      - image: circleci/python:3.6
-    steps:
-      - checkout
-      - run:
-          name: Install backend dependencies
-          command: |
-            sudo pip install -r ./backend/requirements.txt
-      - run:
-          name: Backend unit testing
-          command: |
-            ./backend/start_tests.sh
-  frontend:
-    docker:
-      - image: circleci/node:8.12.0
-    steps:
-      - checkout
-      - run:
-          name: Install frontend dependencies
-          command: |
-            cd frontend
-            npm install
-      - run:
-          name: Frontend unit testing
-          command: |
-            cd frontend
-            npm test
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - frontend
-      - backend
+  build:
+    machine:
+      image: circleci/classic:201903-01
+    - run:
+      name: Install Docker Compose
+      command: |
+        curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+        chmod +x ~/docker-compose
+        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+    - setup_remote_docker
+    - run:
+      name: Build Docker Container
+      command: |
+        docker-compose build
+        docker-compose up -d
