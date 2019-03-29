@@ -49,8 +49,8 @@ jobs:
       - run:
           name: Setup Heroku
           command: |
-          chmod +x ./setup-heroku.sh
-          ./setup-heroku.sh
+            chmod +x ./setup_heroku.sh
+            ./setup_heroku.sh
       - run:
           name: "Heroku login"
           command: |
