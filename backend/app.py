@@ -23,7 +23,7 @@ def test():
     return jsonify({'test': 'success'}), 200
 
 
-@app.route('/message', methods=["post"])
+@app.route('/message', methods=['POST', 'OPTIONS'])
 def message():
     # turning off authentication for now...
     # username = request.json.get('username', None)
@@ -41,7 +41,4 @@ def message():
 
 
 if __name__ == '__main__':
-    # if os.environ['BACKEND_NAME']:
-    #     app.run(debug=True, host=os.environ['BACKEND_NAME'], port=9999)
-    # else:
     app.run(debug=True, host='localhost', port=9999)

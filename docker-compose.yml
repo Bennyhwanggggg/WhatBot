@@ -21,9 +21,7 @@ services:
       dockerfile: Dockerfile
     image: docker.registry.whatbot/backend:latest
     networks:
-      main:
-        aliases:
-          - whatbot   
+      - main
     environment:
       - FRONTEND_NAME=${FRONTEND_NAME}
       - BACKEND_NAME=${BACKEND_NAME}
