@@ -4,7 +4,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: docker.registry.whatbot/frontend:latest     
+    image: bennyhwangg/whatbot:frontend     
     networks:
       - main
     ports:
@@ -19,7 +19,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: docker.registry.whatbot/backend:latest
+    image: bennyhwangg/whatbot:backend
     networks:
       - main
     environment:
