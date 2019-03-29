@@ -73,4 +73,11 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - deploy
+      - frontend_build_and_test
+      - backend_build_and_test
+      - deploy:
+        requires:
+          - build
+        filters:
+          branches:
+            only: master
