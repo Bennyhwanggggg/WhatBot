@@ -5,7 +5,6 @@ import uuid
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from conf.Response import IntentResponse, FallbackResponse
-import os
 
 query_module = QueryModule()
 response_module = ResponseModule()
@@ -18,12 +17,8 @@ CORS(app)
 def login():
     pass
 
-@app.route('/', methods=["post"])
-def test():
-    return jsonify({'test': 'success'}), 200
 
-
-@app.route('/message', methods=['POST', 'OPTIONS'])
+@app.route('/message', methods=['POST'])
 def message():
     # turning off authentication for now...
     # username = request.json.get('username', None)
