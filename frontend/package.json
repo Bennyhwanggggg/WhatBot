@@ -25,7 +25,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "http://localhost:9999",
+  "homepage": "https://whatbot9900.herokuapp.com/",
   "browserslist": [
     ">0.2%",
     "not dead",
