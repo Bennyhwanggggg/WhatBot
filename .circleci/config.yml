@@ -49,7 +49,7 @@ jobs:
       - run:
           name: "Heroku login"
           command: |
-            docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
+            docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
       - run:
           name: Deploy frontend
           command: |
