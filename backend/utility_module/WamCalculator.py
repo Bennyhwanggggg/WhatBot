@@ -14,7 +14,7 @@ class WamCalculator:
 
     def add_mark(self, sid, cid, mark):
         query = "INSERT INTO wam(sid, cid, mark) VALUES (%s, %s, %s)"
-        inputs = (sid, cid, mark)
+        inputs = (sid, cid, mark, )
         return self.data_base_manager.execute_query(query, inputs)
 
     def calculate_wam(self):
@@ -43,8 +43,3 @@ class WamCalculator:
         if wam > 50:
             return 'P'
         return 'F'
-
-
-
-if __name__ == '__main__':
-    data_base_manager = WamCalculator()
