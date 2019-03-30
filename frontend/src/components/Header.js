@@ -7,7 +7,7 @@ const Header = () => {
         <div className="header item">
             WhatBot
         </div>
-        <div className="item Card">
+        <div className="item">
           <Upload />
         </div>
         <div className="right item">
