@@ -1,5 +1,8 @@
 import psycopg2
 import re
+import logging
+
+logger = logging.getLogger(__name__)
 
 HOST = 'whatbot.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
 USERNAME = 'whatbot'
@@ -21,13 +24,13 @@ class DataBaseManager:
                                            port=str(self.port))
         self.connection.set_session(autocommit=True)
         self.cursor = self.connection.cursor()
-        print('Connection to AWS opened')
+        logger.info('Connection to AWS opened')
 
     def disconnect(self):
         if self.connection and self.cursor:
             self.cursor.close()
             self.connection.close()
-            print('Connection to AWS closed')
+            logger.info('Connection to AWS closed')
         self.connection, self.cursor = None, None
 
     def execute_query(self, query, *args):
@@ -42,10 +45,10 @@ class DataBaseManager:
             regex = re.compile(r'SELECT', re.IGNORECASE)
             result = self.cursor.fetchall() if regex.search(query) else "execute successfully"
         except (Exception, psycopg2.Error) as e:
-            print("Error executing query:\n{}".format(str(e)))
+            logger.error("Error executing query:\n{}".format(str(e)))
         finally:
             self.disconnect()
-        print('Query is: {}\nResult is: {}'.format(query, result))
+        logger.debug('Query is: {}\nResult is: {}'.format(query, result))
         return result
 
     def get_course_outline(self, cid):
