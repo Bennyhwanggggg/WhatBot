@@ -26,7 +26,7 @@
     flex-direction: row;
     align-items: center;
 }
-/* 
+
 button {
     font-family: 'Roboto medium', sans-serif;
     font-size: 14px;
@@ -55,4 +55,4 @@ button {
 button:disabled {
     background: rgb(189, 189, 189);
     cursor: default;
-} */
+}
