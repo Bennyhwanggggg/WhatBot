@@ -37,4 +37,10 @@ class ConsultationManager:
 
     def round_time(self, time):
         # TODO: time rounding, input of time is 06:13:00
-        return time
+        timeSplit = time.split(":")
+        hour = timeSplit[0]
+        mins = timeSplit[1]
+        if int(mins) >= 30:
+            return str(int(hour)+1) + ":" + "00"
+        if int(mins) < 30:
+            return hour + ":" + "00"
