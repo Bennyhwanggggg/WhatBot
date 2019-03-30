@@ -6,6 +6,9 @@ const Header = () => {
         <div className="header item">
             WhatBot
         </div>
+        <div className="item Card">
+          <Upload />
+        </div>
         <div className="right item">
             Login
         </div>
