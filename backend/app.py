@@ -20,7 +20,7 @@ response_module = ResponseModule()
 """
 app = Flask(__name__)
 CORS(app)
-UPLOAD_FOLDER = '/Users/mitsunari/Documents/UNSW/COMP9900-Info-Tech-Project/project/backend'
+UPLOAD_FOLDER = '/Users/mitsunari/Documents/UNSW/COMP9900-Info-Tech-Project/project/backend'  # TODO: update this to S3?
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])
@@ -43,7 +43,8 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE_SELECTED.value)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename), 400
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # TODO: modify this to save in S3?
+        print(filename, file, vars(file), file.__dict__)
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # TODO: modify this to save in S3?
         return jsonify(message=UploadFileSuccess.SUCCESS.value), 200
 
 

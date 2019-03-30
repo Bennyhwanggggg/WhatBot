@@ -15,12 +15,12 @@ class Dropzone extends Component {
         this.onDrop = this.onDrop.bind(this);
     }
 
-    openFileDialog() {
+    openFileDialog = () => {
         if (this.props.disabled) return;
         this.fileInputRef.current.click();
     }
 
-    onFilesAdded(evt) {
+    onFilesAdded = (evt) => {
         if (this.props.disabled) return;
         const files = evt.target.files;
         if (this.props.onFilesAdded) {
@@ -29,31 +29,36 @@ class Dropzone extends Component {
         }
     }
 
-    onDragOver(event) {
+    onDragOver = (event) => {
         event.preventDefault();
-        if (this.props.disabed) return;
+        if (this.props.disabed) {
+            return
+        };
         this.setState({ hightlight: true });
     }
 
-    onDragLeave(event) {
+    onDragLeave = (event) => {
+        event.preventDefault();
         this.setState({ hightlight: false });
     }
 
-    onDrop(event) {
+    onDrop = (event) => {
         event.preventDefault();
-        if (this.props.disabed) return;
+        if (this.props.disabed) {
+            return
+        };
         const files = event.dataTransfer.files;
         if (this.props.onFilesAdded) {
-        const array = this.fileListToArray(files);
-        this.props.onFilesAdded(array);
+            const array = this.fileListToArray(files);
+            this.props.onFilesAdded(array);
         }
         this.setState({ hightlight: false });
     }
 
-    fileListToArray(list) {
+    fileListToArray = (list) => {
         const array = [];
         for (var i = 0; i < list.length; i++) {
-        array.push(list.item(i));
+            array.push(list.item(i));
         }
         return array;
     }
@@ -69,16 +74,16 @@ class Dropzone extends Component {
             style={{ cursor: this.props.disabled ? "default" : "pointer" }}
         >
             <input
-            ref={this.fileInputRef}
-            className="FileInput"
-            type="file"
-            multiple
-            onChange={this.onFilesAdded}
+                ref={this.fileInputRef}
+                className="FileInput"
+                type="file"
+                multiple
+                onChange={this.onFilesAdded}
             />
             <img
-            alt="upload"
-            className="Icon"
-            src={baseline_cloud_upload}
+                alt="upload"
+                className="Icon"
+                src={baseline_cloud_upload}
             />
             <span>Upload Files</span>
         </div>
