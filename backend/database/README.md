@@ -37,6 +37,4 @@ Database 1: postgres
                     (username,
                      password,
                      type)
-
-Database 2: 
 ```

@@ -17,6 +17,10 @@ class DataBaseManager:
         self.connection, self.cursor = None, None
 
     def connect(self):
+        """Manages all database connection and autocommits
+
+        :return: None
+        """
         self.connection = psycopg2.connect(database=self.database_name,
                                            user=USERNAME,
                                            password=PASSWORD,
@@ -27,6 +31,10 @@ class DataBaseManager:
         logger.info('Connection to AWS opened')
 
     def disconnect(self):
+        """Manages all disconnection from database. Resets connection and cursor to None
+
+        :return: None
+        """
         if self.connection and self.cursor:
             self.cursor.close()
             self.connection.close()
@@ -34,6 +42,17 @@ class DataBaseManager:
         self.connection, self.cursor = None, None
 
     def execute_query(self, query, *args):
+        """Used to execute query with the query string given and the arguments used for that
+        query. Arguments are given through *args so we can use self.cursor.execute to sanitize
+        the query and prevent SQL injection attacks.
+
+        :param query: query string
+        :type: str
+        :param args: tuple of arguments that goes into query string in a tuple. This field is optional.
+        :type: tuple
+        :return: result of query
+        :rtype: list or str
+        """
         result = None
         try:
             if not self.connection and not self.cursor:
