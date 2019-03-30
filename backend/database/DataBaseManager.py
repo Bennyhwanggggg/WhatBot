@@ -49,7 +49,7 @@ class DataBaseManager:
         return result
 
     def get_course_outline(self, cid):
-        key_part = '%' + cid
+        key_part = '%' + cid.upper()
         query = "SELECT description,outline_url from info_handbook where cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
@@ -85,14 +85,56 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_course(self, cid):
-        key_part = '%' + cid
-        query = "SELECT * from course_list where course_code like %s"
+            key_part = '%' + cid.upper()
+            query = "SELECT * from courselist where course_code like %s"
+            inputs = (key_part, )
+            return self.execute_query(query, inputs)
+
+    def get_location(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT campus from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_tuition_fee(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT commonwealth_std, domestic_std, international_std from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_faculty(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT faculty_url from info_handbook where cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
+
+    def get_prerequisites(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT prerequisite from info_handbook where cid like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
+
+    def get_offer_term(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT offer_term from info_handbook where cid like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
+
+    def get_indicative_hours(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT indicative_contact_hr from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_pdf_url(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT pdf_url from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
 
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
-    result = data_base_manager.get_course_outline("COMP9900")
 
 
