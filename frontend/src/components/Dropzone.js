@@ -16,16 +16,20 @@ class Dropzone extends Component {
     }
 
     openFileDialog = () => {
-        if (this.props.disabled) return;
+        if (this.props.disabled) {
+            return
+        };
         this.fileInputRef.current.click();
     }
 
     onFilesAdded = (evt) => {
-        if (this.props.disabled) return;
+        if (this.props.disabled) {
+            return;
+        }
         const files = evt.target.files;
         if (this.props.onFilesAdded) {
-        const array = this.fileListToArray(files);
-        this.props.onFilesAdded(array);
+            const array = this.fileListToArray(files);
+            this.props.onFilesAdded(array);
         }
     }
 
@@ -65,28 +69,28 @@ class Dropzone extends Component {
 
     render() {
         return (
-        <div
-            className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
-            onDragOver={this.onDragOver}
-            onDragLeave={this.onDragLeave}
-            onDrop={this.onDrop}
-            onClick={this.openFileDialog}
-            style={{ cursor: this.props.disabled ? "default" : "pointer" }}
-        >
-            <input
-                ref={this.fileInputRef}
-                className="FileInput"
-                type="file"
-                multiple
-                onChange={this.onFilesAdded}
-            />
-            <img
-                alt="upload"
-                className="Icon"
-                src={baseline_cloud_upload}
-            />
-            <span>Upload Files</span>
-        </div>
+            <div
+                className={`Dropzone ${this.state.hightlight ? "Highlight" : ""}`}
+                onDragOver={this.onDragOver}
+                onDragLeave={this.onDragLeave}
+                onDrop={this.onDrop}
+                onClick={this.openFileDialog}
+                style={{ cursor: this.props.disabled ? "default" : "pointer" }}
+            >
+                <input
+                    ref={this.fileInputRef}
+                    className="FileInput"
+                    type="file"
+                    multiple
+                    onChange={this.onFilesAdded}
+                />
+                <img
+                    alt="upload"
+                    className="Icon"
+                    src={baseline_cloud_upload}
+                />
+                <span>Upload Files</span>
+            </div>
         );
     }
 }

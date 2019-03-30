@@ -3,6 +3,7 @@ import Dropzone from './Dropzone';
 import './Upload.css';
 import Progress from './Progress';
 import baseline_check_circle from "./baseline-check_circle-24px.svg";
+import baseline_delete from "./baseline-delete-24px.svg";
 
 class Upload extends Component {
     constructor (props) {
@@ -147,12 +148,19 @@ class Upload extends Component {
                     </div>
                     <div className='Files'>
                         {this.state.files.map(file => {
-                        return (
-                            <div key={file.name} className='Row'>
-                            <span className='Filename'>{file.name}</span>
-                            {this.renderProgress(file)}
-                            </div>
-                        )
+                            return (
+                                <div key={file.name} className='Row'>
+                                    <span className='Filename'>
+                                        {file.name}
+                                        <img 
+                                            className='DeleteIcon'
+                                            alt='remove'
+                                            src={baseline_delete}>
+                                        </img>
+                                    </span>
+                                    {this.renderProgress(file)}
+                                </div>
+                            )
                         })}
                     </div>
                 </div>

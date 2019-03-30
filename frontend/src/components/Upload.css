@@ -24,6 +24,12 @@
     opacity: 0.5;
     margin-left: 32px;
 }
+
+.DeleteIcon {
+    padding-top: 10px;
+    height: 24px;
+    width: 24px;
+}
   
 .ProgressWrapper {
     display: flex;
