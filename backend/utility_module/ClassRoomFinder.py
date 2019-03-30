@@ -28,11 +28,3 @@ class ClassRoomFinder:
         if self.data is None:
             self.get_all_classroom()
         return self.data.loc[cid].values[0] if cid in self.data.index else 'No information for the course queried'
-
-
-if __name__ == '__main__':
-    class_room_finder = ClassRoomFinder()
-    class_room_finder.get_all_classroom()
-    result = class_room_finder.find_class_room("COMP9900")
-    print(result)
-
