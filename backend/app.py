@@ -18,7 +18,7 @@ def login():
     pass
 
 
-@app.route('/message', methods=["post"])
+@app.route('/message', methods=['POST'])
 def message():
     # turning off authentication for now...
     # username = request.json.get('username', None)

@@ -1,5 +1,4 @@
 from database.DataBaseManager import DataBaseManager
-import math
 
 
 class WamCalculator:
