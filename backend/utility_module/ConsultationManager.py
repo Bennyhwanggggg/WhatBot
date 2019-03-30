@@ -41,7 +41,12 @@ class ConsultationManager:
         timeSplit = time.split(":")
         hour = timeSplit[0]
         mins = timeSplit[1]
-        if int(mins) >= 30:
-            return str(int(hour)+1) + ":" + "00"
-        if int(mins) < 30:
-            return hour + ":" + "00"
+        if 9 <= int(hour) <= 12 or 1 <= int(hour) <= 5:
+            if int(mins) >= 30:
+                return str(int(hour)+1) + ":" + "00"
+            if int(mins) < 30:
+                return hour + ":" + "00"
+        else:
+            return "Please book consultation between 9AM to 5PM"
+
+
