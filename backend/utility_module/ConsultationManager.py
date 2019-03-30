@@ -6,9 +6,9 @@ class ConsultationManager:
         self.data_base_manager = data_base_manager
 
     def add_consultation(self, cid, sid, time, date):
+        time = self.round_time(time)
         if not self.check_valid_booking_time(time):
             return "Consultation can only be booked between 9AM to 5PM"
-        time = self.round_time(time)
         query = "INSERT INTO consultation(cid, sid, time, date) VALUES (%s, %s, %s, %s)"
         inputs = (cid, sid, time, date)
         return self.data_base_manager.execute_query(query, inputs)
@@ -40,15 +40,15 @@ class ConsultationManager:
 
     def check_valid_booking_time(self, time):
         hour, _, _ = time.split(":")
-        return True if 9 <= int(hour) <= 12 or 1 <= int(hour) <= 5 else False
+        return True if 9 <= int(hour) <= 17 else False
 
     def round_time(self, time):
         """Time rounding function to convert time to nearest hour
 
         :param time: current time in format of hh:mm:ss
         :type: str
-        :return: the rounded time
+        :return: the rounded time in format of hh:mm:ss
         :rtype: str
         """
-        hour, mins, sec = time.split(":")
-        return '{}:00'.format(str(int(hour)+1)) if int(mins) >= 30 else '{}:00'.format(hour)
+        hour, mins, _ = time.split(":")
+        return '{:02d}:00:00'.format(int(hour)+1) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
