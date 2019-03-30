@@ -33,7 +33,7 @@ class Input extends React.Component {
                         name="inputValue" 
                         component={this.renderInput} 
                     />
-                    <button>Send</button>
+                    <button className="SendMessageButton">Send</button>
                 </form>
             </div>
         );

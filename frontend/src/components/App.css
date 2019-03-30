@@ -95,7 +95,7 @@ input {
     flex-grow: 1;
 }
 
-button {
+.SendMessageButton {
     padding: 5px 10px;
     font-size: 16px;
     background-color: rgb(0, 60, 255);

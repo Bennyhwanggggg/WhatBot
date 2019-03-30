@@ -70,3 +70,9 @@
     background: rgb(189, 189, 189);
     cursor: default;
 }
+
+.DeleteButton {
+    padding: 0;
+    border: none;
+    background: none;
+}

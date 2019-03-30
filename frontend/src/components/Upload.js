@@ -29,6 +29,10 @@ class Upload extends Component {
         this.setState({alert: ""})
     }
 
+    onFileRemove = (file) => {
+        console.log(file, this.state.files)
+    }
+
     async uploadFiles () {
         if (!this.state.files.length) {
             this.setState({alert: "No files selected"})
@@ -142,8 +146,8 @@ class Upload extends Component {
                 <div className='Content'>
                     <div>
                         <Dropzone
-                        onFilesAdded={this.onFilesAdded}
-                        disabled={this.state.uploading || this.state.successfullUploaded}
+                            onFilesAdded={this.onFilesAdded}
+                            disabled={this.state.uploading || this.state.successfullUploaded}
                         />
                     </div>
                     <div className='Files'>
@@ -152,11 +156,13 @@ class Upload extends Component {
                                 <div key={file.name} className='Row'>
                                     <span className='Filename'>
                                         {file.name}
-                                        <img 
-                                            className='DeleteIcon'
-                                            alt='remove'
-                                            src={baseline_delete}>
-                                        </img>
+                                        <button className="DeleteButton" onClick={(file) => this.onFileRemove}>
+                                            <img 
+                                                className='DeleteIcon'
+                                                alt='remove'
+                                                src={baseline_delete}>
+                                            </img>
+                                        </button>
                                     </span>
                                     {this.renderProgress(file)}
                                 </div>
