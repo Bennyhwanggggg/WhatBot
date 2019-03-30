@@ -1,3 +1,7 @@
+"""
+    Consultation Booking Manager. This class is responsible for all
+    operations relating to the consultation booking feature.
+"""
 from database.DataBaseManager import DataBaseManager
 
 
@@ -39,6 +43,13 @@ class ConsultationManager:
         return avail_time_slots
 
     def check_valid_booking_time(self, time):
+        """ Check if a valid booking time. Time should be in 24 hour format of hh:mm:ss
+
+        :param time: time to check:
+        :type: str
+        :return: whether it is valid time or not
+        :rtype: bool
+        """
         hour, _, _ = time.split(":")
         return True if 9 <= int(hour) <= 17 else False
 
