@@ -36,17 +36,21 @@ class ConsultationManager:
                 avail_time_slots.append(time)
         return avail_time_slots
 
+    def check_valid_booking_time(self, time):
+        hour, _ = time.split(":")
+        return True if 9 <= int(hour) <= 12 or 1 <= int(hour) <= 5 else False
+
     def round_time(self, time):
-        # TODO: time rounding, input of time is 06:13:00
-        timeSplit = time.split(":")
-        hour = timeSplit[0]
-        mins = timeSplit[1]
-        if 9 <= int(hour) <= 12 or 1 <= int(hour) <= 5:
-            if int(mins) >= 30:
-                return str(int(hour)+1) + ":" + "00"
-            if int(mins) < 30:
-                return hour + ":" + "00"
-        else:
-            return "Please book consultation between 9AM to 5PM"
+        """Time rounding function to convert time to nearest hour
+
+        :param time: current time in format of hh:mm
+        :type: str
+        :return: the rounded time
+        :rtype: str
+        """
+        hour, mins = time.split(":")
+        if self.check_valid_bookin_time(time):
+            return '{}:00'.format(str(int(hour)+1)) if int(mins) >= 30 else '{}:00'.format(hour)
+        return "Consultation can only be booked between 9AM to 5PM"
 
 
