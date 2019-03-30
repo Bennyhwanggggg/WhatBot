@@ -76,9 +76,6 @@ workflows:
       - frontend_build_and_test
       - backend_build_and_test
       - deploy:
-          requires:
-              - frontend_build_and_test
-              - backend_build_and_test
           filters:
               branches:
                 only: master
