@@ -12,6 +12,11 @@ class WamCalculator:
         self.courses = courses
         self.data_base_manager = DataBaseManager()
 
+    def add_mark(self, sid, cid, mark):
+        query = "INSERT INTO wam(sid, cid, mark) VALUES (%s, %s, %s)"
+        inputs = (sid, cid, mark)
+        return self.data_base_manager.execute_query(query, inputs)
+
     def calculate_wam(self):
         wam, total_credits = 0, 0
         result_string = ''
@@ -38,3 +43,8 @@ class WamCalculator:
         if wam > 50:
             return 'P'
         return 'F'
+
+
+
+if __name__ == '__main__':
+    data_base_manager = WamCalculator()
