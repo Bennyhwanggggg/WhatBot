@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Dropzone from './Dropzone'
 import './Upload.css'
 import Progress from './Progress'
-import baseline_check_circle_outline from "baseline-check_circle_outline-24px.svg";
+import baseline_check_circle from "./baseline-check_circle-24px.svg";
 
 class Upload extends Component {
   constructor (props) {
@@ -73,7 +73,7 @@ class Upload extends Component {
         const formData = new FormData()
         formData.append('file', file, file.name)
 
-        req.open('POST', 'http://localhost:8000/upload')
+        req.open('POST', 'http://localhost:8000/upload') // TODO: change this to backend
         req.send(formData)
         })
   }
@@ -87,7 +87,7 @@ class Upload extends Component {
                 <img
                     className='CheckIcon'
                     alt='done'
-                    src={baseline_check_circle_outline}
+                    src={baseline_check_circle}
                     style={{
                     opacity: uploadProgress && uploadProgress.state === 'done' ? 0.5 : 0
                     }}
@@ -102,6 +102,7 @@ class Upload extends Component {
         return (
             <button
             onClick={() => this.setState({ files: [], successfullUploaded: false })}
+            className="Dropzone-upload"
             >
             Clear
             </button>
@@ -111,6 +112,7 @@ class Upload extends Component {
             <button
                 disabled={this.state.files.length < 0 || this.state.uploading}
                 onClick={this.uploadFiles}
+                className="Dropzone-upload"
             >
                 Upload
             </button>

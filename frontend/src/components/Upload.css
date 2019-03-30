@@ -1,3 +1,8 @@
+.Upload {
+    margin: 0 auto;
+    height: 60%;
+}
+
 .Filename {
     margin-bottom: 8px;
     font-size: 16px;
@@ -27,13 +32,16 @@
     align-items: center;
 }
 
-button {
+.Actions {
+    text-align: center;
+}
+
+.Dropzone-upload {
     font-family: 'Roboto medium', sans-serif;
     font-size: 14px;
     display: inline-block;
     height: 36px;
     min-width: 88px;
-    padding: 6px 16px;
     line-height: 1.42857143;
     text-align: center;
     white-space: nowrap;
@@ -52,7 +60,7 @@ button {
     outline: 0;
 }
   
-button:disabled {
+.Dropzone-upload:disabled {
     background: rgb(189, 189, 189);
     cursor: default;
 }
