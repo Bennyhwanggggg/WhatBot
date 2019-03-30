@@ -43,7 +43,7 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE_SELECTED.value)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename), 400
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # TODO: modify this to save in S3?
         return jsonify(message=UploadFileSuccess.SUCCESS.value), 200
 
 
