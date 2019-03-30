@@ -30,7 +30,9 @@ class Upload extends Component {
     }
 
     onFileRemove = (file) => {
-        console.log(file, this.state.files)
+        this.setState(prevState => ({
+            files: prevState.files.filter(f => f !== file)
+        }))
     }
 
     async uploadFiles () {
@@ -156,7 +158,7 @@ class Upload extends Component {
                                 <div key={file.name} className='Row'>
                                     <span className='Filename'>
                                         {file.name}
-                                        <button className="DeleteButton" onClick={(file) => this.onFileRemove}>
+                                        <button className="DeleteButton" onClick={() => this.onFileRemove(file)}>
                                             <img 
                                                 className='DeleteIcon'
                                                 alt='remove'
