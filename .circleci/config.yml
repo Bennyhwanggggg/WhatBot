@@ -15,11 +15,6 @@ jobs:
           command: |
             cd frontend
             npm test
-      - run:
-          name: deploy
-          command: |
-            cd frontend
-            npm test  
   backend_build_and_test:
     docker:
       - image: circleci/python:3.6
