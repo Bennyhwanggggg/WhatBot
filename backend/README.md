@@ -1,13 +1,18 @@
 # WhatBot Backend
 
 ## Setup, build and run
-Setup and build the packages
+Build the packages
 ```
 python3 setup.py install
 ```
-Running
+Running locally
 ```
 python3 app.py
+```
+Running via Docker
+```
+docker build -t whatbot.backend:latest .
+docker run whatbot.backend:latest
 ```
 
 ## Testing
