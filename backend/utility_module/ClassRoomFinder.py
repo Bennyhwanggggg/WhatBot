@@ -1,9 +1,10 @@
 """
     The ClassRoomFinder class is responsible for providing user
-    the class room and tutorial locator feature.
+    the lecture room locator feature for their courses.
 """
 from database.DataBaseManager import DataBaseManager
 import pandas as pd
+
 
 class ClassRoomFinder:
     def __init__(self, data_base_manager=DataBaseManager()):
