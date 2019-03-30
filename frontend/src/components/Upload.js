@@ -16,5 +16,7 @@ class Upload extends Component {
             <div className="Actions" />
           </div>
         )
-      }
-  }
+    }
+}
+
+export default Upload;

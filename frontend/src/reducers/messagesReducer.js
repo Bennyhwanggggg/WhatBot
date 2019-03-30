@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { MESSAGE_SENT, MESSAGE_RECIEVED } from '../actions/types'
 import uuid from 'uuid';
 
