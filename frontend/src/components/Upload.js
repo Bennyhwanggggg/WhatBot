@@ -11,7 +11,8 @@ class Upload extends Component {
             files: [],
             uploading: false,
             uploadProgress: {},
-            successfullUploaded: false
+            successfullUploaded: false,
+            alert: ""
         }
 
         this.onFilesAdded = this.onFilesAdded.bind(this)
@@ -20,17 +21,19 @@ class Upload extends Component {
         this.renderActions = this.renderActions.bind(this)
     }
 
-    onFilesAdded (files) {
+    onFilesAdded = (files) => {
         this.setState(prevState => ({
             files: prevState.files.concat(files)
         }))
+        this.setState({alert: ""})
     }
 
     async uploadFiles () {
         if (!this.state.files.length) {
+            this.setState({alert: "No files selected"})
             return;
         }
-        this.setState({ uploadProgress: {}, uploading: true })
+        this.setState({ uploadProgress: {}, uploading: true, alert: "" })
         const promises = []
         this.state.files.forEach(file => {
             promises.push(this.sendRequest(file))
@@ -43,7 +46,7 @@ class Upload extends Component {
         }
     }
 
-    sendRequest (file) {
+    sendRequest = (file) => {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest()
 
@@ -84,7 +87,7 @@ class Upload extends Component {
         })
     }
 
-  renderProgress (file) {
+    renderProgress = (file) => {
         const uploadProgress = this.state.uploadProgress[file.name]
         if (this.state.uploading || this.state.successfullUploaded) {
             return (
@@ -101,7 +104,7 @@ class Upload extends Component {
         }
     }
 
-    renderActions () {
+    renderActions = () => {
         if (this.state.successfullUploaded) {
             return (
                 <button
@@ -122,6 +125,14 @@ class Upload extends Component {
                 </button>
             )
          }
+    }
+
+    renderError = () => {
+        if (this.state.alert !== "") {
+            return (
+                <div className='ui warning message'>{this.state.alert}</div>
+            )
+        }
     }
 
     render () {
@@ -145,6 +156,7 @@ class Upload extends Component {
                         })}
                     </div>
                 </div>
+                {this.renderError()}
                 <div className='Actions'>{this.renderActions()}</div>
             </div>
         )
