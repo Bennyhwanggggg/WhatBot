@@ -3,11 +3,13 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import uuid
+import logging
 import os
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from conf.Error import UploadFileError
 from conf.Success import UploadFileSuccess
+
 
 """
     Initialize modules

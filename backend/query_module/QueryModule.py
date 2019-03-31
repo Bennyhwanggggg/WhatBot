@@ -5,7 +5,13 @@ from conf.Response import IntentResponse, FallbackResponse
 import re
 import logging
 
+"""
+    Logger configuration
+"""
+FORMAT = "[%(asctime)s] %(levelname)s: %(name)s: %(message)s"
+logging.basicConfig(format=FORMAT)
 logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.DEBUG)
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -17,7 +23,6 @@ class QueryModule:
     def __init__(self, project_id=DIALOGFLOW_PROJECT_ID,
                  session_id=uuid4(),
                  credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
-
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials
 
         self.project_id, self.session_id = project_id, session_id
@@ -87,7 +92,6 @@ class QueryModule:
         query_input = dialogflow.types.QueryInput(text=text_input)
         response = self.session_client.detect_intent(session=self.session, query_input=query_input)
 
-        logger.info('=' * 20)
         logger.info('Query text: {}'.format(response.query_result.query_text))
         logger.info('Detected intent: {} (confidence: {})\n'.format(
             response.query_result.intent.display_name,
@@ -147,3 +151,4 @@ class QueryModule:
 
 if __name__ == '__main__':
     query_module = QueryModule()
+    query_module.query('hi')
