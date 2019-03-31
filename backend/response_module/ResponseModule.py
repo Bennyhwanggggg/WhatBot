@@ -1,15 +1,12 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
-import logging
+from conf.Logger import Logger
 
 """
     Logger configuration
 """
-FORMAT = "[%(asctime)s] %(levelname)s: %(name)s: %(message)s"
-logging.basicConfig(format=FORMAT)
-logger = logging.getLogger(__name__)
-logger.setLevel(level=logging.DEBUG)
+logger = Logger(__name__).log
 
 
 class ResponseModule:

@@ -2,16 +2,13 @@ import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
+from conf.Logger import Logger
 import re
-import logging
 
 """
     Logger configuration
 """
-FORMAT = "[%(asctime)s] %(levelname)s: %(name)s: %(message)s"
-logging.basicConfig(format=FORMAT)
-logger = logging.getLogger(__name__)
-logger.setLevel(level=logging.DEBUG)
+logger = Logger(__name__).log
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
