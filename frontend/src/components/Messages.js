@@ -24,6 +24,10 @@ class Messages extends Component {
                         </div>
                     </li>
                 )
+            } else {
+                return (
+                    <div></div>
+                )
             }
         });
     }

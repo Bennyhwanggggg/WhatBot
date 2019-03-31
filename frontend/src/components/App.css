@@ -1,106 +1,105 @@
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-style: solid;
-  border-width: 2px;
-  border-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-style: solid;
+    border-width: 2px;
+    border-color: lightgray;
 }
 
 .App-header {
-  background-color: #262626;
-  overflow: visible;
-  width: 100%;
-  text-align: center;
-  color: white;
+    background-color: #262626;
+    overflow: visible;
+    width: 100%;
+    text-align: center;
+    color: white;
 }
 
 .Messages-list {
-  padding: 20px 0;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  list-style: none;
-  padding-left: 0;
-  flex-grow: 1;
-  overflow: auto;
-  scroll-behavior: smooth;
+    padding: 20px 0;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    list-style: none;
+    padding-left: 0;
+    flex-grow: 1;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .Messages-message {
-  display: flex;
-  margin-top: 10px;
+    display: flex;
+    margin-top: 10px;
 }
 
 .Messages-message.currentMember {
-  /*justify-content: flex-end;*/
-  flex-direction: row-reverse;
-  text-align: right;
+    /*justify-content: flex-end;*/
+    flex-direction: row-reverse;
+    text-align: right;
 }
 
 .Message-content {
-  display: inline-block;
+    display: inline-block;
 }
 
 .currentMember > .Message-content {
-  align-items: flex-end;
+    align-items: flex-end;
 }
 
 .Messages-message > .avatar {
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0 10px -10px;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 10px -10px;
 }
 
 .Message-content > .username {
-  display: block;
-  color: gray;
-  font-size: 14px;
-  padding-bottom: 4px;
+    display: block;
+    color: gray;
+    font-size: 14px;
+    padding-bottom: 4px;
 }
 
 .Message-content > .text {
-  padding: 10px;
-  max-width: 400px;
-  margin: 0;
-  border-radius: 12px;
-  background-color: rgb(243, 45, 10);
-  color: white;
-  display: inline-block;
-  word-wrap: break-word;
+    padding: 10px;
+    max-width: 400px;
+    margin: 0;
+    border-radius: 12px;
+    background-color: rgb(243, 45, 10);
+    color: white;
+    display: inline-block;
+    word-wrap: break-word;
 }
 
 .currentMember > .Message-content .text {
-  background-color: rgb(38, 0, 255);
+    background-color: rgb(38, 0, 255);
 }
 
 form {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  max-width: 900px;
-  margin: 0 auto 40px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto 40px;
 }
 
 input {
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid orangered;
-  flex-grow: 1;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid orangered;
+    flex-grow: 1;
 }
 
-button {
-  padding: 5px 10px;
-  font-size: 16px;
-  background-color: rgb(0, 60, 255);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  margin-left: 10px;
+.SendMessageButton {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: rgb(0, 60, 255);
+    color: white;
+    border: none;
+    border-radius: 8px;
 }

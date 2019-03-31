@@ -1,0 +1,79 @@
+.Upload {
+    margin: 0 auto;
+    height: 60%;
+}
+
+.Filename {
+    margin-bottom: 8px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #555;
+}
+  
+.Row {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px;
+    padding: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.CheckIcon {
+    opacity: 0.5;
+    margin-left: 32px;
+}
+
+.DeleteIcon {
+    padding-top: 10px;
+    height: 24px;
+    width: 24px;
+}
+  
+.ProgressWrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Actions {
+    text-align: center;
+}
+
+.Dropzone-upload {
+    font-family: 'Roboto medium', sans-serif;
+    font-size: 14px;
+    display: inline-block;
+    height: 36px;
+    min-width: 88px;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 0;
+    border-radius: 2px;
+    background: rgba(103, 58, 183, 1);
+    color: #fff;
+    outline: 0;
+}
+  
+.Dropzone-upload:disabled {
+    background: rgb(189, 189, 189);
+    cursor: default;
+}
+
+.DeleteButton {
+    padding: 0;
+    border: none;
+    background: none;
+}
