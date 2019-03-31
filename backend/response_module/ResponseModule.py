@@ -1,6 +1,12 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
+from conf.Logger import Logger
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 
 class ResponseModule:
@@ -45,8 +51,7 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        print('Response module recieved:')
-        print('\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
+        logger.info('Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or \
             message.intent == 'Default Fallback Intent' or \
             message.intent.endswith('followup') or \

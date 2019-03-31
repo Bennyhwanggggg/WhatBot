@@ -29,10 +29,13 @@ import os
 import re
 import random
 import datetime
-import logging
 from conf.Restriction import Rules
+from conf.Logger import Logger
 
-logger = logging.getLogger(__name__)
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
