@@ -9,13 +9,34 @@ from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from conf.Error import UploadFileError
 from conf.Success import UploadFileSuccess
-
+from conf.Logger import Logger
 
 """
     Initialize modules
 """
 query_module = QueryModule()
 response_module = ResponseModule()
+
+"""
+    Logger configurations. By default all are set to DEBUG level.
+    Change the level in setLevel to suit whatever your needs are.
+    Available levels from highest severity to lowest are:
+        CRITICAL
+        ERROR
+        WARNING
+        INFO
+        DEBUG
+"""
+logger = Logger(__name__).log
+logger.setLevel(logging.INFO)
+query_module_logger = logging.getLogger('query_module.QueryModule')
+query_module_logger.setLevel(logging.INFO)
+train_logger = logging.getLogger('query_module.train')
+train_logger.setLevel(logging.INFO)
+response_module_logger = logging.getLogger('response_module.ResponseModule')
+response_module_logger.setLevel(logging.INFO)
+database_logger = logging.getLogger('database.DataBaseManager')
+database_logger.setLevel(logging.INFO)
 
 """
     Flask configuration setup

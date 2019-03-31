@@ -1,8 +1,11 @@
 import psycopg2
 import re
-import logging
+from conf.Logger import Logger
 
-logger = logging.getLogger(__name__)
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 HOST = 'whatbot.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
 USERNAME = 'whatbot'

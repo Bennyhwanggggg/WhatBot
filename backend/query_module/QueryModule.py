@@ -6,7 +6,7 @@ from conf.Logger import Logger
 import re
 
 """
-    Logger configuration
+    Logger setup
 """
 logger = Logger(__name__).log
 

@@ -4,7 +4,7 @@ from conf.Response import FallbackResponse
 from conf.Logger import Logger
 
 """
-    Logger configuration
+    Logger setup
 """
 logger = Logger(__name__).log
 
