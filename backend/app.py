@@ -1,10 +1,10 @@
-from flask import Flask, request, abort, jsonify, flash
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import uuid
 import logging
-import os
+
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from management_module.ManagementModule import ManagementModule

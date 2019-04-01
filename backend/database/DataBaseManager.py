@@ -85,24 +85,30 @@ class DataBaseManager:
 
         :return: None
         """
-        if self.s3_resource is None:
-            self.s3_resource = boto3.resource('s3',
-                                              aws_access_key_id=aws_access_key_id,
-                                              aws_secret_access_key= aws_secret_access_key)
-            logger.info('Connection to file storage established')
-        else:
-            logger.warning('Connection to file storage already exist')
+        try:
+            if self.s3_resource is None:
+                self.s3_resource = boto3.resource('s3',
+                                                  aws_access_key_id=aws_access_key_id,
+                                                  aws_secret_access_key= aws_secret_access_key)
+                logger.info('Connection to file storage established')
+            else:
+                logger.warning('Connection to file storage already exist')
+        except Exception as e:
+            logger.error(str(e))
 
     def disconnect_file_storage(self):
         """Used to disconnect from S3 buckets.
 
         :return: None
         """
-        if self.s3_resource is not None:
-            self.s3_resource = None
-            logger.info('Connection to file storage closed')
-        else:
-            logger.warning('No connection to file storage to disconnect from')
+        try:
+            if self.s3_resource is not None:
+                self.s3_resource = None
+                logger.info('Connection to file storage closed')
+            else:
+                logger.warning('No connection to file storage to disconnect from')
+        except Exception as e:
+            logger.error(str(e))
 
     def upload_file(self, path_to_file, file_name):
         """Used to upload file to S3 bucket for file storage.
@@ -114,7 +120,10 @@ class DataBaseManager:
         :return: None
         """
         self.connect_file_storage()
-        self.s3_resource.Bucket(self.file_storage_name).upload_file(Filename=path_to_file, Key=file_name)
+        try:
+            self.s3_resource.Bucket(self.file_storage_name).upload_file(Filename=path_to_file, Key=file_name)
+        except Exception as e:
+            logger.error(str(e))
         self.disconnect_file_storage()
 
     def download_file(self, file_name, path_to_download_to):
@@ -127,27 +136,40 @@ class DataBaseManager:
         :return: None
         """
         self.connect_file_storage()
-        self.s3_resource.Bucket(self.file_storage_name).download_file(Key=file_name, Filename=path_to_download_to)
+        try:
+            self.s3_resource.Bucket(self.file_storage_name).download_file(Key=file_name, Filename=path_to_download_to)
+        except Exception as e:
+            logger.error(str(e))
         self.disconnect_file_storage()
 
     def read_file(self, file_name):
-        """Read a file from S3 without downloading. Converts the bytes data into string.
+        """Read a file from S3 without downloading. Converts the bytes data into string then
+        separate it into list by newline
 
         :param file_name: file you want to read
         :type: str
-        :return: file content
-        :rtype: str
+        :return: content
+        :rtype: list[str]
         """
         self.connect_file_storage()
-        binary_data = self.s3_resource.Object(self.file_storage_name, file_name).get()['Body'].read()
+        content = []
+        try:
+            binary_data = self.s3_resource.Object(self.file_storage_name, file_name).get()['Body'].read()
+            content = self.process_string_data(binary_data.decode('utf-8'))
+        except Exception as e:
+            logger.error(str(e))
         self.disconnect_file_storage()
-        return self.process_string_data(binary_data.decode('utf-8'))
+        return content
 
     def get_list_of_files_from_storage(self):
         self.connect_file_storage()
-        objects = self.s3_resource.Bucket(self.file_storage_name).objects.all()
+        try:
+            objects = self.s3_resource.Bucket(self.file_storage_name).objects.all()
+        except Exception as e:
+            logger.error(str(e))
+            return []
         self.disconnect_file_storage()
-        return [object.key for object in objects]
+        return [obj.key for obj in objects]
 
     def process_string_data(self, string_data, separator='\n'):
         """Convert string data into lists using a separator. By default it is new line ('\n').
