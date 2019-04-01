@@ -7,6 +7,7 @@ import logging
 import os
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
+from management_module.ManagementModule import ManagementModule
 from conf.Error import UploadFileError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
@@ -16,6 +17,7 @@ from conf.Logger import Logger
 """
 query_module = QueryModule()
 response_module = ResponseModule()
+management_module = ManagementModule()
 
 """
     Logger configurations. By default all are set to DEBUG level.
@@ -37,14 +39,14 @@ response_module_logger = logging.getLogger('response_module.ResponseModule')
 response_module_logger.setLevel(logging.INFO)
 database_logger = logging.getLogger('database.DataBaseManager')
 database_logger.setLevel(logging.INFO)
+management_logger = logging.getLogger('management_module.ManagementModule')
+management_logger.setLevel(logging.INFO)
 
 """
     Flask configuration setup
 """
 app = Flask(__name__)
 CORS(app)
-UPLOAD_FOLDER = '/Users/mitsunari/Documents/UNSW/COMP9900-Info-Tech-Project/project/backend'  # TODO: update this to S3?
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])
 
@@ -66,20 +68,19 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE_SELECTED.value)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename), 400
-        print(filename, file, vars(file), file.__dict__)
-        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # TODO: modify this to save in S3?
+        management_module.upload_new_file(filename)
+        # TODO: automated training
         return jsonify(message=UploadFileSuccess.SUCCESS.value), 200
 
 
 @app.route('/message', methods=['POST'])
 def message():
-    # turning off authentication for now...
-    # username = request.json.get('username', None)
     message = request.json.get('inputValue', None)
     id = str(uuid.uuid4())
 
     query_result = query_module.query(message)
     return_message = response_module.respond(query_result)
+
     response = {
         'message': return_message,
         'timestamp': datetime.now(),
