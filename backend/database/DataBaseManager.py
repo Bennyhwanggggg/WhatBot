@@ -1,4 +1,5 @@
 import psycopg2
+import boto3
 import re
 from conf.Logger import Logger
 
@@ -12,18 +13,24 @@ USERNAME = 'whatbot'
 PASSWORD='12345678'
 DATABASE = "postgres"
 PORT = '5432'
+FILE_STORAGE = 'whatbots3'
+aws_access_key_id = 'AKIAUHOEW66FFI2ABONG'
+aws_secret_access_key = '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'
 
 
 class DataBaseManager:
-    def __init__(self, host=HOST, port=PORT, database_name=DATABASE):
+    def __init__(self, host=HOST, port=PORT, database_name=DATABASE, file_storage_name=FILE_STORAGE):
         self.host, self.port, self.database_name = host, port, database_name
-        self.connection, self.cursor = None, None
+        self.file_storage_name = file_storage_name
+        self.connection, self.cursor, self.s3_resource = None, None, None
 
-    def connect(self):
+    def connect_database(self):
         """Manages all database connection and autocommits
 
         :return: None
         """
+        if self.connection is not None:
+            return
         self.connection = psycopg2.connect(database=self.database_name,
                                            user=USERNAME,
                                            password=PASSWORD,
@@ -33,7 +40,7 @@ class DataBaseManager:
         self.cursor = self.connection.cursor()
         logger.info('Connection to AWS opened')
 
-    def disconnect(self):
+    def disconnect_database(self):
         """Manages all disconnection from database. Resets connection and cursor to None
 
         :return: None
@@ -59,7 +66,7 @@ class DataBaseManager:
         result = None
         try:
             if not self.connection and not self.cursor:
-                self.connect()
+                self.connect_database()
             if args:
                 self.cursor.execute(query, (args[0]))
             else:
@@ -69,10 +76,33 @@ class DataBaseManager:
         except (Exception, psycopg2.Error) as e:
             logger.error("Error executing query:\n{}".format(str(e)))
         finally:
-            self.disconnect()
+            self.disconnect_database()
         logger.debug('Query is: {}\nResult is: {}'.format(query, result))
         return result
 
+    def connect_file_storage(self):
+        if self.s3_resource is None:
+            self.s3_resource = boto3.resource('s3',
+                                              aws_access_key_id=aws_access_key_id,
+                                              aws_secret_access_key= aws_secret_access_key)
+
+    def disconnect_file_storage(self):
+        if self.s3_resource is not None:
+            self.s3_resource = None
+
+    def upload_file(self, path_to_file, file_name):
+        self.connect_file_storage()
+        self.s3_resource.Bucket(self.file_storage_name).upload_file(Filename=path_to_file, Key=file_name)
+        self.disconnect_file_storage()
+
+    def download_file(self, file_name, path_to_download_to):
+        self.connect_file_storage()
+        self.s3_resource.Bucket(self.file_storage_name).download_file(Key=file_name, Filename=path_to_download_to)
+        self.disconnect_file_storage()
+
+    """
+        Common SQL query operations
+    """
     def get_course_outline(self, cid):
         key_part = '%' + cid.upper()
         query = "SELECT description,outline_url from info_handbook where cid like %s"
@@ -161,5 +191,4 @@ class DataBaseManager:
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
-
-
+    data_base_manager.upload_file('./schemas/9900_database.sql', 'test')
