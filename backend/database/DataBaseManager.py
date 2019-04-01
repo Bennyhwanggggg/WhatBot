@@ -143,6 +143,12 @@ class DataBaseManager:
         self.disconnect_file_storage()
         return self.process_string_data(binary_data.decode('utf-8'))
 
+    def get_list_of_files_from_storage(self):
+        self.connect_file_storage()
+        objects = self.s3_resource.Bucket(self.file_storage_name).objects.all()
+        self.disconnect_file_storage()
+        return [object.key for object in objects]
+
     def process_string_data(self, string_data, separator='\n'):
         """Convert string data into lists using a separator. By default it is new line ('\n').
         This is used mainly to process the data we read from S3
@@ -188,8 +194,8 @@ class DataBaseManager:
                            campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std,
                            international_std):
         query = "INSERT INTO info_handbook(cid, title, credit, prerequisite, outline_url, faculty_url, school_url, " \
-        "offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
-        "international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                "offer_term, campus, description, pdf_url, indicative_contact_hr, commonwealth_std, domestic_std, " \
+                "international_std) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         inputs = (cid, title, credit, prerequisite, outline_url, faculty_url,
                   school_url, offer_term, campus, description, pdf_url,
                   indicative_contact_hr, commonwealth_std, domestic_std, international_std, )
