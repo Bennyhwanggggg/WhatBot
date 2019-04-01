@@ -30,6 +30,12 @@ import re
 import random
 import datetime
 from conf.Restriction import Rules
+from conf.Logger import Logger
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -131,7 +137,7 @@ class QueryModuleTrainer:
         output_contexts, input_contexts, action = [], [], []
         reset_context = False
         if not data or not data[0]:
-            print('Empty intents data file:\n{}\n'.format(data_file))
+            logger.warning('Empty intents data file:\n{}\n'.format(data_file))
             return display_name, message_texts, intent_types, parent_followup, \
                    input_contexts, output_contexts, action, clean_data, reset_context
         data = deque(data)
@@ -156,7 +162,7 @@ class QueryModuleTrainer:
             else:
                 clean_data.append(line)
         if not clean_data or not display_name or not message_texts or not intent_types:
-            print('Error in intents data file configuration: {}'.format(data_file))
+            logger.warning('Error in intents data file configuration: {}'.format(data_file))
             return None, [], [], [], [], [], [], [], False
         return display_name, message_texts, intent_types, parent_followup, \
                input_contexts, output_contexts, action, clean_data, reset_context
@@ -238,7 +244,7 @@ class QueryModuleTrainer:
         if not data_is_parsed:
             _, _, _, training_data = self.read_intents_data(training_data)
             if not training_data:
-                print('No training data provided')
+                logger.info('No training data provided')
                 return
         training_data_entities = [self.intent_entity_map[intent_type] for intent_type in intent_types]
 
@@ -291,7 +297,7 @@ class QueryModuleTrainer:
                                          messages=[message])
 
         response = self.intents_client.create_intent(self.intents_parent, intent)
-        print('Intent created: {}'.format(response))
+        logger.info('Intent created: {}'.format(response))
 
     def _get_intent_ids(self, display_name):
         """ Helper to get an id of an intent using display name
@@ -339,7 +345,7 @@ class QueryModuleTrainer:
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.read_intents_data(path_to_read)
             if not data or training_data_file in self.rules.restricted:
-                print('Skipping: {} due to restriction or no data'.format(training_data_file))
+                logger.info('Skipping: {} due to restriction or no data'.format(training_data_file))
                 continue
             try:
                 if self._get_intent_ids(display_name):
@@ -349,8 +355,7 @@ class QueryModuleTrainer:
                                    parent_followup=parent_followup, action=action, reset_contexts=reset_contexts,
                                    data_is_parsed=True)
             except Exception as e:
-                print('Error occurred with {}: {}'.format(display_name, str(e)))
-            print('\n', '=' * 30)
+                logger.error('Error occurred with {}: {}'.format(display_name, str(e)))
 
     def read_entities_data(self, data_file):
         from collections import deque
@@ -358,7 +363,7 @@ class QueryModuleTrainer:
         data = data_file.read().split('\n')
         data_file.close()
         if not data or not data[0]:
-            print('Empty entity data file: {}'.format(data_file))
+            logger.warning('Empty entity data file: {}'.format(data_file))
             return None, [], []
         data = deque(data)
         entity_values, synonyms = [], []
@@ -373,7 +378,7 @@ class QueryModuleTrainer:
                     all_synonyms = line[1].split('$$$')
                     synonyms.append(all_synonyms)
         if not entity_values:
-            print('Empty entity data file configuration: {}'.format(data_file))
+            logger.warning('Empty entity data file configuration: {}'.format(data_file))
             return None, [], []
         return display_name, entity_values, synonyms
 
@@ -392,7 +397,7 @@ class QueryModuleTrainer:
         """
         entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP', auto_expansion_mode=True)
         response = self.entity_types_client.create_entity_type(self.entity_types_parent, entity_type)
-        print('Entity type created: \n{}'.format(response))
+        logger.info('Entity type created: \n{}'.format(response))
         entity_type_ids = self._get_entity_ids(display_name)
         for entity_type_id in entity_type_ids:
             entity_type_path = self.entity_types_client.entity_type_path(self.project_id, entity_type_id)
@@ -406,7 +411,7 @@ class QueryModuleTrainer:
                     entity.synonyms.append(syn)
                 training_entities.append(entity)
             response = self.entity_types_client.batch_create_entities(entity_type_path, training_entities)
-            print('Entity created: {}'.format(response))
+            logger.info('Entity created: {}'.format(response))
 
     def _get_entity_ids(self, display_name):
         """ Helper to get an id of an entity using display name
@@ -443,26 +448,25 @@ class QueryModuleTrainer:
             path_to_read = os.path.join(training_data_folder, training_data_file)
             display_name, entity_values, synonyms = self.read_entities_data(path_to_read)
             if not entity_values or training_data_file in self.rules.restricted:
-                print('Skipping: {}'.format(training_data_file))
+                logger.info('Skipping: {}'.format(training_data_file))
                 continue
             try:
                 if self._get_entity_ids(display_name):
                     self.delete_entity(display_name)
                 self.create_entity(display_name, entity_values, synonyms)
             except Exception as e:
-                print('Error occurred with {}: {}'.format(display_name, str(e)))
-            print('\n', '=' * 30)
+                logger.error('Error occurred with {}: {}'.format(display_name, str(e)))
 
     def create_context(self, display_name, lifespan_count=4):
         existing_context = self.find_context(display_name)
         if existing_context:
-            print('Context already exist:\n{}'.format(existing_context[0]))
+            logger.info('Context already exist:\n{}'.format(existing_context[0]))
             return existing_context[0]
         session_path = self.contexts_client.session_path(self.project_id, self.session_id)
         context_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)
         context = dialogflow.types.Context(name=context_name, lifespan_count=lifespan_count)
         response = self.contexts_client.create_context(session_path, context)
-        print('Context created:\n{}'.format(response))
+        logger.info('Context created:\n{}'.format(response))
         return context
 
     def find_context(self, display_name):

@@ -1,5 +1,11 @@
 import psycopg2
 import re
+from conf.Logger import Logger
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 HOST = 'whatbot.ciquzj8l3yd7.ap-southeast-2.rds.amazonaws.com'
 USERNAME = 'whatbot'
@@ -14,6 +20,10 @@ class DataBaseManager:
         self.connection, self.cursor = None, None
 
     def connect(self):
+        """Manages all database connection and autocommits
+
+        :return: None
+        """
         self.connection = psycopg2.connect(database=self.database_name,
                                            user=USERNAME,
                                            password=PASSWORD,
@@ -21,16 +31,31 @@ class DataBaseManager:
                                            port=str(self.port))
         self.connection.set_session(autocommit=True)
         self.cursor = self.connection.cursor()
-        print('Connection to AWS opened')
+        logger.info('Connection to AWS opened')
 
     def disconnect(self):
+        """Manages all disconnection from database. Resets connection and cursor to None
+
+        :return: None
+        """
         if self.connection and self.cursor:
             self.cursor.close()
             self.connection.close()
-            print('Connection to AWS closed')
+            logger.info('Connection to AWS closed')
         self.connection, self.cursor = None, None
 
     def execute_query(self, query, *args):
+        """Used to execute query with the query string given and the arguments used for that
+        query. Arguments are given through *args so we can use self.cursor.execute to sanitize
+        the query and prevent SQL injection attacks.
+
+        :param query: query string
+        :type: str
+        :param args: tuple of arguments that goes into query string in a tuple. This field is optional.
+        :type: tuple
+        :return: result of query
+        :rtype: list or str
+        """
         result = None
         try:
             if not self.connection and not self.cursor:
@@ -42,14 +67,14 @@ class DataBaseManager:
             regex = re.compile(r'SELECT', re.IGNORECASE)
             result = self.cursor.fetchall() if regex.search(query) else "execute successfully"
         except (Exception, psycopg2.Error) as e:
-            print("Error executing query:\n{}".format(str(e)))
+            logger.error("Error executing query:\n{}".format(str(e)))
         finally:
             self.disconnect()
-        print('Query is: {}\nResult is: {}'.format(query, result))
+        logger.debug('Query is: {}\nResult is: {}'.format(query, result))
         return result
 
     def get_course_outline(self, cid):
-        key_part = '%' + cid
+        key_part = '%' + cid.upper()
         query = "SELECT description,outline_url from info_handbook where cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
@@ -85,14 +110,56 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_course(self, cid):
-        key_part = '%' + cid
-        query = "SELECT * from course_list where course_code like %s"
+            key_part = '%' + cid.upper()
+            query = "SELECT * from courselist where course_code like %s"
+            inputs = (key_part, )
+            return self.execute_query(query, inputs)
+
+    def get_location(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT campus from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_tuition_fee(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT commonwealth_std, domestic_std, international_std from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_faculty(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT faculty_url from info_handbook where cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
+
+    def get_prerequisites(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT prerequisite from info_handbook where cid like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
+
+    def get_offer_term(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT offer_term from info_handbook where cid like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
+
+    def get_indicative_hours(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT indicative_contact_hr from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
+    def get_pdf_url(self, cid):
+        key_part = '%' + cid.upper()
+        query = "SELECT pdf_url from info_handbook where cid like %s"
+        inputs = (key_part,)
+        return self.execute_query(query, inputs)
+
 
 
 if __name__ == '__main__':
     data_base_manager = DataBaseManager()
-    result = data_base_manager.get_course_outline("COMP9900")
 
 

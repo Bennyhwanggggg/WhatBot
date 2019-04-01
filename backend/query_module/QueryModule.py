@@ -2,7 +2,13 @@ import os
 import dialogflow_v2 as dialogflow
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
+from conf.Logger import Logger
 import re
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 DIALOGFLOW_PROJECT_ID = 'whatbot-v1'
@@ -14,13 +20,12 @@ class QueryModule:
     def __init__(self, project_id=DIALOGFLOW_PROJECT_ID,
                  session_id=uuid4(),
                  credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
-
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials
 
         self.project_id, self.session_id = project_id, session_id
         self.session_client = dialogflow.SessionsClient()
         self.session = self.session_client.session_path(project_id, session_id)
-        print('Session path: {}\n'.format(self.session))
+        logger.info('Session path: {}\n'.format(self.session))
 
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_regex_map = {
@@ -63,11 +68,11 @@ class QueryModule:
 
     def query(self, text):
         result = self.detect_intent_texts(text=text)
-        print('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
+        logger.debug('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         if not isinstance(result, FallbackResponse):
             if self.detect_missing_parameters(result.intent, result.message) or result.confidence < 0.5:
                 result = self.handle_missing_parameters(result)
-        print('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
+        logger.debug('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
     def detect_intent_texts(self, text, language_code='en'):
@@ -84,12 +89,11 @@ class QueryModule:
         query_input = dialogflow.types.QueryInput(text=text_input)
         response = self.session_client.detect_intent(session=self.session, query_input=query_input)
 
-        print('=' * 20)
-        print('Query text: {}'.format(response.query_result.query_text))
-        print('Detected intent: {} (confidence: {})\n'.format(
+        logger.info('Query text: {}'.format(response.query_result.query_text))
+        logger.info('Detected intent: {} (confidence: {})\n'.format(
             response.query_result.intent.display_name,
             response.query_result.intent_detection_confidence))
-        print('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
+        logger.info('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
         if response.query_result.intent.display_name == 'Default Fallback Intent':
             return FallbackResponse(intent=response.query_result.intent.display_name,
@@ -144,4 +148,4 @@ class QueryModule:
 
 if __name__ == '__main__':
     query_module = QueryModule()
-    query_module.detect_intent_texts('hi')
+    query_module.query('hi')

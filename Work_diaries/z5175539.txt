@@ -24,3 +24,8 @@ Week 5
 Update the dialogflow trainer to be able to do follow ups and use contexts. Also updated training
 data and test cases for it to ensure accurate intent and entity detection. I also finished setting up
 on the CI/CD build pipeline using Circle CI 
+
+Week 6
+Updated training data to train more intents and followups. Also finished the deployment pipline using
+nginx, docker and Heroku. Started working on file upload in both frontend and backend for the automation
+training feature.

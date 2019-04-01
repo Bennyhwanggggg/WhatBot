@@ -1,6 +1,12 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
+from conf.Logger import Logger
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
 
 class ResponseModule:
@@ -45,8 +51,7 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        print('Response module recieved:')
-        print('\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
+        logger.info('Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or \
             message.intent == 'Default Fallback Intent' or \
             message.intent.endswith('followup') or \
@@ -57,33 +62,47 @@ class ResponseModule:
         return self.query_map[message.intent](message.message)
 
     def respond_to_course_outline_queries(self, cid):
-        response = self.data_base_manager.get_course_outline(cid)
-        # TODO: format result
-        return response
+            response = self.data_base_manager.get_course_outline(cid)
+            # TODO: format result
+            return response[0][0]
 
     def respond_to_course_fee_queries(self, cid):
-        pass
+            response = self.data_base_manager.get_tuition_fee(cid)
+            return "commonwealth student: " +response[0][0] + "\ndomestic student: " + response[0][1] + "\ninternational student: " + response[0][2]
 
     def respond_to_course_location_queries(self, cid):
-        pass
+        response = self.data_base_manager.get_location(cid)
+        return response[0][0]
 
     def respond_to_course_indicative_hours_queries(self, cid):
-        pass
+        response = self.data_base_manager.get_indicative_hours(cid)
+        return response[0][0]
 
     def respond_to_course_offering_term_queries(self, cid):
-        pass
+        response = self.data_base_manager.get_offer_term(cid)
+        return response[0][0]
 
     def respond_to_course_prerequisites_queries(self, cid):
-        pass
+        response = self.data_base_manager.get_prerequisites(cid)
+        if not response[0][0]:
+            return "There is no prerequisite for this course, it is 0 level"
+        return response[0][0]
 
-    def respond_to_course_school_and_faculty_queries(self, cid):
-        pass
+    def respond_to_course_school_and_faculty_queries(self, cid):# not finished
+        response = self.data_base_manager.get_faculty(cid)
+        return "The detail for faculty: " + response[0][0]
 
     def respond_to_course_send_outline_queries(self, cid):
-        pass
+        response = self.data_base_manager.get_pdf_url(cid)
+        return response[0][0]
 
     def respond_to_course_study_level_queries(self, cid):
         pass
+
+    def respond_to_course_isadk_queries(self, cid):
+        response = self.data_base_manager.get_course(cid)
+        answer = "Yes, it is an ADK course" if response[0][3] else "Sorry, it is not an ADK"
+        return answer
 
     def respond_to_course_consultation_booking(self):
         pass
