@@ -1,3 +1,7 @@
+"""
+    Consultation Booking Manager. This class is responsible for all
+    operations relating to the consultation booking feature.
+"""
 from database.DataBaseManager import DataBaseManager
 
 
@@ -6,6 +10,9 @@ class ConsultationManager:
         self.data_base_manager = data_base_manager
 
     def add_consultation(self, cid, sid, time, date):
+        time = self.round_time(time)
+        if not self.check_valid_booking_time(time):
+            return "Consultation can only be booked between 9AM to 5PM"
         query = "INSERT INTO consultation(cid, sid, time, date) VALUES (%s, %s, %s, %s)"
         inputs = (cid, sid, time, date)
         return self.data_base_manager.execute_query(query, inputs)
@@ -35,12 +42,24 @@ class ConsultationManager:
                 avail_time_slots.append(time)
         return avail_time_slots
 
+    def check_valid_booking_time(self, time):
+        """ Check if a valid booking time. Time should be in 24 hour format of hh:mm:ss
+
+        :param time: time to check:
+        :type: str
+        :return: whether it is valid time or not
+        :rtype: bool
+        """
+        hour, _, _ = time.split(":")
+        return True if 9 <= int(hour) <= 17 else False
+
     def round_time(self, time):
-        # TODO: time rounding, input of time is 06:13:00
-        timeSplit = time.split(":")
-        hour = timeSplit[0]
-        mins = timeSplit[1]
-        if int(mins) >= 30:
-            return str(int(hour)+1) + ":" + "00"
-        if int(mins) < 30:
-            return hour + ":" + "00"
+        """Time rounding function to convert time to nearest hour
+
+        :param time: current time in format of hh:mm:ss
+        :type: str
+        :return: the rounded time in format of hh:mm:ss
+        :rtype: str
+        """
+        hour, mins, _ = time.split(":")
+        return '{:02d}:00:00'.format(int(hour)+1) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
