@@ -17,7 +17,9 @@ class UtilityModule:
     def __init__(self):
         """
             Initialise the UtilityModule class. This uses a single data base manager instance to manage
-            all database connection related work.
+            all database connection related work. Upon initialisation, we preload data that are often fix
+            like class room location information and student marks into memory so we don't need to keep
+            accessing the database everytime.
         """
         self.data_base_manager = DataBaseManager()
         self.wam_calculator = WamCalculator(courses=self.get_student_academic_results())

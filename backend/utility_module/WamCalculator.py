@@ -12,7 +12,30 @@ class WamCalculator:
         self.courses = courses
         self.data_base_manager = DataBaseManager()
 
+    def add_mark(self, sid, cid, mark):
+        """Update the mark of a course for a student in the databse
+
+        :param sid: student ID
+        :type: str
+        :param cid: course code
+        :type: str
+        :param mark: result of that course
+        :type: float
+        :return: database operation result
+        :rtype: str
+        """
+        query = "INSERT INTO wam(sid, cid, mark) VALUES (%s, %s, %s)"
+        inputs = (sid, cid, mark, )
+        return self.data_base_manager.execute_query(query, inputs)
+
     def calculate_wam(self):
+        """Calculate wam using the preloaded data from self.courses and
+        give a result string which is a summary of their course results and
+        final calculated WAM
+
+        :return: result summary string
+        :rtype: str
+        """
         wam, total_credits = 0, 0
         result_string = ''
         for course in self.courses:
