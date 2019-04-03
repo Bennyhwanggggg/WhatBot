@@ -21,3 +21,8 @@ Week5:
 Fix the codes for data extractor for course handbook. Store course handbook into database. Working on database funtions with Steve.
 Discussing with team members on how to design for the consultation. We might set the timeslot in advance like per hour for each consultation with
 specific lecturer. Catch up the codes updated by Benny for the Dialogflow with our backend.
+
+Week6:
+Adding consultation, classroom and WAM table in the database. Also inserting some data in these three tables.
+Importing Pandas in Classroom and WAM functions when aiming to searching location or WAM.
+Adding round time function for consultation
