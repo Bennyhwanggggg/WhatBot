@@ -1,6 +1,6 @@
 """
     The ClassRoomFinder class is responsible for providing user
-    the class room and tutorial locator feature.
+    the lecture room locator feature for their courses.
 """
 from database.DataBaseManager import DataBaseManager
 import pandas as pd
@@ -28,10 +28,3 @@ class ClassRoomFinder:
         if self.data is None:
             self.get_all_classroom()
         return self.data.loc[cid].values[0] if cid in self.data.index else 'No information for the course queried'
-
-
-if __name__ == '__main__':
-    class_room_finder = ClassRoomFinder()
-    class_room_finder.get_all_classroom()
-    result = class_room_finder.find_class_room("COMP9900")
-    print(result)

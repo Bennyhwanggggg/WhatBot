@@ -23,15 +23,15 @@ class ConsultationManager:
         return self.data_base_manager.execute_query(query, inputs)
 
     def check_avail_time_slots(self, cid):
-        initial_time_slots = ['9:00AM',
-                              '10:00AM',
-                              '11:00AM',
-                              '12:00AM',
-                              '1:00PM',
-                              '2:00PM',
-                              '3:00PM',
-                              '4:00PM',
-                              '5:00PM']
+        initial_time_slots = ['9:00',
+                              '10:00',
+                              '11:00',
+                              '12:00',
+                              '13:00',
+                              '14:00',
+                              '15:00',
+                              '16:00',
+                              '17:00']
         key_part = '%' + cid
         inputs = (key_part,)
         query = "SELECT time from consultation where cid like %s"
