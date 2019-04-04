@@ -22,3 +22,7 @@ Design the consultation booking system.
 Week 5:
 I mainly work on the DataBaseManager and responseModule this week.
 And write the backend function of consultation module.
+
+Week 6:
+Fulfill the ConsultationManager functions. Make sure the booking can be based on date and the range is one week.
+Writing test files for response module and consulation manager.
