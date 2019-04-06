@@ -29,3 +29,8 @@ Week 6
 Updated training data to train more intents and followups. Also finished the deployment pipline using
 nginx, docker and Heroku. Started working on file upload in both frontend and backend for the automation
 training feature.
+
+Week 7
+Worked on management module's automation pipeline by setting up AWS S3 for file storage. Updated database
+code to access AWS S3 files. Also worked on documentation for automation pipline to describe its features
+and how it is different from Dialogflow console. 
