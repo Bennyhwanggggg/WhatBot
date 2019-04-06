@@ -38,6 +38,6 @@ After upload, they see the 5 requests because we entered 5 lines above and we al
 Step 4. 
 User is then required to go into it and manually create the new intent themselves and also label the entities as well. 
 ![alt text](md_images/dialogflow_console_create_intent.png "dialogflow_console_create_intent")  
-User creating a new intent themselves by clicking create new.  
+_User creating a new intent themselves by clicking create new._**  
 ![alt text](md_images/dialogflow_console_entity_labelling.png "dialogflow_console_entity_labelling")  
-User doing manual entity labelling as Dialogflow console often does not pick up custom entities.  
+_User doing manual entity labelling as Dialogflow console often does not pick up custom entities._**  
