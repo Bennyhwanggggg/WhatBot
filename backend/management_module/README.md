@@ -14,10 +14,10 @@ In summary, automatic AI model training provides these advantages:
 Dialogflow also provide a feature for user to upload conversation logs into it's console [See here](https://dialogflow.com/docs/training-analytics/training). However, WhatBot's automatic AI training feature is a lot more powerful and this will be described in this section.
 ##### 1. Dialogflow console's upload file cannot create a new intent directly
 While conversation logs can be uploaded onto Dialogflow console, it cannot be used to create a new intent. Dialogflow will only try to match the lines in conversation logs to an existing intent and add the lines as training queries into those existing intent. Therefore, you cannot create a new intent using console's feature without having to manually create that intent yourself and enter some training queries for the lines in the conversation logs to be matched to it. If you do not do so, you have to manually label each line in the conversation log you uploaded to an intent yourself.  
-However, with WhatBot's automatic AI training feature, user's can create brand new intent or update an existing one by simply specifying the intent name along with some training queries.
+However, with WhatBot's automatic AI training feature, user's can create brand new intent or update an existing one by simply specifying the intent name along with some training queries.  
 For example:  
-Scenario: User is trying to create an intent for course outline.
-**User using Dialogflow console**
+Scenario: User is trying to create an intent for course outline.  
+**User using Dialogflow console**  
 Step 1.  
 User prepares the conversation log which looks like a .txt file with the following content:
 ```
@@ -29,15 +29,15 @@ Outline for COMP9331
 ```
 Step 2.
 On Dialogflow console, user navigates to the "Training" tab and click "Upload".  
-![alt text](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/management_module/md_images/dialogflow_console_training_button.png "dialogflow_console_training_button")
+![alt text](md_images/dialogflow_console_training_button.png "dialogflow_console_training_button")
 
 Step 3.
 After upload, they see the 5 requests because we entered 5 lines above and we also see 5 no match because the intent for `course outline related queries` did not exist before.  
-![alt text](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/management_module/md_images/dialogflow_console_display.png "dialogflow_console_display")
+![alt text](md_images/dialogflow_console_display.png "dialogflow_console_display")
 
 Step 4. 
 User is then required to go into it and manually create the new intent themselves and also label the entities as well. 
-![alt text](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/management_module/md_images/dialogflow_console_create_intent.png "dialogflow_console_create_intent")  
+![alt text](md_images/dialogflow_console_create_intent.png "dialogflow_console_create_intent")  
 User creating a new intent themselves by clicking create new.  
-![alt text](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/management_module/md_images/dialogflow_console_entity_labelling.png "dialogflow_console_entity_labelling")  
+![alt text](md_images/dialogflow_console_entity_labelling.png "dialogflow_console_entity_labelling")  
 User doing manual entity labelling as Dialogflow console often does not pick up custom entities.  
