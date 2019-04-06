@@ -14,6 +14,11 @@ const Header = () => {
             Upload training data
           </Link>
         </div>
+        <div className="item">
+          <Link to="/dashboard">
+            Dashboard
+          </Link>
+        </div>
         <div className="right item">
             Login
         </div>
