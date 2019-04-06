@@ -33,11 +33,11 @@ Note: Will throw an error if entity already exist, so make sure you call query_m
 
 ### Training data configuration
 #### Intents
-Intents training data should have the following lines:
-`display_name` : The name of the intent
-`message_texts` : How the intent should respond. If returning multiple entities, each field should be separated by ` @@@ `. e.g `$course @@@ $time`
-`intent_type` : The type of intent. This should match a key in `self.intent_entity_map` and is an indication of what type of entities will be inside the intent.
-The entities inside data themselves should also be wrapped with curly brackets `{}`.
+Intents training data should have the following lines:  
+`display_name` : The name of the intent  
+`message_texts` : How the intent should respond. If returning multiple entities, each field should be separated by ` @@@ `. e.g `$course @@@ $time`  
+`intent_type` : The type of intent. This should match a key in `self.intent_entity_map` and is an indication of what type of entities will be inside the intent.  
+The entities inside data themselves should also be wrapped with curly brackets `{}`.  
 
 For example:
 ```
