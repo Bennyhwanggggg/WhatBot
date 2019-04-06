@@ -4,9 +4,9 @@ Management module is essentially the backstage of the chatbot system, where cour
 ## Features
 ### Automatic AI model training
 #### What is it?
-This feature allows admin users or engineers to update WhatBot's NLP models without the need of manually going into Dialogflow console to create a new intent or entity. It leverages Dialogflow APIs so that users can simply upload a training data configuration file, which follows the configuration described in [how to use query trainer](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#how-to-train), through the "Upload training data" tab in WhatBot's UI and the intent or entity will be trained in Dialogflow. This automation process makes WhatBot unique as it means developers or administrators can quickly react and adapt WhatBot to new type of queries as long as the data required to answer those queries is available in the database. Therefore, you can imagine how powerful and flexible WhatBot can become as it can be updated for new usage cases very quickly. Furthermore, it also generate significant more amount of training queries with only a few training data and this remove the manual process of having user to enter variations of training queries by themselves on Dialogflow console. AI model training can also be triggered through command line for developers allowing it to be used without going through the web interface making the system super usable by all users with access to it.  
+This feature allows admin users or engineers to update WhatBot's NLP models without the need of manually going into Dialogflow console to create a new intent or entity. It leverages Dialogflow APIs so that users can simply upload a training data configuration file, which follows the configuration described in [how to use query trainer](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#how-to-train), through the "Upload training data" tab in WhatBot's UI and the intent or entity will be trained in Dialogflow. This automation process makes WhatBot unique as it means developers or administrators can quickly react and adapt WhatBot to new type of queries as long as the data required to answer those queries is available in the database. Furthermore, it also generate significant more amount of training queries with only a few training data and this remove the manual process of having user to enter variations of training queries by themselves on Dialogflow console.
 In summary, automatic AI model training provides these advantages:
-- Rapid Dialogflow NLP model update making it easily adaptable to new use cases.  
+- Rapid Dialogflow NLP model update making it easily adaptable to new use cases by creating or updating intents and entities.  
 - Generate training queries. For example, given 10 training data, it can produce more than 200 training queries to be used to make the NLP model more robust.  
 - Useable through web interface or command line, making it user friendly for even user without any computer knowledge.  
 
@@ -38,6 +38,60 @@ After upload, they see the 5 requests because we entered 5 lines above and we al
 Step 4. 
 User is then required to go into it and manually create the new intent themselves and also label the entities as well. 
 ![alt text](md_images/dialogflow_console_create_intent.png "dialogflow_console_create_intent")  
-_User creating a new intent themselves by clicking create new._**  
+_User creating a new intent themselves by clicking create new._  
 ![alt text](md_images/dialogflow_console_entity_labelling.png "dialogflow_console_entity_labelling")  
-_User doing manual entity labelling as Dialogflow console often does not pick up custom entities._**  
+_User doing manual entity labelling as Dialogflow console often does not pick up custom entities._  
+
+**User using WhatBot's automatic AI training feature**  
+Step 1. 
+User prepares the training data file where they can specify the intent's attributes like: `display_name`, `message_texts`, `parent_followup`, `input_context`, `reset_contexts`, `output_context`. More detail on training data file configuration click [here](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#how-to-train). In this example, we will use the an example configuraton file which is also for the the scenario above:
+```
+display_name course_outline_queries
+message_texts $course
+intent_types course_outline
+reset_contexts
+What is {course code} about?
+Tell me more about {course code}
+What can I learn in {course code}
+Description of {course code}
+Course outline for {course code}
+Give me the course outline of {course code}
+Give me a description of {course code}
+I want to know what {course code} is about
+Describe {course code} for me
+I want to see the course outline for {course code}
+Show me the course outline for {course code}
+I want the outline for {course code}
+Give me the outline for {course code}
+{course code} outline
+{course code} course outline
+Course description for {course code} please
+Course description for {course code}
+Course description for {course code} thanks
+Course description for {course code} thank you
+I want to see the course outline for {course code}
+I want to see the course description for {course code}
+outline for {course code}
+Course outline {course code}
+I want to know about {course code}
+I want to find out more about {course code}
+Tell me about {course code}
+{course code} description
+```
+
+Step 2.  
+User uploads the file through web interface. 
+![alt text](md_images/whatbot_upload.png "whatbot_upload") 
+
+Step 3.  
+User can see that the intent has being created on Dialogflow console with more than 300 training phrases that was generated by WhatBot's training query generation feature. User can also see that entities has being labelled through WhatBot's backend doing the query analysis. 
+![alt text](md_images/whatbot_create_intent.png "whatbot_create_intent") 
+
+##### 2. Dialogflow console's upload file cannot label custom entites accurately
+Using the example used above, we can also see that Dialogflow console's upload file feature cannot label custom entites accurately very often while WhatBot's automatic AI training features leverages it's entity training feature and having user provide where these entities should be to accurately label them using Dialogflow APIs for training.  
+
+##### 3. Dialogflow console's upload file cannot be used for creating new entities or updating existing entities
+The upload file for training feature in Dialogflow cannot be used for training entities while WhatBot's automatic AI training feature can be by following the entity training file configuration menthioned in [here](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#entities). This is also the feature that allow accurate entity labelling mentioned in the last difference.  
+
+##### 4. Dialogflow console's upload file cannot be used to configure an intent, e.g. followup, response and contexts
+From the usage example above, you can see that parameters such as `message_texts` and `reset_contexts` were specified in WhatBot's configuration file as a requirement. This allowed WhatBot users to setup various parameters for the intent right away upon creation. Parameters like `message_texts` is used to specify how the intent should respond and `reset_contexts` is used to specify whether this intent will mark the end of a conversation. WhatBot also offer context and followups to be configured as well by specifying fields such as `parent_followup`, `input_context`, `output_context` and `action`. For more detail on the training data configuration see [here](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#how-to-train). All of these, cannot be done on Dialogflow automatically.  
