@@ -2,7 +2,8 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import ChatRoom from './ChatRoom';
-import Upload from './Upload'
+import Upload from './Upload';
+import Dashboard from './Dashboard';
 
 import history from '../history';
 import './App.css';
@@ -37,6 +38,7 @@ class App extends React.Component {
             <Switch>
               <Route path="/" exact component={ChatRoom} />
               <Route path="/upload" exact component={Upload} />
+              <Route path="/dashboard" exact component={Dashboard} />
             </Switch>
           </React.Fragment>
         </Router>
