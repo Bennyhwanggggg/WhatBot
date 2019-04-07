@@ -79,8 +79,8 @@ class WamCalculator:
 
 
 if __name__ == '__main__':
-    class_room_finder = WamCalculator()
-    #result = class_room_finder.add_mark("z8888888", "COMP9511", "74", "6")
-    #result = class_room_finder.get_student_wam("z1234567")
-    result = class_room_finder.calculate_wam("z8888888")
+    wam_finder = WamCalculator()
+    #result = wam_finder.add_mark("z8888888", "COMP9511", "74", "6")
+    #result = wam_finder.get_student_wam("z1234567")
+    result = wam_finder.calculate_wam("z8888888")
     print(result)
