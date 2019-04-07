@@ -1,6 +1,6 @@
 """
-    The ClassRoomFinder class is responsible for providing user
-    the lecture room locator feature for their courses.
+    The CourseTimeTableFinder class is responsible for providing user
+    the class time table features and number of spots available for that course
 """
 from database.DataBaseManager import DataBaseManager
 
