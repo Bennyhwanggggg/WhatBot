@@ -1,3 +1,10 @@
 node_modules
-.vscodeREADME.md
+.vscode
+README.md
 React-doc-links.md
+.git
+Project proposal.pdf
+Work_diaries
+**/md_images
+*.pdf
+*.md

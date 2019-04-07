@@ -2,4 +2,9 @@ build
 venv
 __pycache__
 .pytest_cache
-.idea
+.idea.git
+Project proposal.pdf
+Work_diaries
+**/md_images
+*.pdf
+*.md
