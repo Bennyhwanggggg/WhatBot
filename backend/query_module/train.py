@@ -516,5 +516,3 @@ if __name__ == '__main__':
                                             data_is_parsed=True,
                                             reset_contexts=reset_contexts,
                                             parent_followup=parent_followup)
-        # query_module_trainer.create_context(output_contexts[0])
-        # print(query_module_trainer.find_context(display_name=output_contexts[0]))
