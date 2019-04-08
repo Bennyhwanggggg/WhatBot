@@ -103,3 +103,8 @@ input {
     border: none;
     border-radius: 8px;
 }
+
+.modal {
+    max-height: 80%;
+    overflow-y: scroll;
+}
