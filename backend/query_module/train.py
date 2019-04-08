@@ -505,16 +505,16 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_booking_with_followup-user_input_course_code_with_followup.txt')
-        # query_module_trainer.create_intent(display_name=display_name,
-        #                                    message_texts=message_texts,
-        #                                    intent_types=intent_types,
-        #                                    training_data=data,
-        #                                    input_contexts=input_contexts,
-        #                                    output_contexts=output_contexts,
-        #                                    action=action,
-        #                                    data_is_parsed=True,
-        #                                    reset_contexts=reset_contexts
-        #                                    parent_followup=parent_followup)
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/all_courses_queries.txt')
+        query_module_trainer.create_intent(display_name=display_name,
+                                            message_texts=message_texts,
+                                            intent_types=intent_types,
+                                            training_data=data,
+                                            input_contexts=input_contexts,
+                                            output_contexts=output_contexts,
+                                            action=action,
+                                            data_is_parsed=True,
+                                            reset_contexts=reset_contexts,
+                                            parent_followup=parent_followup)
         # query_module_trainer.create_context(output_contexts[0])
         # print(query_module_trainer.find_context(display_name=output_contexts[0]))

@@ -206,3 +206,36 @@ def test_prerequisites_queries():
         assert result.intent == 'prerequisites_queries'
         assert result.message.upper() == 'COMP9444'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+
+def test_all_courses_queries():
+    query_module = QueryModule()
+    test_messages = ['I wanna know all the courses of postgraduate',
+                     'I want to know the list of postgraduate courses',
+                     "I want to get all the courses of postgraduate",
+                     'I want to get all the courses',
+                     'Can I get all postgraduate courses',
+                     'Can I know all postgraduate courses',
+                     'Can you show me all courses']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'all_courses_queries'
+        assert result.message.upper() == 'Sure! These are all the courses of CSE!'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_wam_queries():
+    query_module = QueryModule()
+    test_messages = ['I want to know the wam of z1234567',
+                     'I want to get the wam of z1234567',
+                     "Can I get the wam for z1234567",
+                     'Can I know the wam for z1234567',
+                     'Please tell me the wam for z1234567',
+                     'Show me the wam for z1234567',
+                     'The wam of z1234567']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'wam_queries'
+        assert result.message.upper() == 'z1234567'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
