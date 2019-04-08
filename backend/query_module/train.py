@@ -81,6 +81,9 @@ class QueryModuleTrainer:
 
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_entity_map = {
+            'none': {'parse_key': []},
+            'course_code': {'parse_key': ['course code']},
+            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']},
             'course_fee': {'parse_key': ['course code']},
             'course_outline': {'parse_key': ['course code']},
             'prerequisites': {'parse_key': ['course code']},
