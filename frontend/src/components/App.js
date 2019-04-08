@@ -4,7 +4,7 @@ import Header from './Header';
 import ChatRoom from './ChatRoom';
 import Upload from './Upload';
 import Dashboard from './Dashboard';
-
+import TrainUsageInfo from './TrainUsageInfo';
 import history from '../history';
 import './App.css';
 
@@ -39,6 +39,7 @@ class App extends React.Component {
               <Route path="/" exact component={ChatRoom} />
               <Route path="/upload" exact component={Upload} />
               <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/info" exact component={TrainUsageInfo} />
             </Switch>
           </React.Fragment>
         </Router>

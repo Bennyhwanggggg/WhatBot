@@ -103,3 +103,21 @@ input {
     border: none;
     border-radius: 8px;
 }
+
+.modal {
+    max-height: 80%;
+    overflow-y: scroll;
+}
+
+.How-to-use {
+    float: right;
+}
+
+.How-to-use-icon {
+    width: 40px;
+    height: auto;
+}
+
+.How-to-use-icon:hover {
+    cursor: pointer
+}
