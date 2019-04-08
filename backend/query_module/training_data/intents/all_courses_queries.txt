@@ -15,4 +15,6 @@ Give me a list of all courses
 all courses
 Please show me all courses
 Please give me all the courses of postgraduate
+Show me all the courses for CSE postgrad
+Show me all the courses for CSE postgraduate
 
