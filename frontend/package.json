@@ -13,6 +13,7 @@
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
     "redux-thunk": "^2.3.0",
+    "remarkable": "^1.7.1",
     "uuid": "^3.3.2"
   },
   "scripts": {
