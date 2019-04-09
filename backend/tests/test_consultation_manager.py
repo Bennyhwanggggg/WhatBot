@@ -1,6 +1,5 @@
 from utility_module.ConsultationManager import ConsultationManager
 from tests.MockDatabase import MockDatabase
-import pandas as pd
 
 
 def test_time_rounding():
