@@ -62,7 +62,7 @@ class ConsultationManager:
             else:
                 DayAsString = weekDays[num_day]
                 logger.info("It is on next" + DayAsString)
-                return True, "Your booking is on next " + DayAsString
+                return True, "Your booking is on " + DayAsString + " " + date
         except ValueError:
             logger.warn("Warning: Wrong input date")
             return False, "Please try again"
@@ -107,7 +107,7 @@ class ConsultationManager:
                         return "Sorry, there is no available time slot on date"
                     result = "Sorry this time slot has been booked, please choose another one from following time slots on " + date
                     logger.info(avail_list)
-                    return result + ', '.join(avail_list)
+                    return result +": "+ ', '.join(avail_list)
             except ValueError:
                 logger.debug("Invalid Input")
                 return
@@ -115,26 +115,6 @@ class ConsultationManager:
             logger.warn(feedback)
             return feedback
 
-
-    def check_avail_time_slots(self, cid):
-        initial_time_slots = ['9:00',
-                              '10:00',
-                              '11:00',
-                              '12:00',
-                              '13:00',
-                              '14:00',
-                              '15:00',
-                              '16:00',
-                              '17:00']
-        key_part = '%' + cid
-        inputs = (key_part,)
-        query = "SELECT time from consultation where cid like %s"
-        booked = list(self.data_base_manager.execute_query(query, inputs)[0])
-        avail_time_slots = []
-        for time in initial_time_slots:
-            if time not in booked:
-                avail_time_slots.append(time)
-        return avail_time_slots
 
     def check_valid_booking_time(self, time):
         """ Check if a valid booking time. Time should be in 24 hour format of hh:mm:ss
