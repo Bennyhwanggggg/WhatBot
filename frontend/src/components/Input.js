@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { sendMessage } from '../actions';
 
 
-// redux-form #224, redux-form.com for docs
-// validation #231
 class Input extends React.Component {
 
     renderInput = ({input}) => {
@@ -19,9 +17,7 @@ class Input extends React.Component {
         );
     };
 
-    // redux-form uses handleSubmit which already calls e.preventDefault #238 send req
     onSubmit = (formValues) => {
-        console.log(formValues)
         if (Object.keys(formValues).length === 0){
             return;
         }
@@ -43,7 +39,6 @@ class Input extends React.Component {
         );
     }
 }
-
 
 const formWrapped = reduxForm({
                         form: "formValues"

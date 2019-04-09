@@ -5,7 +5,7 @@ import ScrollableFeed from 'react-scrollable-feed'
 class Messages extends Component {
 
     renderMessages() {
-        return this.props.messages.map( message => {
+        return this.props.messages.map( msgList => msgList.map( message => {
             const isUser = message.inputValue != null;
             const currentMember = isUser ?  "Messages-message currentMember" : "Messages-message";
             const currentMemberColor = isUser ? "blue" : "red";
@@ -33,13 +33,13 @@ class Messages extends Component {
                             <div className="username">
                                 {currentUserName}
                             </div>
-                            <div class="typing-indicator">
+                            <div className="typing-indicator">
                             </div>
                         </div>
                     </li>
                 )
             }
-        });
+        }));
     }
 
     render() {
@@ -54,7 +54,6 @@ class Messages extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {messages: Object.values(state.messages) }
 }
 
