@@ -95,9 +95,6 @@ class ConsultationManager:
         if is_weekday:
             try:
                 avail_list = self.check_avail_timeslot(cid, date)#return available timeslot list
-                time = time + ":00"
-                print("time", time)
-                print("avail_list", avail_list)
                 if time in avail_list:
                     result = self.add_consultation(cid, sid, time, date)# add into database
                     logger.info(result+"\n"+feedback)
