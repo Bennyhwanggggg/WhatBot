@@ -9,5 +9,6 @@ setup(
               'database',
               'query_module',
               'response_module',
-              'utility_module']
+              'utility_module',
+              'tests']
 )

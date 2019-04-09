@@ -1,7 +1,6 @@
 from utility_module.ConsultationManager import ConsultationManager
-from database.DataBaseManager import DataBaseManager
+from tests.MockDatabase import MockDatabase
 import pandas as pd
-from pandas import DataFrame
 
 
 def test_time_rounding():
@@ -32,38 +31,17 @@ def test_check_weekday():
         assert feedback == expected[i]
 
     
-class Consultation_Test():
-    def __init__(self):
-        self.data_base_manager = DataBaseManager()
-        self.consultation_manager = ConsultationManager()
-        self.data = None
-
-    def get_consultation(self, cid, sid):
-        query = "SELECT * from consultation where cid = %s and sid = %s"
-        inputs = (cid, sid)
-        result = self.data_base_manager.execute_query(query, inputs)
-        df = pd.DataFrame(data=result, columns=['cid', 'sid', 'time', 'date'])
-        self.data = df
-        print(df)
-        return df
-
-    def avail_timeslot_query(self, cid, sid, time, date):
-        if self.data is None:
-            self.get_consultation(cid, sid)
-        for index, row in self.data.iterrows():
-            course_id, student_id, timeslot, year_m_d = row['cid'], row['sid'], row['time'], row['date']
-            if course_id == cid and student_id == sid and year_m_d == date and timeslot == time:
-                result_string = "Sorry this time slot has been booked"
-                return result_string
-        return "This timeslot is available"
-
-    
-def test_consultation():
-    inputs = [["COMP9900", "z5111111", "09:00:00", "2019-04-10"],["COMP9900", "z5111111", "10:00:00", "2019-04-10"]]
-    expected = ["Sorry this time slot has been booked", "This timeslot is available"]#Sorry this time slot has been booked
-    consultation_test = Consultation_Test()
-    for i in range(len(inputs)):
-        s = consultation_test.avail_timeslot_query(inputs[i][0],inputs[i][1],inputs[i][2],inputs[i][3])
-        assert s == expected[i]
-
+def test_make_booking():
+    inputs = [["COMP9900", "z5111111", "09:00:00", "2019-04-10"], ["COMP9900", "z5111111", "09:00:00", "2019-04-10"]]
+    expected = ["Your booking is on Wednesday 2019-04-10", "Sorry this time slot has been booked, please choose another one from following time slots on 2019-04-10: 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00"]
+    consultation_manager = ConsultationManager()
+    consultation_manager.data_base_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
+    consultation_manager.get_time_slots = consultation_manager.data_base_manager.get_time_slots
+    consultation_manager.add_consultation = consultation_manager.data_base_manager.add_consultation
+    test_case = 0
+    for cid, sid, time, date in inputs:
+        s = consultation_manager.consultation_booking_query(cid, sid, time, date)
+        s = s.lstrip()
+        assert s == expected[test_case]
+        test_case += 1
 
