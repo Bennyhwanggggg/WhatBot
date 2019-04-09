@@ -121,3 +121,13 @@ input {
 .How-to-use-icon:hover {
     cursor: pointer
 }
+
+.typing-indicator {
+    background-color: rgb(243, 45, 10);
+    width: 60px;
+    border-radius: 30%;
+    padding: 1rem 1.5rem 2rem;
+    margin: 0 auto;
+    position: relative;
+    animation: 2s pulse infinite ease-out;
+}

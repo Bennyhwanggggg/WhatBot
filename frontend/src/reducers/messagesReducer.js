@@ -1,16 +1,20 @@
-import { MESSAGE_SENT, MESSAGE_RECIEVED } from '../actions/types'
+import { MESSAGE_SENT, MESSAGE_RECIEVED, MESSAGE_LOADING } from '../actions/types'
 import uuid from 'uuid';
 
-export default (state = {}, action) => {
+const INITIAL_STATE = { messages:[] }
+
+export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case MESSAGE_SENT:
-            console.log(MESSAGE_SENT, action.payload)
             const id = uuid.v4();
             action.payload.id = id;
-            return { ...state, [id]: action.payload }
+            return { ...state, messages: [...state.messages, action.payload] }
         case MESSAGE_RECIEVED:
-            console.log(MESSAGE_RECIEVED, action.payload)
-            return { ...state, [action.payload.id]: action.payload }
+            action.payload.id = action.id
+            return { ...state, messages: state.messages.map(message => (message.id === action.id) ? action.payload : message) }
+        case MESSAGE_LOADING:
+            action.payload.id = action.id
+            return { ...state, messages: [...state.messages, action.payload] }
         default:
             return state
     }
