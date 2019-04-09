@@ -24,5 +24,13 @@ I mainly work on the DataBaseManager and responseModule this week.
 And write the backend function of consultation module.
 
 Week 6:
-Fulfill the ConsultationManager functions. Make sure the booking can be based on date and the range is one week.
-Writing test files for response module and consulation manager.
+Fulfill the ConsultationManager functions. 
+Make sure the booking can be based on date and the range is one week, including check the date is valid.
+Write the function to clean the expired data.
+Write test files for response module and consultation manager.
+
+Week 7:
+This week, I fulfill the ConsultationManager.py and test_consultation_manager.py with the help of Benny.
+Add consultation functions into ResponseModule.py
+Write the intent of consultation cancelling and booking into intents under query_module
+Train the intent sentences by running train.py
