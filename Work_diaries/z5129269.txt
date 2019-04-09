@@ -26,3 +26,8 @@ Week6:
 Adding consultation, classroom and WAM table in the database. Also inserting some data in these three tables.
 Importing Pandas in Classroom and WAM functions when aiming to searching location or WAM.
 Adding round time function for consultation
+
+Week7:
+create databse tables for course time tables and anncouncement, as well as adding data to them.
+add database functions for time tables and anncouncement.
+Finish consultation with Benny and Steve.
