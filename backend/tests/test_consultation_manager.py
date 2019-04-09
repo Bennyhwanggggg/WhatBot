@@ -28,7 +28,7 @@ def test_check_weekday():
     tests_date = ["2019-04-10", "2019-04-13", "2019-04-18"]
     expected = ["Your booking is on Wednesday 2019-04-10", "Sorry, there is no consultation on weekends", "It may be beyond the range, your booking date must before 2019-04-16"]
     for i in range(len(tests_date)):
-    is_weekday, feedback = consultation_manager.check_weekday(tests_date[i])
+        is_weekday, feedback = consultation_manager.check_weekday(tests_date[i])
     assert feedback == expected[i]
 
     
