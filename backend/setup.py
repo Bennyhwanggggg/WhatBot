@@ -10,5 +10,6 @@ setup(
               'query_module',
               'response_module',
               'utility_module',
-              'management_module']
+              'management_module',
+              'tests']
 )
