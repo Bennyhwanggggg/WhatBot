@@ -11,7 +11,7 @@ class Messages extends Component {
             const currentMemberColor = isUser ? "blue" : "red";
             const currentUserName = isUser ? "You" : "WhatBot";
             const msg = isUser ? message.inputValue : message.message;
-            if (msg) {
+            if (msg && msg !== 'loading') {
                 return (
                     <li className={currentMember} key={message.id}> 
                         <span className="avatar" 
@@ -26,7 +26,17 @@ class Messages extends Component {
                 )
             } else {
                 return (
-                    <div></div>
+                    <li className={currentMember} key={message.id}> 
+                        <span className="avatar" 
+                        style={{backgroundColor: {currentMemberColor}}}/>
+                        <div className="Message-content">
+                            <div className="username">
+                                {currentUserName}
+                            </div>
+                            <div class="typing-indicator">
+                            </div>
+                        </div>
+                    </li>
                 )
             }
         });
@@ -44,6 +54,7 @@ class Messages extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {messages: Object.values(state.messages) }
 }
 

@@ -76,7 +76,7 @@ def upload():
 @app.route('/message', methods=['POST'])
 def message():
     message = request.json.get('inputValue', None)
-    id = str(uuid.uuid4())
+    id = request.json.get('id', None)
 
     query_result = query_module.query(message)
     return_message = response_module.respond(query_result)
