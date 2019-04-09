@@ -22,7 +22,7 @@ class Input extends React.Component {
     // redux-form uses handleSubmit which already calls e.preventDefault #238 send req
     onSubmit = (formValues) => {
         console.log(formValues)
-        if (formValues !== null){
+        if (Object.keys(formValues).length === 0){
             return;
         }
         this.props.sendMessage(formValues);
