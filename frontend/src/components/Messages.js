@@ -15,7 +15,6 @@ class Messages extends Component {
         if (loadingMessages[0].length) {
             messageList[0] = messageList[0].concat(loadingMessages[0][0])
         }
-        console.log(messageList)
         return messageList.map( msgList => msgList.map( message => {
             const isUser = message.inputValue != null;
             const currentMember = isUser ?  "Messages-message currentMember" : "Messages-message";
