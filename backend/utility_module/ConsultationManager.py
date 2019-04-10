@@ -8,6 +8,7 @@ from conf.Logger import Logger
 
 logger = Logger(__name__).log
 
+
 class ConsultationManager:
     def __init__(self, data_base_manager=DataBaseManager()):
         self.data_base_manager = data_base_manager
@@ -34,36 +35,38 @@ class ConsultationManager:
         inputs = (cid, sid, time, date)
         return self.data_base_manager.execute_query(query, inputs)
 
-    def update_consultation(self):#update the consultation database everyday
-            date = datetime.datetime.today().strftime('%Y-%m-%d')#eg. 2019-03-28
-            key_part = '%' + date
-            query = "DELETE FROM consultation WHERE date < %s"
-            inputs = (key_part, )
-            return self.data_base_manager.execute_query(query, inputs)
+    def next_seven_day(self):
+        """Getting the date of 7 days later from current day.
 
-    def next_seven_day(self):# getting the date of 7 days later, used in check_weekday first if condition
+        :return: next week's date of current day
+        :rtype: str
+        """
         today = datetime.date.today()
         week_next = today + datetime.timedelta(days=7)
         return week_next.strftime('%Y-%m-%d')
 
-    def update_consultation(self):#update the consultation database everyday
-        date = datetime.datetime.today().strftime('%Y-%m-%d')#eg. 2019-03-28
+    def update_consultation(self):
+        """ Update consultation database
+
+        :return: SQL execution status
+        """
+        date = datetime.datetime.today().strftime('%Y-%m-%d')
         key_part = '%' + date
         query = "DELETE FROM consultation WHERE date < %s"
         inputs = (key_part, )
         return self.data_base_manager.execute_query(query, inputs)
 
-    def check_weekday(self,date):  # check whether the booking day is valid, date like 2019-03-28
-        week_next = self.next_seven_day()  # get the date of 7 days later from current date
+    def check_weekday(self, date):
+        week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
-        if not date or date > week_next or date < today:#check the date is within one week
-            return False, "It may be beyond the range, your booking date must before " + week_next
+        if not date or date > week_next or date < today:  # check the date is within one week
+            return False, "It may be beyond the range, your booking date must before {}".format(week_next)
 
         week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         date_convert = date.split('-')
         date_list = [int(i) for i in date_convert]
         try:
-            day = datetime.date(date_list[0], date_list[1], date_list[2])  # eg. should be 2017,12,25 integer parameters; <class 'datetime.date'>
+            day = datetime.date(date_list[0], date_list[1], date_list[2])
             num_day = day.weekday()  # convert weekday into digit (eg Mon -> 0,)
             if num_day == 5 or num_day == 6:
                 logger.info("Sorry, there is no consultation on weekends")
