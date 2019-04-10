@@ -5,7 +5,18 @@ import ScrollableFeed from 'react-scrollable-feed'
 class Messages extends Component {
 
     renderMessages() {
-        return this.props.messages.map( msgList => msgList.map( message => {
+        var messageList = this.props.messages.map( msgList => msgList.filter( message => {
+            return message.message !== 'loading'
+        }))
+        var loadingMessages = this.props.messages.map( msgList => msgList.filter( message => {
+            const isUser = message.inputValue != null;
+            return !isUser && message.message === 'loading'
+        }))
+        if (loadingMessages[0].length) {
+            messageList[0] = messageList[0].concat(loadingMessages[0][0])
+        }
+        console.log(messageList)
+        return messageList.map( msgList => msgList.map( message => {
             const isUser = message.inputValue != null;
             const currentMember = isUser ?  "Messages-message currentMember" : "Messages-message";
             const currentMemberColor = isUser ? "blue" : "red";
