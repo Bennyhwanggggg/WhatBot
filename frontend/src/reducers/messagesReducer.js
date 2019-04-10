@@ -25,10 +25,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, messages: state.messages.map(message => (message.id === action.id) ? action.payload : message) }
         case MESSAGE_LOADING:
             action.payload.id = action.id
-            var messageList = [...state.messages, action.payload]
-            var messages = []
-            var loadingMessages = []
-            for (var i=0; i<messageList.length; i++) {
+            messageList = [...state.messages, action.payload]
+            messages = []
+            loadingMessages = []
+            for (i=0; i<messageList.length; i++) {
                 if (messageList[i].message && messageList[i].message === 'loading') {
                     loadingMessages.push(messageList[i])
                 } else {
