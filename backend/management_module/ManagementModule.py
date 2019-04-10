@@ -1,5 +1,7 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
+from query_module.train import QueryModuleTrainer
+import os
 """
     Logger setup
 """
@@ -9,6 +11,7 @@ logger = Logger(__name__).log
 class ManagementModule:
     def __init__(self):
         self.data_base_manager = DataBaseManager()
+        self.trainer = QueryModuleTrainer()
 
     def upload_new_file(self, file):
         """Upload a file to AWS S3. The file will be stored using the same name provided
@@ -18,7 +21,22 @@ class ManagementModule:
         :type: str
         :return: None
         """
-        self.data_base_manager.upload_file(file, file)
+        # verify the format
+        self.data_base_manager.upload_file(file, os.path.basename(file))
+
+    def train_new_intent(self, file_path):
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.trainer.read_intents_data(file_path)
+        self.trainer.create_intent(display_name=display_name,
+                                           message_texts=message_texts,
+                                           intent_types=intent_types,
+                                           training_data=data,
+                                           input_contexts=input_contexts,
+                                           output_contexts=output_contexts,
+                                           action=action,
+                                           data_is_parsed=True,
+                                           reset_contexts=reset_contexts,
+                                           parent_followup=parent_followup)
+
 
     def read_file_from_storage(self, file):
         """Read a file on AWS S3 and load its content into memory

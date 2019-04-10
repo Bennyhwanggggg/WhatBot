@@ -44,7 +44,7 @@ GOOGLE_APPLICATION_CREDENTIALS_PATH = os.path.join(PATH, GOOGLE_APPLICATION_CRED
 
 
 class QueryModuleTrainer:
-    def __init__(self, project_id, credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
+    def __init__(self, project_id=DIALOGFLOW_PROJECT_ID, credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
         """ Initialise the query module trainer that trains NLP intents on Dialogflow.
         To retrain the whole model, must retrain entities first before intents. Otherwise,
         issue with entities being used will arise.

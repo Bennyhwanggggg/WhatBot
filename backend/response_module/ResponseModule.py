@@ -18,25 +18,25 @@ class ResponseModule:
         """
         self.data_base_manager = DataBaseManager()
         self.query_map = {
-            'course_outline_queries': self.respond_to_course_outline_queries,
-            'course_outline_queries_with_followup-user_input_course_code': self.respond_to_course_outline_queries,
-            'course_fee_queries': self.respond_to_course_fee_queries,
-            'course_fee_queries_with_followup-user_input_course_code': self.respond_to_course_fee_queries,
-            'course_location_queries': self.respond_to_course_location_queries,
-            'course_location_queries_with_followup-user_input_course_code': self.respond_to_course_location_queries,
-            'indicative_hours_queries': self.respond_to_course_indicative_hours_queries,
-            'indicative_hours_queries_with_followup-user_input_course_code': self.respond_to_course_indicative_hours_queries,
-            'offering_term_queries': self.respond_to_course_offering_term_queries,
-            'offering_term_queries_with_followup-user_input_course_code': self.respond_to_course_offering_term_queries,
-            'prerequisites_queries': self.respond_to_course_prerequisites_queries,
-            'prerequisites_queries_with_followup-user_input_course_code': self.respond_to_course_prerequisites_queries,
-            'school_and_faculty_queries': self.respond_to_course_school_and_faculty_queries,
-            'school_and_faculty_queries_with_followup-user_input_course_code': self.respond_to_course_school_and_faculty_queries,
-            'send_outline_queries': self.respond_to_course_send_outline_queries,
-            'send_outline_queries_with_followup-user_input_course_code': self.respond_to_course_send_outline_queries,
-            'study_level_queries': self.respond_to_course_study_level_queries,
-            'study_level_queries_with_followup-user_input_course_code': self.respond_to_course_study_level_queries,
-            'consultation_booking': self.respond_to_course_consultation_booking,
+            'course_outline_queries':                                                                           self.respond_to_course_outline_queries,
+            'course_outline_queries_with_followup-user_input_course_code':                                      self.respond_to_course_outline_queries,
+            'course_fee_queries':                                                                               self.respond_to_course_fee_queries,
+            'course_fee_queries_with_followup-user_input_course_code':                                          self.respond_to_course_fee_queries,
+            'course_location_queries':                                                                          self.respond_to_course_location_queries,
+            'course_location_queries_with_followup-user_input_course_code':                                     self.respond_to_course_location_queries,
+            'indicative_hours_queries':                                                                         self.respond_to_course_indicative_hours_queries,
+            'indicative_hours_queries_with_followup-user_input_course_code':                                    self.respond_to_course_indicative_hours_queries,
+            'offering_term_queries':                                                                            self.respond_to_course_offering_term_queries,
+            'offering_term_queries_with_followup-user_input_course_code':                                       self.respond_to_course_offering_term_queries,
+            'prerequisites_queries':                                                                            self.respond_to_course_prerequisites_queries,
+            'prerequisites_queries_with_followup-user_input_course_code':                                       self.respond_to_course_prerequisites_queries,
+            'school_and_faculty_queries':                                                                       self.respond_to_course_school_and_faculty_queries,
+            'school_and_faculty_queries_with_followup-user_input_course_code':                                  self.respond_to_course_school_and_faculty_queries,
+            'send_outline_queries':                                                                             self.respond_to_course_send_outline_queries,
+            'send_outline_queries_with_followup-user_input_course_code':                                        self.respond_to_course_send_outline_queries,
+            'study_level_queries':                                                                              self.respond_to_course_study_level_queries,
+            'study_level_queries_with_followup-user_input_course_code':                                         self.respond_to_course_study_level_queries,
+            'consultation_booking':                                                                             self.respond_to_course_consultation_booking,
             'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date': self.respond_to_course_consultation_booking,
             'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code': self.respond_to_course_consultation_booking
         }
@@ -59,7 +59,8 @@ class ResponseModule:
             return message.message
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE.value
-        return self.query_map[message.intent](message.message)
+        handler = self.query_map[message.intent]
+        return handler(message.message)
 
     def respond_to_course_outline_queries(self, cid):
             response = self.data_base_manager.get_course_outline(cid)

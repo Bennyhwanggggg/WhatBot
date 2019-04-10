@@ -135,7 +135,8 @@ class QueryModule:
             return FallbackResponse(intent=response.intent,
                                     message=self.entity_intent_fall_backs[response.intent],
                                     confidence=response.confidence)
-        return FallbackResponse(intent=response.intent,
+        else:
+            return FallbackResponse(intent=response.intent,
                                 message="Sorry, I didn't quite understand that. Could you please rephrase your question?",
                                 confidence=response.confidence)
 

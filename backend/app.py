@@ -4,6 +4,8 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import uuid
 import logging
+import time
+import os
 
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
@@ -50,6 +52,8 @@ CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])
 
+PATH = os.path.dirname(os.path.realpath(__file__))
+INTENT_PATH = os.path.join(PATH, 'query_module/training_data/intents/')
 
 @app.route('/login', methods=["post"])
 def login():
@@ -65,11 +69,13 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE.value), 400
     file = request.files['file']
     if not file.filename:
-        return jsonify(message=UploadFileError.NO_FILE_SELECTED.value)
+        return jsonify(message=UploadFileError.NO_FILE_SELECTED.value), 400
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename), 400
-        management_module.upload_new_file(filename)
-        # TODO: automated training
+        filename = secure_filename(file.filename)
+        intent_file_path_and_name = os.path.join(INTENT_PATH, "{}-{}.txt".format(file.filename.strip('.txt'), int(time.time())))
+        file.save(intent_file_path_and_name)
+        management_module.train_new_intent(intent_file_path_and_name)
+        management_module.upload_new_file(intent_file_path_and_name)
         return jsonify(message=UploadFileSuccess.SUCCESS.value), 200
 
 
