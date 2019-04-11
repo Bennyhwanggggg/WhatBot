@@ -21,10 +21,40 @@ class ManagementModule:
         :type: str
         :return: None
         """
-        # verify the format
         self.data_base_manager.upload_file(file, os.path.basename(file))
 
+    def check_intent_file_format(self, file_path):
+        """Check if the file is a correct intent training data file format. Format should follow the directions provided at:
+        https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module
+
+        :param file_path: path to file
+        :type: str
+        :return: whether it is a valid file or not
+        :rtype: bool
+        """
+        invalid_result = [None, [], [], [], [], [], [], [], False]
+        return False if invalid_result == [self.trainer.read_intents_data(file_path)] else True
+
+    def check_entity_file_format(self, file_path):
+        """Check if the file is a correct entity training data file format. Format should follow the directions provided at:
+        https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module
+
+        :param file_path: path to file
+        :type: str
+        :return: whether it is a valid file or not
+        :rtype: bool
+        """
+        invalid_result = [None, [], []]
+        return False if invalid_result == [self.trainer.read_entities_data(file_path)] else True
+
     def train_new_intent(self, file_path):
+        """Train a new intent using trainer.
+
+        :param file_path: path to file to train
+        :type: str
+        :return: success status
+        :rtype: bool
+        """
         display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.trainer.read_intents_data(file_path)
         self.trainer.create_intent(display_name=display_name,
                                            message_texts=message_texts,
@@ -36,7 +66,7 @@ class ManagementModule:
                                            data_is_parsed=True,
                                            reset_contexts=reset_contexts,
                                            parent_followup=parent_followup)
-
+        return True
 
     def read_file_from_storage(self, file):
         """Read a file on AWS S3 and load its content into memory
