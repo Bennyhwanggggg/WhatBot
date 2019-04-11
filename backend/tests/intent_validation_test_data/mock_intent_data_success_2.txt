@@ -1,0 +1,10 @@
+display_name all_courses_queries
+message_texts Sure! These are all the courses of CSE!
+intent_types none
+output_context all_courses_queries
+I wanna know all the courses of postgraduate
+I want to know the list of postgraduate courses
+I want to get all the courses of postgraduate
+I want to get all the courses
+Can I get all postgraduate courses
+Can I know all postgraduate courses

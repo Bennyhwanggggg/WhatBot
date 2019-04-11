@@ -1,0 +1,5 @@
+display_name all_courses_queries
+intent_types none
+output_context all_courses_queries
+I wanna know all the courses of postgraduate
+I want to know the list of postgraduate courses
