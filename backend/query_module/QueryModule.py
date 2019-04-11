@@ -94,7 +94,7 @@ class QueryModule:
             response.query_result.intent.display_name,
             response.query_result.intent_detection_confidence))
         logger.info('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
-
+        self.detect_missing_parameters(response.query_result.parameters.fields)
         if response.query_result.intent.display_name == 'Default Fallback Intent':
             return FallbackResponse(intent=response.query_result.intent.display_name,
                                     message=response.query_result.fulfillment_text,
@@ -112,16 +112,22 @@ class QueryModule:
 
         return query_response
 
-    def detect_missing_parameters(self, intent, text):
-        if intent not in self.intent_regex_map.keys():
-            return []
-        regexs = self.intent_regex_map[intent]
-        missing = []
-        for regex in regexs:
-            for key, val in regex.items():
-                if not val.match(text):
-                    missing.append(key)
-        return missing
+    def detect_missing_parameters(self, parameters):
+        """Receives a dict from Dialogflow's response.query_result.parameter.fields
+        and check if the list values are empty for anyone of them and return the missing
+        fields
+
+        :param parameters: Dialogflow response of query result parameter fields
+        :type: response.query_result.parameter.fields
+        :return: list of missing paramters
+        :rtype: list
+        """
+        result = []
+        for entity in parameters.keys():
+            if not len(parameters[entity].list_value.values):
+                result.append(entity)
+        logger.debug(result)
+        return result
 
     def handle_missing_parameters(self, response):
         if response.intent in self.entity_intent_fall_backs:
@@ -142,5 +148,5 @@ class QueryModule:
 
 if __name__ == '__main__':
     query_module = QueryModule()
-    res = query_module.detect_intent_texts('I want to know the list of postgraduate courses')
+    res = query_module.detect_intent_texts('book course consultation for comp9111 at 2pm')
     print(res.message)
