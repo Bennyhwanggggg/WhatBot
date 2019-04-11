@@ -32,7 +32,7 @@ class ManagementModule:
         :return: whether it is a valid file or not
         :rtype: bool
         """
-        invalid_result = [None, [], [], [], [], [], [], [], False]
+        invalid_result = [(None, [], [], [], [], [], [], [], False)]
         return False if invalid_result == [self.trainer.read_intents_data(file_path)] else True
 
     def check_entity_file_format(self, file_path):
@@ -44,8 +44,7 @@ class ManagementModule:
         :return: whether it is a valid file or not
         :rtype: bool
         """
-        invalid_result = [None, [], []]
-        print(self.trainer.read_entities_data(file_path))
+        invalid_result = [(None, [], [])]
         return False if invalid_result == [self.trainer.read_entities_data(file_path)] else True
 
     def train_new_intent(self, file_path):
@@ -86,9 +85,3 @@ class ManagementModule:
         :type: list[str]
         """
         return self.data_base_manager.get_list_of_files_from_storage()
-
-
-if __name__ == '__main__':
-    management_module = ManagementModule()
-    print(management_module.check_entity_file_format('./README.md'))
-    print(management_module.check_intent_file_format('./README.md'))
