@@ -103,3 +103,31 @@ input {
     border: none;
     border-radius: 8px;
 }
+
+.modal {
+    max-height: 80%;
+    overflow-y: scroll;
+}
+
+.How-to-use {
+    float: right;
+}
+
+.How-to-use-icon {
+    width: 40px;
+    height: auto;
+}
+
+.How-to-use-icon:hover {
+    cursor: pointer
+}
+
+.typing-indicator {
+    background-color: rgb(243, 45, 10);
+    width: 60px;
+    border-radius: 30%;
+    padding: 1rem 1.5rem 2rem;
+    margin: 0 auto;
+    position: relative;
+    animation: 2s pulse infinite ease-out;
+}
