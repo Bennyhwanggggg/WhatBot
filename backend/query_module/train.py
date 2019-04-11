@@ -91,6 +91,7 @@ class QueryModuleTrainer:
             'indicative_hours': {'parse_key': ['course code']},
             'send_outline': {'parse_key': ['course code']},
             'consultation_booking': {'parse_key': ['course code', 'time', 'date']}
+            'consultation_cancel': {'parse_key': ['course code', 'time', 'date']}
         }
 
         self.entity_map = {
