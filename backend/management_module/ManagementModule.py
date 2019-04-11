@@ -7,6 +7,13 @@ import os
 """
 logger = Logger(__name__).log
 
+"""
+    Path setup
+"""
+PATH = os.path.dirname(os.path.realpath(__file__))
+INTENT_PATH = os.path.join(PATH, '../query_module/training_data/intents/')
+ENTITY_PATH = os.path.join(PATH, '../query_module/training_data/entities/')
+
 
 class ManagementModule:
     def __init__(self):
@@ -16,7 +23,8 @@ class ManagementModule:
     def train(self, file_path):
         """Given a file path, check if it is a valid file and whether the file
         is supposed to be used for training intent or entity then performs the
-        relevant training if the file is valid. Returns true when successful
+        relevant training if the file is valid. If training successful, we upload
+        the file to AWS S3 for storage. Returns true when everything is successful
         otherwise false.
 
         :param file_path: path to file to train
@@ -25,9 +33,15 @@ class ManagementModule:
         :rtype: bool
         """
         if self.check_intent_file_format(file_path):
-            return self.train_new_intent(file_path)
+            intent_file_path = os.path.join(INTENT_PATH, os.path.basename(file_path))
+            os.rename(file_path, intent_file_path)
+            if self.train_new_intent(intent_file_path):
+                return self.upload_new_file(intent_file_path)
         elif self.check_entity_file_format(file_path):
-            return self.train_new_entity(file_path)
+            entity_file_path = os.path.join(ENTITY_PATH, os.path.basename(file_path))
+            os.rename(file_path, entity_file_path)
+            if self.train_new_entity(entity_file_path):
+                return self.upload_new_file(entity_file_path)
         return False
 
     def upload_new_file(self, file):
@@ -38,7 +52,12 @@ class ManagementModule:
         :type: str
         :return: None
         """
-        self.data_base_manager.upload_file(file, os.path.basename(file))
+        try:
+            self.data_base_manager.upload_file(file, os.path.basename(file))
+        except Exception as e:
+            logger.error(str(e))
+            return False
+        return True
 
     def check_intent_file_format(self, file_path):
         """Check if the file is a correct intent training data file format. Format should follow the directions provided at:
