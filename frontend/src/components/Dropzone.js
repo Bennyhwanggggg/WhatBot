@@ -31,6 +31,7 @@ class Dropzone extends Component {
             const array = this.fileListToArray(files);
             this.props.onFilesAdded(array);
         }
+
     }
 
     onDragOver = (event) => {
@@ -83,6 +84,9 @@ class Dropzone extends Component {
                     type="file"
                     multiple
                     onChange={this.onFilesAdded}
+                    onClick={(event)=> {
+                        event.target.value = null
+                    }}
                 />
                 <img
                     alt="upload"
