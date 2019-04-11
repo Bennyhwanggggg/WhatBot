@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Dropzone from './Dropzone';
-import './Upload.css';
+import './stylesheets/Upload.css';
 import Progress from './Progress';
 import history from '../history';
-import baseline_check_circle from "./baseline-check_circle-24px.svg";
-import baseline_delete from "./baseline-delete-24px.svg";
-import information from "./information.svg";
+import baseline_check_circle from "./images/baseline-check_circle-24px.svg";
+import baseline_delete from "./images/baseline-delete-24px.svg";
+import information from "./images/information.svg";
 
 class Upload extends Component {
     constructor (props) {

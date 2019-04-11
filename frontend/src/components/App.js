@@ -6,7 +6,7 @@ import Upload from './Upload';
 import Dashboard from './Dashboard';
 import TrainUsageInfo from './TrainUsageInfo';
 import history from '../history';
-import './App.css';
+import './stylesheets/App.css';
 
 
 class App extends React.Component {

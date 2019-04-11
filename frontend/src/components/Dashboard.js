@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div>{this.generateChart()}</div>
+            <div className="Dashboard">{this.generateChart()}</div>
         )
     }
 }
