@@ -20,20 +20,13 @@ def test_valid_booking_time():
         test = consultation_manager.round_time(test)
         result = consultation_manager.check_valid_booking_time(test)
         assert expect == result
-
-        
-def test_check_weekday():
-    consultation_manager = ConsultationManager()
-    test_cases = ["2019-04-10", "2019-04-13", "2119-04-18"]
-    expected = ["Your booking is on Wednesday 2019-04-10", "Sorry, there is no consultation on weekends", "It may be beyond the range, your booking date must before {}".format((datetime.date.today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]
-    for test, expect in zip(test_cases, expected):
-        is_weekday, feedback = consultation_manager.check_weekday(test)
-        assert expect == feedback
-
     
 def test_make_booking():
-    inputs = [["COMP9900", "z5111111", "09:00:00", "2019-04-10"], ["COMP9900", "z5111111", "09:00:00", "2019-04-10"]]
-    expected = ["Your booking is on Wednesday 2019-04-10", "Sorry this time slot has been booked, please choose another one from following time slots on 2019-04-10: 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00"]
+    consultation_manager = ConsultationManager()
+    date = datetime.datetime.today().strftime('%Y-%m-%d')
+    day_as_string = consultation_manager.get_the_weekday(date)
+    inputs = [["COMP9900", "z5111111", "09:00:00", date], ["COMP9900", "z5111111", "09:00:00", date]]
+    expected = ["Your booking is on "+day_as_string+ " "+date, "Sorry this time slot has been booked, please choose another one from following time slots on "+date+": 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00"]
     consultation_manager = ConsultationManager()
     consultation_manager.data_base_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
     consultation_manager.get_time_slots = consultation_manager.data_base_manager.get_time_slots
@@ -44,4 +37,3 @@ def test_make_booking():
         s = s.lstrip()
         assert s == expected[test_case]
         test_case += 1
-

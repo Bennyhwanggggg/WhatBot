@@ -56,23 +56,26 @@ class ConsultationManager:
         inputs = (key_part, )
         return self.data_base_manager.execute_query(query, inputs)
 
+    def get_the_weekday(self,date):
+        date_convert = date.split('-')
+        week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+        date_list = [int(i) for i in date_convert]
+        day = datetime.date(date_list[0], date_list[1], date_list[2])
+        num_day = day.weekday()# convert weekday into digit (eg Mon -> 0,)
+        day_as_string = week_days[num_day]
+        return day_as_string
+
     def check_weekday(self, date):
         week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
         if not date or date > week_next or date < today:  # check the date is within one week
             return False, "It may be beyond the range, your booking date must before {}".format(week_next)
-
-        week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-        date_convert = date.split('-')
-        date_list = [int(i) for i in date_convert]
         try:
-            day = datetime.date(date_list[0], date_list[1], date_list[2])
-            num_day = day.weekday()  # convert weekday into digit (eg Mon -> 0,)
-            if num_day == 5 or num_day == 6:
+            day_as_string = self.get_the_weekday(date)
+            if day_as_string == "Saturday" or day_as_string == "Sunday":
                 logger.info("Sorry, there is no consultation on weekends")
                 return False, "Sorry, there is no consultation on weekends"
             else:
-                day_as_string = week_days[num_day]
                 logger.info("It is on next {}".format(day_as_string))
                 return True, "Your booking is on {} {}".format(day_as_string, date)
         except ValueError as e:
@@ -139,3 +142,7 @@ class ConsultationManager:
         hour, mins, _ = time.split(":")
         return '{:02d}:00:00'.format(int(hour)+1 ) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
 
+# if __name__ == '__main__':
+#     consultationManager =  ConsultationManager()
+#     s = consultationManager.consultation_booking_query("COMP9318", "z5111111", "10:00:00", "2019-04-14")
+#     print(s)
