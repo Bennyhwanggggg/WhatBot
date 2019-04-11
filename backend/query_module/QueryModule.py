@@ -111,14 +111,6 @@ class QueryModule:
 
         return query_response
 
-    def check_relevance_to_state(self, prev, new):
-        regexs = self.intent_regex_map[prev.intent]
-        for regex in regexs:
-            for key, val in regex.items():
-                if val.match(new.message):
-                    return True
-        return False
-
     def detect_missing_parameters(self, intent, text):
         if intent not in self.intent_regex_map.keys():
             return []
@@ -149,4 +141,5 @@ class QueryModule:
 
 if __name__ == '__main__':
     query_module = QueryModule()
-    query_module.query('hi')
+    res = query_module.detect_intent_texts('I want to know the list of postgraduate courses')
+    print(res.message)
