@@ -208,7 +208,6 @@ def test_prerequisites_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-
 def test_all_courses_queries():
     query_module = QueryModule()
     test_messages = ['I wanna know all the courses of postgraduate',
@@ -221,7 +220,7 @@ def test_all_courses_queries():
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'all_courses_queries'
-        assert result.message.upper() == 'Sure! These are all the courses of CSE!'
+        assert result.message == 'Sure! These are all the courses of CSE!'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
@@ -237,5 +236,5 @@ def test_wam_queries():
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'wam_queries'
-        assert result.message.upper() == 'z1234567'
+        assert result.message == 'z1234567'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
