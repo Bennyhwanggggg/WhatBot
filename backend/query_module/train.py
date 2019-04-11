@@ -362,7 +362,7 @@ class QueryModuleTrainer:
         data = deque(data)
         # first line must be entity display_name
         display_name_line = data.popleft().split()
-        display_name = display_name_line[1] if display_name_line[0] == 'display_name' else None
+        display_name = ' '.join(display_name_line[1:]) if display_name_line[0] == 'display_name' else None
         if not display_name:
             return display_name, entity_values, synonyms
         while data:
