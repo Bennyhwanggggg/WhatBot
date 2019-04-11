@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react'; 
+import './stylesheets/Dashboard.css';
 
 class Dashboard extends React.Component {
 
