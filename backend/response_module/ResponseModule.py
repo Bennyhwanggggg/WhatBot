@@ -3,6 +3,7 @@ from utility_module.ConsultationManager import ConsultationManager
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
 from conf.Logger import Logger
+import re
 
 """
     Logger setup
@@ -133,9 +134,11 @@ class ResponseModule:
         return response + ", you have relase the time slot at " + time + " on " + date
 
 
-if __name__ == '__main__':
-    response_module = ResponseModule()
-    # s = response_module.respond_to_course_outline_queries("COMp4444")
-    # s = response_module.respond_to_course_consultation_booking("COMP9318", "z5111111", "09:00:00", "2019-04-20")
-    s = response_module.respond_to_course_consultation__cancel("COMP9318", "z5111111", "09:00:00", "2019-04-12")
-    print(s)
+    def respond_to_all_course(self):
+        response = self.data_base_manager.get_all_courses()
+        string = 'The list of courses is '
+        for each in response:
+        	course = re.findall('\((.*?)\,\)', str(each))[0]
+        	result = re.findall('\'(.*?)\'', str(course))[0]
+        	string +=  result + ' '
+        return string
