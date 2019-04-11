@@ -1,0 +1,6 @@
+display_name course names
+Security Engineering and Cyber Security
+Foundations of Computer Science
+Principles of Programming
+Microprocessors and Interfacing
+Database Systems
