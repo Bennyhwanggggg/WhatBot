@@ -1,5 +1,6 @@
 from utility_module.ConsultationManager import ConsultationManager
 from tests.MockDatabase import MockDatabase
+import datetime
 
 
 def test_time_rounding():
@@ -23,11 +24,11 @@ def test_valid_booking_time():
         
 def test_check_weekday():
     consultation_manager = ConsultationManager()
-    tests_date = ["2019-04-10", "2019-04-13", "2019-04-18"]
-    expected = ["Your booking is on Wednesday 2019-04-10", "Sorry, there is no consultation on weekends", "It may be beyond the range, your booking date must before 2019-04-16"]
-    for i in range(len(tests_date)):
-        is_weekday, feedback = consultation_manager.check_weekday(tests_date[i])
-        assert feedback == expected[i]
+    test_cases = ["2019-04-10", "2019-04-13", "2119-04-18"]
+    expected = ["Your booking is on Wednesday 2019-04-10", "Sorry, there is no consultation on weekends", "It may be beyond the range, your booking date must before {}".format((datetime.date.today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]
+    for test, expect in zip(test_cases, expected):
+        is_weekday, feedback = consultation_manager.check_weekday(test)
+        assert expect == feedback
 
     
 def test_make_booking():
