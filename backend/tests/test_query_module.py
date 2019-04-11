@@ -7,14 +7,14 @@ TIME_BETWEEN_API = 1.5
 def test_clean_message():
     query_module = QueryModule()
     test_messages = ['COMP9900?',
-                     'Comp9900?!!',
-                     'comp9900???',
-                     "Comp9900''''s",
+                     '&Comp9900?!!',
+                     'qqcomp9900???',
+                     "abcComp9900''''s",
                      'COmp9900!!!!',
-                     "Comp9900's?",
+                     "~~Comp9900's?",
                      '>COMP9900?[<',
-                     "comp9900's",
-                     "comp9900's's",
+                     "...comp9900's",
+                     "*comp9900's's",
                      "COMP9900''s"]
     for test_message in test_messages:
         result = query_module.clean_message(test_message)
