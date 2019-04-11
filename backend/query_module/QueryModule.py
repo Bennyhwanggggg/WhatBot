@@ -3,7 +3,6 @@ import dialogflow_v2 as dialogflow
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
-import re
 
 """
     Logger setup
