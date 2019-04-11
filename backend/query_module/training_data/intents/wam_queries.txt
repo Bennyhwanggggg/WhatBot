@@ -1,6 +1,6 @@
 display_name wam_queries
 message_texts $student
-intent_types course_fee
+intent_types none
 output_context wam_queries
 I want to know the wam of {student code}
 I want to get the wam of {student code}
