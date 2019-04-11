@@ -37,10 +37,12 @@
     flex: 1;
     flex-direction: row;
     align-items: center;
+    height: 8px;
 }
 
 .Actions {
     text-align: center;
+    position: relative;
 }
 
 .Dropzone-upload {

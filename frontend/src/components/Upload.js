@@ -165,7 +165,7 @@ class Upload extends Component {
                         {this.state.files.map(file => {
                             return (
                                 <div key={file.name} className='Row'>
-                                    <span className='Filename'>
+                                    <div className='Filename'>
                                         {file.name}
                                         <button className="DeleteButton" onClick={() => this.onFileRemove(file)}>
                                             <img 
@@ -174,7 +174,7 @@ class Upload extends Component {
                                                 src={baseline_delete}>
                                             </img>
                                         </button>
-                                    </span>
+                                    </div>
                                     {this.renderProgress(file)}
                                 </div>
                             )

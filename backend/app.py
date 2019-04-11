@@ -72,7 +72,7 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE_SELECTED.value), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        intent_file_path_and_name = os.path.join(INTENT_PATH, "{}-{}.txt".format(file.filename.strip('.txt'), int(time.time())))
+        intent_file_path_and_name = os.path.join(INTENT_PATH, "{}-{}.txt".format(filename.rstrip('.txt'), int(time.time())))
         file.save(intent_file_path_and_name)
         management_module.train_new_intent(intent_file_path_and_name)
         management_module.upload_new_file(intent_file_path_and_name)
