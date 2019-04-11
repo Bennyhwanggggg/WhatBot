@@ -83,17 +83,7 @@ class QueryModuleTrainer:
         self.intent_entity_map = {
             'none': {'parse_key': []},
             'course_code': {'parse_key': ['course code']},
-            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']},
-            'course_fee': {'parse_key': ['course code']},
-            'course_outline': {'parse_key': ['course code']},
-            'prerequisites': {'parse_key': ['course code']},
-            'school_and_faculty': {'parse_key': ['course code']},
-            'study_level': {'parse_key': ['course code']},
-            'offering_term': {'parse_key': ['course code']},
-            'course_location': {'parse_key': ['course code']},
-            'indicative_hours': {'parse_key': ['course code']},
-            'send_outline': {'parse_key': ['course code']},
-            'consultation_booking': {'parse_key': ['course code', 'time', 'date']}
+            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']}
         }
 
         self.entity_map = {
