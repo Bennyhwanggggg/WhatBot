@@ -224,17 +224,17 @@ def test_all_courses_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_wam_queries():
-    query_module = QueryModule()
-    test_messages = ['I want to know the wam of z1234567',
-                     'I want to get the wam of z1234567',
-                     "Can I get the wam for z1234567",
-                     'Can I know the wam for z1234567',
-                     'Please tell me the wam for z1234567',
-                     'Show me the wam for z1234567',
-                     'The wam of z1234567']
-    for test_message in test_messages:
-        result = query_module.detect_intent_texts(test_message)
-        assert result.intent == 'wam_queries'
-        assert result.message == 'z1234567'
-        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+# def test_wam_queries():
+#     query_module = QueryModule()
+#     test_messages = ['I want to know the wam of z1234567',
+#                      'I want to get the wam of z1234567',
+#                      "Can I get the wam for z1234567",
+#                      'Can I know the wam for z1234567',
+#                      'Please tell me the wam for z1234567',
+#                      'Show me the wam for z1234567',
+#                      'The wam of z1234567']
+#     for test_message in test_messages:
+#         result = query_module.detect_intent_texts(test_message)
+#         assert result.intent == 'wam_queries'
+#         assert result.message == 'z1234567'
+#         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
