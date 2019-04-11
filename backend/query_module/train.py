@@ -87,13 +87,13 @@ class QueryModuleTrainer:
         }
 
         self.entity_map = {
-            'course code': {'regex': re.compile('^COMP\d{4}', re.IGNORECASE),
+            'course code': {'regex': re.compile(r'^COMP\d{4}', re.IGNORECASE),
                             'entity_type': '@course',
                             'alias': 'course'},
-            'date': {'regex': re.compile('\d{1,4}\/\d{1,2}\/\d{1,4}'),
+            'date': {'regex': re.compile(r'\d{1,4}\/\d{1,2}\/\d{1,4}'),
                      'entity_type': '@sys.date',
                      'alias': 'date'},
-            'time': {'regex': re.compile('\d{1,2}:\d{1,2}|\d(pm|am)'),
+            'time': {'regex': re.compile(r'\d{1,2}:\d{1,2}|\d(pm|am)'),
                      'entity_type': '@sys.time',
                      'alias': 'time'}
         }
