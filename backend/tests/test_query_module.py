@@ -8,8 +8,8 @@ def test_clean_message():
     query_module = QueryModule()
     test_messages = ['COMP9900?',
                      '&Comp9900?!!',
-                     'qqcomp9900???',
-                     "abcComp9900''''s",
+                     'comp9900???',
+                     "Comp9900''''s",
                      'COmp9900!!!!',
                      "~~Comp9900's?",
                      '>COMP9900?[<',
