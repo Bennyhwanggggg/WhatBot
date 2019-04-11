@@ -45,6 +45,7 @@ class ManagementModule:
         :rtype: bool
         """
         invalid_result = [None, [], []]
+        print(self.trainer.read_entities_data(file_path))
         return False if invalid_result == [self.trainer.read_entities_data(file_path)] else True
 
     def train_new_intent(self, file_path):
@@ -57,15 +58,15 @@ class ManagementModule:
         """
         display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.trainer.read_intents_data(file_path)
         self.trainer.create_intent(display_name=display_name,
-                                           message_texts=message_texts,
-                                           intent_types=intent_types,
-                                           training_data=data,
-                                           input_contexts=input_contexts,
-                                           output_contexts=output_contexts,
-                                           action=action,
-                                           data_is_parsed=True,
-                                           reset_contexts=reset_contexts,
-                                           parent_followup=parent_followup)
+                                   message_texts=message_texts,
+                                   intent_types=intent_types,
+                                   training_data=data,
+                                   input_contexts=input_contexts,
+                                   output_contexts=output_contexts,
+                                   action=action,
+                                   data_is_parsed=True,
+                                   reset_contexts=reset_contexts,
+                                   parent_followup=parent_followup)
         return True
 
     def read_file_from_storage(self, file):
@@ -89,3 +90,5 @@ class ManagementModule:
 
 if __name__ == '__main__':
     management_module = ManagementModule()
+    print(management_module.check_entity_file_format('./README.md'))
+    print(management_module.check_intent_file_format('./README.md'))

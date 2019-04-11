@@ -355,13 +355,16 @@ class QueryModuleTrainer:
         data_file = open(data_file, 'r')
         data = data_file.read().split('\n')
         data_file.close()
+        display_name, entity_values, synonyms = None, [], []
         if not data or not data[0]:
             logger.warning('Empty entity data file: {}'.format(data_file))
-            return None, [], []
+            return display_name, entity_values, synonyms
         data = deque(data)
-        entity_values, synonyms = [], []
         # first line must be entity display_name
-        display_name = data.popleft()
+        display_name_line = data.popleft().split()
+        display_name = display_name_line[1] if display_name_line[0] == 'display_name' else None
+        if not display_name:
+            return display_name, entity_values, synonyms
         while data:
             line = data.popleft().split('@@@')
             if len(line):
