@@ -95,7 +95,10 @@ class QueryModuleTrainer:
                      'alias': 'date'},
             'time': {'regex': re.compile(r'\d{1,2}:\d{1,2}|\d(pm|am)'),
                      'entity_type': '@sys.time',
-                     'alias': 'time'}
+                     'alias': 'time'},
+            'student': {'regex': re.compile(r'z\d{7}'),
+                     'entity_type': '@student',
+                     'alias': 'student'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
