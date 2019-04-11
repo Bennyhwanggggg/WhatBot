@@ -45,5 +45,11 @@ Make the simple demo works:
 ## week7
 
 * Worked on design and implementation of management module.
-* prototyping the system insight dashboard # TODO
 * Test and tune the automation process
+
+## week8
+
+* Implemented auto training in frontend.
+* design the version control mechanism to defend exception.
+* prototyping the system insight dashboard # TODO
+
