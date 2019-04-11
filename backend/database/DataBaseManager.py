@@ -270,3 +270,15 @@ class DataBaseManager:
         query = "SELECT pdf_url from info_handbook where cid like %s"
         inputs = (key_part,)
         return self.execute_query(query, inputs)
+
+    def get_all_courses(self):
+        query = "SELECT course_code from courselist"
+        return  self.execute_query(query)
+
+if __name__ == '__main__':
+    wam_finder = DataBaseManager()
+    #result = wam_finder.add_mark("z8888888", "COMP9511", "74", "6")
+    #result = wam_finder.get_student_wam("z1234567")
+    result = wam_finder.get_all_courses()
+    print(result)
+
