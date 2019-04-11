@@ -13,6 +13,23 @@ class ManagementModule:
         self.data_base_manager = DataBaseManager()
         self.trainer = QueryModuleTrainer()
 
+    def train(self, file_path):
+        """Given a file path, check if it is a valid file and whether the file
+        is supposed to be used for training intent or entity then performs the
+        relevant training if the file is valid. Returns true when successful
+        otherwise false.
+
+        :param file_path: path to file to train
+        :type: str
+        :return: whether training is successful or not
+        :rtype: bool
+        """
+        if self.check_intent_file_format(file_path):
+            return self.train_new_intent(file_path)
+        elif self.check_entity_file_format(file_path):
+            return self.train_new_entity(file_path)
+        return False
+
     def upload_new_file(self, file):
         """Upload a file to AWS S3. The file will be stored using the same name provided
         on S3.
@@ -48,24 +65,49 @@ class ManagementModule:
         return False if invalid_result == [self.trainer.read_entities_data(file_path)] else True
 
     def train_new_intent(self, file_path):
-        """Train a new intent using trainer.
+        """Train a new intent using trainer. If the intent already exist, old one will be replaced
 
         :param file_path: path to file to train
         :type: str
         :return: success status
         :rtype: bool
         """
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.trainer.read_intents_data(file_path)
-        self.trainer.create_intent(display_name=display_name,
-                                   message_texts=message_texts,
-                                   intent_types=intent_types,
-                                   training_data=data,
-                                   input_contexts=input_contexts,
-                                   output_contexts=output_contexts,
-                                   action=action,
-                                   data_is_parsed=True,
-                                   reset_contexts=reset_contexts,
-                                   parent_followup=parent_followup)
+        try:
+            display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = self.trainer.read_intents_data(file_path)
+            if self.trainer.get_intent_ids(display_name):
+                self.trainer.delete_intent(display_name)
+            self.trainer.create_intent(display_name=display_name,
+                                       message_texts=message_texts,
+                                       intent_types=intent_types,
+                                       training_data=data,
+                                       input_contexts=input_contexts,
+                                       output_contexts=output_contexts,
+                                       action=action,
+                                       data_is_parsed=True,
+                                       reset_contexts=reset_contexts,
+                                       parent_followup=parent_followup)
+        except Exception as e:
+            logger.error(str(e))
+            return False
+        return True
+
+    def train_new_entity(self, file_path):
+        """Train a new entity using trainer. If the entity exist, the newly uploaded one
+        will take effect and old one will be deleted.
+
+        :param file_path: path to the data file
+        :type: str
+        :return: success status
+        :rtype: bool
+        """
+        try:
+            display_name, entity_values, synonyms = self.trainer.read_entities_data(file_path)
+            if self.trainer.get_entity_ids(display_name):
+                self.trainer.delete_entity(display_name)
+            self.trainer.create_entity(display_name, entity_values, synonyms)
+        except Exception as e:
+            logger.error(str(e))
+            return False
         return True
 
     def read_file_from_storage(self, file):

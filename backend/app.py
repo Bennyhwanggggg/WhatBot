@@ -50,10 +50,15 @@ management_logger.setLevel(logging.INFO)
 app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
-ALLOWED_EXTENSIONS = set(['txt'])
+ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
 
+"""
+    Path setup
+"""
 PATH = os.path.dirname(os.path.realpath(__file__))
 INTENT_PATH = os.path.join(PATH, 'query_module/training_data/intents/')
+ENTITY_PATH = os.path.join(PATH, 'query_module/training_data/entities/')
+
 
 @app.route('/login', methods=["post"])
 def login():
