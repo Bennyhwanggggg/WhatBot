@@ -100,10 +100,11 @@ class QueryModule:
                                     message=response.query_result.fulfillment_text,
                                     confidence=response.query_result.intent_detection_confidence)
 
-        if not response.query_result.intent.display_name.endswith('with_followup'):
-            query_response_message = self.clean_message(response.query_result.fulfillment_text)
-        else:
+        if response.query_result.intent.display_name.endswith('with_followup') or \
+           response.query_result.intent.display_name not in self.intent_regex_map:
             query_response_message = response.query_result.fulfillment_text
+        else:
+            query_response_message = self.clean_message(response.query_result.fulfillment_text)
 
         query_response = IntentResponse(intent=response.query_result.intent.display_name,
                                         message=query_response_message,
