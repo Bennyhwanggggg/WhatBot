@@ -7,14 +7,14 @@ TIME_BETWEEN_API = 1.5
 def test_clean_message():
     query_module = QueryModule()
     test_messages = ['COMP9900?',
-                     'Comp9?900?',
+                     '&Comp9900?!!',
                      'comp9900???',
-                     'Comp9900??',
+                     "Comp9900''''s",
                      'COmp9900!!!!',
-                     'Comp~!9+900?',
+                     "~~Comp9900's?",
                      '>COMP9900?[<',
-                     "comp9900's",
-                     "comp9900's's",
+                     "...comp9900's",
+                     "*comp9900's's",
                      "COMP9900''s"]
     for test_message in test_messages:
         result = query_module.clean_message(test_message)
@@ -208,7 +208,6 @@ def test_prerequisites_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-
 def test_all_courses_queries():
     query_module = QueryModule()
     test_messages = ['I wanna know all the courses of postgraduate',
@@ -221,21 +220,21 @@ def test_all_courses_queries():
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'all_courses_queries'
-        assert result.message.upper() == 'Sure! These are all the courses of CSE!'
+        assert result.message == 'Sure! These are all the courses of CSE!'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-def test_wam_queries():
-    query_module = QueryModule()
-    test_messages = ['I want to know the wam of z1234567',
-                     'I want to get the wam of z1234567',
-                     "Can I get the wam for z1234567",
-                     'Can I know the wam for z1234567',
-                     'Please tell me the wam for z1234567',
-                     'Show me the wam for z1234567',
-                     'The wam of z1234567']
-    for test_message in test_messages:
-        result = query_module.detect_intent_texts(test_message)
-        assert result.intent == 'wam_queries'
-        assert result.message.upper() == 'z1234567'
-        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+# def test_wam_queries():
+#     query_module = QueryModule()
+#     test_messages = ['I want to know the wam of z1234567',
+#                      'I want to get the wam of z1234567',
+#                      "Can I get the wam for z1234567",
+#                      'Can I know the wam for z1234567',
+#                      'Please tell me the wam for z1234567',
+#                      'Show me the wam for z1234567',
+#                      'The wam of z1234567']
+#     for test_message in test_messages:
+#         result = query_module.detect_intent_texts(test_message)
+#         assert result.intent == 'wam_queries'
+#         assert result.message == 'z1234567'
+#         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded

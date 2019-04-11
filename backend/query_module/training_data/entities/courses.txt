@@ -1,4 +1,4 @@
-course
+display_name course
 COMP6441@@@Security Engineering and Cyber Security
 COMP9020@@@Foundations of Computer Science
 COMP9021@@@Principles of Programming

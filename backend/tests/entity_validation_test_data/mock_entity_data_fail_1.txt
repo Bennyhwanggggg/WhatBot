@@ -1,0 +1,6 @@
+course
+COMP6441@@@Security Engineering and Cyber Security
+COMP9020@@@Foundations of Computer Science
+COMP9021@@@Principles of Programming
+COMP9032@@@Microprocessors and Interfacing
+COMP9311@@@Database Systems

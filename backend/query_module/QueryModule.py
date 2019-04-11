@@ -1,9 +1,9 @@
 import os
 import dialogflow_v2 as dialogflow
+import re
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
-import re
 
 """
     Logger setup
@@ -27,51 +27,19 @@ class QueryModule:
         self.session = self.session_client.session_path(project_id, session_id)
         logger.info('Session path: {}\n'.format(self.session))
 
-        # the information regarding this map should match what is on DialogFlow setup
-        self.intent_regex_map = {
-            'course_fee_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'course_outline_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'course_location_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'indicative_hours_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'offering_term_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'prerequisites_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'school_and_faculty_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'send_outline_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'study_level_queries': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)}],
-            'consultation_booking': [{'$course': re.compile('.*COMP\d{4}.*', re.IGNORECASE)},
-                                     {'$date': re.compile('.*\d{4}-\d{2}-\d{2}.*')},
-                                     {'$time': re.compile('.*\d{2}:\d{2}:\d{2}.*')}]
-        }
-
-        self.entity_intent_fall_backs = {
-            'course_fee_queries': "My apologise, could you rephrase and tell me again tell me the course code of the course "
-                                  "you would like to know the course fee for?",
-            'course_outline_queries': "Sorry, I didn't quite understand that. Could you rephrase and tell me "
-                                      "again which course's course outline would you like to know?",
-            'course_location_queries': "My apologise, could you rephrase and tell me again which course's "
-                                       "course location would you like to know?",
-            'indicative_hours_queries': "Sorry, could you rephrase and tell me again and tell me the course code of the course you "
-                                        "would like to know the amount of indicative hours for?",
-            'offering_term_queries': "My apologise, could you please rephrase and tell me again the course code of the course you "
-                                     "would like to know the offering term for?",
-            'prerequisites_queries': "Sorry, could you rephrase and tell me again what is the course code of the course you "
-                                     "would like to know the prerequisites for?",
-            'school_and_faculty_queries': "My apologise, could you rephrase and tell me again what is the course code of the course you "
-                                          "would like to know the school and faculty for?",
-            'send_outline_queries': "Sorry, could you rephrase and tell me again what is the course code of the course "
-                                    "you would like me to send outline for?",
-            'study_level_queries': "Sorry, could you please rephrase and tell me the course code of the course "
-                                   "you would like to know the study level for?",
-            'consultation_booking': "Sorry, could you please rephrase your sentence and tell me what is the course code, "
-                                    "time and date of the course consultation you want to book?"
+        self.entity_map = {
+            'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE)},
+            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*')},
+            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d(pm|am).*')},
+            'student': {'regex': re.compile(r'z\d{7}')}
         }
 
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         logger.debug('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         if not isinstance(result, FallbackResponse):
-            if self.detect_missing_parameters(result.intent, result.message) or result.confidence < 0.5:
-                result = self.handle_missing_parameters(result)
+            if result.confidence < 0.5:
+                pass  # TODO: collect log
         logger.debug('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
@@ -95,15 +63,22 @@ class QueryModule:
             response.query_result.intent_detection_confidence))
         logger.info('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
+        missing_parameters = self.detect_missing_parameters(response.query_result.parameters.fields)
+        if len(missing_parameters):
+            return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
+                                    message='Sorry, I cannot understand your question. Could you please rephrase your question? '
+                                            'I also need the following information to assist you more efficiently: {}'.format(' '.join(missing_parameters)),
+                                    confidence=response.query_result.intent_detection_confidence)
         if response.query_result.intent.display_name == 'Default Fallback Intent':
             return FallbackResponse(intent=response.query_result.intent.display_name,
                                     message=response.query_result.fulfillment_text,
                                     confidence=response.query_result.intent_detection_confidence)
 
-        if not response.query_result.intent.display_name.endswith('with_followup'):
-            query_response_message = self.clean_message(response.query_result.fulfillment_text)
-        else:
+        logger.debug(response.query_result)
+        if response.query_result.intent.display_name.endswith('with_followup'):
             query_response_message = response.query_result.fulfillment_text
+        else:
+            query_response_message = self.clean_message(response.query_result.fulfillment_text)
 
         query_response = IntentResponse(intent=response.query_result.intent.display_name,
                                         message=query_response_message,
@@ -111,42 +86,29 @@ class QueryModule:
 
         return query_response
 
-    def check_relevance_to_state(self, prev, new):
-        regexs = self.intent_regex_map[prev.intent]
-        for regex in regexs:
-            for key, val in regex.items():
-                if val.match(new.message):
-                    return True
-        return False
+    def detect_missing_parameters(self, parameters):
+        """Receives a dict from Dialogflow's response.query_result.parameter.fields
+        and check if the list values are empty for anyone of them and return the missing
+        fields
 
-    def detect_missing_parameters(self, intent, text):
-        if intent not in self.intent_regex_map.keys():
-            return []
-        regexs = self.intent_regex_map[intent]
-        missing = []
-        for regex in regexs:
-            for key, val in regex.items():
-                if not val.match(text):
-                    missing.append(key)
-        return missing
-
-    def handle_missing_parameters(self, response):
-        if response.intent in self.entity_intent_fall_backs:
-            return FallbackResponse(intent=response.intent,
-                                    message=self.entity_intent_fall_backs[response.intent],
-                                    confidence=response.confidence)
-        else:
-            return FallbackResponse(intent=response.intent,
-                                message="Sorry, I didn't quite understand that. Could you please rephrase your question?",
-                                confidence=response.confidence)
+        :param parameters: Dialogflow response of query result parameter fields
+        :type: response.query_result.parameter.fields
+        :return: list of missing paramters
+        :rtype: list
+        """
+        result = []
+        for entity in parameters.keys():
+            if not len(parameters[entity].list_value.values):
+                result.append(entity)
+        logger.debug(result)
+        return result
 
     def clean_message(self, message):
+        logger.debug(message)
+        if not any([self.entity_map[entity]['regex'].search(message) for entity in self.entity_map.keys()]):
+            return message
         message = message.replace("'s", '')
         translator = str.maketrans('', '', "#!?()[]{}=+`~$%&*,.'\\|><")
         message = message.translate(translator)
+        logger.debug(message)
         return message
-
-
-if __name__ == '__main__':
-    query_module = QueryModule()
-    query_module.query('hi')

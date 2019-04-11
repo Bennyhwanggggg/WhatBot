@@ -87,15 +87,18 @@ class QueryModuleTrainer:
         }
 
         self.entity_map = {
-            'course code': {'regex': re.compile('^COMP\d{4}', re.IGNORECASE),
+            'course code': {'regex': re.compile(r'^COMP\d{4}', re.IGNORECASE),
                             'entity_type': '@course',
                             'alias': 'course'},
-            'date': {'regex': re.compile('\d{1,4}\/\d{1,2}\/\d{1,4}'),
+            'date': {'regex': re.compile(r'\d{1,4}\/\d{1,2}\/\d{1,4}'),
                      'entity_type': '@sys.date',
                      'alias': 'date'},
-            'time': {'regex': re.compile('\d{1,2}:\d{1,2}|\d(pm|am)'),
+            'time': {'regex': re.compile(r'\d{1,2}:\d{1,2}|\d(pm|am)'),
                      'entity_type': '@sys.time',
-                     'alias': 'time'}
+                     'alias': 'time'},
+            'student': {'regex': re.compile(r'z\d{7}'),
+                     'entity_type': '@student',
+                     'alias': 'student'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
@@ -277,7 +280,7 @@ class QueryModuleTrainer:
 
         action = action[0] if action else None
         parent_followup = 'projects/{}/agent/intents/{}'.format(self.project_id,
-                                                                self._get_intent_ids(parent_followup[0])[0]) if parent_followup else None
+                                                                self.get_intent_ids(parent_followup[0])[0]) if parent_followup else None
         intent = dialogflow.types.Intent(display_name=display_name,
                                          training_phrases=training_phrases,
                                          parent_followup_intent_name=parent_followup,
@@ -292,7 +295,7 @@ class QueryModuleTrainer:
         response = self.intents_client.create_intent(self.intents_parent, intent)
         logger.info('Intent created: {}'.format(response))
 
-    def _get_intent_ids(self, display_name):
+    def get_intent_ids(self, display_name):
         """ Helper to get an id of an intent using display name
 
         :param display_name: name of the intent
@@ -309,7 +312,7 @@ class QueryModuleTrainer:
         :param display_name: name of the intent
         :return: None
         """
-        intent_ids = self._get_intent_ids(display_name)
+        intent_ids = self.get_intent_ids(display_name)
         for intent_id in intent_ids:
             intent_path = self.intents_client.intent_path(self.project_id, intent_id)
             self.intents_client.delete_intent(intent_path)
@@ -341,7 +344,7 @@ class QueryModuleTrainer:
                 logger.info('Skipping: {} due to restriction or no data'.format(training_data_file))
                 continue
             try:
-                if self._get_intent_ids(display_name):
+                if self.get_intent_ids(display_name):
                     self.delete_intent(display_name)
                 self.create_intent(display_name, data, message_texts, intent_types,
                                    input_contexts=input_contexts, output_contexts=output_contexts,
@@ -355,19 +358,22 @@ class QueryModuleTrainer:
         data_file = open(data_file, 'r')
         data = data_file.read().split('\n')
         data_file.close()
+        display_name, entity_values, synonyms = None, [], []
         if not data or not data[0]:
             logger.warning('Empty entity data file: {}'.format(data_file))
-            return None, [], []
+            return display_name, entity_values, synonyms
         data = deque(data)
-        entity_values, synonyms = [], []
         # first line must be entity display_name
-        display_name = data.popleft()
+        display_name_line = data.popleft().split()
+        display_name = ' '.join(display_name_line[1:]) if display_name_line[0] == 'display_name' else None
+        if not display_name:
+            return display_name, entity_values, synonyms
         while data:
             line = data.popleft().split('@@@')
             if len(line):
                 entity_values.append(line[0])
                 if len(line) > 1:
-                    # synomoys should be separated by $$$
+                    # synonyms should be separated by $$$
                     all_synonyms = line[1].split('$$$')
                     synonyms.append(all_synonyms)
         if not entity_values:
@@ -391,7 +397,7 @@ class QueryModuleTrainer:
         entity_type = dialogflow.types.EntityType(display_name=display_name, kind='KIND_MAP', auto_expansion_mode=True)
         response = self.entity_types_client.create_entity_type(self.entity_types_parent, entity_type)
         logger.info('Entity type created: \n{}'.format(response))
-        entity_type_ids = self._get_entity_ids(display_name)
+        entity_type_ids = self.get_entity_ids(display_name)
         for entity_type_id in entity_type_ids:
             entity_type_path = self.entity_types_client.entity_type_path(self.project_id, entity_type_id)
 
@@ -406,7 +412,7 @@ class QueryModuleTrainer:
             response = self.entity_types_client.batch_create_entities(entity_type_path, training_entities)
             logger.info('Entity created: {}'.format(response))
 
-    def _get_entity_ids(self, display_name):
+    def get_entity_ids(self, display_name):
         """ Helper to get an id of an entity using display name
 
         :param display_name: name of the intent
@@ -424,7 +430,7 @@ class QueryModuleTrainer:
         :param display_name: name of entity to delete
         :return: None
         """
-        entity_type_ids = self._get_entity_ids(display_name)
+        entity_type_ids = self.get_entity_ids(display_name)
         for entity_type_id in entity_type_ids:
             entity_type_path = self.entity_types_client.entity_type_path(self.project_id, entity_type_id)
             self.entity_types_client.delete_entity_type(entity_type_path)
@@ -444,7 +450,7 @@ class QueryModuleTrainer:
                 logger.info('Skipping: {}'.format(training_data_file))
                 continue
             try:
-                if self._get_entity_ids(display_name):
+                if self.get_entity_ids(display_name):
                     self.delete_entity(display_name)
                 self.create_entity(display_name, entity_values, synonyms)
             except Exception as e:
@@ -467,8 +473,6 @@ class QueryModuleTrainer:
         contexts = self.contexts_client.list_contexts(session_path)
         target_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)
         return [context for context in contexts if context.name == target_name]
-
-
 
 
 if __name__ == '__main__':

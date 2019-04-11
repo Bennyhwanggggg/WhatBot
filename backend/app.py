@@ -50,10 +50,16 @@ management_logger.setLevel(logging.INFO)
 app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
-ALLOWED_EXTENSIONS = set(['txt'])
+ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
 
+"""
+    Path setup
+"""
 PATH = os.path.dirname(os.path.realpath(__file__))
 INTENT_PATH = os.path.join(PATH, 'query_module/training_data/intents/')
+ENTITY_PATH = os.path.join(PATH, 'query_module/training_data/entities/')
+TEMP_PATH = os.path.join(PATH, 'management_module/temp/')
+
 
 @app.route('/login', methods=["post"])
 def login():
@@ -72,10 +78,11 @@ def upload():
         return jsonify(message=UploadFileError.NO_FILE_SELECTED.value), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        intent_file_path_and_name = os.path.join(INTENT_PATH, "{}-{}.txt".format(filename.rstrip('.txt'), int(time.time())))
-        file.save(intent_file_path_and_name)
-        management_module.train_new_intent(intent_file_path_and_name)
-        management_module.upload_new_file(intent_file_path_and_name)
+        file_path = os.path.join(TEMP_PATH, "{}-{}.txt".format(filename.rstrip('.txt'), int(time.time())))
+        file.save(file_path)
+        if not management_module.train(file_path):
+            os.remove(file_path)
+            return jsonify(message=UploadFileError.INVALID_FORMAT.value), 400
         return jsonify(message=UploadFileSuccess.SUCCESS.value), 200
 
 
