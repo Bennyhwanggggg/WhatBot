@@ -12,3 +12,10 @@ def test_valid_intent_files():
         result = management_module.check_intent_file_format(test_file)
         assert True == result
 
+
+def test_invalid_intent_files():
+    management_module = ManagementModule()
+    test_files = [os.path.join(INTENT_VALIDATION_TEST_DATA_PATH, file) for file in os.listdir(INTENT_VALIDATION_TEST_DATA_PATH) if 'fail' in file]
+    for test_file in test_files:
+        result = management_module.check_intent_file_format(test_file)
+        assert False == result
