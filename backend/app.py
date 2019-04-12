@@ -6,6 +6,7 @@ import uuid
 import logging
 import time
 import os
+import concurrent.futures
 
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
@@ -92,6 +93,9 @@ def message():
     id = request.json.get('id', None)
 
     query_result = query_module.query(message)
+    # use multiprocessing to avoid collecting user data from slowing us down
+    with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
+        executor.submit(management_module.add_intent_data(query_result.intent, message, query_result.confidence))
     return_message = response_module.respond(query_result)
 
     response = {

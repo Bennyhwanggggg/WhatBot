@@ -2,6 +2,7 @@ from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
 import os
+from datetime import datetime
 """
     Logger setup
 """
@@ -146,3 +147,8 @@ class ManagementModule:
         :type: list[str]
         """
         return self.data_base_manager.get_list_of_files_from_storage()
+
+    def add_intent_data(self, intent, query_text, confidence):
+        query = "INSERT INTO intent_data(intent, query_text, confidence, timestamp) VALUES (%s, %s, %s, %s)"
+        inputs = (intent, query_text, confidence, datetime.now())
+        return self.data_base_manager.execute_query(query, inputs)
