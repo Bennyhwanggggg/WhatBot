@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import ScrollableFeed from 'react-scrollable-feed'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ScrollableFeed from 'react-scrollable-feed';
 
 class Messages extends Component {
 

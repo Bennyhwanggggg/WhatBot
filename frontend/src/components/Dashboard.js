@@ -1,61 +1,27 @@
 import React from 'react';
-import ReactEcharts from 'echarts-for-react'; 
+import ReactEcharts from 'echarts-for-react';
+import { getDashboardData } from '../actions';
+import { connect } from 'react-redux'
 import './stylesheets/Dashboard.css';
 
 class Dashboard extends React.Component {
 
-    sample_chart_option = () => {
-        var option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
-            },
-            legend: {
-                orient: "vertical",
-                x: "left",
-                data:["cconsultation_booking","prerequisites_queries","indicative_hours_queries","course_outline_queries","course_location_queries"]
-            },
-            series: [
-                {
-                    name:"intents",
-                    type:"pie",
-                    radius: ["50%", "70%"],
-                    avoidLabelOverlap: false,
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "center"
-                        },
-                        emphasis: {
-                            show: true,
-                            textStyle: {
-                                fontSize: "30",
-                                fontWeight: "bold"
-                            }
-                        }
-                    },
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
-                    },
-                    data:[
-                        {value:335, name:"consultation_booking"},
-                        {value:310, name:"prerequisites_queries"},
-                        {value:234, name:"indicative_hours_queries"},
-                        {value:1135, name:"course_outline_queries"},
-                        {value:1548, name:"course_location_queries"}
-                    ]
-                }
-            ]
-         };
-         return option;
+    componentOnMount() {
+        this.props.getDashboardData();
     }
 
     generateChart = () => {
+        console.log(this.props.piechart)
+        if (this.props.piechart.length === 0) {
+            return (
+                <div className="loading-screen">
+                    <div className="ui active centered inline loader"></div>
+                </div>
+            )
+        }
         return (
             <ReactEcharts
-                option={this.sample_chart_option()}
+                option={this.props.piechart}
                  />
         )
     }
@@ -67,4 +33,12 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {piechart: Object.values(state.dashboard.piechart) }
+}
+
+export default connect(
+    mapStateToProps,
+    { getDashboardData }
+)(Dashboard);
