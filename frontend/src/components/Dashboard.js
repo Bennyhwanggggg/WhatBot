@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
         return (
             this.props.piechart.map(chart => {
                 return (
-                    <div key={uuid.v4()}>
+                    <div className="chart" key={uuid.v4()}>
                         <ReactEcharts
                             option={chart}
                         />
@@ -34,7 +34,22 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="Dashboard">{this.generateChart()}</div>
+            <div className="Dashboard">
+                <div class="ui grid charts">
+                    <div class="fifteen wide column">
+                        {this.generateChart()}
+                    </div>
+                    <div class="fifteen wide column">
+                        {this.generateChart()}
+                    </div>
+                    <div class="fifteen wide column">
+                        {this.generateChart()}
+                    </div>
+                    <div class="fifteen wide column">
+                        {this.generateChart()}
+                    </div>
+                </div>
+            </div>
         )
     }
 }
