@@ -1,3 +1,9 @@
 .Dashboard {
     height: 100%;
 }
+
+.loading-screen {
+    margin: auto;
+    height: 100%;
+    padding-top: 35%;
+}
