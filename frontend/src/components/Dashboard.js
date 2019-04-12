@@ -3,6 +3,7 @@ import ReactEcharts from 'echarts-for-react';
 import { getDashboardData } from '../actions';
 import { connect } from 'react-redux'
 import './stylesheets/Dashboard.css';
+import uuid from 'uuid';
 
 class Dashboard extends React.Component {
 
@@ -11,7 +12,6 @@ class Dashboard extends React.Component {
     }
 
     generateChart = () => {
-        console.log(this.props.piechart[0])
         if (this.props.piechart.length === 0) {
             return (
                 <div className="loading-screen">
@@ -20,9 +20,15 @@ class Dashboard extends React.Component {
             )
         }
         return (
-            <ReactEcharts
-                option={this.props.piechart[0]}
-                 />
+            this.props.piechart.map(chart => {
+                return (
+                    <div key={uuid.v4()}>
+                        <ReactEcharts
+                            option={chart}
+                        />
+                    </div>
+                )
+            })
         )
     }
 
