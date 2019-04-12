@@ -52,6 +52,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
+THREAD_EXECUTOR = concurrent.futures.ThreadPoolExecutor(max_workers=16)
 
 """
     Path setup
@@ -94,7 +95,7 @@ def message():
 
     query_result = query_module.query(message)
     # use multiprocessing to avoid collecting user data from slowing us down
-    with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
+    with THREAD_EXECUTOR as executor:
         executor.submit(management_module.add_intent_data(query_result.intent, message, query_result.confidence))
     return_message = response_module.respond(query_result)
 
