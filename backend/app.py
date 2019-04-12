@@ -154,6 +154,9 @@ def piechart():
             }
         ]
     }
+    response_data = {
+        "data": response_data
+    }
     return jsonify(response_data), 200
 
 
