@@ -71,7 +71,7 @@ def login():
         return 404
     s = Serializer(SECRET_KEY, expires_in=6000)
     token = s.dumps(username)
-    if username == 'admin' and password == 'admin':
+    if username == 'admin' and password == 'admin':  # TODO: search through database and if there is a match, use its type to identify user and use that to generate token
         return token.decode()
     return 404
 
