@@ -63,12 +63,12 @@ ENTITY_PATH = os.path.join(PATH, 'query_module/training_data/entities/')
 TEMP_PATH = os.path.join(PATH, 'management_module/temp/')
 
 
-@app.route('/login', methods=["post"])
+@app.route('/login', methods=['POST'])
 def login():
     pass
 
 
-@app.route('/upload', methods=["post"])
+@app.route('/upload', methods=['POST'])
 def upload():
     def allowed_file(f):
         return '.' in f and f.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -226,6 +226,53 @@ def timeline_chart():
         },
 
         "series": series_list
+    }
+    response_data = {
+        "data": response_data
+    }
+    return jsonify(response_data), 200
+
+
+@app.route('/dashboard/barchart', methods=["GET"])
+def barchart():
+    category_data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    data = [10, 52, 200, 334, 390, 330, 220]
+    response_data = {
+        "color": ['#3398DB'],
+        "tooltip": {
+            "trigger": 'axis',
+            "axisPointer": {
+                "type": 'shadow'
+            }
+        },
+        "grid": {
+            "left": '3%',
+            "right": '4%',
+            "bottom": '3%',
+            "containLabel": True
+        },
+        "xAxis": [
+            {
+                "type": 'category',
+                "data": category_data,
+                "axisTick": {
+                    "alignWithLabel": True
+                }
+            }
+        ],
+        "yAxis": [
+            {
+                "type": 'value'
+            }
+        ],
+        "series": [
+            {
+                "name": '直接访问',
+                "type": 'bar',
+                "barWidth": '60%',
+                "data": data
+            }
+        ]
     }
     response_data = {
         "data": response_data

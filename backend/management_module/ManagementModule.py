@@ -173,7 +173,3 @@ class ManagementModule:
         query = "SELECT intent FROM intent_data"
         data = [result[0] for result in self.data_base_manager.execute_query(query)]
         print(data)  # data is currently list of intents
-
-
-a = ManagementModule()
-a.get_intent_percentages()
