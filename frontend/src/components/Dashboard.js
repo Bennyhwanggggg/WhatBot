@@ -6,7 +6,7 @@ import './stylesheets/Dashboard.css';
 
 class Dashboard extends React.Component {
 
-    componentOnMount() {
+    componentDidMount() {
         this.props.getDashboardData();
     }
 
