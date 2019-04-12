@@ -1,9 +1,23 @@
 .Dashboard {
     height: 100%;
+    overflow: auto;
 }
 
 .loading-screen {
     margin: auto;
     height: 100%;
     padding-top: 35%;
+}
+
+.grid {
+    height: 100%;
+}
+
+.charts {
+    width: 100%;
+}
+
+.chart {
+    margin: 0 auto;
+    padding-left: 10px;
 }

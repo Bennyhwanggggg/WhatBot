@@ -154,6 +154,7 @@ def piechart():
             }
         ]
     }
+
     response_data = {
         "data": response_data
     }
