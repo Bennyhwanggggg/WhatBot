@@ -102,5 +102,55 @@ def message():
     return jsonify(response), 200
 
 
+@app.route('/dashboard/piechart', methods=["GET"])
+def piechart():
+    data = {
+        "tooltip": {
+            "trigger": "item",
+            "formatter": "{a} <br/>{b}: {c} ({d}%)"
+        },
+        "legend": {
+            "orient": "vertical",
+            "x": "left",
+            "data": ["cconsultation_booking", "prerequisites_queries", "indicative_hours_queries",
+                     "course_outline_queries", "course_location_queries"]
+        },
+        "series": [
+            {
+                "name": "intents",
+                "type": "pie",
+                "radius": ["50%", "70%"],
+                "avoidLabelOverlap": False,
+                "label": {
+                    "normal": {
+                        "show": False,
+                        "position": "center"
+                    },
+                    "emphasis": {
+                        "show": True,
+                        "textStyle": {
+                            "fontSize": "30",
+                            "fontWeight": "bold"
+                        }
+                    }
+                },
+                "labelLine": {
+                    "normal": {
+                        "show": False
+                    }
+                },
+                "data": [
+                    {"value": 335, "name": "consultation_booking"},
+                    {"value": 310, "name": "prerequisites_queries"},
+                    {"value": 234, "name": "indicative_hours_queries"},
+                    {"value": 1135, "name": "course_outline_queries"},
+                    {"value": 1548, "name": "course_location_queries"}
+                ]
+            }
+        ]
+    }
+    return jsonify(data), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=9999)
