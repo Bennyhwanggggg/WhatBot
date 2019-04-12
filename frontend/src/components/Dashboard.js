@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
     }
 
     generateChart = () => {
-        console.log(this.props.piechart)
+        console.log(this.props.piechart[0])
         if (this.props.piechart.length === 0) {
             return (
                 <div className="loading-screen">
@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
         }
         return (
             <ReactEcharts
-                option={this.props.piechart}
+                option={this.props.piechart[0]}
                  />
         )
     }
