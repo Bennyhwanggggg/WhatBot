@@ -13,6 +13,10 @@
     height: 100%;
 }
 
+.charts {
+    width: 100%;
+}
+
 .chart {
     margin: 0 auto;
     padding-left: 10px;
