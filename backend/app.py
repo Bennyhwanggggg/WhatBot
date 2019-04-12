@@ -104,7 +104,19 @@ def message():
 
 @app.route('/dashboard/piechart', methods=["GET"])
 def piechart():
-    data = {
+    # TODO original_data should come from database
+    original_data = {
+        "consultation_booking"    : 335,
+        "prerequisites_queries"   : 310,
+        "indicative_hours_queries": 234,
+        "course_outline_queries"  : 1135,
+        "course_location_queries" : 1548,
+    }
+
+    # convert the original data to the form that echart piechart expected
+    key_list = list(original_data.keys())
+    data_field = [{"value": original_data[key], "name": key} for key in key_list]
+    response_data = {
         "tooltip": {
             "trigger": "item",
             "formatter": "{a} <br/>{b}: {c} ({d}%)"
@@ -112,8 +124,7 @@ def piechart():
         "legend": {
             "orient": "vertical",
             "x": "left",
-            "data": ["cconsultation_booking", "prerequisites_queries", "indicative_hours_queries",
-                     "course_outline_queries", "course_location_queries"]
+            "data": key_list
         },
         "series": [
             {
@@ -139,17 +150,11 @@ def piechart():
                         "show": False
                     }
                 },
-                "data": [
-                    {"value": 335, "name": "consultation_booking"},
-                    {"value": 310, "name": "prerequisites_queries"},
-                    {"value": 234, "name": "indicative_hours_queries"},
-                    {"value": 1135, "name": "course_outline_queries"},
-                    {"value": 1548, "name": "course_location_queries"}
-                ]
+                "data": data_field
             }
         ]
     }
-    return jsonify(data), 200
+    return jsonify(response_data), 200
 
 
 if __name__ == '__main__':
