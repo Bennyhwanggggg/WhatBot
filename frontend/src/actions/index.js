@@ -1,5 +1,13 @@
 import backend from '../apis/backend'
-import { SIGN_IN, SIGN_OUT, MESSAGE_SENT, MESSAGE_RECIEVED, MESSAGE_LOADING, PIECHART_GET } from './types'
+import { SIGN_IN, 
+         SIGN_OUT, 
+         MESSAGE_SENT, 
+         MESSAGE_RECIEVED, 
+         MESSAGE_LOADING, 
+         INTENT_USAGE_PIECHART_GET, 
+         INTENT_USAGE_TIMELINE_GET, 
+         INTENT_USAGE_3D_GET, 
+         INTENT_AVG_CONFIDENCE_BARCHART_GET } from './types'
 import uuid from 'uuid';
 
 export const sendMessage = message => async dispatch => {
@@ -11,10 +19,24 @@ export const sendMessage = message => async dispatch => {
     dispatch({type: MESSAGE_RECIEVED, payload: response.data, id: id});
 }
 
-export const getDashboardData = () => async dispatch => {
-    console.log('get dashboard data')
+export const getPiechartData = () => async dispatch => {
     const response = await backend.get('dashboard/piechart');
-    dispatch({type: PIECHART_GET, payload: response.data})
+    dispatch({type: INTENT_USAGE_PIECHART_GET, payload: response.data})
+}
+
+export const get3DData = () => async dispatch => {
+    const response = await backend.get('dashboard/threeD');
+    dispatch({type: INTENT_USAGE_3D_GET, payload: response.data})
+}
+
+export const getTimelineData = () => async dispatch => {
+    const response = await backend.get('dashboard/timeline');
+    dispatch({type: INTENT_USAGE_TIMELINE_GET, payload: response.data})
+}
+
+export const getBarchartData = () => async dispatch => {
+    const response = await backend.get('dashboard/barchart');
+    dispatch({type: INTENT_AVG_CONFIDENCE_BARCHART_GET, payload: response.data})
 }
 
 export const signIn = userId => {
