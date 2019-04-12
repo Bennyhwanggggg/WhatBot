@@ -28,6 +28,7 @@ class Dashboard extends React.Component {
                     <div className="chart" key={uuid.v4()}>
                         <ReactEcharts
                             option={chart}
+                            style={{height: '500px', width: '100%'}}
                         />
                     </div>
                 )
