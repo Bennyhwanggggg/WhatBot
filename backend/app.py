@@ -106,11 +106,11 @@ def message():
 def piechart():
     # TODO original_data should come from database
     original_data = {
-        "consultation_booking"    : 335,
-        "prerequisites_queries"   : 310,
+        "consultation_booking": 335,
+        "prerequisites_queries": 310,
         "indicative_hours_queries": 234,
-        "course_outline_queries"  : 1135,
-        "course_location_queries" : 1548,
+        "course_outline_queries": 1135,
+        "course_location_queries": 1548,
     }
 
     # convert the original data to the form that echart piechart expected
@@ -153,6 +153,73 @@ def piechart():
                 "data": data_field
             }
         ]
+    }
+    response_data = {
+        "data": response_data
+    }
+    return jsonify(response_data), 200
+
+
+@app.route('/dashboard/timeline', methods=["GET"])
+def timeline_chart():
+    original_data = {
+        "consultation_booking": [120, 132, 101, 134, 90, 230, 210],
+        "prerequisites_queries": [220, 182, 191, 234, 290, 330, 310],
+        "indicative_hours_queries": [150, 232, 201, 154, 190, 330, 410],
+        "course_outline_queries": [320, 332, 301, 334, 390, 330, 320],
+        "course_location_queries": [820, 932, 901, 934, 1290, 1330, 1320]
+    }
+    time_slots = [
+        "07/04/2019",
+        "08/04/2019",
+        "09/04/2019",
+        "10/04/2019",
+        "11/04/2019",
+        "12/04/2019",
+        "13/04/2019",
+    ]
+
+    title_list = list(original_data.keys())
+    series_list = [
+        {
+            "name": title,
+            "type": 'line',
+            "stack": i,
+            "data": original_data[title],
+        }
+        for i, title in enumerate(original_data)
+    ]
+    response_data = {
+        "title": {
+            "text": 'Whatbot Usage'
+        },
+        "tooltip": {
+            "trigger": 'axis'
+        },
+        "legend": {
+            "data": title_list
+        },
+        "grid": {
+            "left": '3%',
+            "right": '4%',
+            "bottom": '3%',
+            "containLabel": True
+        },
+        "toolbox": {
+            "feature": {
+                "saveAsImage": {}
+            }
+        },
+        "xAxis": {
+            "type": 'category',
+            "boundaryGap": False,
+            "data": time_slots
+        },
+        "yAxis": {
+            "type": 'value'
+        },
+
+        "series": series_list
     }
     response_data = {
         "data": response_data
