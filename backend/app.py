@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer)
 import uuid
 import logging
 import time
@@ -51,6 +52,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
+SECRET_KEY = 'WHATBOTHDHD'
 
 """
     Path setup
@@ -63,7 +65,15 @@ TEMP_PATH = os.path.join(PATH, 'management_module/temp/')
 
 @app.route('/login', methods=["post"])
 def login():
-    pass
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
+    if not username or not password:
+        return 404
+    s = Serializer(SECRET_KEY, expires_in=6000)
+    token = s.dumps(username)
+    if username == 'admin' and password == 'admin':
+        return token.decode()
+    return 404
 
 
 @app.route('/upload', methods=["post"])
