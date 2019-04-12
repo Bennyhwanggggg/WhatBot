@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import { getDashboardData } from '../actions';
+import { getBarchartData, get3DData, getPiechartData, getTimelineData } from '../actions';
 import { connect } from 'react-redux'
 import './stylesheets/Dashboard.css';
 import uuid from 'uuid';
@@ -8,11 +8,14 @@ import uuid from 'uuid';
 class Dashboard extends React.Component {
 
     componentDidMount() {
-        this.props.getDashboardData();
+        this.props.getBarchartData();
+        this.props.get3DData();
+        this.props.getPiechartData();
+        this.props.getTimelineData();
     }
 
-    generateChart = () => {
-        if (this.props.piechart.length === 0) {
+    generateChart = (chartData) => {
+        if (chartData.length === 0) {
             return (
                 <div className="loading-screen">
                     <div className="ui active centered inline loader"></div>
@@ -20,7 +23,7 @@ class Dashboard extends React.Component {
             )
         }
         return (
-            this.props.piechart.map(chart => {
+            chartData.map(chart => {
                 return (
                     <div className="chart" key={uuid.v4()}>
                         <ReactEcharts
@@ -35,18 +38,18 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="Dashboard">
-                <div class="ui grid charts">
-                    <div class="fifteen wide column">
-                        {this.generateChart()}
+                <div className="ui grid charts">
+                    <div className="fifteen wide column">
+                        {this.generateChart(this.props.piechart)}
                     </div>
-                    <div class="fifteen wide column">
-                        {this.generateChart()}
+                    <div className="fifteen wide column">
+                        {this.generateChart(this.props.timeline)}
                     </div>
-                    <div class="fifteen wide column">
-                        {this.generateChart()}
+                    <div className="fifteen wide column">
+                        {this.generateChart(this.props.threeD)}
                     </div>
-                    <div class="fifteen wide column">
-                        {this.generateChart()}
+                    <div className="fifteen wide column">
+                        {this.generateChart(this.props.barchart)}
                     </div>
                 </div>
             </div>
@@ -56,10 +59,13 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
     console.log(state)
-    return {piechart: Object.values(state.dashboard.piechart) }
+    return {piechart: Object.values(state.dashboard.piechart),
+            timeline: Object.values(state.dashboard.timeline),
+            threeD: Object.values(state.dashboard.threeD),
+            barchart: Object.values(state.dashboard.barchart) }
 }
 
 export default connect(
     mapStateToProps,
-    { getDashboardData }
+    { getBarchartData, get3DData, getPiechartData, getTimelineData }
 )(Dashboard);
