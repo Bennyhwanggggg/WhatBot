@@ -138,11 +138,12 @@ I want to book on {date} at {time}
 ```
 
 #### Entities
-The first line of any entities training data should be the name of the entity and all following lines are the data themselves. If an entity has a synonym, it should be separated with `@@@` on the same line. 
-
+The first line of any entities training data should be the name of the entity and starts with `display_name`. All following lines are the data themselves. If an entity has a synonym, it should be separated with `@@@` on the same line. 
+Entity training data files should have the following lines:  
+`display_name`: name of the entity  
 For example:
 ```
-course
+display_name course
 COMP6441@@@Security Engineering and Cyber Security
 COMP9020@@@Foundations of Computer Science
 COMP9021@@@Principles of Programming
