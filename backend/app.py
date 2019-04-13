@@ -14,6 +14,8 @@ from management_module.ManagementModule import ManagementModule
 from conf.Error import UploadFileError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
+from authenitcation.config import SECRET_KEY
+from authenitcation.security import login_required
 
 """
     Initialize modules
@@ -52,7 +54,6 @@ app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
-SECRET_KEY = 'WHATBOTHDHD'
 
 """
     Path setup
