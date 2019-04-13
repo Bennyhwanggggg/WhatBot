@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { signOut } from '../actions';
 
 class Header extends React.Component {
+
+    logout = () => {
+        this.props.signOut();
+    }
 
     renderAdmin() {
         // TODO: update logout
@@ -23,7 +28,7 @@ class Header extends React.Component {
                     </Link>
                 </div>
                 <div className="right item">
-                    <Link to="/logout">
+                    <Link to="/login" onClick={this.logout}>
                         Logout
                     </Link>
                 </div>
@@ -41,7 +46,7 @@ class Header extends React.Component {
                     </Link>
                 </div>
                 <div className="right item">
-                    <Link to="/logout">
+                    <Link to="/login" onClick={this.logout}>
                         Logout
                     </Link>
                 </div>
@@ -77,5 +82,16 @@ class Header extends React.Component {
         }
     }
 };
-  
-export default Header;
+
+const mapStateToProps = (state) => {
+    return { 
+        isSignedIn: state.auth.isSignedIn,
+        userId: state.auth.userId,
+        accessLevel: state.auth.accessLevel
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {signOut}
+)(Header);

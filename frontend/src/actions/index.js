@@ -35,11 +35,11 @@ export const signIn = (username, password) => async dispatch => {
     } 
 }
 
-export const signOut = () => {
+export const signOut = () => dispatch => {
     window.localStorage.removeItem('token');
-    return {
+    dispatch ({
       type: SIGN_OUT
-    }
+    })
 }
 
 export const checkSignedIn = () => async dispatch => {

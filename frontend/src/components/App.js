@@ -43,17 +43,13 @@ class App extends React.Component {
             <div className="App">
                 <Router history={history}>
                 <React.Fragment>
-                    <Header
-                        isSignedIn={isSignedIn}
-                        userId={userId}
-                        accessLevel={accessLevel}
-                    />
+                    <Header/>
                     <Switch>
                         <Route path="/chatroom" exact component={ChatRoom} />
                         <Route path="/upload" exact component={Upload} />
                         <Route path="/dashboard" exact component={Dashboard} />
                         <Route path="/info" exact component={TrainUsageInfo} />
-                        <Route path="/" exact component={Login} />
+                        <Route path="/login" exact component={Login} />
                     </Switch>
                 </React.Fragment>
                 </Router>
