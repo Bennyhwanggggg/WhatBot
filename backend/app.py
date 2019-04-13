@@ -309,7 +309,7 @@ def three_dimention_chart():
         "zAxis3D": {},
         "dataset": {
             "dimensions": [
-                'Income',
+                'Usage',
                 'Time',
                 'Population',
                 'Intent',
