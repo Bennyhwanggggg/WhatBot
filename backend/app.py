@@ -235,8 +235,14 @@ def timeline_chart():
 
 @app.route('/dashboard/barchart', methods=["GET"])
 def barchart():
-    category_data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    data = [10, 52, 200, 334, 390, 330, 220]
+    category_data = ["consultation_booking",
+                     "prerequisites_queries",
+                     "indicative_hours_queries",
+                     "course_outline_queries",
+                     "course_location_queries_followup",
+                     "indicative_hours_queries_followup",
+                     "prerequisites_queries_followup",]
+    confidence_data = [0.78, 0.82, 0.85, 0.87, 0.89, 0.90, 0.91]
     response_data = {
         "color": ['#3398DB'],
         "tooltip": {
@@ -267,10 +273,10 @@ def barchart():
         ],
         "series": [
             {
-                "name": '直接访问',
+                "name": 'Average Confidence',
                 "type": 'bar',
                 "barWidth": '60%',
-                "data": data
+                "data": confidence_data
             }
         ]
     }
