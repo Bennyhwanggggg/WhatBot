@@ -24,6 +24,9 @@ class App extends React.Component {
 
     componentDidMount() {
         this.props.checkSignedIn()
+        if (!this.props.isSignedIn) {
+            history.push('/login')
+        }
     }
 
     onSendMessage = (message) => {

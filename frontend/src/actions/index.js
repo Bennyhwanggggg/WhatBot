@@ -36,8 +36,8 @@ export const signIn = (username, password) => async dispatch => {
 export const signOut = () => dispatch => {
     window.localStorage.removeItem('token');
     dispatch ({
-      type: SIGN_OUT,
-      payload: { errorMessage: null }
+        type: SIGN_OUT,
+        payload: { errorMessage: null }
     })
 }
 
