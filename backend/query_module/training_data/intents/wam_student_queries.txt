@@ -1,0 +1,73 @@
+display_name wam_student_queries
+message_texts wam_student_queries
+intent_types none
+reset_contexts
+Can I know my WAM?
+can I know my wam?
+I want to know my wam
+I want to know my WAM
+my WAM
+My WAM
+My wam
+My grades
+Tell me my wam
+tell me my WAM
+Can you tell me my WAM?
+Can you tell me my WAM??
+can you tell me my grades?
+Tell me my grades
+tell me my grades thanks
+tell me my grades please
+Can you tell me my grades?
+I want to see my wam
+See my WAM
+I want to know my wam
+What is my current WAM?
+Tell me my current wam
+What is my WAM?
+What is my wam
+What is my current wam?
+What is my current WAM
+Tell me my WAM right now
+Tell me my current grades
+Tell me my current grades thanks
+Show me my WAM
+show my wam
+show my grade
+WAM
+Grades
+Current WAM
+Current grades
+My course results
+Tell me my academic standing
+Can you tell me my current academic standing?
+I want to see my academic result
+Show me my academic result thanks
+Show me my grades please
+What is my current wam right now?
+What is my current WAM thanks
+Tell me my what my WAM is right now
+Tell me my current grades are thanks
+Tell me my current grades thanks
+Show me my WAM please
+show my wam thanks
+show my grade please
+WAM please
+Grades thanks
+Current WAM please
+Current grades thanks
+My course results please
+I want to see my course results
+Tell me my course results
+Tell me my academic standing thanks
+Can you tell me my current course results?
+I want to see my academic result please
+Show me my academic result thanks
+Show me my grades please
+Please tell me what my WAM is right now
+Please show me my course result
+Please tell me what my grades are
+Tell me about my WAM
+Tell me about my course result
+Tell me about my grades
+Please tell me about my course result

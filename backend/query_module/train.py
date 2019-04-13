@@ -97,8 +97,8 @@ class QueryModuleTrainer:
                      'entity_type': '@sys.time',
                      'alias': 'time'},
             'student': {'regex': re.compile(r'z\d{7}'),
-                     'entity_type': '@student',
-                     'alias': 'student'}
+                        'entity_type': '@student',
+                        'alias': 'student'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
@@ -502,7 +502,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/wam_queries.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/wam_student_queries.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                             message_texts=message_texts,
                                             intent_types=intent_types,

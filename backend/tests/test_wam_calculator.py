@@ -1,5 +1,6 @@
 from utility_module.WamCalculator import WamCalculator
 
+
 def test_wam_calculation():
     wam = WamCalculator()
     result = wam.calculate_wam("z1234567")
@@ -30,6 +31,4 @@ def test_wam_calculation():
                'Result: 85.0\n' \
                'Wam is: 86.1\n' \
                'Grade is: D'
-
-
     assert expected == result
