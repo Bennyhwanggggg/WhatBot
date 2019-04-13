@@ -10,3 +10,7 @@ class UploadFileError(enum.Enum):
     NO_FILE = 'No file part.'
     NO_FILE_SELECTED = 'No file selected for uploading.'
     INVALID_FORMAT = 'The format of the file you are trying to upload is invalid.'
+
+
+class AuthenticationError(enum.Enum):
+    INVALID_CREDENTIALS = 'Invalid username or password'

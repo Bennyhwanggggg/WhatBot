@@ -10,12 +10,12 @@ import os
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from management_module.ManagementModule import ManagementModule
-from conf.Error import UploadFileError
+from conf.Error import UploadFileError, AuthenticationError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
 from authenitcation.config import SECRET_KEY
 from authenitcation.security import login_required, login_required_admin, generate_token
-from authenitcation.db import Authentication
+from authenitcation.db import Authenticator
 
 """
     Initialize modules
@@ -23,6 +23,7 @@ from authenitcation.db import Authentication
 query_module = QueryModule()
 response_module = ResponseModule()
 management_module = ManagementModule()
+authenticator = Authenticator()
 
 """
     Logger configurations. By default all are set to DEBUG level.
@@ -47,9 +48,9 @@ database_logger.setLevel(logging.INFO)
 management_logger = logging.getLogger('management_module.ManagementModule')
 management_logger.setLevel(logging.INFO)
 authentication_db_logger = logging.getLogger('authentication.db')
-authentication_db_logger.setLevel(logging.INFO)
+authentication_db_logger.setLevel(logging.DEBUG)
 authentication_security_logger = logging.getLogger('authentication.security')
-authentication_security_logger.setLevel(logging.INFO)
+authentication_security_logger.setLevel(logging.DEBUG)
 
 """
     Flask configuration setup
@@ -73,12 +74,12 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
     if not username or not password:
-        return 404
-    if Authentication.check_is_admin(username, password):
-        return generate_token('admin')
-    if Authentication.check_is_student(username, password):
-        return generate_token('student')
-    return 404
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    if authenticator.check_is_admin(username, password):
+        return jsonify(token=generate_token('admin'), id=username, accessLevel='admin'), 200
+    if authenticator.check_is_student(username, password):
+        return jsonify(token=generate_token('student'), id=username, accessLevel='student'), 200
+    return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
 
 
 @app.route('/upload', methods=['POST'])
