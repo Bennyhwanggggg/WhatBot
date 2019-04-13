@@ -194,7 +194,7 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_all_lecturers(self):
-        query = "SELECT * from lecturer"
+        query = "SELECT * FROM lecturer"
         return self.execute_query(query)
 
     def make_consultation_booking(self, tid):
@@ -203,7 +203,7 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_consultation_timeslots(self, tid):
-        query = "SELECT tid, start_time, end_time, available from Timeslot Where tid = %s"
+        query = "SELECT tid, start_time, end_time, available FROM Timeslot WHERE tid = %s"
         inputs = (tid, )
         return self.execute_query(query, inputs)
 
@@ -225,55 +225,52 @@ class DataBaseManager:
 
     def get_course(self, cid):
             key_part = '%' + cid.upper()
-            query = "SELECT * from courselist where course_code like %s"
+            query = "SELECT * FROM courselist WHERE course_code like %s"
             inputs = (key_part, )
             return self.execute_query(query, inputs)
 
     def get_location(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT campus from info_handbook where cid like %s"
+        query = "SELECT campus FROM info_handbook WHERE cid like %s"
         inputs = (key_part,)
         return self.execute_query(query, inputs)
 
     def get_tuition_fee(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT commonwealth_std, domestic_std, international_std from info_handbook where cid like %s"
+        query = "SELECT commonwealth_std, domestic_std, international_std FROM info_handbook WHERE cid like %s"
         inputs = (key_part,)
         return self.execute_query(query, inputs)
 
     def get_faculty(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT faculty_url from info_handbook where cid like %s"
+        query = "SELECT faculty_url FROM info_handbook WHERE cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
 
     def get_prerequisites(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT prerequisite from info_handbook where cid like %s"
+        query = "SELECT prerequisite FROM info_handbook WHERE cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
 
     def get_offer_term(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT offer_term from info_handbook where cid like %s"
+        query = "SELECT offer_term FROM info_handbook WHERE cid like %s"
         inputs = (key_part, )
         return self.execute_query(query, inputs)
 
     def get_indicative_hours(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT indicative_contact_hr from info_handbook where cid like %s"
+        query = "SELECT indicative_contact_hr FROM info_handbook WHERE cid like %s"
         inputs = (key_part,)
         return self.execute_query(query, inputs)
 
     def get_pdf_url(self, cid):
         key_part = '%' + cid.upper()
-        query = "SELECT pdf_url from info_handbook where cid like %s"
+        query = "SELECT pdf_url FROM info_handbook WHERE cid like %s"
         inputs = (key_part,)
         return self.execute_query(query, inputs)
 
     def get_all_courses(self):
-        query = "SELECT course_code from courselist"
-        return  self.execute_query(query)
-
-
-
+        query = "SELECT course_code FROM courselist"
+        return self.execute_query(query)

@@ -113,3 +113,7 @@ input {
     position: relative;
     animation: 2s pulse infinite ease-out;
 }
+
+.loginForm {
+    width: 100%;
+}

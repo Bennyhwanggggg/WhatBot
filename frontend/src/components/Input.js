@@ -21,7 +21,7 @@ class Input extends React.Component {
         if (Object.keys(formValues).length === 0){
             return;
         }
-        this.props.sendMessage(formValues);
+        this.props.sendMessage(formValues, this.props.userId);
         this.props.reset();
     }
 
@@ -44,8 +44,13 @@ const formWrapped = reduxForm({
                         form: "formValues"
                     })(Input);
 
+const mapStateToProps = (state) => {
+    return { 
+        userId: state.auth.userId,
+    }
+}
 
 export default connect(
-    null,
+    mapStateToProps,
     { sendMessage }
 )(formWrapped);

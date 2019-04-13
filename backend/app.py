@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
-import uuid
 import json
 import logging
 import time
@@ -12,9 +11,11 @@ import concurrent.futures
 from query_module.QueryModule import QueryModule
 from response_module.ResponseModule import ResponseModule
 from management_module.ManagementModule import ManagementModule
-from conf.Error import UploadFileError
+from conf.Error import UploadFileError, AuthenticationError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
+from authenitcation.security import generate_token, verify_token
+from authenitcation.db import Authenticator
 
 """
     Initialize modules
@@ -22,6 +23,7 @@ from conf.Logger import Logger
 query_module = QueryModule()
 response_module = ResponseModule()
 management_module = ManagementModule()
+authenticator = Authenticator()
 
 """
     Logger configurations. By default all are set to DEBUG level.
@@ -45,6 +47,10 @@ database_logger = logging.getLogger('database.DataBaseManager')
 database_logger.setLevel(logging.INFO)
 management_logger = logging.getLogger('management_module.ManagementModule')
 management_logger.setLevel(logging.INFO)
+authentication_db_logger = logging.getLogger('authentication.db')
+authentication_db_logger.setLevel(logging.DEBUG)
+authentication_security_logger = logging.getLogger('authentication.security')
+authentication_security_logger.setLevel(logging.DEBUG)
 
 """
     Flask configuration setup
@@ -54,6 +60,16 @@ CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
 thread_executor = concurrent.futures.ThreadPoolExecutor(max_workers=16)
+
+
+@app.after_request
+def after_request(resp):
+    resp.headers["Access-Control-Allow-Origin"] = '*'
+    request_headers = request.headers.get("Access-Control-Request-Headers")
+    resp.headers["Access-Control-Allow-Headers"] = request_headers
+    resp.headers['Access-Control-Allow-Methods'] = "DELETE, GET, POST, HEAD, OPTIONS"
+    return resp
+
 
 """
     Path setup
@@ -66,7 +82,28 @@ TEMP_PATH = os.path.join(PATH, 'management_module/temp/')
 
 @app.route('/login', methods=['POST'])
 def login():
-    pass
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
+    if not username or not password:
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    if authenticator.check_is_admin(username, password):
+        return jsonify(token=generate_token('admin', username), id=username, authority='admin'), 200
+    if authenticator.check_is_student(username, password):
+        return jsonify(token=generate_token('student', username), id=username, authority='student'), 200
+    logger.info('{}: {} login success'.format(username, password))
+    return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+
+
+@app.route('/validation', methods=['POST'])
+def validation():
+    token = request.headers.get('authorization', None)
+    if not token:
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    verified = verify_token(token)
+    if not verified:
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    logger.info('{}: {} re-authenticated'.format(verified['user_id'], verified['user_type']))
+    return jsonify(token=token, id=verified['user_id'], authority=verified['user_type']), 200
 
 
 @app.route('/upload', methods=['POST'])
@@ -92,6 +129,7 @@ def upload():
 @app.route('/message', methods=['POST'])
 def message():
     message = request.json.get('inputValue', None)
+    username = request.json.get('username', None)
     id = request.json.get('id', None)
 
     query_result = query_module.query(message)

@@ -12,13 +12,13 @@ configure({ adapter: new Adapter() });
 
 describe('Chatroom Component testing', function() {
 
-  it('Chatroom renders properly', () => {
-    const wrapper = shallow(<ChatRoom />);
-    expect(wrapper).not.to.have.className('App');
-    expect(wrapper.find(Input)).to.have.lengthOf(1);
-    expect(wrapper.find(Messages)).to.have.lengthOf(1);
-  });
+    it('Chatroom renders properly', () => {
+        const wrapper = shallow(<ChatRoom />);
+        expect(wrapper).not.to.have.className('App');
+        expect(wrapper.find(Input)).to.have.lengthOf(1);
+        expect(wrapper.find(Messages)).to.have.lengthOf(1);
+    });
 
-  chai.use(chaiEnzyme());
+    chai.use(chaiEnzyme());
 
 })
