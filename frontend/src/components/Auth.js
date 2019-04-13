@@ -1,9 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signIn, signOut} from '../actions';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 class Auth extends React.Component {
+
+    onSubmit = () => {
+        const username = this.state.username;
+        const password = this.state.password;
+        if (!username || !password) {
+            // TODO: show error 
+            return;
+        }
+    }
+
+    onInputUsernameChange = (evt) => {
+        this.setState({
+            username: evt.target.value
+        });
+    }
+
+    onInputPasswordChange = (evt) => {
+        this.setState({
+            password: evt.target.value
+        });
+    }
+
     render() {
         return (
             <div className='login-form'>
@@ -20,18 +42,25 @@ class Auth extends React.Component {
                     <Header as='h2' color='teal' textAlign='center'>
                     Log in
                     </Header>
-                    <Form size='large'>
+                    <Form size='large' onSubmit={this.onSubmit}>
                         <Segment stacked className='loginForm'>
-                            <Form.Input fluid icon='user' iconPosition='left' placeholder='zID'/>
+                            <Form.Input 
+                                fluid icon='user' 
+                                iconPosition='left' 
+                                placeholder='zID'
+                                onChange={this.onInputUsernameChange}
+                                />
                             <Form.Input
                                 fluid
                                 icon='lock'
                                 iconPosition='left'
                                 placeholder='Password'
                                 type='password'
+                                onChange={this.onInputPasswordChange}
                             />
                 
-                            <Button color='teal' fluid size='large'>
+                            <Button color='teal' 
+                                    fluid size='large'>
                                 Login
                             </Button>
                         </Segment>
