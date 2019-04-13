@@ -197,7 +197,7 @@ def timeline_chart():
     ]
     response_data = {
         "title": {
-            "text": 'Whatbot Usage'
+            "text": ' '
         },
         "tooltip": {
             "trigger": 'axis'
