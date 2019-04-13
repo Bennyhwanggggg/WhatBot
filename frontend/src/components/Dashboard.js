@@ -60,7 +60,6 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {piechart: Object.values(state.dashboard.piechart),
             timeline: Object.values(state.dashboard.timeline),
             threeD: Object.values(state.dashboard.threeD),
