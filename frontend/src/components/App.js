@@ -31,33 +31,39 @@ class App extends React.Component {
     }
 
     render() {
+        const { isSignedIn, userId, accessLevel } = this.props
         return (
-        <div className="App">
-            <Router history={history}>
-            <React.Fragment>
-                <Header/>
-                <Switch>
-                    <Route path="/" exact component={ChatRoom} />
-                    <Route path="/upload" exact component={Upload} />
-                    <Route path="/dashboard" exact component={Dashboard} />
-                    <Route path="/info" exact component={TrainUsageInfo} />
-                    <Route path="/login" exact component={Auth} />
-                </Switch>
-            </React.Fragment>
-            </Router>
-        </div>
+            <div className="App">
+                <Router history={history}>
+                <React.Fragment>
+                    <Header
+                        isSignedIn={isSignedIn}
+                        userId={userId}
+                        accessLevel={accessLevel}
+                    />
+                    <Switch>
+                        <Route path="/" exact component={ChatRoom} />
+                        <Route path="/upload" exact component={Upload} />
+                        <Route path="/dashboard" exact component={Dashboard} />
+                        <Route path="/info" exact component={TrainUsageInfo} />
+                        <Route path="/login" exact component={Auth} />
+                    </Switch>
+                </React.Fragment>
+                </Router>
+            </div>
         );
     }
 }
 
-const mapStateToProps = (dispatch) => {
-    loadUserFromToken = () => {
-        let token = sessionStorage.getItem('token');
-        if(!token || token === '') { //if there is no token, dont bother
-            return;
+const mapStateToProps = (state) => {
+    const isSignedIn = state.auth.isSignedIn;
+    const userId = state.auth.userId;
+    const accessLevel = state.auth.accessLevel
+    return {
+        isSignedIn: isSignedIn,
+        userId: userId,
+        accessLevel: accessLevel
     }
-    return { isSignedIn: state.auth.isSignedIn }
 }
 
-export default App;
-
+export default connect(mapStateToProps)(App);

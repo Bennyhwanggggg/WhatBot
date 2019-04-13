@@ -19,7 +19,7 @@ export const signIn = (username, password) => async dispatch => {
             type: SIGN_OUT
         }
     } 
-    window.localStorage.setItem('token', response.data.token)
+    window.localStorage.setItem('token', response.data.token);
     return {
       type: SIGN_IN,
       payload: response.data
@@ -27,6 +27,7 @@ export const signIn = (username, password) => async dispatch => {
 }
 
 export const signOut = () => {
+    window.localStorage.removeItem('token');
     return {
       type: SIGN_OUT
     }
