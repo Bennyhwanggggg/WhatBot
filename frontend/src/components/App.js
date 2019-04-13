@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { checkSignedIn } from '../actions';
 import Header from './Header';
@@ -50,6 +50,7 @@ class App extends React.Component {
                         <Route path="/dashboard" exact component={Dashboard} />
                         <Route path="/info" exact component={TrainUsageInfo} />
                         <Route path="/login" exact component={Login} />
+                        <Route render={() => <Redirect to="/login" />} />
                     </Switch>
                 </React.Fragment>
                 </Router>
