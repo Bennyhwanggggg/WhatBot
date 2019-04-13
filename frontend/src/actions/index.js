@@ -1,4 +1,5 @@
-import backend from '../apis/backend'
+import backend from '../apis/backend';
+import backendURL from '../apis/routes';
 import { SIGN_IN, 
          SIGN_OUT, 
          IS_SIGNED_IN,
@@ -8,7 +9,7 @@ import { SIGN_IN,
          INTENT_USAGE_PIECHART_GET, 
          INTENT_USAGE_TIMELINE_GET, 
          INTENT_USAGE_3D_GET, 
-         INTENT_AVG_CONFIDENCE_BARCHART_GET } from './types'
+         INTENT_AVG_CONFIDENCE_BARCHART_GET } from './types';
 import uuid from 'uuid';
 import history from '../history';
 
@@ -34,7 +35,6 @@ export const signIn = (username, password) => async dispatch => {
         )
         history.push('/chatroom');
     } catch (err) {
-        console.log(err)
         dispatch({
             type: SIGN_OUT,
             payload: {errorMessage: 'The username or password you entered is invalid'}
@@ -79,7 +79,7 @@ export const checkSignedIn = (message) => async dispatch => {
             payload: notSignedInData
         })
   	} else {
-        const response = await fetch('http://localhost:9999/validation', {
+        const response = await fetch(`${backendURL}/validation`, {
             method: 'POST',
             headers: {
                 Authorization: token
