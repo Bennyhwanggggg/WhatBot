@@ -25,7 +25,7 @@ export const getPiechartData = () => async dispatch => {
 }
 
 export const get3DData = () => async dispatch => {
-    const response = await backend.get('dashboard/threeD');
+    const response = await backend.get('dashboard/3dchart');
     dispatch({type: INTENT_USAGE_3D_GET, payload: response.data})
 }
 
