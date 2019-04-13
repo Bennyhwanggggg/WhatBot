@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer)
 import logging
 import time
 import os
@@ -13,8 +12,7 @@ from management_module.ManagementModule import ManagementModule
 from conf.Error import UploadFileError, AuthenticationError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
-from authenitcation.config import SECRET_KEY
-from authenitcation.security import login_required, login_required_admin, generate_token, verify_token
+from authenitcation.security import generate_token, verify_token
 from authenitcation.db import Authenticator
 
 """
@@ -106,7 +104,6 @@ def validation():
 
 
 @app.route('/upload', methods=['POST'])
-@login_required_admin
 def upload():
     def allowed_file(f):
         return '.' in f and f.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -127,9 +124,9 @@ def upload():
 
 
 @app.route('/message', methods=['POST'])
-@login_required
 def message():
     message = request.json.get('inputValue', None)
+    username = request.json.get('username', None)
     id = request.json.get('id', None)
 
     query_result = query_module.query(message)

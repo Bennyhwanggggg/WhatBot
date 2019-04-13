@@ -3,12 +3,13 @@ import { SIGN_IN, SIGN_OUT, IS_SIGNED_IN, MESSAGE_SENT, MESSAGE_RECIEVED, MESSAG
 import uuid from 'uuid';
 import history from '../history';
 
-export const sendMessage = message => async dispatch => {
+export const sendMessage = (message, username) => async dispatch => {
     const id = uuid.v4();
     dispatch({type: MESSAGE_SENT, payload: message, id: id}); 
     const loading = {message: 'loading'}
     dispatch({type: MESSAGE_LOADING, payload: loading, id: id});
-    const response = await backend.post('/message', message, id);
+    message = {...message, username: username}
+    const response = await backend.post('/message', message);
     dispatch({type: MESSAGE_RECIEVED, payload: response.data, id: id});
 }
 
