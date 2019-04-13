@@ -2,8 +2,9 @@ import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import { getBarchartData, get3DData, getPiechartData, getTimelineData } from '../actions';
 import { connect } from 'react-redux'
-import './stylesheets/Dashboard.css';
 import uuid from 'uuid';
+import './stylesheets/Dashboard.css';
+import 'echarts-gl/dist/echarts-gl';
 
 class Dashboard extends React.Component {
 
@@ -28,7 +29,7 @@ class Dashboard extends React.Component {
                     <div className="chart" key={uuid.v4()}>
                         <ReactEcharts
                             option={chart}
-                            style={{height: '500px', width: '100%'}}
+                            style={{height: '700px', width: '100%'}}
                         />
                     </div>
                 )
