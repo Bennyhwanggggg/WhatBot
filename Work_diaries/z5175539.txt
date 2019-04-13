@@ -34,3 +34,10 @@ Week 7
 Worked on management module's automation pipeline by setting up AWS S3 for file storage. Updated database
 code to access AWS S3 files. Also worked on documentation for automation pipline to describe its features
 and how it is different from Dialogflow console. 
+
+Week 8
+This week I worked on finishing the automation pipline in management module by integrating it with main
+backend code and linking it to the frontend. I also worked on the dashboard's frontend and some of the
+backend data analytic code. Also finished authentication for both frontend and backend by setting up
+the redux store and navigation. Also updated the API requests to send usernames to help backend identify
+which user is using the API so that some API like WAM query can perform it's features.
