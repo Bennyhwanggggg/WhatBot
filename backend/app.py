@@ -299,9 +299,9 @@ def three_dimention_chart():
         "dataset": {
             "dimensions": [
                 'Income',
-                'Life Expectancy',
+                'Time',
                 'Population',
-                'Country',
+                'Intent',
                 {"name": 'Year', "type": 'ordinal'}
             ],
             "source": data
