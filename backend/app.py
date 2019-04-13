@@ -14,7 +14,7 @@ from conf.Error import UploadFileError, AuthenticationError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
 from authenitcation.config import SECRET_KEY
-from authenitcation.security import login_required, login_required_admin, generate_token
+from authenitcation.security import login_required, login_required_admin, generate_token, verify_token
 from authenitcation.db import Authenticator
 
 """
@@ -60,6 +60,17 @@ CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max size
 ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
 
+
+@app.after_request
+def after_request(resp):
+    resp.headers["Access-Control-Allow-Origin"] = '*'
+    request_headers = request.headers.get("Access-Control-Request-Headers")
+    print(request_headers)
+    resp.headers["Access-Control-Allow-Headers"] = request_headers
+    resp.headers['Access-Control-Allow-Methods'] = "DELETE, GET, POST, HEAD, OPTIONS"
+    return resp
+
+
 """
     Path setup
 """
@@ -76,9 +87,21 @@ def login():
     if not username or not password:
         return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
     if authenticator.check_is_admin(username, password):
-        return jsonify(token=generate_token('admin'), id=username, accessLevel='admin'), 200
+        return jsonify(token=generate_token('admin'), id=username, authority='admin'), 200
     if authenticator.check_is_student(username, password):
-        return jsonify(token=generate_token('student'), id=username, accessLevel='student'), 200
+        return jsonify(token=generate_token('student'), id=username, authority='student'), 200
+    return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+
+
+@app.route('/validation', methods=['POST'])
+def validation():
+    token = request.headers.get('authorization', None)
+    if not token:
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    verified = verify_token(token)
+    if not verified:
+        return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    print(verified)
     return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
 
 
