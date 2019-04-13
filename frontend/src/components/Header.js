@@ -10,17 +10,19 @@ const Header = () => {
             </Link>
         </div>
         <div className="item">
-          <Link to="/upload">
-            Upload training data
-          </Link>
+            <Link to="/upload">
+                Upload training data
+            </Link>
         </div>
         <div className="item">
-          <Link to="/dashboard">
-            Dashboard
-          </Link>
+            <Link to="/dashboard">
+                Dashboard
+            </Link>
         </div>
         <div className="right item">
-            Login
+            <Link to="/login">
+                Login
+            </Link>
         </div>
       </div>
     );

@@ -11,10 +11,18 @@ export const sendMessage = message => async dispatch => {
     dispatch({type: MESSAGE_RECIEVED, payload: response.data, id: id});
 }
 
-export const signIn = userId => {
+export const signIn = (username, password) => async dispatch => {
+    const response = await backend.post('/login', username, password);
+    if (response.status != 200) {
+        // TODO: notify user wrong username and password
+        return {
+            type: SIGN_OUT
+        }
+    } 
+    window.localStorage.setItem('token', response.data.token)
     return {
       type: SIGN_IN,
-      payload: userId
+      payload: response.data
     }
 }
 

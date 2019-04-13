@@ -1,51 +1,62 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from './Header';
 import ChatRoom from './ChatRoom';
 import Upload from './Upload';
 import Dashboard from './Dashboard';
 import TrainUsageInfo from './TrainUsageInfo';
 import history from '../history';
+import Auth from './Auth';
 import './App.css';
 
 
 class App extends React.Component {
-  state = {
-    messages: [],
-    member: {
-      username: "You",
-      color: "#fb7f0a"
+    state = {
+        messages: [],
+        member: {
+            username: "You",
+            color: "#fb7f0a"
+        }
     }
-  }
 
-  onSendMessage = (message) => {
-    const messages = this.state.messages;
-    messages.push({
-      text: message,
-      member: this.state.member
-    })
-    this.setState({messages: messages})
-    this.props.sendMessage(message)
-  }
+    onSendMessage = (message) => {
+        const messages = this.state.messages;
+        messages.push({
+            text: message,
+            member: this.state.member
+        })
+        this.setState({messages: messages})
+        this.props.sendMessage(message)
+    }
 
-  render() {
-    // TODO: Add login page to route later
-    return (
-      <div className="App">
-        <Router history={history}>
-          <React.Fragment>
-            <Header/>
-            <Switch>
-              <Route path="/" exact component={ChatRoom} />
-              <Route path="/upload" exact component={Upload} />
-              <Route path="/dashboard" exact component={Dashboard} />
-              <Route path="/info" exact component={TrainUsageInfo} />
-            </Switch>
-          </React.Fragment>
-        </Router>
-      </div>
-    );
-  }
+    render() {
+        return (
+        <div className="App">
+            <Router history={history}>
+            <React.Fragment>
+                <Header/>
+                <Switch>
+                    <Route path="/" exact component={ChatRoom} />
+                    <Route path="/upload" exact component={Upload} />
+                    <Route path="/dashboard" exact component={Dashboard} />
+                    <Route path="/info" exact component={TrainUsageInfo} />
+                    <Route path="/login" exact component={Auth} />
+                </Switch>
+            </React.Fragment>
+            </Router>
+        </div>
+        );
+    }
+}
+
+const mapStateToProps = (dispatch) => {
+    loadUserFromToken = () => {
+        let token = sessionStorage.getItem('token');
+        if(!token || token === '') { //if there is no token, dont bother
+            return;
+    }
+    return { isSignedIn: state.auth.isSignedIn }
 }
 
 export default App;

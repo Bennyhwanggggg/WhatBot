@@ -3,7 +3,6 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer)
-import uuid
 import logging
 import time
 import os
@@ -15,7 +14,8 @@ from conf.Error import UploadFileError
 from conf.Success import UploadFileSuccess
 from conf.Logger import Logger
 from authenitcation.config import SECRET_KEY
-from authenitcation.security import login_required
+from authenitcation.security import login_required, login_required_admin, generate_token
+from authenitcation.db import Authentication
 
 """
     Initialize modules
@@ -46,6 +46,10 @@ database_logger = logging.getLogger('database.DataBaseManager')
 database_logger.setLevel(logging.INFO)
 management_logger = logging.getLogger('management_module.ManagementModule')
 management_logger.setLevel(logging.INFO)
+authentication_db_logger = logging.getLogger('authentication.db')
+authentication_db_logger.setLevel(logging.INFO)
+authentication_security_logger = logging.getLogger('authentication.security')
+authentication_security_logger.setLevel(logging.INFO)
 
 """
     Flask configuration setup
@@ -64,20 +68,21 @@ ENTITY_PATH = os.path.join(PATH, 'query_module/training_data/entities/')
 TEMP_PATH = os.path.join(PATH, 'management_module/temp/')
 
 
-@app.route('/login', methods=["post"])
+@app.route('/login', methods=['POST'])
 def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
     if not username or not password:
         return 404
-    s = Serializer(SECRET_KEY, expires_in=6000)
-    token = s.dumps(username)
-    if username == 'admin' and password == 'admin':  # TODO: search through database and if there is a match, use its type to identify user and use that to generate token
-        return token.decode()
+    if Authentication.check_is_admin(username, password):
+        return generate_token('admin')
+    if Authentication.check_is_student(username, password):
+        return generate_token('student')
     return 404
 
 
-@app.route('/upload', methods=["post"])
+@app.route('/upload', methods=['POST'])
+@login_required_admin
 def upload():
     def allowed_file(f):
         return '.' in f and f.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -98,6 +103,7 @@ def upload():
 
 
 @app.route('/message', methods=['POST'])
+@login_required
 def message():
     message = request.json.get('inputValue', None)
     id = request.json.get('id', None)
