@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { signIn, signOut} from '../actions';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
-class Auth extends React.Component {
+class Login extends React.Component {
 
     onSubmit = () => {
         const username = this.state.username;
@@ -12,6 +12,7 @@ class Auth extends React.Component {
             // TODO: show error 
             return;
         }
+        this.props.signIn(username, password);
     }
 
     onInputUsernameChange = (evt) => {
@@ -72,4 +73,15 @@ class Auth extends React.Component {
     }
 }
 
-export default Auth;
+const mapStateToProps = (state) => {
+    return { 
+        isSignedIn: state.auth.isSignedIn,
+        userId: state.auth.userId,
+        accessLevel: state.auth.accessLevel
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {signIn, signOut}
+)(Login);
