@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.2.1",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "echarts-gl": "^1.1.1",
     "marked": "^0.6.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
@@ -16,6 +19,7 @@
     "redux-form": "^8.1.0",
     "redux-thunk": "^2.3.0",
     "remarkable": "^1.7.1",
+    "semantic-ui-react": "^0.86.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

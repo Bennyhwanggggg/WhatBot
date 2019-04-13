@@ -20,13 +20,20 @@ def test_valid_booking_time():
         test = consultation_manager.round_time(test)
         result = consultation_manager.check_valid_booking_time(test)
         assert expect == result
-    
+
+
 def test_make_booking():
     consultation_manager = ConsultationManager()
-    date = datetime.datetime.today().strftime('%Y-%m-%d')
+    today = datetime.datetime.today()
+    date = today.strftime('%Y-%m-%d')
     day_as_string = consultation_manager.get_the_weekday(date)
+    while day_as_string == 'Saturday' or day_as_string == 'Sunday':
+        today = datetime.datetime.today() + datetime.timedelta(days=2)
+        date = today.strftime('%Y-%m-%d')
+        day_as_string = consultation_manager.get_the_weekday(date)
     inputs = [["COMP9900", "z5111111", "09:00:00", date], ["COMP9900", "z5111111", "09:00:00", date]]
-    expected = ["Your booking is on "+day_as_string+ " "+date, "Sorry this time slot has been booked, please choose another one from following time slots on "+date+": 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00"]
+    expected = ["Your booking is on {} {}".format(day_as_string, date),
+                "Sorry this time slot has been booked, please choose another one from following time slots on {}: 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00".format(date)]
     consultation_manager = ConsultationManager()
     consultation_manager.data_base_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
     consultation_manager.get_time_slots = consultation_manager.data_base_manager.get_time_slots

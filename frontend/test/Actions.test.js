@@ -13,23 +13,23 @@ const mockStore = configureStore(middlewares)
 
 describe('Actions tests', function() {
 
-  it('Send message action test', () => {
-    const initialState = {}
-    const store = mockStore(initialState)
+    it('Send message action test', () => {
+        const initialState = {}
+        const store = mockStore(initialState)
 
-    const fakeServer = sinon.fakeServer.create()
-    fakeServer.respondWith('POST', '/message', 
-                            [200, { "Content-Type": "application/json"},
-                            '{ "type": "MESSAGE_SENT" }'])
+        const fakeServer = sinon.fakeServer.create()
+        fakeServer.respondWith('POST', '/message', 
+                                [200, { "Content-Type": "application/json"},
+                                '{ "type": "MESSAGE_SENT" }'])
 
-    store.dispatch(actions.sendMessage({inputValue: 'Test message 1'})).then(() => {
-      const actions = store.getActions();
-      expect(actions[0].type).to.be.equal(MESSAGE_SENT);
-      expect(actions[1].type).to.be.equal(MESSAGE_RECIEVED);
-    })    
-    
-  });
+        store.dispatch(actions.sendMessage({inputValue: 'Test message 1'})).then(() => {
+        const actions = store.getActions();
+        expect(actions[0].type).to.be.equal(MESSAGE_SENT);
+        expect(actions[1].type).to.be.equal(MESSAGE_RECIEVED);
+        })    
+        
+    });
 
-  chai.use(chaiEnzyme());
+    chai.use(chaiEnzyme());
 
 })

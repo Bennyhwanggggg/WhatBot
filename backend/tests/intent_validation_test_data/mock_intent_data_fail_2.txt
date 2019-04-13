@@ -1,0 +1,4 @@
+display_name all_courses_queries
+message_texts Sure! These are all the courses of CSE!
+intent_types none
+output_context all_courses_queries

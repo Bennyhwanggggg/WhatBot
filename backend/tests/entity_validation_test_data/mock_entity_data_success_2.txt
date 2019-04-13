@@ -1,0 +1,3 @@
+display_name course
+COMP6441
+COMP9814
