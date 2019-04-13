@@ -292,7 +292,7 @@ def barchart():
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-JSON_3D_PATH = os.path.join("filter.json")
+JSON_3D_PATH = os.path.join("filter3.json")
 
 
 @app.route('/dashboard/3dchart', methods=["GET"])
@@ -311,9 +311,8 @@ def three_dimention_chart():
             "dimensions": [
                 'Usage',
                 'Time',
-                'Population',
                 'Intent',
-                {"name": 'Year', "type": 'ordinal'}
+                {"name": 'Intent', "type": 'ordinal'}
             ],
             "source": data
         },
