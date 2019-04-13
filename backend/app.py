@@ -235,14 +235,19 @@ def timeline_chart():
 
 @app.route('/dashboard/barchart', methods=["GET"])
 def barchart():
-    category_data = ["consultation_booking",
-                     "prerequisites_queries",
-                     "indicative_hours_queries",
-                     "course_outline_queries",
-                     "course_location_queries_followup",
-                     "indicative_hours_queries_followup",
-                     "prerequisites_queries_followup",]
-    confidence_data = [0.78, 0.82, 0.85, 0.87, 0.89, 0.90, 0.91]
+    # TODO original data should come from database,
+    #  which should be a list that follow `[[name, confid], ...]`,
+    #  and it should also be ascending sorted by confid
+    original_data = [["consultation_booking", 0.78],
+                     ["prerequisites_queries", 0.82],
+                     ["indicative_hours_queries", 0.85],
+                     ["course_outline_queries", 0.87],
+                     ["course_location_queries_followup", 0.89],
+                     ["indicative_hours_queries_followup", 0.90],
+                     ["prerequisites_queries_followup", 0.91],
+                     ]
+    category_data = [item[0] for item in original_data]
+    confidence_data = [item[1] for item in original_data]
     response_data = {
         "color": ['#3398DB'],
         "tooltip": {
@@ -287,7 +292,7 @@ def barchart():
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-JSON_3D_PATH = os.path.join("3d-table.json")
+JSON_3D_PATH = os.path.join("filter.json")
 
 
 @app.route('/dashboard/3dchart', methods=["GET"])
