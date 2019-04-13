@@ -37,8 +37,6 @@ class App extends React.Component {
     }
 
     render() {
-        const { isSignedIn, userId, accessLevel } = this.props
-        console.log(isSignedIn, userId, accessLevel)
         return (
             <div className="App">
                 <Router history={history}>
@@ -60,7 +58,6 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     const isSignedIn = state.auth.isSignedIn;
     const userId = state.auth.userId;
     const accessLevel = state.auth.accessLevel
