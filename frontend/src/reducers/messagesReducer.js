@@ -1,4 +1,4 @@
-import { MESSAGE_SENT, MESSAGE_RECIEVED, MESSAGE_LOADING } from '../actions/types'
+import { MESSAGE_SENT, MESSAGE_RECIEVED, MESSAGE_LOADING } from '../actions/types';
 import uuid from 'uuid';
 
 const INITIAL_STATE = { messages:[] }

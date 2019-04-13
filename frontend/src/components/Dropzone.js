@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./Dropzone.css";
-import baseline_cloud_upload from "./baseline-cloud_upload-24px.svg";
+import "./stylesheets/Dropzone.css";
+import baseline_cloud_upload from "./images/baseline-cloud_upload-24px.svg";
 
 class Dropzone extends Component {
     constructor(props) {

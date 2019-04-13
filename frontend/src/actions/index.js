@@ -1,5 +1,14 @@
-import backend from '../apis/backend';
-import { SIGN_IN, SIGN_OUT, IS_SIGNED_IN, MESSAGE_SENT, MESSAGE_RECIEVED, MESSAGE_LOADING } from './types';
+import backend from '../apis/backend'
+import { SIGN_IN, 
+         SIGN_OUT, 
+         IS_SIGNED_IN,
+         MESSAGE_SENT, 
+         MESSAGE_RECIEVED, 
+         MESSAGE_LOADING, 
+         INTENT_USAGE_PIECHART_GET, 
+         INTENT_USAGE_TIMELINE_GET, 
+         INTENT_USAGE_3D_GET, 
+         INTENT_AVG_CONFIDENCE_BARCHART_GET } from './types'
 import uuid from 'uuid';
 import history from '../history';
 
@@ -30,7 +39,27 @@ export const signIn = (username, password) => async dispatch => {
             type: SIGN_OUT,
             payload: {errorMessage: 'The username or password you entered is invalid'}
         })
-    } 
+    }
+}
+
+export const getPiechartData = () => async dispatch => {
+    const response = await backend.get('dashboard/piechart');
+    dispatch({type: INTENT_USAGE_PIECHART_GET, payload: response.data})
+}
+
+export const get3DData = () => async dispatch => {
+    const response = await backend.get('dashboard/3dchart');
+    dispatch({type: INTENT_USAGE_3D_GET, payload: response.data})
+}
+
+export const getTimelineData = () => async dispatch => {
+    const response = await backend.get('dashboard/timeline');
+    dispatch({type: INTENT_USAGE_TIMELINE_GET, payload: response.data})
+}
+
+export const getBarchartData = () => async dispatch => {
+    const response = await backend.get('dashboard/barchart');
+    dispatch({type: INTENT_AVG_CONFIDENCE_BARCHART_GET, payload: response.data})
 }
 
 export const signOut = () => dispatch => {

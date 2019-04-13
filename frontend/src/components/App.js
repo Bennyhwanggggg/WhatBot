@@ -9,7 +9,7 @@ import Dashboard from './Dashboard';
 import TrainUsageInfo from './TrainUsageInfo';
 import history from '../history';
 import Login from './Login';
-import './App.css';
+import './stylesheets/App.css';
 
 
 class App extends React.Component {

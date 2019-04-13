@@ -2,6 +2,7 @@ from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
 import os
+from datetime import datetime
 """
     Logger setup
 """
@@ -146,3 +147,29 @@ class ManagementModule:
         :type: list[str]
         """
         return self.data_base_manager.get_list_of_files_from_storage()
+
+    def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.now()):
+        """Collect user data and upload it to database
+
+        :param intent: intent that the user triggered
+        :type: str
+        :param query_text: user's query text
+        :type: str
+        :param confidence: the confidence level from Dialogflow
+        :type: float
+        :return: query execution status
+        :rtype: str
+        """
+        query = "INSERT INTO intent_data(intent, query_text, confidence, timestamp) VALUES (%s, %s, %s, %s)"
+        inputs = (intent, query_text, confidence, timestamp)
+        return self.data_base_manager.execute_query(query, inputs)
+
+    def get_intent_percentages(self):
+        """Retrieve intent usage and calculate their percentage use
+
+        :return: intent usage percentage data
+        :rtype: str or dataframe? TODO: decide return format to see what is based for formatting
+        """
+        query = "SELECT intent FROM intent_data"
+        data = [result[0] for result in self.data_base_manager.execute_query(query)]
+        print(data)  # data is currently list of intents

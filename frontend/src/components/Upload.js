@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Dropzone from './Dropzone';
-import './Upload.css';
+import './stylesheets/Upload.css';
 import Progress from './Progress';
 import history from '../history';
-import baseline_check_circle from "./baseline-check_circle-24px.svg";
-import baseline_delete from "./baseline-delete-24px.svg";
-import information from "./information.svg";
+import backendURL from '../apis/routes';
+import baseline_check_circle from "./images/baseline-check_circle-24px.svg";
+import baseline_delete from "./images/baseline-delete-24px.svg";
+import information from "./images/information.svg";
 
 class Upload extends Component {
     constructor (props) {
@@ -86,10 +87,6 @@ class Upload extends Component {
 
             const formData = new FormData()
             formData.append('file', file, file.name)
-
-            const dev = 'http://localhost:9999';
-            const prod = `https://${process.env.REACT_APP_BACKEND_NAME}.herokuapp.com`
-            const backendURL = process.env.NODE_ENV === 'development' ? dev : prod
 
             req.open('POST', `${backendURL}/upload`)
             req.send(formData)
