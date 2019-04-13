@@ -3,6 +3,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import uuid
+import json
 import logging
 import time
 import os
@@ -270,6 +271,51 @@ def barchart():
                 "type": 'bar',
                 "barWidth": '60%',
                 "data": data
+            }
+        ]
+    }
+    response_data = {
+        "data": response_data
+    }
+    return jsonify(response_data), 200
+
+
+PATH = os.path.dirname(os.path.realpath(__file__))
+JSON_3D_PATH = os.path.join("3d-table.json")
+
+
+@app.route('/dashboard/3dchart', methods=["GET"])
+def three_dimention_chart():
+    with open(JSON_3D_PATH) as f:
+        data = json.load(f)
+    symbol_size = 2.5
+    response_data = {
+        "grid3D": {},
+        "xAxis3D": {
+            "type": 'category'
+        },
+        "yAxis3D": {},
+        "zAxis3D": {},
+        "dataset": {
+            "dimensions": [
+                'Income',
+                'Life Expectancy',
+                'Population',
+                'Country',
+                {"name": 'Year', "type": 'ordinal'}
+            ],
+            "source": data
+        },
+        "series": [
+            {
+                "type": 'scatter3D',
+                "symbolSize": symbol_size,
+                "encode": {
+                    "x": 'Intent',
+                    "y": 'Time',
+                    "z": 'Usage',
+                    "tooltip": [0, 1, 2, 3, 4]
+                }
             }
         ]
     }
