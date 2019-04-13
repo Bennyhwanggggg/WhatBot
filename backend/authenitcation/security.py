@@ -11,9 +11,9 @@ from conf.Logger import Logger
 logger = Logger(__name__).log
 
 
-def generate_token(user_type):
+def generate_token(user_type, user_id):
     s = Serializer(SECRET_KEY, expires_in=TOKEN_EXPIRE_TIME)
-    token = s.dumps(user_type)
+    token = s.dumps({'user_type': user_type, 'user_id': user_id})
     return token.decode()
 
 
@@ -29,7 +29,7 @@ def verify_token(token):
 def authenticate_admin_by_token(token):
     if token is None:
         return False
-    if verify_token(token) == 'admin':
+    if verify_token(token).user_type == 'admin':
         logger.debug('Authentication admin Success')
         return True
     logger.debug('Authentication admin fail')
@@ -39,7 +39,7 @@ def authenticate_admin_by_token(token):
 def authenticate_student_by_token(token):
     if token is None:
         return False
-    if verify_token(token) == 'student':
+    if verify_token(token).user_type == 'student':
         logger.debug('Authentication student Success')
         return True
     logger.debug('Authentication student fail')

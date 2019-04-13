@@ -65,7 +65,6 @@ ALLOWED_EXTENSIONS = set(['txt'])  # We only allow .txt files to be uploaded
 def after_request(resp):
     resp.headers["Access-Control-Allow-Origin"] = '*'
     request_headers = request.headers.get("Access-Control-Request-Headers")
-    print(request_headers)
     resp.headers["Access-Control-Allow-Headers"] = request_headers
     resp.headers['Access-Control-Allow-Methods'] = "DELETE, GET, POST, HEAD, OPTIONS"
     return resp
@@ -87,9 +86,10 @@ def login():
     if not username or not password:
         return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
     if authenticator.check_is_admin(username, password):
-        return jsonify(token=generate_token('admin'), id=username, authority='admin'), 200
+        return jsonify(token=generate_token('admin', username), id=username, authority='admin'), 200
     if authenticator.check_is_student(username, password):
-        return jsonify(token=generate_token('student'), id=username, authority='student'), 200
+        return jsonify(token=generate_token('student', username), id=username, authority='student'), 200
+    logger.info('{}: {} login success'.format(username, password))
     return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
 
 
@@ -101,8 +101,8 @@ def validation():
     verified = verify_token(token)
     if not verified:
         return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
-    print(verified)
-    return jsonify(message=AuthenticationError.INVALID_CREDENTIALS.value), 401
+    logger.info('{}: {} re-authenticated'.format(verified['user_id'], verified['user_type']))
+    return jsonify(token=token, id=verified['user_id'], authority=verified['user_type']), 200
 
 
 @app.route('/upload', methods=['POST'])
