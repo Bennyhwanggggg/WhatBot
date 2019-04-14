@@ -6,13 +6,26 @@ I wanna know all the courses of postgraduate
 I want to know the list of postgraduate courses
 I want to get all the courses of postgraduate
 I want to get all the courses
+I wanna know all the courses available for postgraduate
+I want to see the list of postgraduate courses
+I want to see the list of postgraduate courses at CSE
+I want to get all the courses of postgraduate at CSE
+I want to get all the courses at CSE
 Can I get all postgraduate courses
 Can I know all postgraduate courses
+Can I get all postgraduate courses at CSE
+Can I know all postgraduate courses at CSE?
 Can you show me all courses
 Can you give me all courses
+Can you show me all courses available at CSE?
+Can you give me all courses available at CSE?
 Tell me all the courses
+Tell me all the courses available at CSE
 Give me a list of all courses
-all courses
+Give me a list of all courses at CSE
+All courses in CSE
+All postgrad courses in CSE
+All postgraduate courses in CSE
 Please show me all courses
 Please give me all the courses of postgraduate
 Show me all the courses for CSE postgrad

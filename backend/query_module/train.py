@@ -221,7 +221,7 @@ class QueryModuleTrainer:
                 samples = self.data_map[parse_key](size)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
             data = new_data
-        k = len(data) if len(data) < 2000 else 2000
+        k = len(data)*3 if len(data)*3 < 2000 else 2000
         return random.choices(data, k=k)  # Dialogflow has a limit of 2000 training data
 
     def create_intent(self, display_name, training_data, message_texts,
@@ -258,6 +258,7 @@ class QueryModuleTrainer:
 
         # parse the data with the entites
         training_phrases_parts = self.parse_data(training_data, training_data_entities_parse_keys)
+        logger.debug(len(training_phrases_parts))
 
         # Process training phrases
         for training_phrases_part in training_phrases_parts:
