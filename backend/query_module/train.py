@@ -258,7 +258,7 @@ class QueryModuleTrainer:
 
         # parse the data with the entites
         training_phrases_parts = self.parse_data(training_data, training_data_entities_parse_keys)
-        logger.debug(len(training_phrases_parts))
+        logger.debug('Number of training phrases: {}'.format(len(training_phrases_parts)))
 
         # Process training phrases
         for training_phrases_part in training_phrases_parts:
@@ -509,7 +509,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/all_courses_queries.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/announcement_queries.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                             message_texts=message_texts,
                                             intent_types=intent_types,
