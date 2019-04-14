@@ -1,0 +1,31 @@
+display_name course_timetable_queries
+message_texts $course
+intent_types course_code
+reset_contexts
+What is {course code} timetable?
+What is {course code}'s timetable?
+Tell me about {course code}'s timetable
+Tell me {course code}'s timetable
+Timetable of {course code}
+Course timetable for {course code}
+Timetable for {course code}
+Give me the course timetable of {course code}
+Give me the timetable of {course code}
+Give me {course code}'s timetable
+Give me {course code} timetable
+I want to know {course code}'s timetable
+Show me {course code} timetable
+Show me {course code}'s timetable
+I want to see the timetable for {course code}
+I want to see {course code}'s timetable
+When are the classes for {course code}
+What time are the classes for {course code}
+{course code} timetable
+What time are do classes for {course code} take place
+Timetable for {course code} please
+Timetable for {course code} thanks
+Timetable {course code} thank you
+I want to see the course timetable for {course code}
+Timetable of {course code}
+Timetable of {course code} please
+Timetable of {course code} thanks
