@@ -15,6 +15,10 @@ class Dashboard extends React.Component {
         this.props.getTimelineData();
     }
 
+    state = {
+        currentGraph: this.props.piechart
+    }
+
     generateChart = (chartData) => {
         if (chartData.length === 0) {
             return (
@@ -40,26 +44,26 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="Dashboard">
-                <div class="ui grid dashboard-grid">
-                    <div class="four wide column">
-                        <div class="ui vertical fluid tabular menu vertical-menu">
-                            <a class="active item">
-                                Bio
+                <div className="ui grid dashboard-grid">
+                    <div className="four wide column">
+                        <div className="ui vertical fluid tabular menu vertical-menu">
+                            <a className="active item" onClick={() => this.setState({currentGraph: this.props.piechart})}>
+                                Usage
                             </a>
-                            <a class="item">
-                                Pics
+                            <a className="item" onClick={() => this.setState({currentGraph: this.props.timeline})}>
+                                Activities Timeline
                             </a>
-                            <a class="item">
-                                Companies
+                            <a className="item" onClick={() => this.setState({currentGraph: this.props.threeD})}>
+                                Usage Activity
                             </a>
-                            <a class="item">
-                                Links
+                            <a className="item" onClick={() => this.setState({currentGraph: this.props.barchart})}>
+                                Quality Control
                             </a>
                         </div>
                     </div>
-                    <div class="twelve wide stretched column">
-                        <div class="ui segment">
-                        This is an stretched grid column. This segment will always match the tab height
+                    <div className="twelve wide stretched column">
+                        <div className="ui segment">
+                            {this.generateChart(this.state.currentGraph)}
                         </div>
                     </div>
                 </div>
