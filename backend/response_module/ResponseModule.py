@@ -69,17 +69,20 @@ class ResponseModule:
             return QueryError.UNKNOWN_QUERY_TYPE.value
         return self.query_map[message.intent](message.message)
 
+    def unpack_message(self, message, token=' @@@ '):
+        return message.split(token)
+
     def respond_to_course_outline_queries(self, cid):
-            response = self.data_base_manager.get_course_outline(cid)
-            if not response:
-                return "Sorry, there is no such course"
-            return response[0][0]
+        response = self.data_base_manager.get_course_outline(cid)
+        if not response:
+            return "Sorry, there is no such course"
+        return response[0][0]
 
     def respond_to_course_fee_queries(self, cid):
-            response = self.data_base_manager.get_tuition_fee(cid)
-            if not response:
-                return "Sorry, there is no such course"
-            return "commonwealth student: {}\ndomestic student: {}\ninternational student: {}".format(response[0][0], response[0][1], response[0][2])
+        response = self.data_base_manager.get_tuition_fee(cid)
+        if not response:
+            return "Sorry, there is no such course"
+        return "commonwealth student: {}\ndomestic student: {}\ninternational student: {}".format(response[0][0], response[0][1], response[0][2])
 
     def respond_to_course_location_queries(self, cid):
         response = self.data_base_manager.get_location(cid)
@@ -129,13 +132,15 @@ class ResponseModule:
         answer = "Yes, it is an ADK course" if response[0][3] else "Sorry, it is not an ADK"
         return answer
 
-    def respond_to_course_consultation_booking(self,cid, sid, time, date):
+    def respond_to_course_consultation_booking(self, message):
+        cid, time, date = self.unpack_message(message)
+        sid = 1
         response = self.consultation_manager.consultation_booking_query(cid, sid, time, date)
-        return response
+        return response  # TODO: fix this to sound like human.... @Steve????
 
     def respond_to_course_consultation_cancel(self, cid, sid, time, date):
         response = self.consultation_manager.delete_consultation(cid, sid, time, date)
-        return "{}, you have relase the time slot at {} on {}".format(response, time, date)
+        return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
 
     def respond_to_all_course(self, _):
         response = self.data_base_manager.get_all_courses()
