@@ -108,7 +108,8 @@ class QueryModuleTrainer:
                              'COMP6714', 'COMP6771', 'COMP9153', 'COMP9313', 'COMP9322', 'COmp9417', 'COMP9444',
                              'COMP9517', 'COMP9201', 'COMP9102', 'COMP9315', 'COMP4121', 'COMP9323', 'COMP9318',
                              'COMP6441', 'comp9511', 'ComP9032', 'Comp4418', 'comP6324', 'CoMp9415', 'ComP4141',
-                             'COmP6752', 'ComP9153', 'comP9211', 'comP9319', 'cOMP9336', 'comP6471', 'COMP9243']
+                             'COmP6752', 'ComP9153', 'comP9211', 'comP9319', 'cOMP9336', 'comP6471', 'COMP9243',
+                             'COMP9321', 'comp9900', 'COMP9444', 'COMP5752', 'comp9041', 'comp9331', 'comp9311']
 
     def read_intents_data(self, data_file):
         """ Read intents data from our training data set. Data files should be configured to have
@@ -169,7 +170,7 @@ class QueryModuleTrainer:
         return random.choices(['z{0:0=7d}'.format(random.randint(0, 10000000)) for _ in range(size*200)], k=int(size*200))
 
     def _get_training_course_codes(self, size):
-        return random.choices(self.course_codes, k=int(size*3))
+        return random.choices(self.course_codes, k=int(size*5))
 
     def _set_training_time(self, size):
         def random_date(start, l):

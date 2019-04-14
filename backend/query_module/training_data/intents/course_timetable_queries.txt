@@ -6,21 +6,54 @@ What is {course code} timetable?
 What is {course code}'s timetable?
 Tell me about {course code}'s timetable
 Tell me {course code}'s timetable
+Tell me {course code} timetable
+Tell me about {course code}'s timetable please
+Tell me {course code}'s timetable thanks
+Tell me {course code} timetable please
+Tell me about {course code}'s timetable thanks
+Tell me {course code}'s timetable please
+Tell me {course code} timetable thanks
 Timetable of {course code}
+Timetable {course code}
 Course timetable for {course code}
 Timetable for {course code}
 Give me the course timetable of {course code}
+Give me the course timetable of {course code} please
+Give me the course timetable of {course code} thanks
 Give me the timetable of {course code}
+Give me the timetable of {course code} please
+Give me the timetable of {course code} thanks
 Give me {course code}'s timetable
 Give me {course code} timetable
+Can I have the course timetable of {course code}
+Can I have the course timetable of {course code} please
+Can I have the course timetable of {course code} thanks
+Can I have the timetable of {course code}
+Can I have the timetable of {course code} please
+Can I have the timetable of {course code} thanks
+Can I have {course code}'s timetable
+Can I have {course code} timetable
 I want to know {course code}'s timetable
 Show me {course code} timetable
 Show me {course code}'s timetable
+Show me {course code} timetable please
+Show me {course code}'s timetable thanks
 I want to see the timetable for {course code}
 I want to see {course code}'s timetable
 When are the classes for {course code}
+When are the classes for {course code}?
+When are the classes for {course code} thanks
+When are the classes for {course code} please
+Please tell me when are the classes for {course code}
+Please tell me what time are the classes for {course code}
+Please tell me when are the classes for {course code} thanks
+Please tell me what time are the classes for {course code} please
 What time are the classes for {course code}
+What time are the classes for {course code}?
+What time are the classes for {course code}??
 {course code} timetable
+{course code} timetable please
+{course code} timetable thanks
 What time are do classes for {course code} take place
 Timetable for {course code} please
 Timetable for {course code} thanks
@@ -36,3 +69,13 @@ Please give me the course timetable of {course code}
 Please give me the timetable of {course code}
 Please give me {course code}'s timetable
 Please give me {course code} timetable
+I want to know the timetable for {course code}
+I want to know timetable for {course code}
+I want to know the timetable of {course code}
+I want to find out the timetable for {course code}
+See timetable for {course code}
+I want to see timetable for {course code}
+I want to see {course code} timetable
+I want to see the timetable of {course code}
+I want to see {course code}'s timetable
+Timetable for COMP9321
