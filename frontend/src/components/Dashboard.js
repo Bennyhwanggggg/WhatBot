@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
+        // On Mount, get all the required data for each graph
         this.props.getBarchartData();
         this.props.get3DData();
         this.props.getPiechartData();
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
     }
 
     componentDidUpdate() {
+        // Only do initial update to avoid max depth
         if (this.state.currentGraphName === 'piechart' && this.state.currentGraphData !== this.props.piechart) {
             this.setState({ active: "Usage",
                             currentGraphName: 'piechart',
