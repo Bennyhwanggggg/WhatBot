@@ -1,6 +1,6 @@
 display_name wam_admin_queries
 message_texts $student
-intent_types none
+intent_types student
 reset_contexts
 I want to know the wam of {student}
 I want to get the wam of {student}
