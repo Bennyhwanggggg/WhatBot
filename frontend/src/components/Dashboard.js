@@ -54,7 +54,6 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         const { active } = this.state;
         return (
             <div className="Dashboard">
