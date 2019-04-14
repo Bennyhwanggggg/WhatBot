@@ -76,14 +76,16 @@ class QueryModuleTrainer:
         self.data_map = {
             'course code': self._get_training_course_codes,
             'time': self._set_training_time,
-            'date': self._set_training_date
+            'date': self._set_training_date,
+            'student': self._get_training_students
         }
 
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_entity_map = {
             'none': {'parse_key': []},
             'course_code': {'parse_key': ['course code']},
-            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']}
+            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']},
+            'student': {'parse_key': ['student']},
         }
 
         self.entity_map = {
@@ -97,8 +99,8 @@ class QueryModuleTrainer:
                      'entity_type': '@sys.time',
                      'alias': 'time'},
             'student': {'regex': re.compile(r'z\d{7}'),
-                     'entity_type': '@student',
-                     'alias': 'student'}
+                        'entity_type': '@student',
+                        'alias': 'student'}
         }
 
         self.course_codes = ['COMP9900', 'comp9321', 'COMP9945', 'COMP9101', 'COMP9041', 'COMP9331', 'COMP9311',
@@ -162,6 +164,9 @@ class QueryModuleTrainer:
             return None, [], [], [], [], [], [], [], False
         return display_name, message_texts, intent_types, parent_followup, \
                input_contexts, output_contexts, action, clean_data, reset_context
+
+    def _get_training_students(self, size):
+        return random.choices(['z{0:0=7d}'.format(random.randint(0, 10000000)) for _ in range(size*200)], k=int(size*200))
 
     def _get_training_course_codes(self, size):
         return random.choices(self.course_codes, k=int(size*3))
@@ -502,7 +507,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/all_courses_queries.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/wam_student_queries.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                             message_texts=message_texts,
                                             intent_types=intent_types,

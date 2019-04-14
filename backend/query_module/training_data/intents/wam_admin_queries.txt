@@ -1,0 +1,48 @@
+display_name wam_admin_queries
+message_texts $student
+intent_types student
+reset_contexts
+I want to know the wam of {student}
+I want to get the wam of {student}
+Can I get the wam for {student}
+Can I know the wam for {student}
+Please tell me the wam for {student}
+Show me the wam for {student}
+The wam of {student}
+Give me the wam of {student}
+Give me the grade of {student}
+Give me the {student}'s grade
+Give me the {student}'s WAM
+{student} wam
+{student} grade
+wam of {student}
+{student}'s wam
+{student}'s grade
+wam for {student}
+Show me the result of wam for {student}
+Tell me {student}'s wam
+Tell me {student}'s wam please
+Tell me {student}'s wam thanks
+Tell me {student}'s grade
+Tell me {student}'s grade please
+Tell me {student}'s grade thanks
+Show me {student}'s wam
+Show me {student}'s wam please
+Show me {student}'s wam thanks
+Show me {student}'s grade
+Show me {student}'s grade please
+Show me {student}'s grade thanks
+I want to know {student}'s wam
+I want to know {student}'s grade
+I want to know {student}'s wam please
+Can I get the {student}'s wam
+Can I get the {student}'s grade
+Can I get the {student}'s wam?
+Can I get the {student}'s grade?
+Can I know the {student}'s wam
+Can I know the {student}'s grade
+Can I know the {student}'s wam?
+Can I know the {student}'s grade?
+Please tell me the grade for {student}
+Please tell me the {student} WAM
+Please tell me the {student} grade
