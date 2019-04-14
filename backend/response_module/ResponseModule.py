@@ -3,7 +3,7 @@ from utility_module.ConsultationManager import ConsultationManager
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
 from conf.Logger import Logger
-import re
+import random
 
 """
     Logger setup
@@ -116,12 +116,15 @@ class ResponseModule:
             return "There is no prerequisite for this course, it is 0 level"
         return response[0][0]
 
-    def respond_to_course_school_and_faculty_queries(self, message):  # TODO: finish
+    def respond_to_course_school_and_faculty_queries(self, message):
         cid = message.message
         response = self.data_base_manager.get_faculty(cid)
         if not response:
             return "Sorry, there is no such course"
-        return "The detail for faculty: {}".format(response[0][0])
+        responses = ["This course belongs to {}.".format(response[0][0]),
+                     "This course is run by {}.".format(response[0][0]),
+                     "{} manages this course.".format(response[0][0])]
+        return random.choice(responses)
 
     def respond_to_course_send_outline_queries(self, message):
         cid = message.message
