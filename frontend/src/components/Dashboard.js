@@ -15,6 +15,11 @@ class Dashboard extends React.Component {
         this.props.getTimelineData();
     }
 
+    state = {
+        active: "Usage",
+        currentGraph: this.props.piechart
+    }
+
     generateChart = (chartData) => {
         if (chartData.length === 0) {
             return (
@@ -38,20 +43,30 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        const { active } = this.state;
         return (
             <div className="Dashboard">
-                <div className="ui grid charts">
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.piechart)}
+                <div className="ui grid dashboard-grid">
+                    <div className="three wide column">
+                        <div className="ui vertical fluid tabular menu vertical-menu">
+                            <div className={ active === "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.piechart, active: "Usage"})}>
+                                Usage
+                            </div>
+                            <div className={ active === "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.timeline, active: "Timeline"})}>
+                                Activities Timeline
+                            </div>
+                            <div className={ active === "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.threeD, active: "Activity"})}>
+                                Usage Activity
+                            </div>
+                            <div className={ active === "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.barchart, active: "Quality"})}>
+                                Quality Control
+                            </div>
+                        </div>
                     </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.timeline)}
-                    </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.threeD)}
-                    </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.barchart)}
+                    <div className="thirteen wide stretched column">
+                        <div className="ui segment">
+                            {this.generateChart(this.state.currentGraph)}
+                        </div>
                     </div>
                 </div>
             </div>

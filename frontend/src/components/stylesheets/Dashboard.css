@@ -9,6 +9,14 @@
     padding-top: 35%;
 }
 
+.dashboard-grid {
+    margin: 0 0 0 0 !important;
+}
+
+.vertical-menu {
+    height: 100%;
+}
+
 .grid {
     height: 100%;
 }
