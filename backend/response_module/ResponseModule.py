@@ -45,7 +45,8 @@ class ResponseModule:
             'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code': self.respond_to_course_consultation_booking,
             'consultation_cancel': self.respond_to_course_consultation_cancel,
             'wam_admin_queries': self.respond_to_wam_admin_queries,
-            'wam_student_queries': self.respond_to_wam_student_queries
+            'wam_student_queries': self.respond_to_wam_student_queries,
+            'is_adk_queries': self.respond_to_course_isadk_queries
         }
 
     def respond(self, message):
@@ -119,7 +120,7 @@ class ResponseModule:
         return response[0][0]
 
     def respond_to_course_study_level_queries(self, cid):
-        pass
+        pass  # TODO: finish, if not in database, we say no
 
     def respond_to_course_isadk_queries(self, cid):
         response = self.data_base_manager.get_course(cid)
