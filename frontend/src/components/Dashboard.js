@@ -40,18 +40,27 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="Dashboard">
-                <div className="ui grid charts">
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.piechart)}
+                <div class="ui grid dashboard-grid">
+                    <div class="four wide column">
+                        <div class="ui vertical fluid tabular menu vertical-menu">
+                            <a class="active item">
+                                Bio
+                            </a>
+                            <a class="item">
+                                Pics
+                            </a>
+                            <a class="item">
+                                Companies
+                            </a>
+                            <a class="item">
+                                Links
+                            </a>
+                        </div>
                     </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.timeline)}
-                    </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.threeD)}
-                    </div>
-                    <div className="fifteen wide column">
-                        {this.generateChart(this.props.barchart)}
+                    <div class="twelve wide stretched column">
+                        <div class="ui segment">
+                        This is an stretched grid column. This segment will always match the tab height
+                        </div>
                     </div>
                 </div>
             </div>
