@@ -8,6 +8,12 @@ import 'echarts-gl/dist/echarts-gl';
 
 class Dashboard extends React.Component {
 
+    state = {
+        active: "Usage",
+        currentGraphName: "piechart",
+        currentGraphData: this.props.piechart
+    }
+
     componentDidMount() {
         this.props.getBarchartData();
         this.props.get3DData();
@@ -15,9 +21,12 @@ class Dashboard extends React.Component {
         this.props.getTimelineData();
     }
 
-    state = {
-        active: "Usage",
-        currentGraph: this.props.piechart
+    componentDidUpdate() {
+        if (this.state.currentGraphName === 'piechart' && this.state.currentGraphData !== this.props.piechart) {
+            this.setState({ active: "Usage",
+                            currentGraphName: 'piechart',
+                            currentGraphData: this.props.piechart})
+        }
     }
 
     generateChart = (chartData) => {
@@ -43,29 +52,30 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const { active } = this.state;
         return (
             <div className="Dashboard">
                 <div className="ui grid dashboard-grid">
                     <div className="three wide column">
                         <div className="ui vertical fluid tabular menu vertical-menu">
-                            <div className={ active === "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.piechart, active: "Usage"})}>
+                            <div className={ active === "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraphData: this.props.piechart, currentGraphName: 'piechart', active: "Usage"})}>
                                 Usage
                             </div>
-                            <div className={ active === "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.timeline, active: "Timeline"})}>
+                            <div className={ active === "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraphData: this.props.timeline, currentGraphName: 'timeline', active: "Timeline"})}>
                                 Activities Timeline
                             </div>
-                            <div className={ active === "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.threeD, active: "Activity"})}>
+                            <div className={ active === "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraphData: this.props.threeD, currentGraphName: 'threeD', active: "Activity"})}>
                                 Usage Activity
                             </div>
-                            <div className={ active === "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.barchart, active: "Quality"})}>
+                            <div className={ active === "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraphData: this.props.barchart, currentGraphName: 'barchart', active: "Quality"})}>
                                 Quality Control
                             </div>
                         </div>
                     </div>
                     <div className="thirteen wide stretched column">
                         <div className="ui segment">
-                            {this.generateChart(this.state.currentGraph)}
+                            {this.generateChart(this.state.currentGraphData)}
                         </div>
                     </div>
                 </div>
