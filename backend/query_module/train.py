@@ -76,14 +76,16 @@ class QueryModuleTrainer:
         self.data_map = {
             'course code': self._get_training_course_codes,
             'time': self._set_training_time,
-            'date': self._set_training_date
+            'date': self._set_training_date,
+            'student': self._get_training_students
         }
 
         # the information regarding this map should match what is on DialogFlow setup
         self.intent_entity_map = {
             'none': {'parse_key': []},
             'course_code': {'parse_key': ['course code']},
-            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']}
+            'course_code_and_time_and_date': {'parse_key': ['course code', 'time', 'date']},
+            'student': {'parse_key': ['student']},
         }
 
         self.entity_map = {
@@ -162,6 +164,9 @@ class QueryModuleTrainer:
             return None, [], [], [], [], [], [], [], False
         return display_name, message_texts, intent_types, parent_followup, \
                input_contexts, output_contexts, action, clean_data, reset_context
+
+    def _get_training_students(self, size):
+        return random.choices(['z{0:0=7d}'.format(zid) for zid in range(0, 10000000)], k=int(size*200))
 
     def _get_training_course_codes(self, size):
         return random.choices(self.course_codes, k=int(size*3))
