@@ -141,8 +141,3 @@ class ConsultationManager:
         """
         hour, mins, _ = time.split(":")
         return '{:02d}:00:00'.format(int(hour)+1 ) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
-
-# if __name__ == '__main__':
-#     consultationManager =  ConsultationManager()
-#     s = consultationManager.consultation_booking_query("COMP9318", "z5111111", "10:00:00", "2019-04-14")
-#     print(s)
