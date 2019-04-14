@@ -137,14 +137,10 @@ class ResponseModule:
         response = self.consultation_manager.delete_consultation(cid, sid, time, date)
         return "{}, you have relase the time slot at {} on {}".format(response, time, date)
 
-    def respond_to_all_course(self):
+    def respond_to_all_course(self, _):
         response = self.data_base_manager.get_all_courses()
-        string = 'The list of courses is '
-        for each in response:
-            course = re.findall('\((.*?)\,\)', str(each))[0]
-            result = re.findall('\'(.*?)\'', str(course))[0]
-            string += result + ' '
-        return string
+        courses = [result[0] for result in response]
+        return 'The list of courses is:\n{}'.format('\n'.join(courses))
 
     def respond_to_wam_admin_queries(self):
         pass  # TODO:
