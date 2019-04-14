@@ -47,23 +47,23 @@ class Dashboard extends React.Component {
         return (
             <div className="Dashboard">
                 <div className="ui grid dashboard-grid">
-                    <div className="four wide column">
+                    <div className="three wide column">
                         <div className="ui vertical fluid tabular menu vertical-menu">
-                            <a className={ active == "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.piechart, active: "Usage"})}>
+                            <div className={ active === "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.piechart, active: "Usage"})}>
                                 Usage
-                            </a>
-                            <a className={ active == "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.timeline, active: "Timeline"})}>
+                            </div>
+                            <div className={ active === "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.timeline, active: "Timeline"})}>
                                 Activities Timeline
-                            </a>
-                            <a className={ active == "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.threeD, active: "Activity"})}>
+                            </div>
+                            <div className={ active === "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.threeD, active: "Activity"})}>
                                 Usage Activity
-                            </a>
-                            <a className={ active == "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.barchart, active: "Quality"})}>
+                            </div>
+                            <div className={ active === "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.barchart, active: "Quality"})}>
                                 Quality Control
-                            </a>
+                            </div>
                         </div>
                     </div>
-                    <div className="twelve wide stretched column">
+                    <div className="thirteen wide stretched column">
                         <div className="ui segment">
                             {this.generateChart(this.state.currentGraph)}
                         </div>
