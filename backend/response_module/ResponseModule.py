@@ -21,6 +21,7 @@ class ResponseModule:
         self.data_base_manager = DataBaseManager()
         self.consultation_manager = ConsultationManager()
         self.query_map = {
+            'all_courses_queries': self.respond_to_all_course,
             'course_outline_queries': self.respond_to_course_outline_queries,
             'course_outline_queries_with_followup-user_input_course_code': self.respond_to_course_outline_queries,
             'course_fee_queries': self.respond_to_course_fee_queries,
@@ -41,7 +42,10 @@ class ResponseModule:
             'study_level_queries_with_followup-user_input_course_code': self.respond_to_course_study_level_queries,
             'consultation_booking': self.respond_to_course_consultation_booking,
             'consultation_booking_with_followup-user_input_course_code_with_followup-user_input_time_and_date': self.respond_to_course_consultation_booking,
-            'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code': self.respond_to_course_consultation_booking
+            'consultation_booking_with_followup-user_input_time_and_date_with_followup-user_input_course_code': self.respond_to_course_consultation_booking,
+            'consultation_cancel': self.respond_to_course_consultation_cancel,
+            'wam_admin_queries': self.respond_to_wam_admin_queries,
+            'wam_student_queries': self.respond_to_wam_student_queries
         }
 
     def respond(self, message):
@@ -66,7 +70,6 @@ class ResponseModule:
 
     def respond_to_course_outline_queries(self, cid):
             response = self.data_base_manager.get_course_outline(cid)
-            # TODO: format result
             if not response:
                 return "Sorry, there is no such course"
             return response[0][0]
@@ -75,7 +78,7 @@ class ResponseModule:
             response = self.data_base_manager.get_tuition_fee(cid)
             if not response:
                 return "Sorry, there is no such course"
-            return "commonwealth student: " +response[0][0] + "\ndomestic student: " + response[0][1] + "\ninternational student: " + response[0][2]
+            return "commonwealth student: {}\ndomestic student: {}\ninternational student: {}".format(response[0][0], response[0][1], response[0][2])
 
     def respond_to_course_location_queries(self, cid):
         response = self.data_base_manager.get_location(cid)
@@ -103,11 +106,11 @@ class ResponseModule:
             return "There is no prerequisite for this course, it is 0 level"
         return response[0][0]
 
-    def respond_to_course_school_and_faculty_queries(self, cid):# not finished
+    def respond_to_course_school_and_faculty_queries(self, cid):  # TODO: finish
         response = self.data_base_manager.get_faculty(cid)
         if not response:
             return "Sorry, there is no such course"
-        return "The detail for faculty: " + response[0][0]
+        return "The detail for faculty: {}".format(response[0][0])
 
     def respond_to_course_send_outline_queries(self, cid):
         response = self.data_base_manager.get_pdf_url(cid)
@@ -129,16 +132,21 @@ class ResponseModule:
         response = self.consultation_manager.consultation_booking_query(cid, sid, time, date)
         return response
 
-    def respond_to_course_consultation__cancel(self, cid, sid, time, date):
+    def respond_to_course_consultation_cancel(self, cid, sid, time, date):
         response = self.consultation_manager.delete_consultation(cid, sid, time, date)
-        return response + ", you have relase the time slot at " + time + " on " + date
-
+        return "{}, you have relase the time slot at {} on {}".format(response, time, date)
 
     def respond_to_all_course(self):
         response = self.data_base_manager.get_all_courses()
         string = 'The list of courses is '
         for each in response:
-        	course = re.findall('\((.*?)\,\)', str(each))[0]
-        	result = re.findall('\'(.*?)\'', str(course))[0]
-        	string +=  result + ' '
+            course = re.findall('\((.*?)\,\)', str(each))[0]
+            result = re.findall('\'(.*?)\'', str(course))[0]
+            string += result + ' '
         return string
+
+    def respond_to_wam_admin_queries(self):
+        pass  # TODO:
+
+    def respond_to_wam_student_queries(self):
+        pass  # TODO:
