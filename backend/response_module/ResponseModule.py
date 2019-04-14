@@ -67,42 +67,48 @@ class ResponseModule:
             return message.message
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE.value
-        return self.query_map[message.intent](message.message)
+        return self.query_map[message.intent](message)
 
     def unpack_message(self, message, token=' @@@ '):
         return message.split(token)
 
-    def respond_to_course_outline_queries(self, cid):
+    def respond_to_course_outline_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_course_outline(cid)
         if not response:
             return "Sorry, there is no such course"
         return response[0][0]
 
-    def respond_to_course_fee_queries(self, cid):
+    def respond_to_course_fee_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_tuition_fee(cid)
         if not response:
             return "Sorry, there is no such course"
         return "commonwealth student: {}\ndomestic student: {}\ninternational student: {}".format(response[0][0], response[0][1], response[0][2])
 
-    def respond_to_course_location_queries(self, cid):
+    def respond_to_course_location_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_location(cid)
         if not response:
             return "Sorry, there is no such course"
         return response[0][0]
 
-    def respond_to_course_indicative_hours_queries(self, cid):
+    def respond_to_course_indicative_hours_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_indicative_hours(cid)
         if not response:
             return "Sorry, there is no such course"
         return response[0][0]
 
-    def respond_to_course_offering_term_queries(self, cid):
+    def respond_to_course_offering_term_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_offer_term(cid)
         if not response:
             return "Sorry, there is no such course"
         return response[0][0]
 
-    def respond_to_course_prerequisites_queries(self, cid):
+    def respond_to_course_prerequisites_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_prerequisites(cid)
         if not response:
             return "Sorry, there is no such course"
@@ -110,22 +116,26 @@ class ResponseModule:
             return "There is no prerequisite for this course, it is 0 level"
         return response[0][0]
 
-    def respond_to_course_school_and_faculty_queries(self, cid):  # TODO: finish
+    def respond_to_course_school_and_faculty_queries(self, message):  # TODO: finish
+        cid = message.message
         response = self.data_base_manager.get_faculty(cid)
         if not response:
             return "Sorry, there is no such course"
         return "The detail for faculty: {}".format(response[0][0])
 
-    def respond_to_course_send_outline_queries(self, cid):
+    def respond_to_course_send_outline_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_pdf_url(cid)
         if not response:
             return "Sorry, there is no such course"
         return response[0][0]
 
-    def respond_to_course_study_level_queries(self, cid):
+    def respond_to_course_study_level_queries(self, message):
+        cid = message.message
         pass  # TODO: finish, if not in database, we say no
 
-    def respond_to_course_isadk_queries(self, cid):
+    def respond_to_course_isadk_queries(self, message):
+        cid = message.message
         response = self.data_base_manager.get_course(cid)
         if not response:
             return "Sorry, there is no such course"
@@ -133,12 +143,14 @@ class ResponseModule:
         return answer
 
     def respond_to_course_consultation_booking(self, message):
-        cid, time, date = self.unpack_message(message)
-        sid = 1
+        cid, time, date = self.unpack_message(message.message)
+        sid = message.username
         response = self.consultation_manager.consultation_booking_query(cid, sid, time, date)
         return response  # TODO: fix this to sound like human.... @Steve????
 
-    def respond_to_course_consultation_cancel(self, cid, sid, time, date):
+    def respond_to_course_consultation_cancel(self, message):
+        cid, time, date = self.unpack_message(message.message)
+        sid = message.username
         response = self.consultation_manager.delete_consultation(cid, sid, time, date)
         return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
 
@@ -147,8 +159,10 @@ class ResponseModule:
         courses = [result[0] for result in response]
         return 'The list of courses is:\n{}'.format('\n'.join(courses))
 
-    def respond_to_wam_admin_queries(self):
+    def respond_to_wam_admin_queries(self, message):
+        sid = message.message
         pass  # TODO:
 
-    def respond_to_wam_student_queries(self):
+    def respond_to_wam_student_queries(self, message):
+        sid = message.username
         pass  # TODO:
