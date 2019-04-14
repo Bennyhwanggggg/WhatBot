@@ -1,0 +1,22 @@
+display_name announcement_queries
+message_texts $course
+intent_types course_code
+reset_contexts
+{course code} announcement
+{course code} announcement please
+{course code} announcement thanks
+Get {course code} announcement
+See {course code} announcement
+{course code} latest announcement
+Last {course code} announcement
+Show {course code} announcement
+Show me {course code} announcement
+Show me {course code} latest announcement
+Display {course code} announcement
+Display {course code} latest announcement
+What is {course code}'s announcement?
+What is {course code}'s announcement
+What is {course code} announcement?
+What is {course code}'s latest announcement?
+I want to see {course code}'s announcement
+I want to see {course code}'s latest announcement
