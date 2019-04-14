@@ -29,3 +29,10 @@ I want to see the course timetable for {course code}
 Timetable of {course code}
 Timetable of {course code} please
 Timetable of {course code} thanks
+Display the timetable for {course code}
+Display the timetable for {course code} please
+Display the timetable for {course code} thank you
+Please give me the course timetable of {course code}
+Please give me the timetable of {course code}
+Please give me {course code}'s timetable
+Please give me {course code} timetable
