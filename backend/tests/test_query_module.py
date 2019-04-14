@@ -238,3 +238,18 @@ def test_wam_admin_queries():
         assert result.intent == 'wam_admin_queries'
         assert result.message == 'z1234567'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_wam_student_queries():
+    query_module = QueryModule()
+    test_messages = ['I want to know my grades',
+                     'Tell me about my WAM',
+                     "Tell me about my grades",
+                     'Show me my course results',
+                     'My wam',
+                     'What is my WAM',
+                     'What are my grades right now?']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'wam_student_queries'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
