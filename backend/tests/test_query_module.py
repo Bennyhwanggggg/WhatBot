@@ -272,3 +272,19 @@ def test_course_timetable_queries():
         assert result.intent == 'course_timetable_queries'
         assert result.message.upper() == 'COMP9321'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_announcement_queries():
+    query_module = QueryModule()
+    test_messages = ['COMP9900 announcement',
+                     "COMP9900's announcement",
+                     "Show me COMP9900's announcement",
+                     'Give me COMP9900 announcement',
+                     'announcement for COMP9900',
+                     'What is the latest announcement for COMP9900',
+                     'Give me the announcement for COMP9900 thanks']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'announcement_queries'
+        assert result.message.upper() == 'COMP9900'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded

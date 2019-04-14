@@ -10,11 +10,16 @@ reset_contexts
 {course code}'s announcement thanks
 Get {course code} announcement
 See {course code} announcement
+Get {course code}'s announcement
+See {course code}'s' announcement
 {course code} latest announcement
+{course code}'s' latest announcement
 Last {course code} announcement
 Show {course code} announcement
 Show me {course code} announcement
 Show me {course code} latest announcement
+Show me {course code}'s announcement
+Show me {course code}'s latest announcement
 Display {course code} announcement
 Display {course code} latest announcement
 What is {course code}'s announcement?
@@ -31,3 +36,8 @@ Announcement for {course code} please
 Announcement for {course code} thanks
 Please show me {course code} announcement
 Please show me {course code} latest announcement
+Please show me {course code}'s announcement
+Please show me {course code}'s latest announcement
+What is the latest announcement for COMP9900
+Give me COMP9900 announcement
+Give me the announcement for COMP9900 thanks
