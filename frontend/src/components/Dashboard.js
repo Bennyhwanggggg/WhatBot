@@ -16,6 +16,7 @@ class Dashboard extends React.Component {
     }
 
     state = {
+        active: "Usage",
         currentGraph: this.props.piechart
     }
 
@@ -42,21 +43,22 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        const { active } = this.state;
         return (
             <div className="Dashboard">
                 <div className="ui grid dashboard-grid">
                     <div className="four wide column">
                         <div className="ui vertical fluid tabular menu vertical-menu">
-                            <a className="active item" onClick={() => this.setState({currentGraph: this.props.piechart})}>
+                            <a className={ active == "Usage" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.piechart, active: "Usage"})}>
                                 Usage
                             </a>
-                            <a className="item" onClick={() => this.setState({currentGraph: this.props.timeline})}>
+                            <a className={ active == "Timeline" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.timeline, active: "Timeline"})}>
                                 Activities Timeline
                             </a>
-                            <a className="item" onClick={() => this.setState({currentGraph: this.props.threeD})}>
+                            <a className={ active == "Activity" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.threeD, active: "Activity"})}>
                                 Usage Activity
                             </a>
-                            <a className="item" onClick={() => this.setState({currentGraph: this.props.barchart})}>
+                            <a className={ active == "Quality" ? "active item" : "item" } onClick={() => this.setState({currentGraph: this.props.barchart, active: "Quality"})}>
                                 Quality Control
                             </a>
                         </div>
