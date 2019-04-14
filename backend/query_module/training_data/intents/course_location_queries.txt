@@ -1,6 +1,6 @@
 display_name course_location_queries
 message_texts $course
-intent_types course_location
+intent_types course_code
 reset_contexts
 Where is {course code} offered at?
 Which campus is {course code} going to be in?

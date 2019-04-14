@@ -1,6 +1,6 @@
 display_name course_location_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types course_location
+intent_types course_code
 parent_followup course_location_queries_with_followup
 input_context course_location_queries_with_followup-followup
 reset_contexts

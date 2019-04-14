@@ -1,6 +1,6 @@
 display_name prerequisites_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types prerequisites
+intent_types course_code
 parent_followup prerequisites_queries_with_followup
 input_context prerequisites_queries_with_followup-followup
 reset_contexts

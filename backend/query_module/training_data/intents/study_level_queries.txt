@@ -1,6 +1,6 @@
 display_name study_level_queries
 message_texts $course
-intent_types study_level
+intent_types course_code
 reset_contexts
 Is {course code} for undergraduate?
 is {course code} for postgraduate?

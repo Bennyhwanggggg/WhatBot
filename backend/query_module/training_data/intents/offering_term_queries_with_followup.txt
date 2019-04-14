@@ -1,6 +1,6 @@
 display_name offering_term_queries_with_followup
 message_texts Of course! What is the course code of the course you want to know the offering terms for?
-intent_types offering_term
+intent_types course_code
 output_context offering_term_queries_with_followup-followup
 I want to find out the offering term for a course
 I have a question about offering term
