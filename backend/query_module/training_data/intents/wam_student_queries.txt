@@ -46,6 +46,13 @@ Show me my academic result thanks
 Show me my grades please
 What is my current wam right now?
 What is my current WAM thanks
+What are my grades right now
+What are my grades right now?
+What is my WAM right now?
+What is my WAM
+Can I know my WAM?
+Can I know what my WAM is?
+Can I know what my WAM is right now?
 Tell me my what my WAM is right now
 Tell me my current grades are thanks
 Tell me my current grades thanks
@@ -71,3 +78,9 @@ Tell me about my WAM
 Tell me about my course result
 Tell me about my grades
 Please tell me about my course result
+Show me my course results
+Show my course results
+I want to see my results
+I want to know my course results
+My course results
+I want to know my grades
