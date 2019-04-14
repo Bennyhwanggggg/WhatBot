@@ -170,7 +170,7 @@ class QueryModuleTrainer:
         return random.choices(['z{0:0=7d}'.format(random.randint(0, 10000000)) for _ in range(size*200)], k=int(size*200))
 
     def _get_training_course_codes(self, size):
-        return random.choices(self.course_codes, k=int(size*5))
+        return random.choices(self.course_codes, k=int(size*30))
 
     def _set_training_time(self, size):
         def random_date(start, l):

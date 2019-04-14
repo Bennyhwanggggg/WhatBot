@@ -17,12 +17,25 @@ Timetable of {course code}
 Timetable {course code}
 Course timetable for {course code}
 Timetable for {course code}
+Give me the {course code} course timetable
+Give me the {course code} timetable please
+Give me the {course code} timetable thanks
+Give me the {course code} timetable
+Give me the {course code} timetable please
+Give me the {course code} timetable thanks
 Give me the course timetable of {course code}
 Give me the course timetable of {course code} please
 Give me the course timetable of {course code} thanks
 Give me the timetable of {course code}
 Give me the timetable of {course code} please
 Give me the timetable of {course code} thanks
+Give me the course timetable for {course code}
+Give me the course timetable for {course code} please
+Give me the course timetable for {course code} thanks
+Give me the timetable for {course code}
+Give me the timetable for {course code} please
+Give me the timetable for {course code} thanks
+Give me {course code}'s timetable
 Give me {course code}'s timetable
 Give me {course code} timetable
 Can I have the course timetable of {course code}

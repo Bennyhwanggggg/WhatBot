@@ -260,7 +260,7 @@ def test_wam_student_queries():
 
 def test_course_timetable_queries():
     query_module = QueryModule()
-    test_messages = ['I want to see the COMP9321 timetable',
+    test_messages = ['I want to see COMP9321 timetable',
                      'Timetable for COMP9321',
                      "Tell me COMP9321's timetable",
                      'Show me COMP9321 timetable',
