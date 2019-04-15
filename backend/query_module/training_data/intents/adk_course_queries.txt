@@ -4,12 +4,25 @@ intent_types course_code
 reset_contexts
 Is {course code} a ADK course?
 Tell me {course code} a ADK course or not
+Tell me if {course code} a ADK course or not
 {course code} a ADK course?
 {course code} ADK?
 ADK {course code}
-{course code} for ADK?
+ADK {course code}?
+{course code} is ADK?
 Could you please tell me {course code} a ADK or not
 Could you tell me {course code} a ADK or not please
-ADK for course {course code}
+Could you please tell me if {course code} a ADK or not
+Could you tell me if {course code} a ADK or not please
+Could you please tell me {course code} an ADK
+Could you tell me {course code} an ADK
+Could you please tell me if {course code} an ADK
+Could you tell me if {course code} an ADK
+Could you please tell me {course code} a ADK or not?
+Could you tell me {course code} a ADK or not please?
+Could you please tell me if {course code} a ADK or not?
+Could you tell me if {course code} a ADK or not please?
 I want to know {course code} a ADK course?
 I want to know {course code} a ADK?
+I want to know if {course code} a ADK course?
+I want to know if {course code} a ADK?
