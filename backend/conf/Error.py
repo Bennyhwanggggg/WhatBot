@@ -2,10 +2,11 @@ import enum
 
 
 class QueryError(enum.Enum):
-    UNKNOWN_QUERY_TYPE = 'Unknown query type'
-    NO_DATA = 'Do not have information to answer your question'
+    UNKNOWN_QUERY_TYPE = 'Sorry, I cannot understand your question'
+    NO_DATA = "Sorry, I don't have enough information to answer your question"
     NO_SUCH_COURSE = "Sorry, I don't have the information for this course"
     NOT_AVAILABLE = "Sorry, I cannot do that"
+    NO_STUDENT = "Sorry, I don't have the data for this student"
 
 
 class UploadFileError(enum.Enum):

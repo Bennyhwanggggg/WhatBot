@@ -10,8 +10,8 @@ logger = Logger(__name__).log
 
 
 class ConsultationManager:
-    def __init__(self, data_base_manager=DataBaseManager()):
-        self.data_base_manager = data_base_manager
+    def __init__(self, database_manager=DataBaseManager()):
+        self.database_manager = database_manager
         self.initial_time_slots = ['09:00:00',
                                    '10:00:00',
                                    '11:00:00',
@@ -28,12 +28,12 @@ class ConsultationManager:
             return "Consultation can only be booked between 9:00 to 17:00"
         query = "INSERT INTO consultation(cid, sid, time, date) VALUES (%s, %s, %s, %s)"
         inputs = (cid, sid, time, date)
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
     def delete_consultation(self, cid, sid, time, date):
         query = "DELETE FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         inputs = (cid, sid, time, date)
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
     def next_seven_day(self):
         """Getting the date of 7 days later from current day.
@@ -54,7 +54,7 @@ class ConsultationManager:
         key_part = '%' + date
         query = "DELETE FROM consultation WHERE date < %s"
         inputs = (key_part, )
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
     def get_the_weekday(self,date):
         date_convert = date.split('-')
@@ -85,7 +85,7 @@ class ConsultationManager:
     def get_time_slots(self, cid, date):
         query = "SELECT time from consultation where cid = %s and date = %s"
         inputs = (cid, date)
-        array_book = self.data_base_manager.execute_query(query, inputs)
+        array_book = self.database_manager.execute_query(query, inputs)
         array_book = [e[0] for e in array_book]
         booked = array_book if array_book else []
         return booked

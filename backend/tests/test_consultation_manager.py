@@ -35,9 +35,9 @@ def test_make_booking():
     expected = ["Your booking is on {} {}".format(day_as_string, date),
                 "Sorry this time slot has been booked, please choose another one from following time slots on {}: 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00".format(date)]
     consultation_manager = ConsultationManager()
-    consultation_manager.data_base_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
-    consultation_manager.get_time_slots = consultation_manager.data_base_manager.get_time_slots
-    consultation_manager.add_consultation = consultation_manager.data_base_manager.add_consultation
+    consultation_manager.database_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
+    consultation_manager.get_time_slots = consultation_manager.database_manager.get_time_slots
+    consultation_manager.add_consultation = consultation_manager.database_manager.add_consultation
     test_case = 0
     for cid, sid, time, date in inputs:
         s = consultation_manager.consultation_booking_query(cid, sid, time, date)
