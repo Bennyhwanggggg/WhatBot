@@ -1,5 +1,12 @@
 from database.DataBaseManager import DataBaseManager
+from conf.Logger import Logger
 import pandas as pd
+
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
+
 
 class WamCalculator:
     def __init__(self):
@@ -10,9 +17,8 @@ class WamCalculator:
         :type list of dict
         """
         self.data_base_manager = DataBaseManager()
-        self.data = None
 
-    def add_mark(self, sid, cid, mark):
+    def add_mark(self, sid, cid, mark, credit):
         """Update the mark of a course for a student in the databse
 
         :param sid: student ID
@@ -21,6 +27,8 @@ class WamCalculator:
         :type: str
         :param mark: result of that course
         :type: float
+        :param credit: number of credit for that course
+        :type: int
         :return: database operation result
         :rtype: str
         """
@@ -38,7 +46,6 @@ class WamCalculator:
         inputs = (sid, )
         result = self.data_base_manager.execute_query(query, inputs)
         df = pd.DataFrame(data=result, columns=['sid', 'cid', 'mark', 'credit'])
-        self.data = df
         return df
 
     def calculate_wam(self, sid):
@@ -49,11 +56,10 @@ class WamCalculator:
         :return: result summary string
         :rtype: str
         """
-        if self.data is None:
-            self.get_student_wam(sid)
+        data = self.get_student_wam(sid)
         wam, total_credits = 0, 0
         result_string = ''
-        for index, row in self.data.iterrows():
+        for index, row in data.iterrows():
             course_name, num_of_credits, mark = row['cid'], row['credit'], row['mark']
             result_string += 'Course name: {}\nNumber of credits: {}\nResult: {}\n'.format(course_name,
                                                                                            num_of_credits,
@@ -62,7 +68,7 @@ class WamCalculator:
             total_credits += int(row['credit'])
         wam /= total_credits
         result_string += 'Wam is: {}\nGrade is: {}'.format(round(wam, 1), self.determine_grade(wam))
-        #print(result_string)
+        logger.debug(result_string)
         return result_string
 
     def determine_grade(self, wam):
@@ -76,11 +82,3 @@ class WamCalculator:
         if wam > 50:
             return 'P'
         return 'F'
-
-
-if __name__ == '__main__':
-    wam_finder = WamCalculator()
-    #result = wam_finder.add_mark("z8888888", "COMP9511", "74", "6")
-    #result = wam_finder.get_student_wam("z1234567")
-    result = wam_finder.calculate_wam("z8888888")
-    print(result)
