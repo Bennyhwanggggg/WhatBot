@@ -10,6 +10,8 @@
 from utility_module.WamCalculator import WamCalculator
 from utility_module.ConsultationManager import ConsultationManager
 from utility_module.ClassRoomFinder import ClassRoomFinder
+from utility_module.AnnoucementGetter import AnnouncementsGetter
+from utility_module.CourseTimeTableFinder import CourseTimeTableFinder
 from database.DataBaseManager import DataBaseManager
 
 
@@ -22,16 +24,9 @@ class UtilityModule:
             accessing the database everytime.
         """
         self.data_base_manager = DataBaseManager()
-        self.wam_calculator = WamCalculator(courses=self.get_student_academic_results())
-        self.consultation_manager = ConsultationManager(data_base_manager=self.data_base_manager)
-        self.class_room_finder = ClassRoomFinder()
+        self.wam_calculator = WamCalculator(database_manager=self.data_base_manager)
+        self.consultation_manager = ConsultationManager(database_manager=self.data_base_manager)
+        self.class_room_finder = ClassRoomFinder(database_manager=self.data_base_manager)
+        self.announcement_getter = AnnouncementsGetter(database_manager=self.data_base_manager)
+        self.course_timetable_finder = CourseTimeTableFinder(database_manager=self.data_base_manager)
         self.class_room_finder.get_all_classroom()
-
-    def get_student_academic_results(self):
-        """ Get a list of course name and their result for a student
-
-        :return: course result list
-        :type: [{course_name: string, number_of_credits: int, score: float}, {course_name: string, number_of_credits: int, score: float}]
-        """
-        # TODO: get student courses and results from database
-        pass
