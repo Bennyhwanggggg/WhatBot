@@ -135,6 +135,7 @@ def message():
     query_result = query_module.query(message)
     # use multiprocessing to avoid collecting user data from slowing us down
     thread_executor.submit(management_module.add_intent_data(query_result.intent, message, query_result.confidence))
+    query_result.set_username(username)
     return_message = response_module.respond(query_result)
 
     response = {

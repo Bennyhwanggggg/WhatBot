@@ -21,3 +21,5 @@ School that runs {course code} thanks
 {course code}'s school and faculty
 {course code}'s school
 {course code}'s faculty
+Can you tell me the school and faculty for {course code}?
+Can you tell me the school for {course code}?
