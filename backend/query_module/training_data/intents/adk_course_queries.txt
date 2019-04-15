@@ -1,0 +1,15 @@
+display_name adk_course_queries
+message_texts $course
+intent_types course_code
+reset_contexts
+Is {course code} a ADK course?
+Tell me {course code} a ADK course or not
+{course code} a ADK course?
+{course code} ADK?
+ADK {course code}
+{course code} for ADK?
+Could you please tell me {course code} a ADK or not
+Could you tell me {course code} a ADK or not please
+ADK for course {course code}
+I want to know {course code} a ADK course?
+I want to know {course code} a ADK?
