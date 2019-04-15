@@ -2,7 +2,6 @@ import smtplib
 import config
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from
 
 class sending:
     def __init__(self, subject, msg, cid):
@@ -17,7 +16,7 @@ class sending:
             server.starttls()
             server.login(config.EMAIl_ADDRESS, config.PASSWORD)
             message = MIMEMultipart("alternative")
-            message["Subject"] = self.subject
+            message["Subject"] = "{} of {}".format(self.subject, self.cid)
 
             html = """\
             <html>
