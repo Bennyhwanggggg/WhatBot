@@ -1,5 +1,6 @@
 from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
+from conf.Error import QueryError
 import pandas as pd
 
 """
@@ -57,6 +58,9 @@ class WamCalculator:
         :rtype: str
         """
         data = self.get_student_wam(sid)
+        if data.empty or not data:
+            return QueryError.NO_STUDENT.value
+        logger.debug(data)
         wam, total_credits = 0, 0
         result_string = ''
         for index, row in data.iterrows():
