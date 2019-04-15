@@ -58,7 +58,7 @@ class WamCalculator:
         :rtype: str
         """
         data = self.get_student_wam(sid)
-        if data.empty or not data:
+        if data.empty:
             return QueryError.NO_STUDENT.value
         logger.debug(data)
         wam, total_credits = 0, 0
