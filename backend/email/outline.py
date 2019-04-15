@@ -1,22 +1,28 @@
 import smtplib
-import config
+from email.config import EMAIl_ADDRESS, PASSWORD
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from conf.Logger import Logger
 
-class sending:
-    def __init__(self, subject, msg, cid):
-        self.subject = subject
-        self.msg = msg
-        self.cid = cid
+"""
+    Logger setup
+"""
+logger = Logger(__name__).log
 
-    def outline(self):
+
+class EmailSender:
+    def __init__(self, email_address=EMAIl_ADDRESS, password=PASSWORD):
+        self.email_address = email_address
+        self.password = password
+
+    def send_outline(self, subject, msg, cid, receiver):
         try:
             server = smtplib.SMTP('smtp.gmail.com:587')
             server.ehlo()
             server.starttls()
-            server.login(config.EMAIl_ADDRESS, config.PASSWORD)
+            server.login(self.email_address, self.password)
             message = MIMEMultipart("alternative")
-            message["Subject"] = "{} of {}".format(self.subject, self.cid)
+            message["Subject"] = "{} of {}".format(subject, cid)
 
             html = """\
             <html>
@@ -27,26 +33,13 @@ class sending:
                 </p>
               </body>
             </html>
-            """.format(self.cid, self.msg)
+            """.format(cid, msg)
 
             part1 = MIMEText(html, "html")
             message.attach(part1)
 
-            server.sendmail(config.EMAIl_ADDRESS, config.EMAIl_ADDRESS, message.as_string())
+            server.sendmail(self.email_address, receiver, message.as_string())
             server.quit()
-            print("Success: Email sent!")
-            return "Success: Email sent(:"
-        except:
-            print("Email failed to send")
-            return "Email failed to send:("
-
-
-
-if __name__ == '__main__':
-     subject = "Outline"
-     msg = "https://www.engineering.unsw.edu.au/computer-science-engineering"
-     cid = 'COMP9900'
-     email = sending(subject, msg, cid)
-     email.outline()
-
-
+            logger.info("Success: Email sent to {}!".format(receiver))
+        except Exception as e:
+            logger.error(str(e))
