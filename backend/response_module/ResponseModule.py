@@ -167,9 +167,11 @@ class ResponseModule:
         return 'The list of courses is:\n{}'.format('\n'.join(courses))
 
     def respond_to_wam_admin_queries(self, message):
-        sid = message.username
-
+        sid = message.message
+        response = self.utility_module.wam_calculator.calculate_wam(sid)
+        return response
 
     def respond_to_wam_student_queries(self, message):
         sid = message.username
-        pass  # TODO:
+        response = self.utility_module.wam_calculator.calculate_wam(sid)
+        return response
