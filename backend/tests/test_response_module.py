@@ -26,6 +26,7 @@ def test_respond_to_course_fee():
     assert course_fee == "Commonwealth student: $1170\nDomestic student: $4350\nInternational student: $5730"
 
 
+
 def test_respond_to_course_isadk():
     response_module = ResponseModule()
     course = "comp9900"
@@ -56,6 +57,7 @@ def test_respond_to_course_school_and_faculty():
     message = IntentResponse(intent='school_and_faculty_queries', confidence=1, message=course)
     course_school_and_faculty = response_module.respond_to_course_school_and_faculty_queries(message)
     assert "Faculty of Engineering" in course_school_and_faculty
+
 
 
 def test_respond_to_course_location():
