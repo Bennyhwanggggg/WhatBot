@@ -1,0 +1,35 @@
+display_name consultation_cancelling_with_followup-user_input_course_code_with_followup
+message_texts Sure! Please tell me which date and time you would like to cancel a course consultation for $course.
+intent_types course_code_and_time_and_date
+parent_followup consultation_cancelling_with_followup
+input_context consultation_cancelling_with_followup-followup
+output_context consultation_cancelling_with_followup-user_input_course_code_with_followup-followup
+action consultation_cancelling_with_followup.consultation_cancelling_with_followup-user_course_code_with_followup
+{course code}
+{course code} please
+{course code} thanks
+I want to cancel {course code}
+I want to cancel for {course code}
+I want to cancel consultation for {course code}
+I want to cancel course consultation for {course code}
+cancel {course code}
+cancel for {course code}
+cancel consultation for {course code}
+cancel course consultation for {course code}
+Make cancelling for {course code}
+Make consultation cancelling for {course code}
+Make course consultation cancelling for {course code}
+I want to cancel {course code} please
+I want to cancel for {course code} thanks
+I want to cancel consultation for {course code} please
+I want to cancel course consultation for {course code} please
+cancel {course code} thanks
+cancel for {course code} please
+cancel consultation for {course code} please
+cancel course consultation for {course code} thanks
+Make cancelling for {course code} please
+Make consultation cancelling for {course code} thanks
+Make course consultation cancelling for {course code} please
+Please cancel a consultation for {course code}
+Please cancel for {course code}
+Please cancel a course consultation for {course code}

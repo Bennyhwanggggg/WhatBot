@@ -1,0 +1,27 @@
+display_name consultation_cancelling_with_followup-user_input_course_code_with_followup-user_input_time_and_date
+message_texts #consultation_cancelling_with_followup-user_input_course_code_with_followup-followup.course  @@@ $time @@@ $date
+intent_types course_code_and_time_and_date
+parent_followup consultation_cancelling_with_followup-user_input_course_code_with_followup
+input_context consultation_cancelling_with_followup-user_input_course_code_with_followup-followup
+action consultation_cancelling_with_followup.consultation_cancelling_with_followup-user_course_code_with_followup
+reset_contexts
+I want to cancel on {date} at {time}
+I want to cancel at {time} at {date}
+Cancel on {date} at {time}
+Cancel at {time} on {date}
+{date} {time}
+{time} {date}
+{date} at {time}
+{time} on {date}
+On {date} at {time}
+At {time} on {date}
+I want to cancel a consultation on {date} at {time}
+I want to cancel a consultation at {time} at {date}
+I want to make a cancelling on {date} at {time}
+I want to make a cancelling at {time} at {date}
+Make a cancelling on {date} at {time}
+Make a cancelling at {time} at {date}
+Make a consultation cancelling on {date} at {time}
+Make a consultation cancelling at {time} at {date}
+Cancel consultation on {date} at {time}
+Cancel consultation at {time} on {date}

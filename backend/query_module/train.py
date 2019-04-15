@@ -509,7 +509,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/announcement_queries.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/consultation_cancelling_with_followup-user_input_time_and_date_with_followup-user_input_course_code.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                             message_texts=message_texts,
                                             intent_types=intent_types,

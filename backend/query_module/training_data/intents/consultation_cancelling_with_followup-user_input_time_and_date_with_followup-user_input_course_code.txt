@@ -1,0 +1,29 @@
+display_name consultation_cancelling_with_followup-user_input_time_and_date_with_followup-user_input_course_code
+message_texts $course @@@ #consultation_cancelling_with_followup-user_input_time_and_date_with_followup-followup.time @@@ #consultation_booking_with_followup-user_input_time_and_date_with_followup-followup.date
+intent_types course_code_and_time_and_date
+parent_followup consultation_cancelling_with_followup-user_input_time_and_date_with_followup
+input_context consultation_cancelling_with_followup-user_input_time_and_date_with_followup-followup
+action consultation_cancelling_with_followup.consultation_cancelling_with_followup-user_input_time_and_date_with_followup
+reset_contexts
+{course code}
+{course code} please
+{course code} thanks
+I want cancel for {course code}
+I want to cancel for {course code} thanks
+I want to cancel for {course code} please
+I want cancel consultation for {course code}
+I want to cancel course consultation for {course code} thanks
+I want to cancel course consultation for {course code} please
+Cancel for {course code} please
+Cancel consultation for {course code} please
+Cancel consultation for {course code} thanks
+Cancel course consultation for {course code} please
+Cancel course consultation for {course code} thanks
+Please make an cancelling for {course code}
+Please make an cancelling for {course code} thanks
+Make an cancelling for {course code} thanks
+make an cancelling for {course code} please
+Please make a cancelling for {course code}
+Please make a cancelling for {course code} thanks
+Make a cancelling for {course code} thanks
+make a cancelling for {course code} please
