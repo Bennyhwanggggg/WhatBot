@@ -19,11 +19,13 @@ Cancel consultation for {course code} please
 Cancel consultation for {course code} thanks
 Cancel course consultation for {course code} please
 Cancel course consultation for {course code} thanks
-Please make an cancelling for {course code}
-Please make an cancelling for {course code} thanks
-Make an cancelling for {course code} thanks
-make an cancelling for {course code} please
-Please make a cancelling for {course code}
-Please make a cancelling for {course code} thanks
-Make a cancelling for {course code} thanks
-make a cancelling for {course code} please
+Cancel booking for {course code} please
+Cancel consultation booking for {course code} thanks
+Cancel course consultation booking for {course code} please
+Cancel course consultation booking for {course code} thanks
+Please make a cancellation for {course code}
+Please make a cancellation for {course code} thanks
+Make a cancellation for {course code} thanks
+make a cancellation for {course code} please
+Make a booking cancellation for {course code} thanks
+make a course consultation booking cancellation for {course code} please

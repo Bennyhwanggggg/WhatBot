@@ -17,14 +17,20 @@ On {date} at {time}
 At {time} on {date}
 I want to cancel a consultation on {date} at {time}
 I want to cancel a consultation at {time} at {date}
-I want to make a cancelling on {date} at {time}
-I want to make a cancelling at {time} at {date}
+I want to cancel a booking on {date} at {time}
+I want to cancel a booking at {time} at {date}
+I want to make a cancellation on {date} at {time}
+I want to make a cancellation at {time} at {date}
 Make a cancelling on {date} at {time}
 Make a cancelling at {time} at {date}
-Make a consultation cancelling on {date} at {time}
-Make a consultation cancelling at {time} at {date}
+Make a consultation cancellation on {date} at {time}
+Make a consultation cancellation at {time} at {date}
 Cancel consultation on {date} at {time}
 Cancel consultation at {time} on {date}
+Cancel booking on {date} at {time}
+Cancel consultation booking at {time} on {date}
+Cancel booking at {time} at {date}
+Cancel consultation booking at {date} on {time}
 Cancel for {date} {time}
 Cancel for {time} {date}
 Cancel {time} on {date}

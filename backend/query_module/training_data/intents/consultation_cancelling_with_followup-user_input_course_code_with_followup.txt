@@ -11,25 +11,30 @@ action consultation_cancelling_with_followup.consultation_cancelling_with_follow
 I want to cancel {course code}
 I want to cancel for {course code}
 I want to cancel consultation for {course code}
+I want to cancel the booking for {course code}
 I want to cancel course consultation for {course code}
 cancel {course code}
 cancel for {course code}
 cancel consultation for {course code}
+cancel {course code} consultation
 cancel course consultation for {course code}
-Make cancelling for {course code}
+Make cancellation for {course code}
 Make consultation cancelling for {course code}
 Make course consultation cancelling for {course code}
 I want to cancel {course code} please
 I want to cancel for {course code} thanks
 I want to cancel consultation for {course code} please
 I want to cancel course consultation for {course code} please
+I want to cancel consultation for {course code} thanks
+I want to cancel course consultation for {course code} thanks
 cancel {course code} thanks
 cancel for {course code} please
 cancel consultation for {course code} please
 cancel course consultation for {course code} thanks
-Make cancelling for {course code} please
-Make consultation cancelling for {course code} thanks
-Make course consultation cancelling for {course code} please
-Please cancel a consultation for {course code}
+Make cancellation for {course code} please
+Make consultation cancellation for {course code} thanks
+Make course consultation cancellation for {course code} please
+Please cancel the consultation for {course code}
 Please cancel for {course code}
-Please cancel a course consultation for {course code}
+Please cancel the course consultation for {course code}
+Please cancel the booking for {course code}
