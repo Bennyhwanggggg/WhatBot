@@ -1,6 +1,6 @@
 display_name course_fee_queries
 message_texts $course
-intent_types course_fee
+intent_types course_code
 reset_contexts
 How much does {course code} cost?
 How much does {course code} cost to do?

@@ -1,6 +1,6 @@
 display_name offering_term_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types offering_term
+intent_types course_code
 parent_followup offering_term_queries_with_followup
 input_context offering_term_queries_with_followup-followup
 reset_contexts

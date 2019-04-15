@@ -1,6 +1,6 @@
 display_name send_outline_queries
 message_texts $course
-intent_types send_outline
+intent_types course_code
 reset_contexts
 Send me the course outline for {course code}
 Email me the course outline for {course code}

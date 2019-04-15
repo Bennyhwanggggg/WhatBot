@@ -1,6 +1,6 @@
 display_name prerequisites_queries
 message_texts $course
-intent_types prerequisites
+intent_types course_code
 reset_contexts
 What classes do I need to take before doing {course code}?
 What are the prerequisites for {course code}?

@@ -1,6 +1,6 @@
 display_name study_level_queries_with_followup
 message_texts Sure! What is the course code of the course you would like to find study level for?
-intent_types study_level
+intent_types course_code
 output_context study_level_queries_with_followup-followup
 I want to find out the study level for a course
 I have a question about study level

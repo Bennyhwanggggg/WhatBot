@@ -110,5 +110,9 @@ class QueryModule:
         message = message.replace("'s", '')
         translator = str.maketrans('', '', "#!?()[]{}=+`~$%&*,.'\\|><")
         message = message.translate(translator)
+        message_words = message.split()
+        noise_words = ['the', 'for', 'is']
+        message = [word for word in message_words if word.lower() not in noise_words]
+        message = ' '.join(message)
         logger.debug(message)
         return message
