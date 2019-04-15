@@ -1,6 +1,6 @@
 display_name indicative_hours_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types indicative_hours
+intent_types course_code
 parent_followup indicative_hours_queries_with_followup
 input_context indicative_hours_queries_with_followup-followup
 reset_contexts

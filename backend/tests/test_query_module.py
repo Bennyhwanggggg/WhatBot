@@ -15,7 +15,10 @@ def test_clean_message():
                      '>COMP9900?[<',
                      "...comp9900's",
                      "*comp9900's's",
-                     "COMP9900''s"]
+                     "COMP9900''s",
+                     'the COMP9900',
+                     'For COMP9900',
+                     'The comp9900']
     for test_message in test_messages:
         result = query_module.clean_message(test_message)
         assert result.upper() == 'COMP9900'
@@ -252,4 +255,36 @@ def test_wam_student_queries():
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'wam_student_queries'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_course_timetable_queries():
+    query_module = QueryModule()
+    test_messages = ['I want to see COMP9321 timetable',
+                     'Timetable for COMP9321',
+                     "Tell me COMP9321's timetable",
+                     'Show me COMP9321 timetable',
+                     'COMP9321 timetable',
+                     'When are the classes for COMP9321',
+                     'Give me the timetable for comp9321 thanks']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'course_timetable_queries'
+        assert result.message.upper() == 'COMP9321'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_announcement_queries():
+    query_module = QueryModule()
+    test_messages = ['COMP9900 announcement',
+                     "COMP9900's announcement",
+                     "Show me COMP9900's announcement",
+                     'Give me COMP9900 announcement',
+                     'announcement for COMP9900',
+                     'What is the latest announcement for COMP9900',
+                     'Give me the announcement for COMP9900 thanks']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'announcement_queries'
+        assert result.message.upper() == 'COMP9900'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded

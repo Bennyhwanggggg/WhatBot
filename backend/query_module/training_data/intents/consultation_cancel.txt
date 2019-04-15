@@ -1,11 +1,14 @@
 display_name consultation_cancel
 message_texts $course @@@ $time @@@ $date
-intent_types consultation_cancel
+intent_types course_code_and_time_and_date
 reset_contexts
 May I cancel the booking starts from {time} {date} for {course code}?
 May I cancel the booking starts from {time} {date} for {course code}
 May I cancel the booking starts from {date} {time} for {course code}
 May I cancel the booking starts from {date} {time} for {course code}?
+Cancel book for {course code} on {time} at {date}
+Cancel book for {course code} on {time} {date}
+Cancel book for {course code} on {date} {time}
 Cancel the booking starts from {time} {date} for {course code}
 Cancel the booking starts from {time} {date} for {course code}
 May I cancel an consultation on the time slot on {time} {date} for {course code}?

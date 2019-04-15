@@ -1,6 +1,6 @@
 display_name send_outline_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types send_outline
+intent_types course_code
 parent_followup send_outline_queries_with_followup
 input_context send_outline_queries_with_followup-followup
 reset_contexts

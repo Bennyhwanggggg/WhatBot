@@ -108,7 +108,8 @@ class QueryModuleTrainer:
                              'COMP6714', 'COMP6771', 'COMP9153', 'COMP9313', 'COMP9322', 'COmp9417', 'COMP9444',
                              'COMP9517', 'COMP9201', 'COMP9102', 'COMP9315', 'COMP4121', 'COMP9323', 'COMP9318',
                              'COMP6441', 'comp9511', 'ComP9032', 'Comp4418', 'comP6324', 'CoMp9415', 'ComP4141',
-                             'COmP6752', 'ComP9153', 'comP9211', 'comP9319', 'cOMP9336', 'comP6471', 'COMP9243']
+                             'COmP6752', 'ComP9153', 'comP9211', 'comP9319', 'cOMP9336', 'comP6471', 'COMP9243',
+                             'COMP9321', 'comp9900', 'COMP9444', 'COMP5752', 'comp9041', 'comp9331', 'comp9311']
 
     def read_intents_data(self, data_file):
         """ Read intents data from our training data set. Data files should be configured to have
@@ -169,7 +170,7 @@ class QueryModuleTrainer:
         return random.choices(['z{0:0=7d}'.format(random.randint(0, 10000000)) for _ in range(size*200)], k=int(size*200))
 
     def _get_training_course_codes(self, size):
-        return random.choices(self.course_codes, k=int(size*3))
+        return random.choices(self.course_codes, k=int(size*30))
 
     def _set_training_time(self, size):
         def random_date(start, l):
@@ -220,7 +221,7 @@ class QueryModuleTrainer:
                 samples = self.data_map[parse_key](size)
                 new_data.extend([regex.sub(sample, line) for sample in samples])
             data = new_data
-        k = len(data) if len(data) < 2000 else 2000
+        k = len(data)*3 if len(data)*3 < 2000 else 2000
         return random.choices(data, k=k)  # Dialogflow has a limit of 2000 training data
 
     def create_intent(self, display_name, training_data, message_texts,
@@ -257,6 +258,7 @@ class QueryModuleTrainer:
 
         # parse the data with the entites
         training_phrases_parts = self.parse_data(training_data, training_data_entities_parse_keys)
+        logger.debug('Number of training phrases: {}'.format(len(training_phrases_parts)))
 
         # Process training phrases
         for training_phrases_part in training_phrases_parts:
@@ -507,7 +509,7 @@ if __name__ == '__main__':
         query_module_trainer.retrain_entities()
     else:
         # For development use
-        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/wam_student_queries.txt')
+        display_name, message_texts, intent_types, parent_followup, input_contexts, output_contexts, action, data, reset_contexts = query_module_trainer.read_intents_data('./training_data/intents/announcement_queries.txt')
         query_module_trainer.create_intent(display_name=display_name,
                                             message_texts=message_texts,
                                             intent_types=intent_types,

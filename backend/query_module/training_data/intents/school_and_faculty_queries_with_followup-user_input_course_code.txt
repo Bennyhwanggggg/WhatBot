@@ -1,6 +1,6 @@
 display_name school_and_faculty_queries_with_followup-user_input_course_code
 message_texts $course
-intent_types school_and_faculty
+intent_types course_code
 parent_followup school_and_faculty_queries_with_followup
 input_context school_and_faculty_queries_with_followup-followup
 reset_contexts

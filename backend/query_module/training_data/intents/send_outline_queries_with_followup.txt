@@ -1,6 +1,6 @@
 display_name send_outline_queries_with_followup
 message_texts Sure! What is the course code of the course you want me to send outline for?
-intent_types send_outline
+intent_types course_code
 output_context send_outline_queries_with_followup-followup
 I want to get a course outline for a course
 I want to receive the a course outline
