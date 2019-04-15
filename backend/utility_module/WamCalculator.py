@@ -9,14 +9,14 @@ logger = Logger(__name__).log
 
 
 class WamCalculator:
-    def __init__(self):
+    def __init__(self, database_manager=DataBaseManager()):
         """Initialise the WamCalculator with list of dict of
         [{course_name: string, number_of_credits: int, score: float}]
 
         :param courses: list of courses with their score and number of credits as shown above
         :type list of dict
         """
-        self.data_base_manager = DataBaseManager()
+        self.database_manager = database_manager
 
     def add_mark(self, sid, cid, mark, credit):
         """Update the mark of a course for a student in the databse
@@ -34,17 +34,17 @@ class WamCalculator:
         """
         query = "INSERT INTO wam(sid, cid, mark, credit) VALUES (%s, %s, %s, %s)"
         inputs = (sid, cid, mark, credit, )
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
     def delete_sid(self, sid):
         query = "DELETE FROM wam WHERE sid = %s"
         inputs = (sid, )
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
     def get_student_wam(self, sid):
         query = "SELECT * from wam where sid = %s"
         inputs = (sid, )
-        result = self.data_base_manager.execute_query(query, inputs)
+        result = self.database_manager.execute_query(query, inputs)
         df = pd.DataFrame(data=result, columns=['sid', 'cid', 'mark', 'credit'])
         return df
 
