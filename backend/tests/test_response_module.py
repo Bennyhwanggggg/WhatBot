@@ -48,7 +48,7 @@ def test_respond_to_course_send_outline():
     course = "comp9900"
     message = IntentResponse(intent='send_outline_queries', confidence=1, message=course)
     course_send_outline = response_module.respond_to_course_send_outline_queries(message)
-    assert course_send_outline == "https://itq9q5ny14.execute-api.ap-southeast-2.amazonaws.com/prod/pdf?url=https://www.handbook.unsw.edu.au/postgraduate/courses/2019/COMP9900/"
+    assert course_send_outline == 'The course outline for {} has been sent to {}'.format(course, 'whatbot9900@gmail.com')
 
 
 def test_respond_to_course_school_and_faculty():
@@ -57,7 +57,6 @@ def test_respond_to_course_school_and_faculty():
     message = IntentResponse(intent='school_and_faculty_queries', confidence=1, message=course)
     course_school_and_faculty = response_module.respond_to_course_school_and_faculty_queries(message)
     assert "Faculty of Engineering" in course_school_and_faculty
-
 
 
 def test_respond_to_course_location():
