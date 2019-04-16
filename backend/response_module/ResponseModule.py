@@ -1,5 +1,5 @@
 from database.DataBaseManager import DataBaseManager
-from utility_module.ConsultationManager import ConsultationManager
+from utility_module.UtilityModule import UtilityModule
 from conf.Error import QueryError
 from conf.Response import FallbackResponse
 from conf.Logger import Logger
@@ -19,7 +19,7 @@ class ResponseModule:
             of data retrieval functions. The keys inside query_map have to match an intent name on Dialogflow.
         """
         self.data_base_manager = DataBaseManager()
-        self.consultation_manager = ConsultationManager()
+        self.utility_module = UtilityModule()
         self.query_map = {
             'all_courses_queries': self.respond_to_all_course,
             'course_outline_queries': self.respond_to_course_outline_queries,
@@ -148,7 +148,7 @@ class ResponseModule:
     def respond_to_course_consultation_booking(self, message):
         cid, time, date = self.unpack_message(message.message)
         sid = message.username
-        response = self.consultation_manager.consultation_booking_query(cid, sid, time, date)
+        response = self.utility_module.consultation_manager.consultation_booking_query(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
         return response  # TODO: fix this to sound like human.... @Steve????
@@ -156,7 +156,7 @@ class ResponseModule:
     def respond_to_course_consultation_cancel(self, message):
         cid, time, date = self.unpack_message(message.message)
         sid = message.username
-        response = self.consultation_manager.delete_consultation(cid, sid, time, date)
+        response = self.utility_module.consultation_manager.delete_consultation(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
         return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
@@ -168,8 +168,10 @@ class ResponseModule:
 
     def respond_to_wam_admin_queries(self, message):
         sid = message.message
-        pass  # TODO:
+        response = self.utility_module.wam_calculator.calculate_wam(sid)
+        return response
 
     def respond_to_wam_student_queries(self, message):
         sid = message.username
-        pass  # TODO:
+        response = self.utility_module.wam_calculator.calculate_wam(sid)
+        return response

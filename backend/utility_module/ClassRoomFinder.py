@@ -7,13 +7,13 @@ import pandas as pd
 
 
 class ClassRoomFinder:
-    def __init__(self, data_base_manager=DataBaseManager()):
-        self.data_base_manager = data_base_manager
+    def __init__(self, database_manager=DataBaseManager()):
+        self.database_manager = database_manager
         self.data = None
 
     def get_all_classroom(self):
         query = "SELECT * from classroom"
-        result = self.data_base_manager.execute_query(query)
+        result = self.database_manager.execute_query(query)
         self.data = pd.DataFrame(data=result, columns=['course', 'location'])
         self.data.set_index('course', inplace=True)
 
