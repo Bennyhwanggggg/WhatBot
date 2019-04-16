@@ -1,5 +1,5 @@
 import smtplib
-from email.config import EMAIl_ADDRESS, PASSWORD
+from emailer.config import EMAIl_ADDRESS, PASSWORD
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from conf.Logger import Logger
