@@ -155,6 +155,7 @@ class ResponseModule:
         response = self.utility_module.consultation_manager.consultation_booking_query(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
+        logger.debug(response)
         return response  # TODO: fix this to sound like human.... @Steve????
 
     def respond_to_course_consultation_cancel(self, message):
@@ -179,3 +180,8 @@ class ResponseModule:
         sid = message.username
         response = self.utility_module.wam_calculator.calculate_wam(sid)
         return response
+
+from conf.Response import IntentResponse
+test = IntentResponse(intent=1,confidence=1, message='COMP9900 @@@ 11:11:11 @@@ 2019-04-18')
+response_moduel = ResponseModule()
+response_moduel.respond_to_course_consultation_booking(test)
