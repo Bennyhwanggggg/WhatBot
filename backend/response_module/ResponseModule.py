@@ -138,7 +138,8 @@ class ResponseModule:
 
     def respond_to_course_study_level_queries(self, message):
         cid = message.message
-        pass  # TODO: finish, if not in database, we say no
+        response = self.data_base_manager.get_course(cid)
+        return '{} is a CSE course for postgraduate'.format(cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
         cid = message.message

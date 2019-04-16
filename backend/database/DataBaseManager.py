@@ -224,10 +224,10 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_course(self, cid):
-            key_part = '%' + cid.upper()
-            query = "SELECT * FROM courselist WHERE course_code like %s"
-            inputs = (key_part, )
-            return self.execute_query(query, inputs)
+        key_part = '%' + cid.upper()
+        query = "SELECT * FROM courselist WHERE course_code like %s"
+        inputs = (key_part, )
+        return self.execute_query(query, inputs)
 
     def get_location(self, cid):
         key_part = '%' + cid.upper()
