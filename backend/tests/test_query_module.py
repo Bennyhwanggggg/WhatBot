@@ -290,30 +290,7 @@ def test_announcement_queries():
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
 
-
-# def test_consultation_cancelling_command_1():
-#     query_module = QueryModule()
-#     test_messages = ['May I cancel the time slot starts from 06/09/19 18:13 for COMP9334?',
-#                      'May I cancel the time slot starts from 18:13 on 06/09/19 for COMP9334?',
-#                      'Cancel the time slot starts from 06/09/19 18:13 for COMP9334',
-#                      'Cancel a consultation for COMP9334 on 06/09/19 at 18:13',
-#                      'Make consultation cancel for COMP9334 on 06/09/19 at 18:13',
-#                      'Make a consultation cancel on 06/09/19 at 18:13 for COMP9334',
-#                      'Make a consultation cancel for COMP9334 on 06/09/19 at 18:13',
-#                      'May I cancel the time slot starts from 06/09/2019 18:13 for COMP9334?',
-#                      'Cancel an consultation for COMP9334 on 06/09/2019 at 18:13',
-#                      'May I cancel a consultation for COMP9334 at 06/09/2019 18:13',
-#                      'May I cancel consultation for COMP9334 from 06/09/2019 18:13',
-#                      'May I cancel a consultation for COMP9334 on 06/09/2019 at 18:13',
-#                      'Cancel course consultation for COmp9334 on 06/09/2019 at 18:13']
-#     for test_message in test_messages:
-#         result = query_module.detect_intent_texts(test_message)
-#         assert result.intent == 'consultation_cancel'
-#         assert result.message.upper() == 'COMP9334 @@@ 18:13:00 @@@ 2019-09-06'
-#         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
-
-
-def test_consultation_cancelling_command_2():
+def test_consultation_cancelling_command():
     query_module = QueryModule()
     test_messages = ['Can I cancel a consultation for COMP9334 at 06:45 on 20/05/19?',
                      'Cancel appointment with lecturer in charge for COMP9334 at 20/05/19 06:45',
@@ -324,32 +301,11 @@ def test_consultation_cancelling_command_2():
                      'Can I cancel a consultation for COMP9334 at 06:45 on 20/05/19?',
                      'Cancel course consultation for COMP9334 at 06:45 20/05/19',
                      'Cancel booking for COMP9334 on 06:45 20/05/19',
-                     'Cancel course consultation for COMP9334 at {timie} on 20/05/19']
+                     'Cancel course consultation for COMP9334 at 06:45 on 20/05/19',
+                     'Make a consultation cancel for COMP9334 on 20/05/19 at 06:45',
+                     'I want to cancel a course consultation on 20/05/19 at 06:45 for COMP9334?']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'consultation_cancel'
         assert result.message.upper() == 'COMP9334 @@@ 06:45:00 @@@ 2019-05-20'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
-
-
-# def test_consultation_cancelling_command_3():
-#     query_module = QueryModule()
-#     test_messages = ['I want to cancel a course consultation on 1/11/19 at 06:13 for COMP9334?',
-#                      'May I cancel the time slot starts from 1/11/19 06:13 for COMP9334?',
-#                      'May I cancel the time slot starts from 06:13 on 1/11/19 for COMP9334?',
-#                      'Cancel the time slot starts from 2019/11/1 6:13 for COMP9334',
-#                      'Cancel consultation for COMP9334 on 1/11/2019 at 6:13',
-#                      'Make a consultation cancel for COMP9334 on 1/11/19 at 6:13',
-#                      'Make a consultation cancel on 2019/11/1 at 6:13 for COMP9334',
-#                      'Make consultation cancel for COMP9334 on 1/11/19 at 6:13',
-#                      'May I cancel the time slot starts from 1/11/2019 6:13 for COMP9334?',
-#                      'Cancel an consultation for COMP9334 on 1/11/2019 at 6:13',
-#                      'May I cancel a consultation for COMP9334 at 1/11/2019 6:13',
-#                      'May I cancel consultation for COMP9334 from 1/11/2019 6:13',
-#                      'May I cancel a consultation for COMP9334 on 2019/11/1 at 6:13',
-#                      'Cancel a course consultation for COmp9334 on 1/11/2019 at 6:13']
-#     for test_message in test_messages:
-#         result = query_module.detect_intent_texts(test_message)
-#         assert result.intent == 'consultation_cancel'
-#         assert result.message.upper() == 'COMP9334 @@@ 06:13:00 @@@ 2019-11-01'
-#         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
