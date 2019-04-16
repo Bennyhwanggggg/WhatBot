@@ -28,7 +28,7 @@ class EmailSender:
             <html>
               <body>
                 <p>Hi,<br>
-                   This is outline of {}:<br>
+                   This is course outline of {}:<br>
                    <h3><a href={}>Course Outline</a><h3>
                 </p>
               </body>

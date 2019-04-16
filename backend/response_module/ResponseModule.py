@@ -131,7 +131,10 @@ class ResponseModule:
         response = self.data_base_manager.get_pdf_url(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
-        return response[0][0]
+        url = response[0][0]
+        receiver = 'whatbot9900@gmail.com'
+        self.utility_module.emailer.send_outline('WhatBot: Your course outline information request', url, cid, receiver)
+        return 'The course outline for {} has been sent to {}'.format(cid, receiver)
 
     def respond_to_course_study_level_queries(self, message):
         cid = message.message
