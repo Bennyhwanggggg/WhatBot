@@ -288,3 +288,19 @@ def test_announcement_queries():
         assert result.intent == 'announcement_queries'
         assert result.message.upper() == 'COMP9900'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_adk_queries():
+    query_module = QueryModule()
+    test_messages = ['Could you please tell me COMP9900 a ADK or not',
+                     "ADK COMP9900?",
+                     "COMP9900 ADK?",
+                     'Tell me if COMP9900 a ADK course or not',
+                     'Could you please tell me COMP9900 a ADK or not',
+                     'Could you please tell me if COMP9900 an ADK',
+                     'Could you please tell me if COMP9900 a ADK or not?']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'adk_course_queries'
+        assert result.message.upper() == 'COMP9900'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
