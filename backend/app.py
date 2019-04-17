@@ -207,6 +207,7 @@ def piechart():
 
 @app.route('/dashboard/timeline', methods=["GET"])
 def timeline_chart():
+    original_data, time_slots = management_module.get_intent_timeline()
     original_data = {
         "consultation_booking": [120, 132, 101, 134, 90, 230, 210],
         "prerequisites_queries": [220, 182, 191, 234, 290, 330, 310],
@@ -274,6 +275,7 @@ def timeline_chart():
 
 @app.route('/dashboard/barchart', methods=["GET"])
 def barchart():
+    original_data = management_module.get_avg_confidence()
     # TODO original data should come from database,
     #  which should be a list that follow `[[name, confid], ...]`,
     #  and it should also be ascending sorted by confid

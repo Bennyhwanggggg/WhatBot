@@ -189,6 +189,8 @@ class ManagementModule:
 
         :return: each intent and their usage for last 7 days
         :rtype: defaultdict(list) with intent being the key and the list contains last 7 day usage
+        :return: last 7 day as datetime
+        :rtype: list of datetime
         """
         query = "SELECT intent, timestamp FROM intent_data WHERE timestamp > current_date - interval '7 days'"
         result = self.database_manager.execute_query(query)
@@ -210,8 +212,21 @@ class ManagementModule:
                 if len(timeline_data[intent]) != day_num:
                     timeline_data[intent].append(0)
             day_num += 1
-        return timeline_data
+        return timeline_data, last_seven_days
+
+    def get_avg_confidence(self, n=8):
+        """Get the average confidence level of each intent. Return bottom n
+
+        :param n: top n result to get
+        :type: int
+        :return: Bottom n intents and their average confidence value
+        :rtype: list of tuples of (intent, float)
+        """
+        query = "SELECT intent, AVG(confidence) FROM intent_data GROUP BY intent"
+        result = self.database_manager.execute_query(query)
+        result = sorted(result, key=lambda x: x[1])
+        return result[:n]
 
 
 a = ManagementModule()
-print(a.get_intent_timeline())
+print(a.get_avg_confidence())
