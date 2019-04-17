@@ -34,3 +34,8 @@ This week, I fulfill the ConsultationManager.py and test_consultation_manager.py
 Add consultation functions into ResponseModule.py
 Write the intent of consultation cancelling and booking into intents under query_module
 Train the intent sentences by running train.py
+
+Week 8:
+This week i write the function of viewing the consultation booking history.
+Add the intent for consultation view
+Fulfill the previous modules and connect the backend with frondend.
