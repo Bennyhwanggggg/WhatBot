@@ -148,7 +148,7 @@ def message():
 
 @app.route('/dashboard/piechart', methods=["GET"])
 def piechart():
-    # TODO original_data should come from database
+    original_data = management_module.get_intent_percentages(n=8)
     original_data = {
         "consultation_booking": 335,
         "prerequisites_queries": 310,
