@@ -2,8 +2,8 @@ from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
 import os
-from datetime import datetime
-from collections import Counter
+import datetime
+from collections import Counter, defaultdict
 """
     Logger setup
 """
@@ -149,7 +149,7 @@ class ManagementModule:
         """
         return self.database_manager.get_list_of_files_from_storage()
 
-    def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.now()):
+    def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.datetime.now()):
         """Collect user data and upload it to database
 
         :param intent: intent that the user triggered
@@ -158,6 +158,8 @@ class ManagementModule:
         :type: str
         :param confidence: the confidence level from Dialogflow
         :type: float
+        :param: timestamp: timestamp when the query is entered
+        :type: datetime
         :return: query execution status
         :rtype: str
         """
@@ -182,7 +184,34 @@ class ManagementModule:
         most_common.append(('others', others))
         return most_common
 
+    def get_intent_timeline(self):
+        """Retrieve intent usage against time. Only retrieve the last 7 day.
+
+        :return: each intent and their usage for last 7 days
+        :rtype: defaultdict(list) with intent being the key and the list contains last 7 day usage
+        """
+        query = "SELECT intent, timestamp FROM intent_data WHERE timestamp > current_date - interval '7 days'"
+        result = self.database_manager.execute_query(query)
+        result = [(res[0], res[1].date()) for res in result]
+        intents = set([res[0] for res in result])
+        last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(1, 8)]
+        counts = Counter(result)
+        timeline_data = defaultdict(list)
+        for intent in intents:
+            timeline_data.setdefault(intent, [])
+        day_num = 1
+        for date in reversed(last_seven_days):
+            seen = set()
+            for intent, timestamp in result:
+                if intent not in seen and timestamp == date.date():
+                    timeline_data[intent].append(counts[intent, date.date()])
+                    seen.add(intent)
+            for intent in timeline_data.keys():
+                if len(timeline_data[intent]) != day_num:
+                    timeline_data[intent].append(0)
+            day_num += 1
+        return timeline_data
 
 
 a = ManagementModule()
-print(a.get_intent_percentages())
+print(a.get_intent_timeline())
