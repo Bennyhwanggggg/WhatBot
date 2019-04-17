@@ -265,3 +265,103 @@ def test_consultation_booking_user_input_time_date_first_followup_2():
     assert result.message == 'COMP9020 @@@ 11:00:00 @@@ 2019-09-04'
 
     time.sleep(TIME_BETWEEN_API)
+
+
+def test_consultation_cancelling_user_input_course_code_first_followup_1():
+    query_module = QueryModule()
+
+    test_message = 'I want to cancel a course consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to cancel it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "COMP9334 please"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_course_code_with_followup'
+    assert result.message == 'Sure! Please tell me which date and time you would like to cancel a course consultation for COMP9334.'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "3pm on 2/11/2019 thanks"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
+    assert result.message == 'COMP9334 @@@ 15:00:00 @@@ 2019-11-02'
+
+    time.sleep(TIME_BETWEEN_API)
+
+
+def test_consultation_cancelling_user_input_course_code_first_followup_2():
+    query_module = QueryModule()
+
+    test_message = 'Cancel a course consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to cancel it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "COMP9101"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_course_code_with_followup'
+    assert result.message == 'Sure! Please tell me which date and time you would like to cancel a course consultation for COMP9101.'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "3:30pm on 2/11/2019"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_course_code_with_followup-user_input_time_and_date'
+    assert result.message == 'COMP9101 @@@ 15:30:00 @@@ 2019-11-02'
+
+    time.sleep(TIME_BETWEEN_API)
+
+
+def test_consultation_cancelling_user_input_time_date_first_followup_1():
+    query_module = QueryModule()
+
+    test_message = 'Cancel a consultation'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to cancel it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "Cancel 10:15 on 2/3/2019"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_time_and_date_with_followup'
+    assert result.message == 'Sure! Please tell me the course code of the course you want to cancel consultation for?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "COMP9336"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
+    assert result.message == 'COMP9336 @@@ 10:15:00 @@@ 2019-03-02'
+
+    time.sleep(TIME_BETWEEN_API)
+
+
+def test_consultation_cancelling_user_input_time_date_first_followup_2():
+    query_module = QueryModule()
+
+    test_message = 'Please cancel a course consultation for me'
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup'
+    assert result.message == 'Sure! What is the course code of the course you would like to cancel it for? Also, what time and date?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "Cancel the booking at 11am on 04/09/19"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_time_and_date_with_followup'
+    assert result.message == 'Sure! Please tell me the course code of the course you want to cancel consultation for?'
+
+    time.sleep(TIME_BETWEEN_CONTEXT)
+
+    test_message = "COMP9020"
+    result = query_module.detect_intent_texts(test_message)
+    assert result.intent == 'consultation_cancelling_with_followup-user_input_time_and_date_with_followup-user_input_course_code'
+    assert result.message == 'COMP9020 @@@ 11:00:00 @@@ 2019-09-04'
+
+    time.sleep(TIME_BETWEEN_API)
