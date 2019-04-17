@@ -176,7 +176,8 @@ class ManagementModule:
         :rtype: list of tuples of (intent, value)
         """
         query = "SELECT intent FROM intent_data"
-        data = [result[0] for result in self.database_manager.execute_query(query)]
+        query_result = self.database_manager.execute_query(query)
+        data = [res[0] for res in query_result]
         result = Counter(data)
         total_queries = sum(result.values())
         most_common = result.most_common(n)
@@ -225,5 +226,5 @@ class ManagementModule:
         query = "SELECT intent, AVG(confidence) FROM intent_data GROUP BY intent"
         result = self.database_manager.execute_query(query)
         result = sorted(result, key=lambda x: x[1])
+        result = [(res[0], float(res[1])) for res in result]
         return result[:n]
-

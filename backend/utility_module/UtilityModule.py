@@ -16,14 +16,14 @@ from database.DataBaseManager import DataBaseManager
 
 
 class UtilityModule:
-    def __init__(self):
+    def __init__(self, database_manager=DataBaseManager()):
         """
             Initialise the UtilityModule class. This uses a single data base manager instance to manage
             all database connection related work. Upon initialisation, we preload data that are often fix
             like class room location information and student marks into memory so we don't need to keep
             accessing the database everytime.
         """
-        self.data_base_manager = DataBaseManager()
+        self.data_base_manager = database_manager
         self.wam_calculator = WamCalculator(database_manager=self.data_base_manager)
         self.consultation_manager = ConsultationManager(database_manager=self.data_base_manager)
         self.class_room_finder = ClassRoomFinder(database_manager=self.data_base_manager)
