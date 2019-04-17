@@ -33,5 +33,5 @@ add database functions for time tables and anncouncement.
 Finish consultation with Benny and Steve.
 
 Week8:
-fix the bug for UI, adding get all courses function, adding more training for cancelling consultation
-adding email module
+fix the bug for UI, adding get all courses function, adding more training for cancelling consultation and adk courses
+adding email module with sending outline, booking confirmation and cancelling confirmation
