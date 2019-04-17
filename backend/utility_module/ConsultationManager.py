@@ -100,13 +100,14 @@ class ConsultationManager:
 
     def consultation_booking_query(self, cid, sid, time, date):
         is_weekday, feedback = self.check_weekday(date)
+        time = self.round_time(time)
         if is_weekday:
             try:
                 avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list
                 logger.debug(avail_list)
                 if time in avail_list:
                     result = self.add_consultation(cid, sid, time, date)  # add into database
-                    return "{} {}".format(result, feedback)
+                    return "{}".format(feedback)
                 else:
                     if not avail_list:
                         return "Sorry, there is no available time slot on date"
@@ -119,6 +120,11 @@ class ConsultationManager:
         else:
             logger.debug(feedback)
             return feedback
+
+    def view_my_consultation(self, sid):
+        query = "Select cid, time, date FROM consultation WHERE sid = %s "
+        inputs = (sid, )
+        return self.database_manager.execute_query(query, inputs)
 
     def check_valid_booking_time(self, time):
         """ Check if a valid booking time. Time should be in 24 hour format of hh:mm:ss
@@ -141,3 +147,4 @@ class ConsultationManager:
         """
         hour, mins, _ = time.split(":")
         return '{:02d}:00:00'.format(int(hour)+1 ) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
+

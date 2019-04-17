@@ -1,5 +1,5 @@
 import smtplib
-from config import EMAIl_ADDRESS, PASSWORD
+from emailer.config import EMAIl_ADDRESS, PASSWORD
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from conf.Logger import Logger
@@ -28,7 +28,7 @@ class EmailSender:
             <html>
               <body>
                 <p>Hi,<br>
-                   This is outline of {}:<br>
+                   This is course outline of {}:<br>
                    <h3><a href={}>Course Outline</a><h3>
                 </p>
               </body>

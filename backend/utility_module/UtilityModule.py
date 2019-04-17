@@ -13,6 +13,7 @@ from utility_module.ClassRoomFinder import ClassRoomFinder
 from utility_module.AnnoucementGetter import AnnouncementsGetter
 from utility_module.CourseTimeTableFinder import CourseTimeTableFinder
 from database.DataBaseManager import DataBaseManager
+from emailer.EmailSender import EmailSender
 
 
 class UtilityModule:
@@ -30,3 +31,4 @@ class UtilityModule:
         self.announcement_getter = AnnouncementsGetter(database_manager=self.data_base_manager)
         self.course_timetable_finder = CourseTimeTableFinder(database_manager=self.data_base_manager)
         self.class_room_finder.get_all_classroom()
+        self.emailer = EmailSender()

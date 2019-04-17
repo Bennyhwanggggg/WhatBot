@@ -131,11 +131,15 @@ class ResponseModule:
         response = self.data_base_manager.get_pdf_url(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
-        return response[0][0]
+        url = response[0][0]
+        receiver = 'whatbot9900@gmail.com'
+        self.utility_module.emailer.send_outline('WhatBot: Your course outline information request', url, cid, receiver)
+        return 'The course outline for {} has been sent to {}'.format(cid, receiver)
 
     def respond_to_course_study_level_queries(self, message):
         cid = message.message
-        pass  # TODO: finish, if not in database, we say no
+        response = self.data_base_manager.get_course(cid)
+        return '{} is a CSE course for postgraduate'.format(cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
         cid = message.message
@@ -151,7 +155,8 @@ class ResponseModule:
         response = self.utility_module.consultation_manager.consultation_booking_query(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
-        return response  # TODO: fix this to sound like human.... @Steve????
+        logger.debug(response)
+        return response
 
     def respond_to_course_consultation_cancel(self, message):
         cid, time, date = self.unpack_message(message.message)
@@ -160,6 +165,16 @@ class ResponseModule:
         if not response:
             return QueryError.NOT_AVAILABLE.value
         return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
+
+    def respond_to_course_consultation_view(self, message):
+        sid = message.username
+        response = self.utility_module.consultation_manager.view_my_consultation(sid)
+        if not response:
+            return QueryError.NO_CONSULTATION.value
+        result = "The following are the consultation bookings you have made:\n"
+        for cid, time, date in response:
+            result += "Course id: {}, Time: {}, Date: {}\n".format(cid, time, date)
+        return result
 
     def respond_to_all_course(self, _):
         response = self.data_base_manager.get_all_courses()
