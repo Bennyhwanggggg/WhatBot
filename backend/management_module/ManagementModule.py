@@ -227,6 +227,3 @@ class ManagementModule:
         result = sorted(result, key=lambda x: x[1])
         return result[:n]
 
-
-a = ManagementModule()
-print(a.get_avg_confidence())
