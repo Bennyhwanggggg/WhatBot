@@ -291,6 +291,7 @@ def test_consultation_cancelling_user_input_course_code_first_followup_1():
 
     time.sleep(TIME_BETWEEN_API)
 
+
 def test_consultation_cancelling_user_input_course_code_first_followup_2():
     query_module = QueryModule()
 
@@ -351,7 +352,7 @@ def test_consultation_cancelling_user_input_time_date_first_followup_2():
 
     time.sleep(TIME_BETWEEN_CONTEXT)
 
-    test_message = "Make a cancel at 11am on 04/09/19"
+    test_message = "Cancel the booking at 11am on 04/09/19"
     result = query_module.detect_intent_texts(test_message)
     assert result.intent == 'consultation_cancelling_with_followup-user_input_time_and_date_with_followup'
     assert result.message == 'Sure! Please tell me the course code of the course you want to cancel consultation for?'
