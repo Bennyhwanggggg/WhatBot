@@ -44,8 +44,6 @@ class EmailSender:
         except Exception as e:
             logger.error(str(e))
 
-
-
     def send_confirm_booking(self, cid, receiver, date, time):
         try:
             server = smtplib.SMTP('smtp.gmail.com:587')
@@ -59,7 +57,7 @@ class EmailSender:
             <html>
               <body>
                 <p>Hi,<br>
-                   You have successfully booked at {} {} with {}
+                   You have successfully booked a consultation for {} at {} on {}
                 </p>
               </body>
             </html>
@@ -73,8 +71,6 @@ class EmailSender:
             logger.info("Success: Email sent to {}!".format(receiver))
         except Exception as e:
             logger.error(str(e))
-
-
 
     def send_confirm_cancelling(self, cid, receiver, date, time):
         try:
@@ -89,7 +85,7 @@ class EmailSender:
             <html>
               <body>
                 <p>Hi,<br>
-                   You have successfully cancelled at {} {} with {}
+                   You have successfully cancelled your consultation booking for {} at {} on {}
                 </p>
               </body>
             </html>
@@ -103,8 +99,3 @@ class EmailSender:
             logger.info("Success: Email sent to {}!".format(receiver))
         except Exception as e:
             logger.error(str(e))
-
-
-#if __name__ == '__main__':
-    #EmailSender = EmailSender()
-    #EmailSender.send_confirm_cancelling("COMP9900", "whatbot9900@gmail.com", "20-05-2019", "06:45")
