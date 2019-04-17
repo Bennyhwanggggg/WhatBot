@@ -3,6 +3,7 @@ from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
 import os
 from datetime import datetime
+from collections import Counter
 """
     Logger setup
 """
@@ -17,9 +18,9 @@ ENTITY_PATH = os.path.join(PATH, '../query_module/training_data/entities/')
 
 
 class ManagementModule:
-    def __init__(self):
-        self.data_base_manager = DataBaseManager()
-        self.trainer = QueryModuleTrainer()
+    def __init__(self, database_manager=DataBaseManager(), trainer=QueryModuleTrainer()):
+        self.database_manager = database_manager
+        self.trainer = trainer
 
     def train(self, file_path):
         """Given a file path, check if it is a valid file and whether the file
@@ -54,7 +55,7 @@ class ManagementModule:
         :return: None
         """
         try:
-            self.data_base_manager.upload_file(file, os.path.basename(file))
+            self.database_manager.upload_file(file, os.path.basename(file))
         except Exception as e:
             logger.error(str(e))
             return False
@@ -138,7 +139,7 @@ class ManagementModule:
         :return: content of the file
         :rtype: list[str]
         """
-        return self.data_base_manager.read_file(file)
+        return self.database_manager.read_file(file)
 
     def get_all_storage_content(self):
         """Get list of files in AWS S3 storage
@@ -146,7 +147,7 @@ class ManagementModule:
         :return: list of file names
         :type: list[str]
         """
-        return self.data_base_manager.get_list_of_files_from_storage()
+        return self.database_manager.get_list_of_files_from_storage()
 
     def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.now()):
         """Collect user data and upload it to database
@@ -162,14 +163,26 @@ class ManagementModule:
         """
         query = "INSERT INTO intent_data(intent, query_text, confidence, timestamp) VALUES (%s, %s, %s, %s)"
         inputs = (intent, query_text, confidence, timestamp)
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
-    def get_intent_percentages(self):
+    def get_intent_percentages(self, n=8):
         """Retrieve intent usage and calculate their percentage use
 
+        :param: number of top intents to get
+        :type: int
         :return: intent usage percentage data
-        :rtype: str or dataframe? TODO: decide return format to see what is based for formatting
+        :rtype: list of tuples of (intent, value)
         """
         query = "SELECT intent FROM intent_data"
-        data = [result[0] for result in self.data_base_manager.execute_query(query)]
-        print(data)  # data is currently list of intents
+        data = [result[0] for result in self.database_manager.execute_query(query)]
+        result = Counter(data)
+        total_queries = sum(result.values())
+        most_common = result.most_common(n)
+        others = total_queries - sum(intent[1] for intent in most_common)
+        most_common.append(('others', others))
+        return most_common
+
+
+
+a = ManagementModule()
+print(a.get_intent_percentages())
