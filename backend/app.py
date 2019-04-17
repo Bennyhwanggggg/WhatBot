@@ -139,7 +139,7 @@ def message():
     return_message = response_module.respond(query_result)
 
     response = {
-        'message': return_message,
+        'message': return_message.strip(),
         'timestamp': datetime.now(),
         'id': id
     }
