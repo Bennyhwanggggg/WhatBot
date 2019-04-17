@@ -156,7 +156,7 @@ class ResponseModule:
         if not response:
             return QueryError.NOT_AVAILABLE.value
         logger.debug(response)
-        return response  # TODO: fix this to sound like human.... @Steve????
+        return response
 
     def respond_to_course_consultation_cancel(self, message):
         cid, time, date = self.unpack_message(message.message)
@@ -168,12 +168,12 @@ class ResponseModule:
 
     def respond_to_course_consultation_view(self, message):
         sid = message.username
-        response = self.utility_module.consultation_manager.view_myConsultation(sid)
+        response = self.utility_module.consultation_manager.view_my_consultation(sid)
         if not response:
             return QueryError.NO_CONSULTATION.value
-        result = "Your booking results are as followed: \n"
-        for element in response:
-            result += "Course id: " + element[0] + "  Time: " + element[1] + "  Date: " + element[2] + "\n"
+        result = "The following are the consultation bookings you have made:\n"
+        for cid, time, date in response:
+            result += "Course id: {}, Time: {}, Date: {}\n".format(cid, time, date)
         return result
 
     def respond_to_all_course(self, _):
@@ -190,8 +190,3 @@ class ResponseModule:
         sid = message.username
         response = self.utility_module.wam_calculator.calculate_wam(sid)
         return response
-
-from conf.Response import IntentResponse
-test = IntentResponse(intent=1,confidence=1, message='COMP9900 @@@ 11:11:11 @@@ 2019-04-18')
-response_moduel = ResponseModule()
-response_moduel.respond_to_course_consultation_booking(test)

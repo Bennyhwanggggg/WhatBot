@@ -41,6 +41,5 @@ def test_make_booking():
     test_case = 0
     for cid, sid, time, date in inputs:
         s = consultation_manager.consultation_booking_query(cid, sid, time, date)
-        s = s.lstrip()
         assert s == expected[test_case]
         test_case += 1

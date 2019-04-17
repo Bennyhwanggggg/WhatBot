@@ -107,7 +107,7 @@ class ConsultationManager:
                 logger.debug(avail_list)
                 if time in avail_list:
                     result = self.add_consultation(cid, sid, time, date)  # add into database
-                    return "{} {}".format(result, feedback)
+                    return "{}".format(feedback)
                 else:
                     if not avail_list:
                         return "Sorry, there is no available time slot on date"
@@ -121,7 +121,7 @@ class ConsultationManager:
             logger.debug(feedback)
             return feedback
 
-    def view_myConsultation(self, sid):
+    def view_my_consultation(self, sid):
         query = "Select cid, time, date FROM consultation WHERE sid = %s "
         inputs = (sid, )
         return self.database_manager.execute_query(query, inputs)
