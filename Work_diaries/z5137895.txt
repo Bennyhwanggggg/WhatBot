@@ -38,4 +38,4 @@ Train the intent sentences by running train.py
 Week 8:
 This week i write the function of viewing the consultation booking history.
 Add the intent for consultation view
-Fulfill the previous modules and connect the backend with frondend.
+Fulfill the previous modules and connect the backend with frontend.
