@@ -166,6 +166,16 @@ class ResponseModule:
             return QueryError.NOT_AVAILABLE.value
         return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
 
+    def respond_to_course_consultation_view(self, message):
+        sid = message.username
+        response = self.utility_module.consultation_manager.view_myConsultation(sid)
+        if not response:
+            return QueryError.NO_CONSULTATION.value
+        result = "Your booking results are as followed: \n"
+        for element in response:
+            result += "Course id: " + element[0] + "  Time: " + element[1] + "  Date: " + element[2] + "\n"
+        return result
+
     def respond_to_all_course(self, _):
         response = self.data_base_manager.get_all_courses()
         courses = [result[0] for result in response]

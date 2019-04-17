@@ -7,6 +7,7 @@ class QueryError(enum.Enum):
     NO_SUCH_COURSE = "Sorry, I don't have the information for this course"
     NOT_AVAILABLE = "Sorry, I cannot do that"
     NO_STUDENT = "Sorry, I don't have the data for this student"
+    NO_CONSULTATION = "Sorry, there is no consultation booking"
 
 
 class UploadFileError(enum.Enum):
