@@ -31,9 +31,9 @@ class QueryModule:
             'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE),
                             'capture': re.compile(r'.*(COMP\d{4}).*', re.IGNORECASE)},
             'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*'),
-                     'capture': re.compile(r'.*(\d{1,4}\/\d{1,2}\/\d{1,4}).*')},
-            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d(pm|am).*', re.IGNORECASE),
-                     'capture': re.compile(r'.*(\d{1,2}:\d{1,2}.*|.*\d(pm|am)).*', re.IGNORECASE)},
+                     'capture': re.compile(r'(\d{1,4}\/\d{1,2}\/\d{1,4})')},
+            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d+(pm|am).*', re.IGNORECASE),
+                     'capture': re.compile(r'(\d{1,2}:\d{1,2}.*|\d+(pm|am))', re.IGNORECASE)},
             'student': {'regex': re.compile(r'z\d{7}', re.IGNORECASE),
                         'capture': re.compile(r'(z\d{7})', re.IGNORECASE)}
         }
