@@ -323,3 +323,19 @@ def test_adk_queries():
         assert result.intent == 'adk_course_queries'
         assert result.message.upper() == 'COMP9900'
         time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
+
+
+def test_consultation_view():
+    query_module = QueryModule()
+    test_messages = ['May I check my consultation booking',
+                     'What are my consultation bookings right now?',
+                     'I want to see my list of consultation bookings',
+                     'Show me my consultation booking',
+                     'View my consultation bookings',
+                     'Check my consultation bookings',
+                     'See my consultation bookings',
+                     'Show me my consultation booking history ']
+    for test_message in test_messages:
+        result = query_module.detect_intent_texts(test_message)
+        assert result.intent == 'consultation_view'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
