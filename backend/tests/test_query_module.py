@@ -39,14 +39,14 @@ def test_detect_intent():
                      '11/12/2019, coMp9900 11am']
     for test_message in test_messages:
         result = query_module.detect_entity(test_message)
-        assert result.upper() == 'COMP9900 @@@ 11/12/2019 @@@ 11:00:00'
+        assert result.upper() == 'COMP9900 @@@ 11:00:00 @@@ 2019-12-11'
 
     test_messages = ['I want COMP9321 7/12/2019 11:11am',
                      '07/12/2019 COMP9321 11:11am',
                      '07/12/2019, coMp9321 11:11am?']
     for test_message in test_messages:
         result = query_module.detect_entity(test_message)
-        assert result.upper() == 'COMP9321 @@@ 07/12/2019 @@@ 11:11:00'
+        assert result.upper() == 'COMP9321 @@@ 11:11:00 @@@ 2019-12-07'
 
 
 def test_course_outline_queries():

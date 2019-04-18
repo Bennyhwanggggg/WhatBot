@@ -4,6 +4,8 @@ import re
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
+from dateutil.parser import parse
+import datetime
 
 """
     Logger setup
@@ -30,10 +32,10 @@ class QueryModule:
         self.entity_map = {
             'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE),
                             'capture': re.compile(r'.*(COMP\d{4}).*', re.IGNORECASE)},
-            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*'),
-                     'capture': re.compile(r'(\d{1,4}\/\d{1,2}\/\d{1,4})')},
             'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d+(pm|am).*', re.IGNORECASE),
                      'capture': re.compile(r'(\d{1,2}:\d{1,2}.*|\d+(pm|am))', re.IGNORECASE)},
+            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*'),
+                     'capture': re.compile(r'(\d{1,4}\/\d{1,2}\/\d{1,4})')},
             'student': {'regex': re.compile(r'z\d{7}', re.IGNORECASE),
                         'capture': re.compile(r'(z\d{7})', re.IGNORECASE)}
         }
@@ -125,6 +127,7 @@ class QueryModule:
             if matches:
                 # we only use the first match as we only expect one entity
                 match_result = self.convert_to_24_hours(matches.group(1)) if entity == 'time' else matches.group(1)
+                match_result = self.convert_date_format(match_result) if entity == 'date' else match_result
                 logger.debug('Found entity {} in {}: {}'.format(entity, text, match_result))
                 result.append(match_result)
         return ' @@@ '.join(result)
@@ -142,6 +145,22 @@ class QueryModule:
         message = ' '.join(message)
         logger.debug(message)
         return message
+
+    def convert_date_format(self, date):
+        """Convert all date strings from any format to YY-MM-DD
+
+        :param date: date string to convert
+        :type: str
+        :return: date string in YY-MM-DD format
+        :type: str
+        """
+        try:
+            result = parse(date, dayfirst=True)
+        except ValueError as e:
+            logger.error(e)
+            return date
+        result = result.strftime('%Y-%m-%d')
+        return result
 
     def convert_to_24_hours(self, time):
         """Convert a 12 hour in am or pm format into 24 hour string
