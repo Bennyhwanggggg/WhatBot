@@ -300,7 +300,7 @@ def test_consultation_cancelling_command():
                      'Can I cancel my consultation for COMP9334 at 06:45 on 20/05/2019?',
                      'Cancel course consultation booking for COMP9334 at 06:45 20/05/19',
                      'Cancel booking for COMP9334 on 06:45 20/05/19',
-                     'Cancel course consultation for COMP9334 at 06:45 on 20/05/19',
+                     'Cancel my course consultation for COMP9334 at 06:45 on 20/05/19',
                      'I want to cancel my course consultation booking for COMP9334 on 20/05/19 at 06:45']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
