@@ -124,8 +124,9 @@ class QueryModule:
             matches = self.entity_map[entity]['capture'].search(text)
             if matches:
                 # we only use the first match as we only expect one entity
-                logger.debug('match here: {}'.format(matches.group(1)))
-                result.append(matches.group(1))
+                match_result = self.convert_to_24_hours(matches.group(1)) if entity == 'time' else matches.group(1)
+                logger.debug('Found entity {} in {}: {}'.format(entity, text, match_result))
+                result.append(match_result)
         return ' @@@ '.join(result)
 
     def clean_message(self, message):
@@ -141,3 +142,36 @@ class QueryModule:
         message = ' '.join(message)
         logger.debug(message)
         return message
+
+    def convert_to_24_hours(self, time):
+        """Convert a 12 hour in am or pm format into 24 hour string
+
+        :param time: 12 hour time string
+        :type: str
+        :return: 24 hour time string
+        :rtype: str
+        """
+        if not re.search(r'(am|pm)', time, re.IGNORECASE):
+            logger.error('not time string')
+            return time
+        t = time.strip()
+        time_parts = re.split(r'(am|pm)', t, re.IGNORECASE)
+        if len(time_parts) < 2:
+            logger.error('Time is of invalid format: {}'.format(time))
+            return time
+        t, state = time_parts[:2]
+        t, state = t.strip(), state.strip()
+        # case when user have semicolon in time. e.g 3:15am
+        if ':' not in t:
+            hr, min = int(t), 0
+        else:
+            hr, min = list(map(int, t.split(':')))
+        if state.upper() == 'AM':
+            return '{:02d}:{:02d}:{:02d}'.format(hr, min, 0)
+        elif state.upper == 'PM':
+            hr += 12
+            if hr == 24:
+                hr = 0
+            return '{:02d}:{:02d}:{:02d}'.format(hr, min, 0)
+        else:
+            return time
