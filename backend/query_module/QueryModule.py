@@ -28,10 +28,14 @@ class QueryModule:
         logger.info('Session path: {}\n'.format(self.session))
 
         self.entity_map = {
-            'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE)},
-            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*')},
-            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d(pm|am).*')},
-            'student': {'regex': re.compile(r'z\d{7}')}
+            'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE),
+                            'capture': re.compile(r'.*(COMP\d{4}).*', re.IGNORECASE)},
+            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*'),
+                     'capture': re.compile(r'.*(\d{1,4}\/\d{1,2}\/\d{1,4}).*')},
+            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d(pm|am).*', re.IGNORECASE),
+                     'capture': re.compile(r'.*(\d{1,2}:\d{1,2}.*|.*\d(pm|am)).*', re.IGNORECASE)},
+            'student': {'regex': re.compile(r'z\d{7}', re.IGNORECASE),
+                        'capture': re.compile(r'(z\d{7})', re.IGNORECASE)}
         }
 
     def query(self, text):
@@ -65,10 +69,12 @@ class QueryModule:
 
         missing_parameters = self.detect_missing_parameters(response.query_result.parameters.fields)
         if len(missing_parameters):
-            return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
-                                    message='Sorry, I cannot understand your question. Could you please rephrase your question? '
-                                            'I also need the following information to assist you more efficiently: {}'.format(' '.join(missing_parameters)),
-                                    confidence=response.query_result.intent_detection_confidence)
+            response.query_result.fulfillment_text = self.detect_entity(text)
+            if not response.query_result.fulfillment_text:
+                return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
+                                        message='Sorry, I cannot understand your question. Could you please rephrase your question? '
+                                                'I also need the following information to assist you more efficiently: {}'.format(' '.join(missing_parameters)),
+                                        confidence=response.query_result.intent_detection_confidence)
         if response.query_result.intent.display_name == 'Default Fallback Intent':
             return FallbackResponse(intent=response.query_result.intent.display_name,
                                     message=response.query_result.fulfillment_text,
@@ -102,6 +108,25 @@ class QueryModule:
                 result.append(entity)
         logger.debug(result)
         return result
+
+    def detect_entity(self, text):
+        """Receives a query string and find if the missing parameter is missed due to
+        Dialogflow failing to detect it or it is really missing. If it is really missing
+        return the missing parameters
+
+        :param text: query text
+        :type: str
+        :return: missing parameters
+        :rtype: str
+        """
+        result = []
+        for entity in self.entity_map.keys():
+            matches = self.entity_map[entity]['capture'].search(text)
+            if matches:
+                # we only use the first match as we only expect one entity
+                logger.debug('match here: {}'.format(matches.group(1)))
+                result.append(matches.group(1))
+        return ' @@@ '.join(result)
 
     def clean_message(self, message):
         logger.debug(message)
