@@ -24,6 +24,31 @@ def test_clean_message():
         assert result.upper() == 'COMP9900'
 
 
+def test_detect_intent():
+    query_module = QueryModule()
+    test_messages = ['I want to know the outline for COMP9900',
+                     "What is COMP9900's course name?",
+                     'IsComp9900 a good course?',
+                     'Who is the lecturer fo COMP9900?']
+    for test_message in test_messages:
+        result = query_module.detect_entity(test_message)
+        assert result.upper() == 'COMP9900'
+
+    test_messages = ['COMP9900 11/12/2019 11am',
+                     '11/12/2019 COMP9900 11am',
+                     '11/12/2019, coMp9900 11am']
+    for test_message in test_messages:
+        result = query_module.detect_entity(test_message)
+        assert result.upper() == 'COMP9900 @@@ 11:00:00 @@@ 2019-12-11'
+
+    test_messages = ['I want COMP9321 7/12/2019 11:11am',
+                     '07/12/2019 COMP9321 11:11am',
+                     '07/12/2019, coMp9321 11:11am?']
+    for test_message in test_messages:
+        result = query_module.detect_entity(test_message)
+        assert result.upper() == 'COMP9321 @@@ 11:11:00 @@@ 2019-12-07'
+
+
 def test_course_outline_queries():
     query_module = QueryModule()
     test_messages = ['What is the outline for COMP9900?',
