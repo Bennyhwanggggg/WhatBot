@@ -2,9 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { signIn, checkSignedIn } from '../actions';
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
+import backendURL from '../apis/routes';
 import history from '../history';
 
 class Login extends React.Component {
+
+    componentDidMount() {
+        fetch(`${backendURL}`)
+    }
 
     componentDidUpdate() {
         this.props.checkSignedIn(this.props.errorMessage)

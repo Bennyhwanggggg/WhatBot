@@ -146,7 +146,7 @@ def message():
     return jsonify(response), 200
 
 
-@app.route('/dashboard/piechart', methods=["GET"])
+@app.route('/dashboard/piechart', methods=['GET'])
 def piechart():
     # TODO original_data should come from database
     original_data = {
@@ -205,7 +205,7 @@ def piechart():
     return jsonify(response_data), 200
 
 
-@app.route('/dashboard/timeline', methods=["GET"])
+@app.route('/dashboard/timeline', methods=['GET'])
 def timeline_chart():
     original_data = {
         "consultation_booking": [120, 132, 101, 134, 90, 230, 210],
@@ -272,7 +272,7 @@ def timeline_chart():
     return jsonify(response_data), 200
 
 
-@app.route('/dashboard/barchart', methods=["GET"])
+@app.route('/dashboard/barchart', methods=['GET'])
 def barchart():
     # TODO original data should come from database,
     #  which should be a list that follow `[[name, confid], ...]`,
@@ -334,7 +334,7 @@ PATH = os.path.dirname(os.path.realpath(__file__))
 JSON_3D_PATH = os.path.join("filter3.json")
 
 
-@app.route('/dashboard/3dchart', methods=["GET"])
+@app.route('/dashboard/3dchart', methods=['GET'])
 def three_dimention_chart():
     with open(JSON_3D_PATH) as f:
         data = json.load(f)
@@ -372,6 +372,12 @@ def three_dimention_chart():
         "data": response_data
     }
     return jsonify(response_data), 200
+
+
+@app.route('/', methods=['GET'])
+def setup():
+    logger.info('backend activated')
+    return jsonify(message='success'), 200
 
 
 if __name__ == '__main__':
