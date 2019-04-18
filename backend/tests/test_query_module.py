@@ -292,22 +292,21 @@ def test_announcement_queries():
 
 def test_consultation_cancelling_command():
     query_module = QueryModule()
-    test_messages = ['Can I cancel a consultation for COMP9334 at 06:45 on 20/05/19?',
-                     'Cancel appointment with lecturer in charge for COMP9334 at 20/05/19 06:45',
-                     'Please cancel a consultation for COMP9334 at 06:45 on 20/05/19?',
-                     'Cancel consultation at 06:45 on 20/05/19 for COMP9334?',
-                     'Can I cancel a consultation for COMP9334 on 20/05/19 06:45?',
-                     'Can I cancel a consultation for COMP9334 from 20/05/19 06:45',
-                     'Can I cancel a consultation for COMP9334 at 06:45 on 20/05/19?',
-                     'Cancel course consultation for COMP9334 at 06:45 20/05/19',
+    test_messages = ['Cancel my booking for COMP9334 at 06:45 at on 20/05/2019',
+                     'Cancel my appointment with LiC for COMP9334 at 20/05/2019 06:45',
+                     'Please cancel my consultation for COMP9334 at 06:45 on 20/05/19',
+                     'Cancel my consultation at 06:45 on 20/05/19 for COMP9334',
+                     'Can I cancel the consultation for COMP9334 on 20/05/19 06:45?',
+                     'Can I cancel my consultation for COMP9334 at 06:45 on 20/05/2019?',
+                     'Cancel course consultation booking for COMP9334 at 06:45 20/05/19',
                      'Cancel booking for COMP9334 on 06:45 20/05/19',
                      'Cancel course consultation for COMP9334 at 06:45 on 20/05/19',
-                     'Make a consultation cancellation for COMP9334 on 20/05/19 at 06:45',
-                     'I want to cancel a course consultation on 20/05/19 at 06:45 for COMP9334?']
+                     'I want to cancel my course consultation booking for COMP9334 on 20/05/19 at 06:45']
     for test_message in test_messages:
         result = query_module.detect_intent_texts(test_message)
         assert result.intent == 'consultation_cancel'
         assert result.message.upper() == 'COMP9334 @@@ 06:45:00 @@@ 2019-05-20'
+        time.sleep(TIME_BETWEEN_API)  # set gap so Google API doesn't get overloaded
 
         
 def test_adk_queries():
