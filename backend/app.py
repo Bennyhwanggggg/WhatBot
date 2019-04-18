@@ -308,6 +308,7 @@ JSON_3D_PATH = os.path.join("filter3.json")
 
 @app.route('/dashboard/3dchart', methods=["GET"])
 def three_dimention_chart():
+    # TODO: create a function for this
     with open(JSON_3D_PATH) as f:
         data = json.load(f)
     symbol_size = 2.5
