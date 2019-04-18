@@ -1,6 +1,7 @@
 import os
 import dialogflow_v2 as dialogflow
 import re
+import random
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
@@ -34,12 +35,21 @@ class QueryModule:
             'student': {'regex': re.compile(r'z\d{7}')}
         }
 
+        self.low_confidence_fallbacks = [
+            'Sorry, I could not understand your question, can you please rephrase that?',
+            'My apologies, I am not quite sure what you are asking, could you please say that again?',
+            'I am not sure if I understood your question correctly, can you please rephrase your question?'
+        ]
+
     def query(self, text):
         result = self.detect_intent_texts(text=text)
         logger.debug('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         if not isinstance(result, FallbackResponse):
             if result.confidence < 0.5:
-                pass  # TODO: collect log
+                result = FallbackResponse(intent=result.intent,
+                                          message=random.choice(self.low_confidence_fallbacks),
+                                          confidence=result.confidence,
+                                          username=result.username)
         logger.debug('After checking state:\nIntent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         return result
 
