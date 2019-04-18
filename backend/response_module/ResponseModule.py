@@ -46,7 +46,7 @@ class ResponseModule:
             'consultation_cancel': self.respond_to_course_consultation_cancel,
             'wam_admin_queries': self.respond_to_wam_admin_queries,
             'wam_student_queries': self.respond_to_wam_student_queries,
-            'is_adk_queries': self.respond_to_course_isadk_queries
+            'adk_course_queries': self.respond_to_course_isadk_queries,
         }
 
     def respond(self, message):
@@ -164,7 +164,7 @@ class ResponseModule:
         response = self.utility_module.consultation_manager.delete_consultation(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
-        return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
+        return "You have cancelled the booking at {} on {}".format(time, date)
 
     def respond_to_course_consultation_view(self, message):
         sid = message.username
