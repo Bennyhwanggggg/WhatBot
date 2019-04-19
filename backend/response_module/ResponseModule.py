@@ -199,3 +199,10 @@ class ResponseModule:
         cid = self.message
         response = self.AnnouncementsGetter.get_announcement(cid)
         return response
+
+     def respond_to_all_courses_queries(self):
+        response = self.data_base_manager.get_all_courses()
+        result = "The list of courses are:\n"
+        for cid, cname in response:
+            result += "{}-{}".format(cid, cname)
+        return result
