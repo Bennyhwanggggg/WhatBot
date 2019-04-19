@@ -61,7 +61,8 @@ class ConsultationManager:
         week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         date_list = [int(i) for i in date_convert]
         day = datetime.date(date_list[0], date_list[1], date_list[2])
-        num_day = day.weekday()# convert weekday into digit (eg Mon -> 0,)
+        # convert weekday into digit (eg Mon -> 0,)
+        num_day = day.weekday()
         day_as_string = week_days[num_day]
         return day_as_string
 
@@ -69,7 +70,7 @@ class ConsultationManager:
         week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
         if not date or date > week_next or date < today:  # check the date is within one week
-            return False, "It may be beyond the range, your booking date must before {}".format(week_next)
+            return False, "Sorry you can only booking consultation up to next one week. Your booking date must before {}".format(week_next)
         try:
             day_as_string = self.get_the_weekday(date)
             if day_as_string == "Saturday" or day_as_string == "Sunday":
