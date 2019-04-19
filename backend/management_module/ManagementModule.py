@@ -197,7 +197,7 @@ class ManagementModule:
         data = self.database_manager.execute_query(query)
         result = [(res[0], res[1].date()) for res in data]
         intents = set([res[0] for res in result])
-        last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(1, 8)]
+        last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(7, 0, -1)]
         counts = Counter(result)
         top_n = Counter([d[0] for d in data]).most_common(n)
         top_n = [a[0] for a in top_n]
