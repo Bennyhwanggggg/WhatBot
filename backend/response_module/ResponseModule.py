@@ -88,11 +88,12 @@ class ResponseModule:
         return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0], response[0][1], response[0][2])
 
     def respond_to_course_location_queries(self, message):
-        cid = message.message
-        response = self.data_base_manager.get_location(cid)
-        if not response:
+        cid = self.message
+        campus = self.data_base_manager.get_location(cid)
+        classroom = self.utility_module.class_room_finder.find_class_room(cid)
+        if not campus and classroom:
             return QueryError.NO_SUCH_COURSE.value
-        return response[0][0]
+        return "The location of {} is at {}{}".format(cid, classroom, campus[0][0])
 
     def respond_to_course_indicative_hours_queries(self, message):
         cid = message.message
