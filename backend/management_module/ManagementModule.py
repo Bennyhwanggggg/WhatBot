@@ -228,7 +228,7 @@ class ManagementModule:
         :return: Bottom n intents and their average confidence value
         :rtype: list of tuples of (intent, float)
         """
-        query = "SELECT intent, AVG(confidence) FROM intent_data GROUP BY intent"
+        query = "SELECT intent, AVG(confidence) FROM intent_data WHERE intent Not Like '%Missing%' GROUP BY intent"
         result = self.database_manager.execute_query(query)
         result = sorted(result, key=lambda x: x[1])
         result = [(res[0], float(res[1])) for res in result]
