@@ -185,7 +185,7 @@ class ManagementModule:
         most_common.append(('others', others))
         return most_common
 
-    def get_intent_timeline(self):
+    def get_intent_timeline(self, n=5):
         """Retrieve intent usage against time. Only retrieve the last 7 day.
 
         :return: each intent and their usage for last 7 days
@@ -194,18 +194,23 @@ class ManagementModule:
         :rtype: list of datetime
         """
         query = "SELECT intent, timestamp FROM intent_data WHERE timestamp > current_date - interval '7 days'"
-        result = self.database_manager.execute_query(query)
-        result = [(res[0], res[1].date()) for res in result]
+        data = self.database_manager.execute_query(query)
+        result = [(res[0], res[1].date()) for res in data]
         intents = set([res[0] for res in result])
         last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(1, 8)]
         counts = Counter(result)
+        top_n = Counter([d[0] for d in data]).most_common(n)
+        top_n = [a[0] for a in top_n]
         timeline_data = defaultdict(list)
         for intent in intents:
-            timeline_data.setdefault(intent, [])
+            if intent in top_n:
+                timeline_data.setdefault(intent, [])
         day_num = 1
         for date in reversed(last_seven_days):
             seen = set()
             for intent, timestamp in result:
+                if intent not in top_n:
+                    continue
                 if intent not in seen and timestamp == date.date():
                     timeline_data[intent].append(counts[intent, date.date()])
                     seen.add(intent)
