@@ -78,7 +78,7 @@ class ConsultationManager:
                 return False, "Sorry, there is no consultation on weekends"
             else:
                 logger.info("It is on next {}".format(day_as_string))
-                return True, "Your booking is on {} {}".format(day_as_string, date)
+                return True, "Your booking has been made on {} {}".format(day_as_string, date)
         except ValueError as e:
             logger.error(str(e))
             return False, "Please try again"
