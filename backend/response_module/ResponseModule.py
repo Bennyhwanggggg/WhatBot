@@ -46,7 +46,8 @@ class ResponseModule:
             'consultation_cancel': self.respond_to_course_consultation_cancel,
             'wam_admin_queries': self.respond_to_wam_admin_queries,
             'wam_student_queries': self.respond_to_wam_student_queries,
-            'is_adk_queries': self.respond_to_course_isadk_queries
+            'adk_course_queries': self.respond_to_course_isadk_queries,
+            'consultation_view': self.respond_to_course_consultation_view
         }
 
     def respond(self, message):
@@ -164,16 +165,18 @@ class ResponseModule:
         response = self.utility_module.consultation_manager.delete_consultation(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
-        return "{}, you have cancelled the booking at {} on {}".format(response, time, date)
+        elif "no course" in response:
+            return response
+        return "you have cancelled the booking at {} on {}".format(time, date)
 
     def respond_to_course_consultation_view(self, message):
         sid = message.username
         response = self.utility_module.consultation_manager.view_my_consultation(sid)
         if not response:
             return QueryError.NO_CONSULTATION.value
-        result = "The following are the consultation bookings you have made:\n"
+        result = "The list of consultation bookings you’ve made are:\n"
         for cid, time, date in response:
-            result += "Course id: {}, Time: {}, Date: {}\n".format(cid, time, date)
+            result += "{} on {} at {}\n".format(cid, date, time)
         return result
 
     def respond_to_all_course(self, _):

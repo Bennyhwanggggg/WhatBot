@@ -27,12 +27,16 @@ class ConsultationManager:
         if not self.check_valid_booking_time(time):
             return "Consultation can only be booked between 9:00 to 17:00"
         query = "INSERT INTO consultation(cid, sid, time, date) VALUES (%s, %s, %s, %s)"
-        inputs = (cid, sid, time, date)
+        inputs = (cid.upper(), sid, time, date)
         return self.database_manager.execute_query(query, inputs)
 
     def delete_consultation(self, cid, sid, time, date):
+        check_empty = "Select * FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         query = "DELETE FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
-        inputs = (cid, sid, time, date)
+        inputs = (cid.upper(), sid, time, date)
+        data_exist = self.database_manager.execute_query(check_empty, inputs)
+        if not data_exist:
+            return "There is no course consultation booked at this time"
         return self.database_manager.execute_query(query, inputs)
 
     def next_seven_day(self):
@@ -69,7 +73,7 @@ class ConsultationManager:
         week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
         if not date or date > week_next or date < today:  # check the date is within one week
-            return False, "It may be beyond the range, your booking date must before {}".format(week_next)
+            return False, "Sorry you can only booking consultation up to next one week. Your booking date must before {}".format(week_next)
         try:
             day_as_string = self.get_the_weekday(date)
             if day_as_string == "Saturday" or day_as_string == "Sunday":

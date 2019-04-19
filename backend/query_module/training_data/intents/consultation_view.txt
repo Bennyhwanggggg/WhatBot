@@ -1,0 +1,35 @@
+display_name consultation_view
+message_texts consultation_view
+intent_types none
+reset_contexts
+May I view my consultation booking
+May I check my consultation booking
+May I have a look on my consultation booking
+Show me my consultation booking
+Show me my consultation booking history
+Show me my booked consultation
+Show me my reserved consultation
+Can I have a look of my consultation booking
+Can I view my consultation booking
+Can I check my consultation booking
+My consultation booking
+My consultation
+Can I know my consultation booking?
+can I know my consultation booking?
+I want to know my consultation booking
+I want to know my consultation booking
+Tell me my consultation booking
+Tell me my consultation booking thanks
+Please tell me what my consultation booking is right now
+Please show me my consultation booking
+Please tell me what my consultation bookings are
+Tell me about my consultation
+Tell me about my consultation booking
+Tell me about my consultation
+Please tell me about my consultation booking
+What is my consultation booking wam right now?
+What is my current consultation booking thanks
+What are my consultation booking right now
+What are my consultation booking right now?
+What is my consultation booking right now?
+What is my consultation booking
