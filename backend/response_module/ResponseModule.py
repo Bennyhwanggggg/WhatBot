@@ -194,3 +194,8 @@ class ResponseModule:
         sid = message.username
         response = self.utility_module.wam_calculator.calculate_wam(sid)
         return response
+
+    def respond_to_announcement_queries(self, cid):
+        cid = self.message
+        response = self.AnnouncementsGetter.get_announcement(cid)
+        return response
