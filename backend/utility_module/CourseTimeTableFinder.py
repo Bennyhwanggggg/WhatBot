@@ -17,6 +17,7 @@ class CourseTimeTableFinder:
         :return: location of the course
         :rtype: str
         """
+        cid = cid.upper()
         query = "SELECT * from coursetimetable where cid = %s"
         inputs = (cid, )
         result = self.database_manager.execute_query(query, inputs)

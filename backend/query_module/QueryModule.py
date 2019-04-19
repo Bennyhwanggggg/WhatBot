@@ -5,6 +5,8 @@ import random
 from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
+from dateutil.parser import parse
+import datetime
 
 """
     Logger setup
@@ -29,10 +31,14 @@ class QueryModule:
         logger.info('Session path: {}\n'.format(self.session))
 
         self.entity_map = {
-            'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE)},
-            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*')},
-            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d(pm|am).*')},
-            'student': {'regex': re.compile(r'z\d{7}')}
+            'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE),
+                            'capture': re.compile(r'.*(COMP\d{4}).*', re.IGNORECASE)},
+            'time': {'regex': re.compile(r'.*\d{1,2}:\d{1,2}.*|.*\d+(pm|am).*', re.IGNORECASE),
+                     'capture': re.compile(r'(\d{1,2}:\d{1,2}.*|\d+(pm|am))', re.IGNORECASE)},
+            'date': {'regex': re.compile(r'.*\d{1,4}\/\d{1,2}\/\d{1,4}.*'),
+                     'capture': re.compile(r'(\d{1,4}\/\d{1,2}\/\d{1,4})')},
+            'student': {'regex': re.compile(r'z\d{7}', re.IGNORECASE),
+                        'capture': re.compile(r'(z\d{7})', re.IGNORECASE)}
         }
 
         self.low_confidence_fallbacks = [
@@ -75,10 +81,12 @@ class QueryModule:
 
         missing_parameters = self.detect_missing_parameters(response.query_result.parameters.fields)
         if len(missing_parameters):
-            return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
-                                    message='Sorry, I cannot understand your question. Could you please rephrase your question? '
-                                            'I also need the following information to assist you more efficiently: {}'.format(' '.join(missing_parameters)),
-                                    confidence=response.query_result.intent_detection_confidence)
+            response.query_result.fulfillment_text = self.detect_entity(text)
+            if not response.query_result.fulfillment_text:
+                return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
+                                        message='Sorry, I cannot understand your question. Could you please rephrase your question? '
+                                                'I also need the following information to assist you more efficiently: {}'.format(' '.join(missing_parameters)),
+                                        confidence=response.query_result.intent_detection_confidence)
         if response.query_result.intent.display_name == 'Default Fallback Intent':
             return FallbackResponse(intent=response.query_result.intent.display_name,
                                     message=response.query_result.fulfillment_text,
@@ -113,6 +121,27 @@ class QueryModule:
         logger.debug(result)
         return result
 
+    def detect_entity(self, text):
+        """Receives a query string and find if the missing parameter is missed due to
+        Dialogflow failing to detect it or it is really missing. If it is really missing
+        return the missing parameters
+
+        :param text: query text
+        :type: str
+        :return: missing parameters
+        :rtype: str
+        """
+        result = []
+        for entity in self.entity_map.keys():
+            matches = self.entity_map[entity]['capture'].search(text)
+            if matches:
+                # we only use the first match as we only expect one entity
+                match_result = self.convert_to_24_hours(matches.group(1)) if entity == 'time' else matches.group(1)
+                match_result = self.convert_date_format(match_result) if entity == 'date' else match_result
+                logger.debug('Found entity {} in {}: {}'.format(entity, text, match_result))
+                result.append(match_result)
+        return ' @@@ '.join(result)
+
     def clean_message(self, message):
         logger.debug(message)
         if not any([self.entity_map[entity]['regex'].search(message) for entity in self.entity_map.keys()]):
@@ -126,3 +155,52 @@ class QueryModule:
         message = ' '.join(message)
         logger.debug(message)
         return message
+
+    def convert_date_format(self, date):
+        """Convert all date strings from any format to YY-MM-DD
+
+        :param date: date string to convert
+        :type: str
+        :return: date string in YY-MM-DD format
+        :type: str
+        """
+        try:
+            result = parse(date, dayfirst=True)
+        except ValueError as e:
+            logger.error(e)
+            return date
+        result = result.strftime('%Y-%m-%d')
+        return result
+
+    def convert_to_24_hours(self, time):
+        """Convert a 12 hour in am or pm format into 24 hour string
+
+        :param time: 12 hour time string
+        :type: str
+        :return: 24 hour time string
+        :rtype: str
+        """
+        if not re.search(r'(am|pm)', time, re.IGNORECASE):
+            logger.error('not time string')
+            return time
+        t = time.strip()
+        time_parts = re.split(r'(am|pm)', t, re.IGNORECASE)
+        if len(time_parts) < 2:
+            logger.error('Time is of invalid format: {}'.format(time))
+            return time
+        t, state = time_parts[:2]
+        t, state = t.strip(), state.strip()
+        # case when user have semicolon in time. e.g 3:15am
+        if ':' not in t:
+            hr, min = int(t), 0
+        else:
+            hr, min = list(map(int, t.split(':')))
+        if state.upper() == 'AM':
+            return '{:02d}:{:02d}:{:02d}'.format(hr, min, 0)
+        elif state.upper == 'PM':
+            hr += 12
+            if hr == 24:
+                hr = 0
+            return '{:02d}:{:02d}:{:02d}'.format(hr, min, 0)
+        else:
+            return time

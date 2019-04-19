@@ -3,110 +3,72 @@ message_texts $course @@@ $time @@@ $date
 intent_types course_code_and_time_and_date
 reset_contexts
 May I cancel the booking at {time} {date} for {course code}?
-May I cancel the booking at {time} {date} for {course code}
-May I cancel the booking on {date} {time} for {course code}
 May I cancel the booking on {date} {time} for {course code}?
-Cancel booking for {course code} on {time} at {date}
+May I cancel the course consultation at {time} {date} for {course code}?
+May I cancel the course consultation at {time} {date} for {course code}
+May I cancel the course consultation on {date} {time} for {course code}
+May I cancel the course consultation on {date} {time} for {course code}?
+May I cancel the course consultation booking at {time} {date} for {course code}?
+May I cancel the course consultation booking at {time} {date} for {course code}
+May I cancel the consultation on {date} {time} for {course code}
+May I cancel the consultation on {date} {time} for {course code}?
+May I cancel the consultation booking at {time} {date} for {course code}?
+May I cancel the consultation booking on {date} {time} for {course code}?
+May I cancel my booking at {time} {date} for {course code}?
+May I cancel my booking at {time} {date} for {course code}
+May I cancel my course consultation on {date} {time} for {course code}
+May I cancel my course consultation on {date} {time} for {course code}?
+May I cancel my course consultation booking at {time} {date} for {course code}?
+May I cancel my course consultation booking on {date} {time} for {course code}?
+Cancel consultation booking for {course code} on {time} at {date}
 Cancel booking for {course code} on {time} {date}
 Cancel booking for {course code} on {date} {time}
-Cancel the booking starts from {time} {date} for {course code}
-Cancel the booking starts from {time} {date} for {course code}
-May I cancel a consultation on the time slot at {time} {date} for {course code}?
-Make an consultation cancel for {course code} on {time} {date}
-Make an consultation cancel for {course code} at {time} on {date}
-May I cancel the time slot starts from {time} on {date} for {course code}?
-Cancel a consultation for {course code} on {date} at {time}
-Cancel a course consultation for {course code} on {date} at {time}
+Cancel the consultation booking at {time} {date} for {course code}
+Cancel the consultation booking on {date} at {time} for {course code}
+Cancel my booking for {course code} on {time} at {date}
+Cancel my booking for {course code} on {time} {date}
+Cancel my booking for {course code} on {date} {time}
+Cancel my consultation booking at {time} {date} for {course code}
+Cancel my consultation booking on {date} at {time} for {course code}
+Cancel my consultation at {time} {date} for {course code}
+Cancel my consultation on {date} at {time} for {course code}
+Cancel my consultation for {course code} on {date} at {time}
+Cancel my course consultation for {course code} on {date} at {time}
 Cancel course consultation for {course code} on {date} at {time}
 Cancel course consultation for {course code} on {date} {time}
-Cancel course consultation for {course code} at {timie} on {date}
-Cancel course consultation for {course code} at {time} {date}
-Cancel course consultation for {course code} at {date} {time}
-I want to cancel a consultation for {course code} at {date} {time}
-I want to cancel a consultation booking for {course code} at {date} {time}
-I want to cancel a booking for {course code} at {date} {time}
-I want to cancel a course consultation booking for {course code} at {date} {time}
-I want to cancel a course consultation at {date} {time}
-Cancel course consultation for {course code} at {date} {time}
-Cancel course consultation booking for {course code} at {date} {time}
-Cancel course consultation for {course code} at {date} {time}
-Cancel course consultation for {course code} at {time} {date}
-Cancel a course consultation for {course code} at {date} {time}
-Cancel a consultation for {course code} at {date} {time}
-Please cancel course consultation for {course code} at {date} {time}
-Cancel course consultation for {course code} at {date} {time}
+Cancel course consultation for {course code} at {time} on {date}
+Cancel my course consultation for {course code} on {date} at {time}
+Cancel my course consultation for {course code} on {date} {time}
+Cancel my course consultation for {course code} at {time} {date}
+Cancel my course consultation for {course code} at {date} {time}
+I want to cancel my consultation for {course code} at {date} {time}
+I want to cancel my consultation booking for {course code} at {date} {time}
+I want to cancel my booking for {course code} at {date} {time}
+I want to cancel my course consultation at {date} {time}
 I want to cancel appointment with the lecturer for {course code} at {date} {time}
 I want to cancel an appointment with the lecturer in charge for {course code} at {date} {time}
 I want to cancel an appointment with the LiC for {course code} at {date} {time}
 Cancel appointment with LiC for {course code} at {date} {time}
-Cancel appointment with lecturer for {course code} at {date} {time}
-Cancel appointment with lecturer in charge for {course code} at {date} {time}
 I want to cancel appointment with the lecturer for {course code} at {date} {time}
 I want to cancel appointment with the lecturer in charge for {course code} at {date} {time}
 I want to cancel appointment with the LiC for {course code} at {date} {time}
-Cancel appoint with a lecturer for {course code} at {date} {time}
+I want to cancel my appointment with the lecturer for {course code} at {date} {time}
 Cancel course consultation appointment for {course code} at {date} {time}
-Cancel a consultation booking for {course code} at {date} {time}
-Cancel a consultation booking for {course code} on {date} on {time}
-Cancel a consultation booking for {course code} on {date} at {time}
 Cancel consultation booking for {course code} at {date} {time}
-Cancel an appointment for course consultation for {course code} at {date} {time}
-On {date} at {time} cancel a course consultation booking for {course code}
-On {date} at {time} cancel a course consultation booking with the lecturer in charge for {course code}
-On {date} at {time} cancel a course consultation booking with the LiC for {course code}
-May I cancel a consultation for {course code} from {date} {time}
-May I cancel a consultation for {course code} from {date} {time}?
-May I cancel a consultation for {course code} on {date} {time}
-May I cancel a consultation for {course code} on {date} {time}?
-May I cancel a consultation for {course code} on {date} at {time}
-May I cancel a consultation for {course code} on {date} at {time}?
-May I cancel a consultation for {course code} at {time} on {date}
-May I cancel a consultation for {course code} at {time} on {date}?
-Can I cancel a consultation for {course code} from {date} {time}
-Can I cancel a consultation for {course code} from {date} {time}?
-Can I cancel a consultation for {course code} on {date} {time}
-Can I cancel a consultation for {course code} on {date} {time}?
+Cancel my appointment for course consultation for {course code} at {date} {time}
+Can I cancel my consultation for {course code} on {date} {time}?
 Can I cancel a consultation for {course code} on {date} at {time}
-Can I cancel a consultation for {course code} on {date} at {time}?
-Can I cancel a consultation for {course code} at {time} on {date}
-Can I cancel a consultation for {course code} at {time} on {date}?
-Please cancel a consultation for {course code} from {date} {time}
-Please cancel a consultation for {course code} from {date} {time}?
-Please cancel a consultation for {course code} on {date} {time}
-Please cancel a consultation for {course code} on {date} {time}?
-Please cancel a consultation for {course code} on {date} at {time}
-Please cancel a consultation for {course code} on {date} at {time}?
-Please cancel a consultation for {course code} at {time} on {date}
-Please cancel a consultation for {course code} at {time} on {date}?
-Cancel consultation for {course code} at {time} on {date}?
-Cancel consultation at {time} on {date} for {course code}?
-Cancel consultation on {date} at {time} for {course code}?
-Cancel consultation on {date} {time} for {course code}?
-May I cancel a consultation booking for {course code} from {date} {time}
-May I cancel a consultation booking for {course code} from {date} {time}?
-May I cancel a course consultation booking for {course code} on {date} {time}
-May I cancel a course consultation booking for {course code} on {date} {time}?
-May I cancel a consultation booking for {course code} on {date} at {time}
-May I cancel a consultation booking for {course code} on {date} at {time}?
-May I cancel a consultation booking for {course code} at {time} on {date}
+Can I cancel my consultation for {course code} on {date} at {time}?
+Please cancel my consultation for {course code} on {date} {time}
+Please cancel my consultation for {course code} on {date} at {time}?
+Please cancel my consultation for {course code} at {time} on {date}
+May I cancel my consultation booking for {course code} from {date} {time}
+May I cancel my course consultation booking for {course code} on {date} {time}
 May I cancel course consultation booking for {course code} at {time} on {date}?
-Can I cancel a booking for {course code} from {date} {time}
 Can I cancel a consultation booking for {course code} from {date} {time}?
-Can I cancel a consultation booking for {course code} on {date} {time}
-Can I cancel a consultation booking for {course code} on {date} {time}?
-Can I cancel a consultation booking for {course code} on {date} at {time}
-Can I cancel a consultation booking for {course code} on {date} at {time}?
-Can I cancel a consultation booking for {course code} at {time} on {date}
-Can I cancel a consultation booking for {course code} at {time} on {date}?
+Can I cancel my consultation booking for {course code} on {date} {time}
 Please cancel a booking for {course code} from {date} {time}
-Please cancel a course consultation booking for {course code} from {date} {time}?
-Please cancel a consultation booking for {course code} on {date} {time}
-Please cancel a course consultation booking for {course code} on {date} {time}?
-Please cancel consultation booking for {course code} on {date} at {time}
-Please cancel a consultation booking for {course code} on {date} at {time}?
-Please cancel a consultation booking for {course code} at {time} on {date}
-Please cancel a consultation booking for {course code} at {time} on {date}?
+Please cancel my course consultation booking for {course code} from {date} {time}?
 Cancel course consultation booking for {course code} at {time} on {date}?
-Cancel consultation booking at {time} on {date} for {course code}?
 Cancel consultation booking on {date} at {time} for {course code}?
 Cancel course consultation booking on {date} {time} for {course code}?

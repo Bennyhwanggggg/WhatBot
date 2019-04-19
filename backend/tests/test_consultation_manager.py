@@ -32,7 +32,7 @@ def test_make_booking():
         date = today.strftime('%Y-%m-%d')
         day_as_string = consultation_manager.get_the_weekday(date)
     inputs = [["COMP9900", "z5111111", "09:00:00", date], ["COMP9900", "z5111111", "09:00:00", date]]
-    expected = ["Your booking is on {} {}".format(day_as_string, date),
+    expected = ["Your booking has been made on {} {}".format(day_as_string, date),
                 "Sorry this time slot has been booked, please choose another one from following time slots on {}: 10:00:00, 11:00:00, 12:00:00, 13:00:00, 14:00:00, 15:00:00, 16:00:00, 17:00:00".format(date)]
     consultation_manager = ConsultationManager()
     consultation_manager.database_manager = MockDatabase('CONSULTATION', ['cid', 'sid', 'time', 'date'])
@@ -41,6 +41,5 @@ def test_make_booking():
     test_case = 0
     for cid, sid, time, date in inputs:
         s = consultation_manager.consultation_booking_query(cid, sid, time, date)
-        s = s.lstrip()
         assert s == expected[test_case]
         test_case += 1

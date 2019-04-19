@@ -7,7 +7,14 @@ def test_respond_to_course_outline():
     course = "comp9900"
     message = IntentResponse(intent='course_outline_queries', confidence=1, message=course)
     course_outline = response_module.respond_to_course_outline_queries(message)
-    assert course_outline == "A capstone software project. Students work in teams to define, implement and evaluate a real-world software system. Most of the work in this course is team-based project work, although there are some introductory lectures on software project management and teamwork strategies. Project teams meet fortnightly with project mentors to report on the progress of the project. Assessment is based on a project proposal, a final project demonstration and report, and on the quality of the software system itself. Students are also required to reflect on their work and to provide peer assessment of their team-mates' contributions to the project."
+    assert course_outline == "A capstone software project. Students work in teams to define, implement and evaluate a " \
+                             "real-world software system. Most of the work in this course is team-based project work, " \
+                             "although there are some introductory lectures on software project management and teamwork " \
+                             "strategies. Project teams meet fortnightly with project mentors to report on the progress " \
+                             "of the project. Assessment is based on a project proposal, a final project demonstration " \
+                             "and report, and on the quality of the software system itself. Students are also required " \
+                             "to reflect on their work and to provide peer assessment of their team-mates' contributions" \
+                             " to the project."
 
 
 def test_respond_to_course_indicative_hours():
@@ -24,7 +31,6 @@ def test_respond_to_course_fee():
     message = IntentResponse(intent='course_fee_queries', confidence=1, message=course)
     course_fee = response_module.respond_to_course_fee_queries(message)
     assert course_fee == "Commonwealth student: $1170\nDomestic student: $4350\nInternational student: $5730"
-
 
 
 def test_respond_to_course_isadk():
@@ -48,7 +54,7 @@ def test_respond_to_course_send_outline():
     course = "comp9900"
     message = IntentResponse(intent='send_outline_queries', confidence=1, message=course)
     course_send_outline = response_module.respond_to_course_send_outline_queries(message)
-    assert course_send_outline == "https://itq9q5ny14.execute-api.ap-southeast-2.amazonaws.com/prod/pdf?url=https://www.handbook.unsw.edu.au/postgraduate/courses/2019/COMP9900/"
+    assert course_send_outline == 'The course outline for {} has been sent to {}'.format(course, 'whatbot9900@gmail.com')
 
 
 def test_respond_to_course_school_and_faculty():
@@ -59,13 +65,12 @@ def test_respond_to_course_school_and_faculty():
     assert "Faculty of Engineering" in course_school_and_faculty
 
 
-
 def test_respond_to_course_location():
     response_module = ResponseModule()
     course = "comp9900"
     message = IntentResponse(intent='course_location_queries', confidence=1, message=course)
     course_location = response_module.respond_to_course_location_queries(message)
-    assert course_location == "Kensington"
+    assert course_location == 'The location of COMP9900 is at Bongo Lab K17 Kensington'
 
 
 def test_respond_to_course_prerequisites():

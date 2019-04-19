@@ -27,4 +27,5 @@ class ClassRoomFinder:
         """
         if self.data is None:
             self.get_all_classroom()
+        cid = cid.upper()
         return self.data.loc[cid].values[0] if cid in self.data.index else 'No information for the course queried'

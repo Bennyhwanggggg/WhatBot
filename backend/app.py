@@ -141,14 +141,14 @@ def message():
     return_message = response_module.respond(query_result)
 
     response = {
-        'message': return_message,
+        'message': return_message.strip(),
         'timestamp': datetime.now(),
         'id': id
     }
     return jsonify(response), 200
 
 
-@app.route('/dashboard/piechart', methods=["GET"])
+@app.route('/dashboard/piechart', methods=['GET'])
 def piechart():
     data = management_module.get_intent_percentages(n=8)
     original_data = dict()
@@ -203,7 +203,7 @@ def piechart():
     return jsonify(response_data), 200
 
 
-@app.route('/dashboard/timeline', methods=["GET"])
+@app.route('/dashboard/timeline', methods=['GET'])
 def timeline_chart():
     original_data, time_slots = management_module.get_intent_timeline()
     title_list = list(original_data.keys())
@@ -254,7 +254,7 @@ def timeline_chart():
     return jsonify(response_data), 200
 
 
-@app.route('/dashboard/barchart', methods=["GET"])
+@app.route('/dashboard/barchart', methods=['GET'])
 def barchart():
     original_data = management_module.get_avg_confidence()
     category_data = [item[0] for item in original_data]
@@ -306,7 +306,7 @@ PATH = os.path.dirname(os.path.realpath(__file__))
 JSON_3D_PATH = os.path.join("filter3.json")
 
 
-@app.route('/dashboard/3dchart', methods=["GET"])
+@app.route('/dashboard/3dchart', methods=['GET'])
 def three_dimention_chart():
     # TODO: create a function for this
     with open(JSON_3D_PATH) as f:
@@ -345,6 +345,12 @@ def three_dimention_chart():
         "data": response_data
     }
     return jsonify(response_data), 200
+
+
+@app.route('/', methods=['GET'])
+def setup():
+    logger.info('backend activated')
+    return jsonify(message='success'), 200
 
 
 if __name__ == '__main__':

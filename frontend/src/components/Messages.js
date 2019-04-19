@@ -1,8 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import ScrollableFeed from 'react-scrollable-feed';
+import uuid from 'uuid'
 
-class Messages extends Component {
+class Messages extends React.Component {
+
+    renderText = (txt) => {
+        return txt.split('\n').map((t) => {
+            return (
+                <React.Fragment key={uuid.v4()}>{t}<br/></React.Fragment>
+            )
+        })
+    } 
 
     renderMessages() {
         var messageList = this.props.messages.map( msgList => msgList.filter( message => {
@@ -30,7 +39,7 @@ class Messages extends Component {
                             <div className="username">
                                 {currentUserName}
                             </div>
-                            <div className="text">{msg}</div>
+                            <div className="text">{this.renderText(msg)}</div>
                         </div>
                     </li>
                 )

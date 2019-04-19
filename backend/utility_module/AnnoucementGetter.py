@@ -11,6 +11,7 @@ class AnnouncementsGetter:
         self.database_manager = database_manager
 
     def delete_announcement(self, cid):
+        cid = cid.upper()
         query = "DELETE FROM announcement WHERE cid = %s"
         inputs = (cid, )
         return self.database_manager.execute_query(query, inputs)
@@ -32,6 +33,7 @@ class AnnouncementsGetter:
         return self.database_manager.execute_query(query, inputs)
 
     def get_announcement(self, cid):
+        cid = cid.upper()
         query = "SELECT * from announcement where cid = %s"
         inputs = (cid, )
         result = self.database_manager.execute_query(query, inputs)

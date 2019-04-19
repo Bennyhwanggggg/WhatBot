@@ -33,16 +33,19 @@ class WamCalculator:
         :return: database operation result
         :rtype: str
         """
+        sid, cid = sid.lower(), cid.lower()
         query = "INSERT INTO wam(sid, cid, mark, credit) VALUES (%s, %s, %s, %s)"
         inputs = (sid, cid, mark, credit, )
         return self.database_manager.execute_query(query, inputs)
 
     def delete_sid(self, sid):
+        sid = sid.lower()
         query = "DELETE FROM wam WHERE sid = %s"
         inputs = (sid, )
         return self.database_manager.execute_query(query, inputs)
 
     def get_student_wam(self, sid):
+        sid = sid.lower()
         query = "SELECT * from wam where sid = %s"
         inputs = (sid, )
         result = self.database_manager.execute_query(query, inputs)
@@ -57,6 +60,7 @@ class WamCalculator:
         :return: result summary string
         :rtype: str
         """
+        sid = sid.lower()
         data = self.get_student_wam(sid)
         if data.empty:
             return QueryError.NO_STUDENT.value

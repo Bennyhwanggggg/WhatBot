@@ -27,12 +27,16 @@ class ConsultationManager:
         if not self.check_valid_booking_time(time):
             return "Consultation can only be booked between 9:00 to 17:00"
         query = "INSERT INTO consultation(cid, sid, time, date) VALUES (%s, %s, %s, %s)"
-        inputs = (cid, sid, time, date)
+        inputs = (cid.upper(), sid, time, date)
         return self.database_manager.execute_query(query, inputs)
 
     def delete_consultation(self, cid, sid, time, date):
+        check_empty = "Select * FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         query = "DELETE FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
-        inputs = (cid, sid, time, date)
+        inputs = (cid.upper(), sid, time, date)
+        data_exist = self.database_manager.execute_query(check_empty, inputs)
+        if not data_exist:
+            return "There is no course consultation booked at this time"
         return self.database_manager.execute_query(query, inputs)
 
     def next_seven_day(self):
@@ -61,7 +65,8 @@ class ConsultationManager:
         week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         date_list = [int(i) for i in date_convert]
         day = datetime.date(date_list[0], date_list[1], date_list[2])
-        num_day = day.weekday()# convert weekday into digit (eg Mon -> 0,)
+        # convert weekday into digit (eg Mon -> 0,)
+        num_day = day.weekday()
         day_as_string = week_days[num_day]
         return day_as_string
 
@@ -69,7 +74,7 @@ class ConsultationManager:
         week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
         if not date or date > week_next or date < today:  # check the date is within one week
-            return False, "It may be beyond the range, your booking date must before {}".format(week_next)
+            return False, "Sorry you can only booking consultation up to next one week. Your booking date must before {}".format(week_next)
         try:
             day_as_string = self.get_the_weekday(date)
             if day_as_string == "Saturday" or day_as_string == "Sunday":
@@ -77,7 +82,7 @@ class ConsultationManager:
                 return False, "Sorry, there is no consultation on weekends"
             else:
                 logger.info("It is on next {}".format(day_as_string))
-                return True, "Your booking is on {} {}".format(day_as_string, date)
+                return True, "Your booking has been made on {} {}".format(day_as_string, date)
         except ValueError as e:
             logger.error(str(e))
             return False, "Please try again"
@@ -100,13 +105,14 @@ class ConsultationManager:
 
     def consultation_booking_query(self, cid, sid, time, date):
         is_weekday, feedback = self.check_weekday(date)
+        time = self.round_time(time)
         if is_weekday:
             try:
                 avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list
                 logger.debug(avail_list)
                 if time in avail_list:
                     result = self.add_consultation(cid, sid, time, date)  # add into database
-                    return "{} {}".format(result, feedback)
+                    return "{}".format(feedback)
                 else:
                     if not avail_list:
                         return "Sorry, there is no available time slot on date"
@@ -119,6 +125,11 @@ class ConsultationManager:
         else:
             logger.debug(feedback)
             return feedback
+
+    def view_my_consultation(self, sid):
+        query = "Select cid, time, date FROM consultation WHERE sid = %s "
+        inputs = (sid, )
+        return self.database_manager.execute_query(query, inputs)
 
     def check_valid_booking_time(self, time):
         """ Check if a valid booking time. Time should be in 24 hour format of hh:mm:ss
@@ -141,3 +152,4 @@ class ConsultationManager:
         """
         hour, mins, _ = time.split(":")
         return '{:02d}:00:00'.format(int(hour)+1 ) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
+

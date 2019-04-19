@@ -31,3 +31,7 @@ Week7:
 create databse tables for course time tables and anncouncement, as well as adding data to them.
 add database functions for time tables and anncouncement.
 Finish consultation with Benny and Steve.
+
+Week8:
+fix the bug for UI, adding get all courses function, adding more training for cancelling consultation and adk courses
+adding email module with sending outline, booking confirmation and cancelling confirmation

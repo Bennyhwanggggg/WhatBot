@@ -271,5 +271,6 @@ class DataBaseManager:
         return self.execute_query(query, inputs)
 
     def get_all_courses(self):
-        query = "SELECT course_code FROM courselist"
-        return self.execute_query(query)
+        query = "SELECT course_code, course_name FROM courselist"
+        result = self.execute_query(query)
+        return result
