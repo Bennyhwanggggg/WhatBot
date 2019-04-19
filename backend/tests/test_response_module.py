@@ -70,7 +70,7 @@ def test_respond_to_course_location():
     course = "comp9900"
     message = IntentResponse(intent='course_location_queries', confidence=1, message=course)
     course_location = response_module.respond_to_course_location_queries(message)
-    assert course_location == "Kensington"
+    assert course_location == 'The location of COMP9900 is at Bongo Lab K17 Kensington'
 
 
 def test_respond_to_course_prerequisites():

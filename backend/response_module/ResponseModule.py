@@ -74,21 +74,21 @@ class ResponseModule:
         return message.split(token)
 
     def respond_to_course_outline_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_course_outline(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_fee_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_tuition_fee(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0], response[0][1], response[0][2])
 
     def respond_to_course_location_queries(self, message):
-        cid = self.message
+        cid = message.message.upper()
         campus = self.data_base_manager.get_location(cid)
         classroom = self.utility_module.class_room_finder.find_class_room(cid)
         if not campus and classroom:
@@ -96,21 +96,21 @@ class ResponseModule:
         return "The location of {} is at {}{}".format(cid, classroom, campus[0][0])
 
     def respond_to_course_indicative_hours_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_indicative_hours(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_offering_term_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_offer_term(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_prerequisites_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_prerequisites(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
@@ -119,7 +119,7 @@ class ResponseModule:
         return response[0][0]
 
     def respond_to_course_school_and_faculty_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_faculty(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
@@ -129,7 +129,7 @@ class ResponseModule:
         return random.choice(responses)
 
     def respond_to_course_send_outline_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_pdf_url(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
@@ -139,12 +139,12 @@ class ResponseModule:
         return 'The course outline for {} has been sent to {}'.format(cid, receiver)
 
     def respond_to_course_study_level_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_course(cid)
         return '{} is a CSE course for postgraduate'.format(cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.data_base_manager.get_course(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
