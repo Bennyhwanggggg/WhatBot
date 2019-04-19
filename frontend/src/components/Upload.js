@@ -127,7 +127,7 @@ class Upload extends Component {
                     onClick={this.uploadFiles}
                     className="Dropzone-upload"
                 >
-                Upload
+                Send
                 </button>
             )
          }
