@@ -60,11 +60,12 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        logger.info('Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
+        logger.info(
+            'Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or \
-            message.intent == 'Default Fallback Intent' or \
-            message.intent.endswith('followup') or \
-            isinstance(message, FallbackResponse):
+                message.intent == 'Default Fallback Intent' or \
+                message.intent.endswith('followup') or \
+                isinstance(message, FallbackResponse):
             return message.message
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE.value
@@ -85,7 +86,9 @@ class ResponseModule:
         response = self.data_base_manager.get_tuition_fee(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
-        return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0], response[0][1], response[0][2])
+        return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0],
+                                                                                                  response[0][1],
+                                                                                                  response[0][2])
 
     def respond_to_course_location_queries(self, message):
         cid = message.message.upper()
@@ -141,7 +144,8 @@ class ResponseModule:
     def respond_to_course_study_level_queries(self, message):
         cid = message.message.upper()
         response = self.data_base_manager.get_course(cid)
-        return '{} is a CSE course for postgraduate'.format(cid) if response else '{} is not a CSE postgraduate course'.format(cid)
+        return '{} is a CSE course for postgraduate'.format(
+            cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
         cid = message.message.upper()
@@ -200,7 +204,7 @@ class ResponseModule:
         response = self.AnnouncementsGetter.get_announcement(cid)
         return response
 
-     def respond_to_all_courses_queries(self):
+    def respond_to_all_courses_queries(self):
         response = self.data_base_manager.get_all_courses()
         result = "The list of courses are:\n"
         for cid, cname in response:
