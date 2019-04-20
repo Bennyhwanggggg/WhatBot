@@ -303,14 +303,81 @@ def barchart():
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
-JSON_3D_PATH = os.path.join("filter3.json")
+JSON_3D_PATH = os.path.join("3d_chart_sample_data.json")
 
+
+import datetime
+import collections
+import json
+
+from database import DataBaseManager
+
+db=DataBaseManager.DataBaseManager()
+
+
+def get_3d_chart_data(top_n=5, day_range=7, n_sample=75):
+    """
+    NOTE: corner-case, what if there isn't top 5 intents? 
+        -- it can be auto handled by python slice syntax
+    Complexity: O(N*log(N)), N is the total visit number within day_range
+    """
+
+    ret = db.execute_query("SELECT intent,timestamp FROM intent_data")
+    cnt = collections.Counter([x[0] for x in ret])
+    sorted_cnt = sorted(cnt.items(), key=lambda x:x[1])
+    n_most_common_intent = {x[0] for x in sorted_cnt[-top_n:]}
+    ret = [x for x in ret if x[0] in n_most_common_intent]
+    sorted_ret = sorted(ret, key=lambda x: x[1])
+
+    now = datetime.datetime.now()
+    one_week = datetime.timedelta(days=day_range)
+    ago = now - one_week
+    total_seconds = one_week.total_seconds()
+
+    # convert time attribute to total seconds from `ago`
+    bus_timeline_data = [[x[0], (x[1] - ago).total_seconds()] for x in sorted_ret]
+
+    # one list fan-out to be multiple list, each list corresponds with one intent
+    timeline_data = dict()
+    for x in bus_timeline_data:
+        intent = x[0]
+        if intent not in timeline_data:
+            timeline_data[intent]=list()
+        timeline_data[intent].append(x[1])
+
+    # sampling for e.g 100 time points for the top N intents
+    sample_timepoints = [total_seconds * (i/n_sample) for i in range(1, n_sample+1)]
+    sampled_timeline_data = dict()
+    for intent in timeline_data:
+        sampled_timeline_data[intent] = []
+        cur_timeline = timeline_data[intent]
+        i = 0
+        for sample_point in sample_timepoints:
+            while i < len(cur_timeline) and sample_point >= cur_timeline[i]:
+                i+=1
+            day_range_point = day_range * (sample_point/total_seconds)
+            sampled_timeline_data[intent].append((day_range_point, i+1))
+    # return sampled_timeline_data
+
+    # convert it to the form that 3D chart consumes
+    ret = [
+            [
+              "Usage",
+              "Time",
+              "Intent"
+            ],
+          ]
+    for intent in sampled_timeline_data:
+        cur_sampled_timeline = sampled_timeline_data[intent]
+        for x in cur_sampled_timeline:
+            ret.append([x[1], x[0], intent])
+    return ret
 
 @app.route('/dashboard/3dchart', methods=['GET'])
 def three_dimention_chart():
-    # TODO: create a function for this
-    with open(JSON_3D_PATH) as f:
-        data = json.load(f)
+    # with open(JSON_3D_PATH) as f:
+    #     data = json.load(f)
+    data = get_3d_chart_data()
     symbol_size = 2.5
     response_data = {
         "grid3D": {},
