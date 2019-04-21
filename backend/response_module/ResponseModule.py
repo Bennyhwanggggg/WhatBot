@@ -47,7 +47,8 @@ class ResponseModule:
             'wam_admin_queries': self.respond_to_wam_admin_queries,
             'wam_student_queries': self.respond_to_wam_student_queries,
             'adk_course_queries': self.respond_to_course_isadk_queries,
-            'consultation_view': self.respond_to_course_consultation_view
+            'consultation_view': self.respond_to_course_consultation_view,
+            'course_timetable_queries': self.respond_to_timetable_queries
         }
 
     def respond(self, message):
