@@ -41,3 +41,9 @@ backend code and linking it to the frontend. I also worked on the dashboard's fr
 backend data analytic code. Also finished authentication for both frontend and backend by setting up
 the redux store and navigation. Also updated the API requests to send usernames to help backend identify
 which user is using the API so that some API like WAM query can perform it's features.
+
+Week 9
+Worked on the data analytic dashboard's frontend and backend. I looked at the graphing library echarts.js 
+for the frontend and studied how to use the react version of the library. At the end, we managed to finish
+the data analytic dashboard and also worked on debugging the response module and linking up all the modules 
+together to complete the software.
