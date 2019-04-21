@@ -189,6 +189,8 @@ class ResponseModule:
     def respond_to_wam_admin_queries(self, message):
         sid = message.message
         response = self.utility_module.wam_calculator.calculate_wam(sid)
+        if not len(response):
+            return QueryError.NO_STUDENT.value
         return response
 
     def respond_to_wam_student_queries(self, message):
