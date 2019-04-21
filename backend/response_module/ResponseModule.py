@@ -47,7 +47,8 @@ class ResponseModule:
             'wam_admin_queries': self.respond_to_wam_admin_queries,
             'wam_student_queries': self.respond_to_wam_student_queries,
             'adk_course_queries': self.respond_to_course_isadk_queries,
-            'consultation_view': self.respond_to_course_consultation_view
+            'consultation_view': self.respond_to_course_consultation_view,
+            'course_timetable_queries': self.respond_to_timetable_queries
         }
 
     def respond(self, message):
@@ -192,16 +193,22 @@ class ResponseModule:
     def respond_to_wam_admin_queries(self, message):
         sid = message.message
         response = self.utility_module.wam_calculator.calculate_wam(sid)
+        if not len(response):
+            return QueryError.NO_STUDENT.value
         return response
 
     def respond_to_wam_student_queries(self, message):
         sid = message.username
         response = self.utility_module.wam_calculator.calculate_wam(sid)
+        if not len(response):
+            return QueryError.NO_STUDENT.value
         return response
 
-    def respond_to_announcement_queries(self, cid):
-        cid = self.message
-        response = self.AnnouncementsGetter.get_announcement(cid)
+    def respond_to_announcement_queries(self, message):
+        cid = message.message
+        response = self.utility_module.announcement_getter.get_announcement(cid)
+        if not len(response):
+            return QueryError.NO_DATA.value
         return response
 
     def respond_to_all_courses_queries(self):
@@ -209,4 +216,14 @@ class ResponseModule:
         result = "The list of courses are:\n"
         for cid, cname in response:
             result += "{}-{}".format(cid, cname)
+        return result
+
+    def respond_to_timetable_queries(self, message):
+        cid = message.message
+        response = self.utility_module.course_timetable_finder(cid)
+        if not len(response):
+            return QueryError.NO_SUCH_COURSE.value
+        course, course_name = response[0], response[1].strip()
+        result = 'Timetable for {} - {} is:\n'.format(course, course_name)
+        result += '\n'.join(response[2:])
         return result
