@@ -195,9 +195,9 @@ class ResponseModule:
         response = self.utility_module.wam_calculator.calculate_wam(sid)
         return response
 
-    def respond_to_announcement_queries(self, cid):
-        cid = self.message
-        response = self.AnnouncementsGetter.get_announcement(cid)
+    def respond_to_announcement_queries(self, message):
+        cid = message.message
+        response = self.utility_module.announcement_getter.get_announcement(cid)
         return response
 
     def respond_to_all_courses_queries(self):
