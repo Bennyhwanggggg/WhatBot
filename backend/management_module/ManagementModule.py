@@ -2,7 +2,9 @@ from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
 import os
-from datetime import datetime
+import datetime
+from collections import Counter, defaultdict
+
 """
     Logger setup
 """
@@ -17,9 +19,9 @@ ENTITY_PATH = os.path.join(PATH, '../query_module/training_data/entities/')
 
 
 class ManagementModule:
-    def __init__(self):
-        self.data_base_manager = DataBaseManager()
-        self.trainer = QueryModuleTrainer()
+    def __init__(self, database_manager=DataBaseManager(), trainer=QueryModuleTrainer()):
+        self.database_manager = database_manager
+        self.trainer = trainer
 
     def train(self, file_path):
         """Given a file path, check if it is a valid file and whether the file
@@ -54,7 +56,7 @@ class ManagementModule:
         :return: None
         """
         try:
-            self.data_base_manager.upload_file(file, os.path.basename(file))
+            self.database_manager.upload_file(file, os.path.basename(file))
         except Exception as e:
             logger.error(str(e))
             return False
@@ -138,7 +140,7 @@ class ManagementModule:
         :return: content of the file
         :rtype: list[str]
         """
-        return self.data_base_manager.read_file(file)
+        return self.database_manager.read_file(file)
 
     def get_all_storage_content(self):
         """Get list of files in AWS S3 storage
@@ -146,9 +148,9 @@ class ManagementModule:
         :return: list of file names
         :type: list[str]
         """
-        return self.data_base_manager.get_list_of_files_from_storage()
+        return self.database_manager.get_list_of_files_from_storage()
 
-    def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.now()):
+    def add_intent_data(self, intent, query_text, confidence, timestamp=datetime.datetime.now()):
         """Collect user data and upload it to database
 
         :param intent: intent that the user triggered
@@ -157,19 +159,145 @@ class ManagementModule:
         :type: str
         :param confidence: the confidence level from Dialogflow
         :type: float
+        :param: timestamp: timestamp when the query is entered
+        :type: datetime
         :return: query execution status
         :rtype: str
         """
         query = "INSERT INTO intent_data(intent, query_text, confidence, timestamp) VALUES (%s, %s, %s, %s)"
         inputs = (intent, query_text, confidence, timestamp)
-        return self.data_base_manager.execute_query(query, inputs)
+        return self.database_manager.execute_query(query, inputs)
 
-    def get_intent_percentages(self):
+    def get_intent_percentages(self, n=8):
         """Retrieve intent usage and calculate their percentage use
 
+        :param: number of top intents to get
+        :type: int
         :return: intent usage percentage data
-        :rtype: str or dataframe? TODO: decide return format to see what is based for formatting
+        :rtype: list of tuples of (intent, value)
         """
         query = "SELECT intent FROM intent_data"
-        data = [result[0] for result in self.data_base_manager.execute_query(query)]
-        print(data)  # data is currently list of intents
+        query_result = self.database_manager.execute_query(query)
+        data = [res[0] for res in query_result]
+        result = Counter(data)
+        total_queries = sum(result.values())
+        most_common = result.most_common(n)
+        others = total_queries - sum(intent[1] for intent in most_common)
+        most_common.append(('others', others))
+        return most_common
+
+    def get_intent_timeline(self, n=5):
+        """Retrieve intent usage against time. Only retrieve the last 7 day.
+
+        :return: each intent and their usage for last 7 days
+        :rtype: defaultdict(list) with intent being the key and the list contains last 7 day usage
+        :return: last 7 day as datetime
+        :rtype: list of datetime
+        """
+        query = "SELECT intent, timestamp FROM intent_data WHERE timestamp > current_date - interval '7 days'"
+        data = self.database_manager.execute_query(query)
+        result = [(res[0], res[1].date()) for res in data]
+        intents = set([res[0] for res in result])
+        last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(7, 0, -1)]
+        counts = Counter(result)
+        top_n = Counter([d[0] for d in data]).most_common(n)
+        top_n = [a[0] for a in top_n]
+        timeline_data = defaultdict(list)
+        for intent in intents:
+            if intent in top_n:
+                timeline_data.setdefault(intent, [])
+        day_num = 1
+        for date in reversed(last_seven_days):
+            seen = set()
+            for intent, timestamp in result:
+                if intent not in top_n:
+                    continue
+                if intent not in seen and timestamp == date.date():
+                    timeline_data[intent].append(counts[intent, date.date()])
+                    seen.add(intent)
+            for intent in timeline_data.keys():
+                if len(timeline_data[intent]) != day_num:
+                    timeline_data[intent].append(0)
+            day_num += 1
+        return timeline_data, last_seven_days
+
+    def get_avg_confidence(self, n=8):
+        """Get the average confidence level of each intent. Return bottom n
+
+        :param n: top n result to get
+        :type: int
+        :return: Bottom n intents and their average confidence value
+        :rtype: list of tuples of (intent, float)
+        """
+        query = "SELECT intent, AVG(confidence) FROM intent_data WHERE intent Not Like '%Missing%' GROUP BY intent"
+        result = self.database_manager.execute_query(query)
+        result = sorted(result, key=lambda x: x[1])
+        result = [(res[0], float(res[1])) for res in result]
+        return result[:n]
+
+    def get_3d_chart_data(self, top_n=5, day_range=7, n_sample=75):
+        """
+        NOTE: corner-case, what if there isn't top 5 intents?
+            -- it can be auto handled by python slice syntax
+        Complexity: O(N*log(N)), N is the total visit number within day_range
+
+        :param top_n: top n result to get
+        :type: int
+        :param day_range: number of days data
+        :type: int
+        :param n_sample: number of sample points
+        :type: int
+        :return: 3d data
+        :rtype: dict
+        """
+
+        query = 'SELECT intent,timestamp FROM intent_data'
+        ret = self.database_manager.execute_query(query)
+        cnt = Counter([x[0] for x in ret])
+        sorted_cnt = sorted(cnt.items(), key=lambda x: x[1])
+        n_most_common_intent = {x[0] for x in sorted_cnt[-top_n:]}
+        ret = [x for x in ret if x[0] in n_most_common_intent]
+        sorted_ret = sorted(ret, key=lambda x: x[1])
+
+        now = datetime.datetime.now()
+        one_week = datetime.timedelta(days=day_range)
+        ago = now - one_week
+        total_seconds = one_week.total_seconds()
+
+        # convert time attribute to total seconds from `ago`
+        bus_timeline_data = [[x[0], (x[1] - ago).total_seconds()] for x in sorted_ret]
+
+        # one list fan-out to be multiple list, each list corresponds with one intent
+        timeline_data = dict()
+        for x in bus_timeline_data:
+            intent = x[0]
+            if intent not in timeline_data:
+                timeline_data[intent] = list()
+            timeline_data[intent].append(x[1])
+
+        # sampling for e.g 100 time points for the top N intents
+        sample_timepoints = [total_seconds * (i / n_sample) for i in range(1, n_sample + 1)]
+        sampled_timeline_data = dict()
+        for intent in timeline_data:
+            sampled_timeline_data[intent] = []
+            cur_timeline = timeline_data[intent]
+            i = 0
+            for sample_point in sample_timepoints:
+                while i < len(cur_timeline) and sample_point >= cur_timeline[i]:
+                    i += 1
+                day_range_point = day_range * (sample_point / total_seconds)
+                sampled_timeline_data[intent].append((day_range_point, i + 1))
+
+        # convert it to the form that 3D chart consumes
+        ret = [
+            [
+                "Usage",
+                "Time",
+                "Intent"
+            ],
+        ]
+        for intent in sampled_timeline_data:
+            cur_sampled_timeline = sampled_timeline_data[intent]
+            for x in cur_sampled_timeline:
+                ret.append([x[1], x[0], intent])
+        return ret

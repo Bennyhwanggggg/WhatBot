@@ -22,34 +22,34 @@ class DataBaseManager:
     def __init__(self, host=HOST, port=PORT, database_name=DATABASE, file_storage_name=FILE_STORAGE):
         self.host, self.port, self.database_name = host, port, database_name
         self.file_storage_name = file_storage_name
-        self.connection, self.cursor, self.s3_resource = None, None, None
+        self.s3_resource = None, None, None
 
     def connect_database(self):
         """Manages all database connection and autocommits
 
-        :return: None
+        :return: PostgreSQL connection object
+        :rtype: connection object
+        :return: PostgreSQL cursor
+        :rtype: cursor object
         """
-        if self.connection is not None:
-            return
-        self.connection = psycopg2.connect(database=self.database_name,
-                                           user=USERNAME,
-                                           password=PASSWORD,
-                                           host=self.host,
-                                           port=str(self.port))
-        self.connection.set_session(autocommit=True)
-        self.cursor = self.connection.cursor()
+        connection = psycopg2.connect(database=self.database_name,
+                                      user=USERNAME,
+                                      password=PASSWORD,
+                                      host=self.host,
+                                      port=str(self.port))
+        connection.set_session(autocommit=True)
+        cursor = connection.cursor()
         logger.info('Connection to AWS opened')
+        return connection, cursor
 
-    def disconnect_database(self):
+    def disconnect_database(self, connection, cursor):
         """Manages all disconnection from database. Resets connection and cursor to None
 
         :return: None
         """
-        if self.connection and self.cursor:
-            self.cursor.close()
-            self.connection.close()
-            logger.info('Connection to AWS closed')
-        self.connection, self.cursor = None, None
+        cursor.close()
+        connection.close()
+        logger.info('Connection to AWS closed')
 
     def execute_query(self, query, *args):
         """Used to execute query with the query string given and the arguments used for that
@@ -65,18 +65,17 @@ class DataBaseManager:
         """
         result = None
         try:
-            if not self.connection and not self.cursor:
-                self.connect_database()
+            connection, cursor = self.connect_database()
             if args:
-                self.cursor.execute(query, (args[0]))
+                cursor.execute(query, (args[0]))
             else:
-                self.cursor.execute(query)
+                cursor.execute(query)
             regex = re.compile(r'SELECT', re.IGNORECASE)
-            result = self.cursor.fetchall() if regex.search(query) else "execute successfully"
+            result = cursor.fetchall() if regex.search(query) else "execute successfully"
         except (Exception, psycopg2.Error) as e:
-            logger.error("Error executing query:\n{}".format(str(e)))
+            logger.error("Error executing query: {}\nError: {}".format(query, str(e)))
         finally:
-            self.disconnect_database()
+            self.disconnect_database(connection, cursor)
         logger.debug('Query is: {}\nResult is: {}'.format(query, result))
         return result
 

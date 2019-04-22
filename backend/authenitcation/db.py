@@ -8,8 +8,8 @@ logger = Logger(__name__).log
 
 
 class Authenticator:
-    def __init__(self):
-        self.database_manager = DataBaseManager()
+    def __init__(self, database_manager=DataBaseManager()):
+        self.database_manager = database_manager
 
     def check_is_admin(self, username, password):
         query = "SELECT type FROM users WHERE username = %s AND password = %s"

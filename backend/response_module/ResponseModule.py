@@ -12,14 +12,14 @@ logger = Logger(__name__).log
 
 
 class ResponseModule:
-    def __init__(self):
+    def __init__(self, database_manager=DataBaseManager()):
         """
             Initialize the Response module class which act as a search engine as well.
             It contains a data base connection and query_map is responsible for handling different types
             of data retrieval functions. The keys inside query_map have to match an intent name on Dialogflow.
         """
-        self.data_base_manager = DataBaseManager()
-        self.utility_module = UtilityModule()
+        self.database_manager = database_manager
+        self.utility_module = UtilityModule(database_manager=self.database_manager)
         self.query_map = {
             'all_courses_queries': self.respond_to_all_course,
             'course_outline_queries': self.respond_to_course_outline_queries,
@@ -61,11 +61,12 @@ class ResponseModule:
         :return: response
         :rtype str
         """
-        logger.info('Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
+        logger.info(
+            'Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
         if message.intent == 'Default Welcome Intent' or \
-            message.intent == 'Default Fallback Intent' or \
-            message.intent.endswith('followup') or \
-            isinstance(message, FallbackResponse):
+                message.intent == 'Default Fallback Intent' or \
+                message.intent.endswith('followup') or \
+                isinstance(message, FallbackResponse):
             return message.message
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE.value
@@ -86,7 +87,9 @@ class ResponseModule:
         response = self.data_base_manager.get_tuition_fee(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
-        return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0], response[0][1], response[0][2])
+        return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0],
+                                                                                                  response[0][1],
+                                                                                                  response[0][2])
 
     def respond_to_course_location_queries(self, message):
         cid = message.message.upper()
@@ -142,7 +145,8 @@ class ResponseModule:
     def respond_to_course_study_level_queries(self, message):
         cid = message.message.upper()
         response = self.data_base_manager.get_course(cid)
-        return '{} is a CSE course for postgraduate'.format(cid) if response else '{} is not a CSE postgraduate course'.format(cid)
+        return '{} is a CSE course for postgraduate'.format(
+            cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
         cid = message.message.upper()
@@ -182,7 +186,7 @@ class ResponseModule:
         return result
 
     def respond_to_all_course(self, _):
-        response = self.data_base_manager.get_all_courses()
+        response = self.database_manager.get_all_courses()
         courses = [result[0] for result in response]
         return 'The list of courses is:\n{}'.format('\n'.join(courses))
 

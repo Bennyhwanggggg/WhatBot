@@ -2,13 +2,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from datetime import datetime
-import json
 import logging
 import time
 import os
 import concurrent.futures
 
 from query_module.QueryModule import QueryModule
+from database.DataBaseManager import DataBaseManager
 from response_module.ResponseModule import ResponseModule
 from management_module.ManagementModule import ManagementModule
 from conf.Error import UploadFileError, AuthenticationError
@@ -20,10 +20,11 @@ from authenitcation.db import Authenticator
 """
     Initialize modules
 """
+database_manager = DataBaseManager()
 query_module = QueryModule()
-response_module = ResponseModule()
-management_module = ManagementModule()
-authenticator = Authenticator()
+response_module = ResponseModule(database_manager=database_manager)
+management_module = ManagementModule(database_manager=database_manager)
+authenticator = Authenticator(database_manager=database_manager)
 
 """
     Logger configurations. By default all are set to DEBUG level.
@@ -148,14 +149,10 @@ def message():
 
 @app.route('/dashboard/piechart', methods=['GET'])
 def piechart():
-    # TODO original_data should come from database
-    original_data = {
-        "consultation_booking": 335,
-        "prerequisites_queries": 310,
-        "indicative_hours_queries": 234,
-        "course_outline_queries": 1135,
-        "course_location_queries": 1548,
-    }
+    data = management_module.get_intent_percentages(n=8)
+    original_data = dict()
+    for intent, value in data:
+        original_data[intent] = value
 
     # convert the original data to the form that echart piechart expected
     key_list = list(original_data.keys())
@@ -207,23 +204,7 @@ def piechart():
 
 @app.route('/dashboard/timeline', methods=['GET'])
 def timeline_chart():
-    original_data = {
-        "consultation_booking": [120, 132, 101, 134, 90, 230, 210],
-        "prerequisites_queries": [220, 182, 191, 234, 290, 330, 310],
-        "indicative_hours_queries": [150, 232, 201, 154, 190, 330, 410],
-        "course_outline_queries": [320, 332, 301, 334, 390, 330, 320],
-        "course_location_queries": [820, 932, 901, 934, 1290, 1330, 1320]
-    }
-    time_slots = [
-        "07/04/2019",
-        "08/04/2019",
-        "09/04/2019",
-        "10/04/2019",
-        "11/04/2019",
-        "12/04/2019",
-        "13/04/2019",
-    ]
-
+    original_data, time_slots = management_module.get_intent_timeline()
     title_list = list(original_data.keys())
     series_list = [
         {
@@ -274,19 +255,9 @@ def timeline_chart():
 
 @app.route('/dashboard/barchart', methods=['GET'])
 def barchart():
-    # TODO original data should come from database,
-    #  which should be a list that follow `[[name, confid], ...]`,
-    #  and it should also be ascending sorted by confid
-    original_data = [["consultation_booking", 0.78],
-                     ["prerequisites_queries", 0.82],
-                     ["indicative_hours_queries", 0.85],
-                     ["course_outline_queries", 0.87],
-                     ["course_location_queries_followup", 0.89],
-                     ["indicative_hours_queries_followup", 0.90],
-                     ["prerequisites_queries_followup", 0.91],
-                     ]
+    original_data = management_module.get_avg_confidence()
     category_data = [item[0] for item in original_data]
-    confidence_data = [item[1] for item in original_data]
+    confidence_data = [round(item[1], 2) for item in original_data]
     response_data = {
         "color": ['#3398DB'],
         "tooltip": {
@@ -330,14 +301,9 @@ def barchart():
     return jsonify(response_data), 200
 
 
-PATH = os.path.dirname(os.path.realpath(__file__))
-JSON_3D_PATH = os.path.join("filter3.json")
-
-
 @app.route('/dashboard/3dchart', methods=['GET'])
 def three_dimention_chart():
-    with open(JSON_3D_PATH) as f:
-        data = json.load(f)
+    data = management_module.get_3d_chart_data()
     symbol_size = 2.5
     response_data = {
         "grid3D": {},
