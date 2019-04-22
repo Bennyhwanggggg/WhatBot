@@ -46,6 +46,7 @@ class ResponseModule:
             'consultation_cancel': self.respond_to_course_consultation_cancel,
             'wam_admin_queries': self.respond_to_wam_admin_queries,
             'wam_student_queries': self.respond_to_wam_student_queries,
+            'rating_queries': self.response_to_rating_queries,
             'adk_course_queries': self.respond_to_course_isadk_queries,
             'consultation_view': self.respond_to_course_consultation_view,
             'course_timetable_queries': self.respond_to_timetable_queries
@@ -227,3 +228,9 @@ class ResponseModule:
         result = 'Timetable for {} - {} is:\n'.format(course, course_name)
         result += '\n'.join(response[2:])
         return result
+
+    def response_to_rating_queries(self, message):
+        cid = message.message
+        response =self.database_manager.get_rating(cid)
+        # TODO: update and format response
+        return response

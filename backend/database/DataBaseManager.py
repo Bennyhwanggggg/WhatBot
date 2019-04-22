@@ -274,3 +274,9 @@ class DataBaseManager:
         query = "SELECT course_code, course_name FROM courselist"
         result = self.execute_query(query)
         return result
+
+    def get_rating(self, cid):
+        query = "SELECT rating FROM info_handbook WHERE cid like %s"
+        inputs = (cid, )
+        result = self.execute_query(query, inputs)
+        return result

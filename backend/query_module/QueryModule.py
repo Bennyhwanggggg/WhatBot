@@ -6,7 +6,6 @@ from uuid import uuid4
 from conf.Response import IntentResponse, FallbackResponse
 from conf.Logger import Logger
 from dateutil.parser import parse
-import datetime
 
 """
     Logger setup
