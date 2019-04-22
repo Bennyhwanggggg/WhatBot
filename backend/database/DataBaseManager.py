@@ -67,8 +67,10 @@ class DataBaseManager:
         try:
             connection, cursor = self.connect_database()
             if args:
+                logger.info('Executing query: {}\nwith inputs: {}'.format(query, args[0]))
                 cursor.execute(query, (args[0]))
             else:
+                logger.info('Executing query: {}'.format(query))
                 cursor.execute(query)
             regex = re.compile(r'SELECT', re.IGNORECASE)
             result = cursor.fetchall() if regex.search(query) else "execute successfully"
