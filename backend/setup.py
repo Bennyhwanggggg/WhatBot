@@ -11,6 +11,5 @@ setup(
               'response_module',
               'utility_module',
               'management_module',
-              'emailer',
               'tests']
 )
