@@ -4,6 +4,7 @@ from query_module.train import QueryModuleTrainer
 import os
 import datetime
 from collections import Counter, defaultdict
+
 """
     Logger setup
 """
@@ -233,3 +234,70 @@ class ManagementModule:
         result = sorted(result, key=lambda x: x[1])
         result = [(res[0], float(res[1])) for res in result]
         return result[:n]
+
+    def get_3d_chart_data(self, top_n=5, day_range=7, n_sample=75):
+        """
+        NOTE: corner-case, what if there isn't top 5 intents?
+            -- it can be auto handled by python slice syntax
+        Complexity: O(N*log(N)), N is the total visit number within day_range
+
+        :param top_n: top n result to get
+        :type: int
+        :param day_range: number of days data
+        :type: int
+        :param n_sample: number of sample points
+        :type: int
+        :return: 3d data
+        :rtype: dict
+        """
+
+        query = 'SELECT intent,timestamp FROM intent_data'
+        ret = self.database_manager.execute_query(query)
+        cnt = Counter([x[0] for x in ret])
+        sorted_cnt = sorted(cnt.items(), key=lambda x: x[1])
+        n_most_common_intent = {x[0] for x in sorted_cnt[-top_n:]}
+        ret = [x for x in ret if x[0] in n_most_common_intent]
+        sorted_ret = sorted(ret, key=lambda x: x[1])
+
+        now = datetime.datetime.now()
+        one_week = datetime.timedelta(days=day_range)
+        ago = now - one_week
+        total_seconds = one_week.total_seconds()
+
+        # convert time attribute to total seconds from `ago`
+        bus_timeline_data = [[x[0], (x[1] - ago).total_seconds()] for x in sorted_ret]
+
+        # one list fan-out to be multiple list, each list corresponds with one intent
+        timeline_data = dict()
+        for x in bus_timeline_data:
+            intent = x[0]
+            if intent not in timeline_data:
+                timeline_data[intent] = list()
+            timeline_data[intent].append(x[1])
+
+        # sampling for e.g 100 time points for the top N intents
+        sample_timepoints = [total_seconds * (i / n_sample) for i in range(1, n_sample + 1)]
+        sampled_timeline_data = dict()
+        for intent in timeline_data:
+            sampled_timeline_data[intent] = []
+            cur_timeline = timeline_data[intent]
+            i = 0
+            for sample_point in sample_timepoints:
+                while i < len(cur_timeline) and sample_point >= cur_timeline[i]:
+                    i += 1
+                day_range_point = day_range * (sample_point / total_seconds)
+                sampled_timeline_data[intent].append((day_range_point, i + 1))
+
+        # convert it to the form that 3D chart consumes
+        ret = [
+            [
+                "Usage",
+                "Time",
+                "Intent"
+            ],
+        ]
+        for intent in sampled_timeline_data:
+            cur_sampled_timeline = sampled_timeline_data[intent]
+            for x in cur_sampled_timeline:
+                ret.append([x[1], x[0], intent])
+        return ret
