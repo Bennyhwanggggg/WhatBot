@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import datetime
 import random
 from management_module.data_tool._data_source import *
@@ -17,9 +17,9 @@ class DataTool:
         self.database_manager = database_manager
         self.management_module = ManagementModule(database_manager=self.database_manager)
 
-    def get_random_index(self):
-        return numpy.random.choice(numpy.arange(0, 5),
-                                   p=[0.02, 0.12, 0.16, 0.25, 0.45])
+    def get_random_index(self, n=6):
+        probs = np.random.dirichlet(np.ones(n), size=1)
+        return np.random.choice(np.arange(0, n), p=probs[0])
 
     def get_random_amp(self):
         return random.choice(range(-5, 5)) / 100

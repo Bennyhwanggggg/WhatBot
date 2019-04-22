@@ -201,11 +201,37 @@ indicative_hours_queries = ["What is the indicative hours for {course_code}?",
                             "Indicative hours a week for {course_code}",
                             ]
 
-intent_list = [['course_fee_queries', course_fee_queries, 0.70],
-               ['course_location_queries', course_location_queries, 0.78],
-               ['course_outline_queries', indicative_hours_queries, 0.80],
-               ['indicative_hours_queries', indicative_hours_queries, 0.85],
-               ['study_level_queries', study_level_queries, 0.90],
+prerequisites_queries = [
+                        "What classes do I need to take before doing {course_code}?",
+                        "What are the prerequisites for {course_code}?",
+                        "What courses do I need to take before doing {course_code}?",
+                        "Give me the prerequisites for {course_code}.",
+                        "Are there any courses I need to do before doing {course_code}?",
+                        "Are there any prerequisites for {course_code}?",
+                        "What is the condition for enrolment for {course_code}?",
+                        "Are there any condition for enrolment for {course_code}?",
+                        "Tell me the prerequisites for {course_code}",
+                        "What courses do I need to take to be eligible for {course_code}?",
+                        "What courses do I need to take to do {course_code}?",
+                        "Are there any classes I need to take before doing {course_code}?",
+                        "I want to know what classes I need to take before doing {course_code}",
+                        "I want to know what courses I need to take before doing {course_code}"
+                        "What are the requirements for {course_code}?",
+                        "What are the requirements to do {course_code}?",
+                        "{course_code} prerequisites",
+                        "What courses do I need to take before {course_code}?",
+                        "{course_code}'s prerequisites",
+                        "{course_code}'s requirements",
+                        "prerequisites for {course_code}",
+                        "Requirements for {course_code}",
+                        ]
+import random
+intent_list = [['course_fee_queries', course_fee_queries, random.uniform(0.4, 1)],
+               ['course_location_queries', course_location_queries, random.uniform(0.75, 1)],
+               ['course_outline_queries', indicative_hours_queries, random.uniform(0.8, 1)],
+               ['indicative_hours_queries', indicative_hours_queries, random.uniform(0.5, 0.9)],
+               ['study_level_queries', study_level_queries, random.uniform(0.66, 0.95)],
+               ['prerequisites_queries', prerequisites_queries, random.uniform(0.76, 0.99)]
                ]
 
 course_list = [["COMP6441", "Security Engineering and Cyber Security"],
