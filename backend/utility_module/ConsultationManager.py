@@ -3,6 +3,7 @@
     operations relating to the consultation booking feature.
 """
 from database.DataBaseManager import DataBaseManager
+from utility_module.emailer import EmailSender
 import datetime
 from conf.Logger import Logger
 
@@ -10,8 +11,9 @@ logger = Logger(__name__).log
 
 
 class ConsultationManager:
-    def __init__(self, database_manager=DataBaseManager()):
+    def __init__(self, database_manager=DataBaseManager(), emailer=EmailSender()):
         self.database_manager = database_manager
+        self.emailer = emailer
         self.initial_time_slots = ['09:00:00',
                                    '10:00:00',
                                    '11:00:00',
@@ -37,6 +39,7 @@ class ConsultationManager:
         data_exist = self.database_manager.execute_query(check_empty, inputs)
         if not data_exist:
             return "There is no course consultation booked at this time"
+        self.emailer.send_confirm_cancelling(cid=cid, time=time, date=date, receiver='whatbot9900@gmail.com')
         return self.database_manager.execute_query(query, inputs)
 
     def next_seven_day(self):
@@ -111,7 +114,8 @@ class ConsultationManager:
                 avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list
                 logger.debug(avail_list)
                 if time in avail_list:
-                    result = self.add_consultation(cid, sid, time, date)  # add into database
+                    self.add_consultation(cid, sid, time, date)  # add into database
+                    self.emailer.send_confirm_booking(cid=cid, time=time, date=date, receiver='whatbot9900@gmail.com')
                     return "{}".format(feedback)
                 else:
                     if not avail_list:
