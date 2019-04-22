@@ -25,10 +25,10 @@ class UtilityModule:
             accessing the database every time.
         """
         self.data_base_manager = database_manager
+        self.emailer = EmailSender()
         self.wam_calculator = WamCalculator(database_manager=self.data_base_manager)
-        self.consultation_manager = ConsultationManager(database_manager=self.data_base_manager)
+        self.consultation_manager = ConsultationManager(database_manager=self.data_base_manager, emailer=self.emailer)
         self.class_room_finder = ClassRoomFinder(database_manager=self.data_base_manager)
         self.announcement_getter = AnnouncementsGetter(database_manager=self.data_base_manager)
         self.course_timetable_finder = CourseTimeTableFinder(database_manager=self.data_base_manager)
         self.class_room_finder.get_all_classroom()
-        self.emailer = EmailSender()
