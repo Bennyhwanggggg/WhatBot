@@ -3,7 +3,7 @@
     operations relating to the consultation booking feature.
 """
 from database.DataBaseManager import DataBaseManager
-from utility_module.emailer import EmailSender
+from utility_module.emailer.EmailSender import EmailSender
 import datetime
 from conf.Logger import Logger
 
