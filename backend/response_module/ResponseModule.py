@@ -78,14 +78,14 @@ class ResponseModule:
 
     def respond_to_course_outline_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_course_outline(cid)
+        response = self.database_manager.get_course_outline(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_fee_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_tuition_fee(cid)
+        response = self.database_manager.get_tuition_fee(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return "Commonwealth student: {}\nDomestic student: {}\nInternational student: {}".format(response[0][0],
@@ -94,7 +94,7 @@ class ResponseModule:
 
     def respond_to_course_location_queries(self, message):
         cid = message.message.upper()
-        campus = self.data_base_manager.get_location(cid)
+        campus = self.database_manager.get_location(cid)
         classroom = self.utility_module.class_room_finder.find_class_room(cid)
         if not campus and classroom:
             return QueryError.NO_SUCH_COURSE.value
@@ -102,21 +102,21 @@ class ResponseModule:
 
     def respond_to_course_indicative_hours_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_indicative_hours(cid)
+        response = self.database_manager.get_indicative_hours(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_offering_term_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_offer_term(cid)
+        response = self.database_manager.get_offer_term(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         return response[0][0]
 
     def respond_to_course_prerequisites_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_prerequisites(cid)
+        response = self.database_manager.get_prerequisites(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         if not response[0][0]:
@@ -125,7 +125,7 @@ class ResponseModule:
 
     def respond_to_course_school_and_faculty_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_faculty(cid)
+        response = self.database_manager.get_faculty(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         responses = ["This course belongs to {}.".format(response[0][0]),
@@ -135,7 +135,7 @@ class ResponseModule:
 
     def respond_to_course_send_outline_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_pdf_url(cid)
+        response = self.database_manager.get_pdf_url(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         url = response[0][0]
@@ -145,13 +145,13 @@ class ResponseModule:
 
     def respond_to_course_study_level_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_course(cid)
+        response = self.database_manager.get_course(cid)
         return '{} is a CSE course for postgraduate'.format(
             cid) if response else '{} is not a CSE postgraduate course'.format(cid)
 
     def respond_to_course_isadk_queries(self, message):
         cid = message.message.upper()
-        response = self.data_base_manager.get_course(cid)
+        response = self.database_manager.get_course(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         answer = "Yes, it is an ADK course" if response[0][3] else "This course is not an ADK course"
@@ -213,7 +213,7 @@ class ResponseModule:
         return response
 
     def respond_to_all_courses_queries(self):
-        response = self.data_base_manager.get_all_courses()
+        response = self.database_manager.get_all_courses()
         result = "The list of courses are:\n"
         for cid, cname in response:
             result += "{}-{}".format(cid, cname)
@@ -231,6 +231,6 @@ class ResponseModule:
 
     def response_to_rating_queries(self, message):
         cid = message.message
-        response =self.database_manager.get_rating(cid)
+        response = self.database_manager.get_rating(cid)
         # TODO: update and format response
         return response
