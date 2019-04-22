@@ -12,7 +12,7 @@ from utility_module.ConsultationManager import ConsultationManager
 from utility_module.ClassRoomFinder import ClassRoomFinder
 from utility_module.AnnoucementGetter import AnnouncementsGetter
 from utility_module.CourseTimeTableFinder import CourseTimeTableFinder
-from utility_module.emailer import EmailSender
+from utility_module.emailer.EmailSender import EmailSender
 from database.DataBaseManager import DataBaseManager
 
 
