@@ -1,4 +1,5 @@
 from response_module.ResponseModule import ResponseModule
+from tests.MockEmailer import MockEmailer
 from conf.Response import IntentResponse
 
 
@@ -51,10 +52,11 @@ def test_respond_to_course_offering_term():
 
 def test_respond_to_course_send_outline():
     response_module = ResponseModule()
+    response_module.utility_module.emailer = MockEmailer()
     course = "comp9900"
     message = IntentResponse(intent='send_outline_queries', confidence=1, message=course)
     course_send_outline = response_module.respond_to_course_send_outline_queries(message)
-    assert course_send_outline == 'The course outline for {} has been sent to {}'.format(course, 'whatbot9900@gmail.com')
+    assert course_send_outline == 'The course outline for {} has been sent to {}'.format(course.upper(), 'whatbot9900@gmail.com')
 
 
 def test_respond_to_course_school_and_faculty():
