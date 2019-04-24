@@ -1,17 +1,31 @@
+"""
+    This file contains the Data Extractor class where it goes to UNSW course handbook and
+    extract the desired data.
+"""
 import requests
-import sys
 from bs4 import BeautifulSoup
 from database.DataBaseManager import DataBaseManager
 
 
 class DataExtractor:
     def __init__(self, study_level='postgraduate', course='COMP9900'):
+        """Initialise the data extractor class with a study level and course to extract.
+
+        :param study_level: study level such as postgraduate or undergraduate
+        :type: str
+        :param course: course code of the course to extract data from
+        :type: str
+        """
         self.study_level = study_level
         self.course = course
         self.details = dict()
         self.data_base_manager = DataBaseManager()
 
     def extract(self):
+        """Extract the data of the desired course and save the data into a class attribute
+
+        :return: None
+        """
         # undergraduate and comp3900 are parameters
         url = "https://www.handbook.unsw.edu.au/{}/courses/2019/{}/".format(self.study_level, self.course)
         url = requests.get(url)
@@ -85,6 +99,11 @@ class DataExtractor:
             self.details["International Student"] = ""
 
     def save(self):
+        """Save the class attribute self.detail into database.
+
+        :return: Database execution status
+        :rtype: str
+        """
         self.data_base_manager.add_handbook_entry(self.course, self.details["Title"], self.details["Credit"],
                                                   self.details["Prerequisite"],self.details["Course Outline"],
                                                   self.details["Faculty"],
@@ -94,12 +113,3 @@ class DataExtractor:
                                                   self.details["Commonwealth Supported Student"],
                                                   self.details["Domestic Student"],
                                                   self.details["International Student"])
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        data_extractor = DataExtractor(sys.argv[1], sys.argv[2])
-    else:
-        data_extractor = DataExtractor()
-    data_extractor.extract()
-    data_extractor.save()

@@ -1,0 +1,2 @@
+# Data Extractor
+The data extractor module is responsible for extracting data from [UNSW course handbook](https://www.handbook.unsw.edu.au/). It extracts data and uses the database module to store the data into our database on AWS RDS.  
