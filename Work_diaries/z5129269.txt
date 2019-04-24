@@ -35,3 +35,6 @@ Finish consultation with Benny and Steve.
 Week8:
 fix the bug for UI, adding get all courses function, adding more training for cancelling consultation and adk courses
 adding email module with sending outline, booking confirmation and cancelling confirmation
+
+Week9:
+update the repsonse for asking location, adding new functions for announcement query and asking for all courses query
