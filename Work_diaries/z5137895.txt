@@ -39,3 +39,8 @@ Week 8:
 This week i write the function of viewing the consultation booking history.
 Add the intent for consultation view
 Fulfill the previous modules and connect the backend with frontend.
+
+Week 9:
+Write and train the intent of viewing consultation booking history, including the functions in response_module and consultationManager.py
+Fix the bug of consultation cancel
+Enhance the course rate.
