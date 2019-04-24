@@ -38,4 +38,4 @@ adding email module with sending outline, booking confirmation and cancelling co
 
 Week9:
 update the repsonse for asking location, adding new functions for announcement query and asking for all courses query,
-add ratings data to database
+add ratings data to database and implementing its function
