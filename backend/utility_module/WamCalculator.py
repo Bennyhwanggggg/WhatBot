@@ -1,3 +1,6 @@
+"""
+    This file contains the Wam Calculator which is responsible for WAM related operations.
+"""
 from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from conf.Error import QueryError

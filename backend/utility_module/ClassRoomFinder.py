@@ -8,10 +8,20 @@ import pandas as pd
 
 class ClassRoomFinder:
     def __init__(self, database_manager=DataBaseManager()):
+        """Instantiate the class with a database instance
+
+        :param database_manager: database instance
+        :type: DataBaseManger
+        """
         self.database_manager = database_manager
         self.data = None
 
     def get_all_classroom(self):
+        """Get all class room location data and set it into memory as
+        they do not change often
+
+        :return: None
+        """
         query = "SELECT * from classroom"
         result = self.database_manager.execute_query(query)
         self.data = pd.DataFrame(data=result, columns=['course', 'location'])

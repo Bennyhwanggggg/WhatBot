@@ -12,8 +12,18 @@ logger = Logger(__name__).log
 
 class ConsultationManager:
     def __init__(self, database_manager=DataBaseManager(), emailer=EmailSender()):
+        """Instantiate the class with a database instance and also an SMTP instance which
+        is responsible for sending confirmation emails. Also set available timeslots that
+        people can book for.
+
+        :param database_manager: Database instance
+        :type: DataBaseManager
+        :param emailer: SMTP email server instance
+        :type: EmailSender
+        """
         self.database_manager = database_manager
         self.emailer = emailer
+        # Set available timeslots
         self.initial_time_slots = ['09:00:00',
                                    '10:00:00',
                                    '11:00:00',
@@ -64,6 +74,13 @@ class ConsultationManager:
         return self.database_manager.execute_query(query, inputs)
 
     def get_the_weekday(self,date):
+        """Convert a date into weekday string form
+
+        :param date: date to convert
+        :type: str
+        :return: week day
+        :rtype: str
+        """
         date_convert = date.split('-')
         week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         date_list = [int(i) for i in date_convert]
@@ -74,6 +91,14 @@ class ConsultationManager:
         return day_as_string
 
     def check_weekday(self, date):
+        """Check if a given date is a weekday and if not, we tell user they cannot book that day.
+        Also check if the booking day is inside our allowed range which is one week.
+
+        :param date: date to check
+        :type: str
+        :return: success or fail message
+        :rtype: str
+        """
         week_next = self.next_seven_day()
         today = datetime.date.today().strftime('%Y-%m-%d')
         if not date or date > week_next or date < today:  # check the date is within one week
@@ -91,6 +116,15 @@ class ConsultationManager:
             return False, "Please try again"
 
     def get_time_slots(self, cid, date):
+        """Get list of available times that are booked for a given date and course
+
+        :param cid: course id
+        :type: str
+        :param date: date of booking
+        :type: str
+        :return: list of booked times
+        :rtype: list
+        """
         query = "SELECT time from consultation where cid = %s and date = %s"
         inputs = (cid, date)
         array_book = self.database_manager.execute_query(query, inputs)
@@ -99,6 +133,16 @@ class ConsultationManager:
         return booked
 
     def get_avail_time_slots(self, cid, date):
+        """Given a course id and a date, get the list of not booked time on that date for that
+        course
+
+        :param cid: course id
+        :type: str
+        :param date: date to check
+        :type: str
+        :return: list of available times
+        :rtype: list
+        """
         booked = self.get_time_slots(cid, date)
         avail_time_slots = []
         for time in self.initial_time_slots:
@@ -107,6 +151,22 @@ class ConsultationManager:
         return avail_time_slots
 
     def consultation_booking_query(self, cid, sid, time, date):
+        """Main function for handling consultation booking query. Use the other helper function
+        in this class to perform checks. First check the date and time to book is valid and then
+        check if that time slot is free for booking. If successful, send the confirmation email to
+        user
+
+        :param cid: course id
+        :type: str
+        :param sid: student id
+        :type: str
+        :param time: time to book
+        :type: str
+        :param date: date to book
+        :type: str
+        :return: success status
+        :rtype: str
+        """
         is_weekday, feedback = self.check_weekday(date)
         time = self.round_time(time)
         if is_weekday:
@@ -131,6 +191,13 @@ class ConsultationManager:
             return feedback
 
     def view_my_consultation(self, sid):
+        """Function to see list of consultations
+
+        :param sid: student id to check
+        :type: str
+        :return: list of consultations student has booked
+        :rtype: list
+        """
         query = "Select cid, time, date FROM consultation WHERE sid = %s "
         inputs = (sid, )
         return self.database_manager.execute_query(query, inputs)

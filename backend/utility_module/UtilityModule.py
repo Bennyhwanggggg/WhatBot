@@ -22,7 +22,8 @@ class UtilityModule:
             Initialise the UtilityModule class. This uses a singleton class that uses single data base manager
             instance to manage all database connection related work. Upon initialisation, we preload data that are
             often fix ike class room location information and student marks into memory so we don't need to keep
-            accessing the database every time.
+            accessing the database every time. It also uses factory design pattern to manage all other components
+            in this module
         """
         self.data_base_manager = database_manager
         self.emailer = EmailSender()

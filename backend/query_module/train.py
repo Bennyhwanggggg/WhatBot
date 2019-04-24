@@ -73,6 +73,9 @@ class QueryModuleTrainer:
         self.intents_parent = self.intents_client.project_agent_path(self.project_id)
         self.entity_types_parent = self.entity_types_client.project_agent_path(project_id)
 
+        """
+            Data generation function mapping
+        """
         self.data_map = {
             'course code': self._get_training_course_codes,
             'time': self._set_training_time,
@@ -81,6 +84,9 @@ class QueryModuleTrainer:
         }
 
         # the information regarding this map should match what is on DialogFlow setup
+        """
+            Entity parsing map configuration
+        """
         self.intent_entity_map = {
             'none': {'parse_key': []},
             'course_code': {'parse_key': ['course code']},
@@ -88,6 +94,9 @@ class QueryModuleTrainer:
             'student': {'parse_key': ['student']},
         }
 
+        """
+            Entity regex mapping
+        """
         self.entity_map = {
             'course code': {'regex': re.compile(r'^COMP\d{4}', re.IGNORECASE),
                             'entity_type': '@course',
@@ -135,10 +144,13 @@ class QueryModuleTrainer:
         display_name, message_texts, intent_types, parent_followup, clean_data = None, [], [], [], []
         output_contexts, input_contexts, action = [], [], []
         reset_context = False
+        # If no data, return empty
         if not data or not data[0]:
             logger.warning('Empty intents data file:\n{}\n'.format(data_file))
             return display_name, message_texts, intent_types, parent_followup, \
                    input_contexts, output_contexts, action, clean_data, reset_context
+
+        # Process the data through queue and use the first word to parse
         data = deque(data)
         while data:
             line = data.popleft()
@@ -265,6 +277,7 @@ class QueryModuleTrainer:
             parts = []
             for word in training_phrases_part.split():
                 is_entity, part = False, None
+                # entity labelling if required
                 for training_data_entities_parse_key in training_data_entities_parse_keys:
                     entity = self.entity_map[training_data_entities_parse_key]
                     regex, entity_type, alias = entity['regex'], entity['entity_type'], entity['alias']
@@ -285,6 +298,7 @@ class QueryModuleTrainer:
         text = dialogflow.types.Intent.Message.Text(text=message_texts)
         message = dialogflow.types.Intent.Message(text=text)
 
+        # action setup for context passing
         action = action[0] if action else None
         parent_followup = 'projects/{}/agent/intents/{}'.format(self.project_id,
                                                                 self.get_intent_ids(parent_followup[0])[0]) if parent_followup else None
@@ -361,6 +375,19 @@ class QueryModuleTrainer:
                 logger.error('Error occurred with {}: {}'.format(display_name, str(e)))
 
     def read_entities_data(self, data_file):
+        """Reads a file that should follow the entity data format then do similar parsing
+        as the read_intent_data function. Extract the display name and then all the following
+        entity words and their synonyms if required.
+
+        :param data_file: file to parse
+        :type: file
+        :return display_name: display name of the entity
+        :rtype: str
+        :return entity_values: the values for that entity
+        :rtype: list
+        :return synonyms: the synonyms for the entity values. Optional, however, should be same length as entity_values if used.
+        :rtype: list
+        """
         from collections import deque
         data_file = open(data_file, 'r')
         data = data_file.read().split('\n')
@@ -406,16 +433,18 @@ class QueryModuleTrainer:
         logger.info('Entity type created: \n{}'.format(response))
         entity_type_ids = self.get_entity_ids(display_name)
         for entity_type_id in entity_type_ids:
+            # get Dialogflow configurations
             entity_type_path = self.entity_types_client.entity_type_path(self.project_id, entity_type_id)
-
             training_entities = []
             synonyms = synonyms or entity_values
+            # pass the values along with their synonyms
             for entity_value, synonym in zip(entity_values, synonyms):
                 entity = dialogflow.types.EntityType.Entity()
                 entity.value = entity_value
                 for syn in synonym:
                     entity.synonyms.append(syn)
                 training_entities.append(entity)
+            # call Dialogflow API and batch create for multiple entity values
             response = self.entity_types_client.batch_create_entities(entity_type_path, training_entities)
             logger.info('Entity created: {}'.format(response))
 
@@ -464,18 +493,38 @@ class QueryModuleTrainer:
                 logger.error('Error occurred with {}: {}'.format(display_name, str(e)))
 
     def create_context(self, display_name, lifespan_count=4):
+        """Create Dialogflow context which lasts for a time of lifespan_count. Context is important
+        when we want to pass information from one previous conversation to another.
+
+        :param display_name: name of context
+        :type: str
+        :param lifespan_count: how long the context should be active for once triggered
+        :type: int
+        :return: Created context
+        :rtype: Dialogflow Context Type
+        """
         existing_context = self.find_context(display_name)
         if existing_context:
             logger.info('Context already exist:\n{}'.format(existing_context[0]))
             return existing_context[0]
+        # Setup
         session_path = self.contexts_client.session_path(self.project_id, self.session_id)
         context_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)
+        # Create the Context object
         context = dialogflow.types.Context(name=context_name, lifespan_count=lifespan_count)
+        # Send it to Dialogflow
         response = self.contexts_client.create_context(session_path, context)
         logger.info('Context created:\n{}'.format(response))
         return context
 
     def find_context(self, display_name):
+        """Used to find a context object in Dialogflow using display name.
+
+        :param display_name: name of context to find
+        :type: str
+        :return: List of context that has the name
+        :rtype: list
+        """
         session_path = self.contexts_client.session_path(self.project_id, self.session_id)
         contexts = self.contexts_client.list_contexts(session_path)
         target_name = self.contexts_client.context_path(self.project_id, self.session_id, display_name)

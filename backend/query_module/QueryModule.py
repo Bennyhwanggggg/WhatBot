@@ -88,7 +88,12 @@ class QueryModule:
 
     def detect_intent_texts(self, text, language_code='en'):
         """Call the Dialogflow API with the given text. Returns the result of detect intent
-        with texts as inputs.
+        with texts as inputs. Also detect if parameters are missing from Dialogflow's result
+        and do our own entity extraction if there is missing parameter. Finally, clean response
+        message by removing unnecessary punctuations.
+
+        If a fallback is received or missing parmeter is detected, we force into a
+        FallbackResponse type.
 
         Using the same `session_id` between requests allows continuation
         of the conversation.
@@ -96,9 +101,13 @@ class QueryModule:
         :type str
         :param language_code: the language code of the language
         :type: str
+        :return: response from Dialogflow
+        :rtype: IntentResponse or FallbackResponse
         """
+        # convert text into Dialogflow Text and Query type
         text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
         query_input = dialogflow.types.QueryInput(text=text_input)
+        # call Dialogflow API
         response = self.session_client.detect_intent(session=self.session, query_input=query_input)
 
         logger.info('Query text: {}'.format(response.query_result.query_text))
@@ -107,8 +116,10 @@ class QueryModule:
             response.query_result.intent_detection_confidence))
         logger.info('Fulfillment text: {}\n'.format(response.query_result.fulfillment_text))
 
+        # Check if missing parameters in response
         missing_parameters = self.detect_missing_parameters(response.query_result.parameters.fields)
         if len(missing_parameters):
+            # Perform entity detection ourselves to see if we can make up for Dialogflow's failure
             response.query_result.fulfillment_text = self.detect_entity(text)
             if not response.query_result.fulfillment_text:
                 return FallbackResponse(intent='Missing parameters: {}'.format(response.query_result.intent.display_name),
@@ -171,6 +182,14 @@ class QueryModule:
         return ' @@@ '.join(result)
 
     def clean_message(self, message):
+        """Given a string, remove unnecessary punctuations from it and also remove noise words
+        from it.
+
+        :param message: message to clean
+        :type: str
+        :return: cleaned message
+        :rtype: str
+        """
         logger.debug(message)
         if not any([self.entity_map[entity]['regex'].search(message) for entity in self.entity_map.keys()]):
             return message

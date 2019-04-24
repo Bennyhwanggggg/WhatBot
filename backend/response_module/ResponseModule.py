@@ -1,3 +1,9 @@
+"""
+    The ResponseModule class is responsible for formulating the responses from the question provided
+    by QueryModule. It manages how each type of query should be responded and provides the final
+    answer that is shown to user on UI. It manages Utility Module as well since some responses requires
+    Utility Module to work.
+"""
 from database.DataBaseManager import DataBaseManager
 from utility_module.UtilityModule import UtilityModule
 from conf.Error import QueryError
@@ -17,9 +23,15 @@ class ResponseModule:
             Initialize the Response module class which act as a search engine as well.
             It contains a data base connection and query_map is responsible for handling different types
             of data retrieval functions. The keys inside query_map have to match an intent name on Dialogflow.
+            It also instantiate a utility module class which will be responsible for queries that requires it.
+            On each call, it uses its database instance to perform the query to database if required to get the answer.
         """
         self.database_manager = database_manager
         self.utility_module = UtilityModule(database_manager=self.database_manager)
+
+        """
+            Response function mapping
+        """
         self.query_map = {
             'all_courses_queries': self.respond_to_all_course,
             'course_outline_queries': self.respond_to_course_outline_queries,
@@ -64,6 +76,7 @@ class ResponseModule:
         """
         logger.info(
             'Response module recieved:\n\tIntent: {}\n\tFullfillment text: {}'.format(message.intent, message.message))
+        # If fallback or welcome or followup, we don't need to do anything
         if message.intent == 'Default Welcome Intent' or \
                 message.intent == 'Default Fallback Intent' or \
                 message.intent.endswith('followup') or \
@@ -71,9 +84,18 @@ class ResponseModule:
             return message.message
         elif message.intent not in self.query_map.keys():
             return QueryError.UNKNOWN_QUERY_TYPE.value
+        # Proceed to mapping
         return self.query_map[message.intent](message)
 
     def unpack_message(self, message, token=' @@@ '):
+        """Unpack Dialogflow messages
+
+        :param message: message to process.
+        :param token: token to split by
+        :type: str
+        :return: processed message
+        :rtype: list
+        """
         return message.split(token)
 
     def respond_to_course_outline_queries(self, message):
@@ -139,7 +161,7 @@ class ResponseModule:
         if not response:
             return QueryError.NO_SUCH_COURSE.value
         url = response[0][0]
-        receiver = 'whatbot9900@gmail.com'
+        receiver = 'whatbot9900@gmail.com'  # set receiver to ourselves since in development, we don't have actual user emails.
         self.utility_module.emailer.send_outline('WhatBot: Your course outline information request', url, cid, receiver)
         return 'The course outline for {} has been sent to {}'.format(cid, receiver)
 

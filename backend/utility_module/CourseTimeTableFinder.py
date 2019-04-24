@@ -7,6 +7,11 @@ from database.DataBaseManager import DataBaseManager
 
 class CourseTimeTableFinder:
     def __init__(self, database_manager=DataBaseManager()):
+        """Instantiate with a database instance
+
+        :param database_manager: database instance
+        :type: DataBaseManager
+        """
         self.database_manager = database_manager
 
     def get_course_timetable(self, cid):

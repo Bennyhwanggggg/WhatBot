@@ -1,8 +1,30 @@
 # Query Module
 
-The query module is responsible for all communication related with Dialogflow. Messages are passed into this module for it to be processed by Dialogflow such that the intent and entites detected will be returned in the response, which will be used by the response module to do further processing.
+The query module is responsible for all communication related with Dialogflow. Messages are passed into this module for 
+it to be processed by Dialogflow such that the intent and entites detected will be returned in the response, which will
+ be used by the response module to do further processing.
+ 
+## Features
 
-## How to train
+### User Input Intent Classification 
+
+Query Module will take the user input and pass it to Dialogflow through an API call. This API call gives us access to 
+the AI NLP model we have pre-trained already on Dialogflow and will return us an result of which intent Dialogflow 
+thinks the user query belong to and also the entities that exist in their query. These information are returned as a 
+result of the API call. The query module then process this result to check if Dialogflow has high confidence or if 
+Dialogflow has failed to detect any entities. If any of these occurs, query module will handle these tasks and then 
+formulate the appropriate response to give to the Response Module.
+
+### Query Intent AI Training
+
+The `QueryTrainer` class in `train.py` is responsible for AI model training. This allows user to train new intent by 
+simply providing some training data which follows the configuration in the instruction below. Through this feature, 
+even when user only provide little training data, the `QueryTrainer` can still automatically generate variations of the 
+training data to increase number of training phrases. More detail on the power of this feature in `ManagementModule`'s 
+automatic AI training section.
+
+#### How to train
+
 The Dialogflow agent can be trained using the supplied data inside `training_data` folder.
 
 To train an entity:
@@ -31,8 +53,8 @@ query_module_trainer.create_entity(self, display_name=display_name, entity_value
 ```
 Note: Will throw an error if entity already exist, so make sure you call query_module_trainer.delete_entity(display_name)
 
-### Training data configuration
-#### Intents
+##### Training data configuration
+###### Intents
 Intents training data should have the following lines:  
 `display_name` : The name of the intent. If an intent is expected to have a follow up, it should end with `_with_follow_up`.  
 `message_texts` : How the intent should respond. If returning multiple entities, each field should be separated by ` @@@ `. e.g `$course @@@ $time`   
@@ -137,7 +159,7 @@ I want to book on {date} at {time}
 {time} {date}
 ```
 
-#### Entities
+###### Entities
 The first line of any entities training data should be the name of the entity and starts with `display_name`. All following lines are the data themselves. If an entity has a synonym, it should be separated with `@@@` on the same line. 
 Entity training data files should have the following lines:  
 `display_name`: name of the entity  

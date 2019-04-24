@@ -1,5 +1,5 @@
 """
-    This is a mock emailer class that is used for testing only
+    This is a mock EmailSender class that is used for testing only
     It copies the functionality of Utility Module's emailer.
 """
 
