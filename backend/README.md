@@ -4,24 +4,29 @@ This packages contains the backend modules of WhatBot. It is a Python Flask app 
 
 ## Setup, build and run
 
-Build the packages
+**Running locally**  
+*Prerequisites*: Python 3 installed  
+Setup
 ```
+python3 -m pip install -r requirements.txt
 python3 setup.py install
 ```
-Running locally
+Run
 ```
 python3 app.py
 ```
-Running via Docker
+
+**Running via Docker**
+Using Docker to run will run the app in production mode.
 ```
 docker build -t whatbot.backend:latest .
 docker run whatbot.backend:latest
 ```
-Using Docker to run will run the app in production mode.
 
 ## Testing
 
-Pytest is the chosen testing module for our backend. All test cases are inside the `tests` folder.
+Pytest is the chosen testing module for our backend. All test cases are inside the `tests` folder. The test covers 
+most of the backend module's essential functions.  
 
 ### How to test?
 
