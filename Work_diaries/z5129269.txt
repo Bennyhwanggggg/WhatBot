@@ -37,4 +37,5 @@ fix the bug for UI, adding get all courses function, adding more training for ca
 adding email module with sending outline, booking confirmation and cancelling confirmation
 
 Week9:
-update the repsonse for asking location, adding new functions for announcement query and asking for all courses query
+update the repsonse for asking location, adding new functions for announcement query and asking for all courses query,
+add ratings data to database
