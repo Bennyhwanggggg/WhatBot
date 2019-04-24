@@ -232,5 +232,5 @@ class ResponseModule:
     def response_to_rating_queries(self, message):
         cid = message.message
         response = self.database_manager.get_rating(cid)
-        # TODO: update and format response
-        return response
+        result = "The rating of the course {} is {}".format(cid, response[0][0])
+        return result

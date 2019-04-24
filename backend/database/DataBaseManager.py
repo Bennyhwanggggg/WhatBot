@@ -278,7 +278,7 @@ class DataBaseManager:
         return result
 
     def get_rating(self, cid):
-        query = "SELECT rating FROM info_handbook WHERE cid like %s"
+        query = "SELECT rating FROM courselist WHERE course_code like %s"
         inputs = (cid, )
         result = self.execute_query(query, inputs)
         return result
