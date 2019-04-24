@@ -99,3 +99,17 @@ The upload file for training feature in Dialogflow cannot be used for training e
 
 ##### 4. Dialogflow console's upload file cannot be used to configure an intent, e.g. followup, response and contexts
 From the usage example above, you can see that parameters such as `message_texts` and `reset_contexts` were specified in WhatBot's configuration file as a requirement. This allowed WhatBot users to setup various parameters for the intent right away upon creation. Parameters like `message_texts` is used to specify how the intent should respond and `reset_contexts` is used to specify whether this intent will mark the end of a conversation. WhatBot also offer context and followups to be configured as well by specifying fields such as `parent_followup`, `input_context`, `output_context` and `action`. For more detail on the training data configuration see [here](https://github.com/comp3300-comp9900-term-1-2019/capstone-project-whatbot/tree/master/backend/query_module#how-to-train). All of these, cannot be done on Dialogflow automatically.  
+
+### Data Analytics
+
+#### Intent Usage
+Provides data on the amount of usage for each intent and return the result to the user. Therefore, user who calls this can get a better idea of how their system is being used and what the consumer cares most about.   
+
+#### Intent Timeline
+Provides a timeline data (based on last 7 day) on how much each intent has been used. From this, user can see what is the current trend of their consumer and be able to react to more people's questions faster.  
+
+#### Intent Confidence
+Provides the average confidence level that Dialogflow has for the botton n intent. This lets the user knows how well the system is performing so that they can use the automation training feature to improve the system if required.  
+
+#### 3D Timeline Intent Usage
+Provides a 3D view of top n intent's accumulative usage in the last 7 days so user can get a better understanding of user behaviour.

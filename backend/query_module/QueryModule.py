@@ -1,3 +1,9 @@
+"""
+    This file contains the main QueryModule which handles user inputs from outside
+    and passes it to Dialogflow for intent detection. It then analyse the result from
+    Dialogflow and do processing (e.g if wrong entity detected) if required before passing the
+    result to ResponseModule.
+"""
 import os
 import dialogflow_v2 as dialogflow
 import re
@@ -22,6 +28,16 @@ class QueryModule:
     def __init__(self, project_id=DIALOGFLOW_PROJECT_ID,
                  session_id=uuid4(),
                  credentials=GOOGLE_APPLICATION_CREDENTIALS_PATH):
+        """Initialise the QueryModule with the given credentials from Google to
+        connect to our AI agent on Dialogflow.
+
+        :param project_id: project ID from Google Developer console
+        :type: str
+        :param session_id: session we want to create
+        :type: uuid4
+        :param credentials: file with all the API key given from Google
+        :type: os.path
+        """
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials
 
         self.project_id, self.session_id = project_id, session_id
@@ -29,6 +45,9 @@ class QueryModule:
         self.session = self.session_client.session_path(project_id, session_id)
         logger.info('Session path: {}\n'.format(self.session))
 
+        """
+            Mappings setup which is used for data cleansing.
+        """
         self.entity_map = {
             'course code': {'regex': re.compile(r'.*COMP\d{4}.*', re.IGNORECASE),
                             'capture': re.compile(r'.*(COMP\d{4}).*', re.IGNORECASE)},
@@ -47,9 +66,18 @@ class QueryModule:
         ]
 
     def query(self, text):
+        """Use the provided input and send it to Dialogflow and then process the result.
+        If the result is not a fallback and Dialogflow is not confident. We force it into
+        a fallback since low confidence result from Dialogflow is ususally not accurate.
+
+        :param text: user input
+        :return: response data from Dialogflow
+        :rtype: IntentResponse or FallbackReponse from conf
+        """
         result = self.detect_intent_texts(text=text)
         logger.debug('Intent detection returned:\n\tIntent: {}\n\tFullfillment text: {}'.format(result.intent, result.message))
         if not isinstance(result, FallbackResponse):
+            # force fallback if low confidence
             if result.confidence < 0.5:
                 result = FallbackResponse(intent=result.intent,
                                           message=random.choice(self.low_confidence_fallbacks),
@@ -59,7 +87,8 @@ class QueryModule:
         return result
 
     def detect_intent_texts(self, text, language_code='en'):
-        """Returns the result of detect intent with texts as inputs.
+        """Call the Dialogflow API with the given text. Returns the result of detect intent
+        with texts as inputs.
 
         Using the same `session_id` between requests allows continuation
         of the conversation.

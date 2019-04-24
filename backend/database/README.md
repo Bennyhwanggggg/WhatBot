@@ -11,6 +11,9 @@ Sanitize user inputs to avoid SQL injection attacks or Cross Site Scripting for 
 ### Common SQL queries
 Contains common SQL queries used often in the rest of the software.
 
+### File storage
+Uses AWS S3 for file storage to store our training data.
+
 ## Data Schema
 ```
 Database 1: postgres

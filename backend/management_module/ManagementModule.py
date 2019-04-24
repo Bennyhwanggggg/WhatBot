@@ -1,3 +1,7 @@
+"""
+    This file contains the main ManagementModule class which is responsible
+    for automation training and also data analytics features.
+"""
 from database.DataBaseManager import DataBaseManager
 from conf.Logger import Logger
 from query_module.train import QueryModuleTrainer
@@ -20,6 +24,10 @@ ENTITY_PATH = os.path.join(PATH, '../query_module/training_data/entities/')
 
 class ManagementModule:
     def __init__(self, database_manager=DataBaseManager(), trainer=QueryModuleTrainer()):
+        """Initialise the Management Module class with a database instance and also Query
+        Trainer instance. The given instances will be the main instance that is responsible
+        for the core features in this module.
+        """
         self.database_manager = database_manager
         self.trainer = trainer
 
@@ -182,6 +190,7 @@ class ManagementModule:
         result = Counter(data)
         total_queries = sum(result.values())
         most_common = result.most_common(n)
+        # Get the top n result and categorise everything else into others
         others = total_queries - sum(intent[1] for intent in most_common)
         most_common.append(('others', others))
         return most_common
@@ -198,15 +207,19 @@ class ManagementModule:
         data = self.database_manager.execute_query(query)
         result = [(res[0], res[1].date()) for res in data]
         intents = set([res[0] for res in result])
+        # Get last seven days
         last_seven_days = [datetime.datetime.today() - datetime.timedelta(days=i) for i in range(7, 0, -1)]
         counts = Counter(result)
+        # Get top results
         top_n = Counter([d[0] for d in data]).most_common(n)
         top_n = [a[0] for a in top_n]
         timeline_data = defaultdict(list)
+        # form intents list
         for intent in intents:
             if intent in top_n:
                 timeline_data.setdefault(intent, [])
         day_num = 1
+        # Backward calculate and get the required data
         for date in reversed(last_seven_days):
             seen = set()
             for intent, timestamp in result:
@@ -231,7 +244,7 @@ class ManagementModule:
         """
         query = "SELECT intent, AVG(confidence) FROM intent_data WHERE intent Not Like '%Missing%' GROUP BY intent"
         result = self.database_manager.execute_query(query)
-        result = sorted(result, key=lambda x: x[1])
+        result = sorted(result, key=lambda x: x[1])  # filter the result
         result = [(res[0], float(res[1])) for res in result]
         return result[:n]
 

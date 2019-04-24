@@ -1,6 +1,5 @@
 import numpy as np
 import datetime
-import random
 from management_module.data_tool._data_source import *
 from management_module.ManagementModule import ManagementModule
 from database.DataBaseManager import DataBaseManager
@@ -24,7 +23,7 @@ class DataTool:
     def get_random_amp(self):
         return random.choice(range(-5, 5)) / 100
 
-    def generate(self, n_timeslot=10000):
+    def start(self, n_timeslot=10000):
         for i in range(n_timeslot):
             ts = datetime.datetime.now() - datetime.timedelta(seconds=i * 42)
             idx = self.get_random_index()
@@ -40,5 +39,4 @@ class DataTool:
 
 if __name__ == "__main__":
     data_tools = DataTool()
-    data_tools.generate()
-
+    data_tools.start()
