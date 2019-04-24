@@ -1,3 +1,7 @@
+"""
+    This file contains all the enums for error messages that are to be used
+    through out the rest of the program.
+"""
 import enum
 
 

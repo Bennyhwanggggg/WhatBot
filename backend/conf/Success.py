@@ -1,3 +1,6 @@
+"""
+    This file contains the enums for success messages
+"""
 import enum
 
 
