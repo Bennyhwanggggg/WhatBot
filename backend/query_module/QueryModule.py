@@ -2,7 +2,7 @@
     This file contains the main QueryModule which handles user inputs from outside
     and passes it to Dialogflow for intent detection. It then analyse the result from
     Dialogflow and do processing (e.g if wrong entity detected) if required before passing the
-    result to ResponseModule.
+    result to SearchModule.
 """
 import os
 import dialogflow_v2 as dialogflow

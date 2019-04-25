@@ -8,7 +8,7 @@ setup(
               'data_extractor',
               'database',
               'query_module',
-              'response_module',
+              'search_module',
               'utility_module',
               'management_module',
               'tests']

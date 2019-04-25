@@ -9,7 +9,7 @@ import concurrent.futures
 
 from query_module.QueryModule import QueryModule
 from database.DataBaseManager import DataBaseManager
-from response_module.ResponseModule import ResponseModule
+from search_module.SearchModule import SearchModule
 from management_module.ManagementModule import ManagementModule
 from conf.Error import UploadFileError, AuthenticationError
 from conf.Success import UploadFileSuccess
@@ -22,7 +22,7 @@ from authenitcation.db import Authenticator
 """
 database_manager = DataBaseManager()
 query_module = QueryModule()
-response_module = ResponseModule(database_manager=database_manager)
+search_module = SearchModule(database_manager=database_manager)
 management_module = ManagementModule(database_manager=database_manager)
 authenticator = Authenticator(database_manager=database_manager)
 
@@ -42,8 +42,8 @@ query_module_logger = logging.getLogger('query_module.QueryModule')
 query_module_logger.setLevel(logging.INFO)
 train_logger = logging.getLogger('query_module.train')
 train_logger.setLevel(logging.INFO)
-response_module_logger = logging.getLogger('response_module.ResponseModule')
-response_module_logger.setLevel(logging.INFO)
+search_module_logger = logging.getLogger('search_module.SearchModule')
+search_module_logger.setLevel(logging.INFO)
 database_logger = logging.getLogger('database.DataBaseManager')
 database_logger.setLevel(logging.INFO)
 management_logger = logging.getLogger('management_module.ManagementModule')
@@ -137,7 +137,7 @@ def message():
     # use multiprocessing to avoid collecting user data from slowing us down
     thread_executor.submit(management_module.add_intent_data(query_result.intent, message, query_result.confidence))
     query_result.set_username(username)
-    return_message = response_module.respond(query_result)
+    return_message = search_module.respond(query_result)
 
     response = {
         'message': return_message.strip(),

@@ -1,5 +1,5 @@
 """
-    The ResponseModule class is responsible for formulating the responses from the question provided
+    The SearchModule class is responsible for formulating the responses from the question provided
     by QueryModule. It manages how each type of query should be responded and provides the final
     answer that is shown to user on UI. It manages Utility Module as well since some responses requires
     Utility Module to work.
@@ -17,7 +17,7 @@ import random
 logger = Logger(__name__).log
 
 
-class ResponseModule:
+class SearchModule:
     def __init__(self, database_manager=DataBaseManager()):
         """
             Initialize the Response module class which act as a search engine as well.
@@ -65,7 +65,7 @@ class ResponseModule:
         }
 
     def respond(self, message):
-        """ This function should be the entry point into ResponseModule.
+        """ This function should be the entry point into SearchModule.
         Messages from the query module is passed into here for information search
         and responses.
 
