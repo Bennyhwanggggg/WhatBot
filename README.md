@@ -33,7 +33,7 @@ Continuous integration and continous deployment using CircleCI has being setup t
 To manually deploy to Heroku, you need to have Heroku CLI and Docker installed.  
 [Install Heroku CLI here](https://devcenter.heroku.com/articles/heroku-cli).  
 [Install Docker here](https://docs.docker.com/install/).  
-After you have installed both of them:
+After you have installed both of them:  
 Log into Heroku CLI:
 ```
 heroku login
