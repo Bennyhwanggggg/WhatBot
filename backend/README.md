@@ -2,7 +2,7 @@
 
 This packages contains the backend modules of WhatBot. It is a Python Flask app and the main app code is located at `app.py`. In production mode, uWSGI and nginx web server are used for to run the Flask app in a more stable and optimize performance.
 In deployment, production mode is used and the *Docker* is used to run the backend application. However, the `Dockerfile`, *nginx* and *uwsgi* webservers are only configured to work when running on a HTTPS server like Heroku and will not work for running locally.
- Therefore, we have only provided instruction on how to run locally here. To see how *Docker* is used, see the main project's `README.md`.  
+ Therefore, we have only provided instruction on how to run locally here. gi 
 
 ## Setup, build and run
 
