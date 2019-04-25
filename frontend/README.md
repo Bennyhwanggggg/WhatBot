@@ -1,8 +1,8 @@
 # WhatBot Frontend
-This package contains the frontend of WhatBot. In production mode, uWSGI and nginx web server are used for to run the the React app in a more stable and optimize performance. You can see `npm run build` for more details on why.  
+This package contains the frontend of WhatBot. In production mode, uWSGI and nginx web server are used for to run the the React app in a more stable and optimize performance. You can see `npm run build` for more details on why. In deployment, production mode is used and the `Dockerfile`' and nginx used is only configured to work on HTTPS server so we have only provided instruction on how to run locally here as using *Docker* to run locally will not work.  
 
 ## Setup, build and run
-**Running locally**
+**Running locally**  
 *Prerequisites*: npm installed  
 Setup
 ```
@@ -11,14 +11,6 @@ npm install
 Run:
 ```
 npm start
-```
-
-**Running via Docker**
-*Prerequisites*: Docker installed  
-Running using Docker will run the app in production mode .
-```
-docker build -t whatbot.frontend:latest .
-docker run whatbot.frontend:latest
 ```
 
 ### Other Available Scripts
