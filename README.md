@@ -1,6 +1,8 @@
 # WhatBot
 
-WhatBot is a student-tutor support chatbot developed for Capstone Project of Master of IT at UNSW. 
+Live version [here](https://whatbot9900.herokuapp.com/)
+
+WhatBot is a student-tutor support chatbot developed for Capstone Project of Master of IT at UNSW. This repository contains all the packages for the WhatBot software and it is managed as a mono-repo.  
 
 ## Setup, build and run
 
