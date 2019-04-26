@@ -33,7 +33,7 @@ class SearchModule:
             Response function mapping
         """
         self.query_map = {
-            'all_courses_queries': self.respond_to_all_course,
+            'all_courses_queries': self.respond_to_all_course_queries,
             'course_outline_queries': self.respond_to_course_outline_queries,
             'course_outline_queries_with_followup-user_input_course_code': self.respond_to_course_outline_queries,
             'course_fee_queries': self.respond_to_course_fee_queries,
@@ -207,11 +207,6 @@ class SearchModule:
         for cid, time, date in response:
             result += "{} on {} at {}\n".format(cid, date, time)
         return result
-
-    def respond_to_all_course(self, _):
-        response = self.database_manager.get_all_courses()
-        courses = [result[0] for result in response]
-        return 'The list of courses is:\n{}'.format('\n'.join(courses))
 
     def respond_to_wam_admin_queries(self, message):
         sid = message.message
