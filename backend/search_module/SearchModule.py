@@ -229,7 +229,7 @@ class SearchModule:
             return QueryError.NO_DATA.value
         return response
 
-    def respond_to_all_courses_queries(self):
+    def respond_to_all_courses_queries(self, _):
         response = self.database_manager.get_all_courses()
         result = "The list of courses are:\n"
         for cid, cname in response:
