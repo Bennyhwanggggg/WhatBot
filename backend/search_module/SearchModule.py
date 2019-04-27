@@ -127,7 +127,7 @@ class SearchModule:
         response = self.database_manager.get_indicative_hours(cid)
         if not response:
             return QueryError.NO_SUCH_COURSE.value
-        return response[0][0]
+        return '{} hours'.format(response[0][0])
 
     def respond_to_course_offering_term_queries(self, message):
         cid = message.message.upper()
