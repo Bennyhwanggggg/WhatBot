@@ -233,7 +233,7 @@ class SearchModule:
         response = self.database_manager.get_all_courses()
         result = "The list of courses are:\n"
         for cid, cname in response:
-            result += "{}-{}".format(cid, cname)
+            result += "{} - {}\n".format(cid, cname)
         return result
 
     def respond_to_timetable_queries(self, message):
