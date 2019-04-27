@@ -33,7 +33,7 @@ class SearchModule:
             Response function mapping
         """
         self.query_map = {
-            'all_courses_queries': self.respond_to_all_course_queries,
+            'all_courses_queries': self.respond_to_all_courses_queries,
             'course_outline_queries': self.respond_to_course_outline_queries,
             'course_outline_queries_with_followup-user_input_course_code': self.respond_to_course_outline_queries,
             'course_fee_queries': self.respond_to_course_fee_queries,
