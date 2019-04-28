@@ -1,0 +1,18 @@
+display_name rating_queries
+message_texts $course
+intent_types course_code
+reset_contexts
+Can you please tell me if {course code} is a good course?
+Is {course code} a good course?
+Is {course code} a good course
+What is the rating for {course code}?
+Can you tell me if {course code} is a good course?
+Tell me if {course code} is a good course
+{course code} a good course?
+What is {course code}'s rating?
+What do you think about {course code}?
+Rating of {course code}
+{course code}'s rating
+Tell me if {course code} is a good or bad course
+How good is {course code}?
+Tell me if {course code} is a good or not
