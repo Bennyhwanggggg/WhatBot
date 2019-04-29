@@ -43,6 +43,8 @@ class ConsultationManager:
         return self.database_manager.execute_query(query, inputs)
 
     def delete_consultation(self, cid, sid, time, date):
+        if not self.check_course_exist(cid):
+           return “Sorry, I do not know how to help you with this course”
         check_empty = "Select * FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         query = "DELETE FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         inputs = (cid.upper(), sid, time, date)
@@ -169,8 +171,8 @@ class ConsultationManager:
         """
         is_weekday, feedback = self.check_weekday(date)
         time = self.round_time(time)
-        if(not self.check_course_exist(cid)):
-           return “Sorry there is no such a course.”
+        if not self.check_course_exist(cid):
+           return “Sorry, I do not know how to help you with this course”
 
         if is_weekday:
             try:
@@ -229,12 +231,16 @@ class ConsultationManager:
 
     def check_course_exist(self, cid):
        course_codes = [‘COMP9900’, ‘comp9321’, ‘COMP9945’, ‘COMP9101’, ‘COMP9041’, ‘COMP9331’, ‘COMP9311’,
-                        ‘COMP9414’, ‘COMP9841’, ‘COMP6451’, ‘COMP9024’, ‘COMP9021’, ‘COMP9020’, ‘COMP9322’,
-                        ‘COMP6714’, ‘COMP6771’, ‘COMP9153’, ‘COMP9313’, ‘COMP9322’, ‘COmp9417’, ‘COMP9444’,
-                        ‘COMP9517’, ‘COMP9201’, ‘COMP9102’, ‘COMP9315’, ‘COMP4121’, ‘COMP9323’, ‘COMP9318’,
-                        ‘COMP6441’, ‘comp9511’, ‘ComP9032’, ‘Comp4418’, ‘comP6324’, ‘CoMp9415’, ‘ComP4141’,
-                        ‘COmP6752’, ‘ComP9153’, ‘comP9211’, ‘comP9319’, ‘cOMP9336’, ‘comP6471’, ‘COMP9243’,
-                        ‘COMP9321’, ‘comp9900’, ‘COMP9444’, ‘COMP5752’, ‘comp9041’, ‘comp9331’, ‘comp9311’]
+                         ‘COMP9414’, ‘COMP9841’, ‘COMP6451’, ‘COMP9024’, ‘COMP9021’, ‘COMP9020’, ‘COMP9322’,
+                         ‘COMP6714’, ‘COMP6771’, ‘COMP9153’, ‘COMP9313’, ‘COmp9417’, ‘COMP9444’, ‘COMP9334’,
+                         ‘COMP9517’, ‘COMP9201’, ‘COMP9102’, ‘COMP9315’, ‘COMP4121’, ‘COMP9323’, ‘COMP9318’,
+                         ‘COMP6441’, ‘comp9511’, ‘ComP9032’, ‘Comp4418’, ‘comP6324’, ‘CoMp9415’, ‘ComP4141’,
+                         ‘COmP6752’, ‘comP9211’, ‘comP9319’, ‘cOMP9336’, ‘comP6471’, ‘COMP9243’, ‘COMP9283’,
+                         ‘COMP5752’, ‘comp9814’, ‘GSOE9210’, ‘GSOE9220’, ‘GSOE9820’, ‘COMP9801’, ‘COMP9222’,
+                         ‘COMP9447’, ‘COMP4161’, ‘COMP6452’, ‘COMP6733’, ‘COMP6841’, ‘COMP9151’, ‘COMP9161’,
+                         ‘COMP9332’, ‘COMP9333’, ‘COMP9337’, ‘COMP9431’, ‘COMP6443’, ‘COMP6445’, ‘COMP6447’,
+                         ‘COMP6448’, ‘COMP6741’, ‘COMP6843’, ‘COMP6845’, ‘COMP9242’, ‘COMP9418’, ‘COMP9596’,
+                          ‘COMP6721’, ‘COMP9154’, ‘COMP9164’, ‘COMP9434’, ‘COMP9424’, ‘COMP9423’]
        if(cid.upper() in course_codes):
            return True
        return False
