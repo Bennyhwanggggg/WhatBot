@@ -196,6 +196,8 @@ class SearchModule:
             return QueryError.NOT_AVAILABLE.value
         elif response == ConsultationError.INVALID_COURSE.value:
             return response
+        elif response == ConsultationError.INVALID_CANCEL.value:
+            return response
         return "You have cancelled the booking at {} on {}".format(time, date)
 
     def respond_to_course_consultation_view(self, message):

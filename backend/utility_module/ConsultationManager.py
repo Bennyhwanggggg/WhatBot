@@ -51,7 +51,7 @@ class ConsultationManager:
         inputs = (cid.upper(), sid, time, date)
         data_exist = self.database_manager.execute_query(check_empty, inputs)
         if not data_exist:
-            return ConsultationError.INVALID_TIME.value
+            return ConsultationError.INVALID_CANCEL.value
         self.emailer.send_confirm_cancelling(cid=cid, time=time, date=date, receiver='whatbot9900@gmail.com')
         return self.database_manager.execute_query(query, inputs)
 
@@ -176,7 +176,7 @@ class ConsultationManager:
         time = self.round_time(time)
         if is_weekday:
             try:
-                avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list
+                avail_list = self.get_avail_time_slots(cid.upper(), date)  # return available time slot list
                 logger.debug(avail_list)
                 if time in avail_list:
                     self.add_consultation(cid, sid, time, date)  # add into database
@@ -241,6 +241,7 @@ class ConsultationManager:
                       'COMP9332', 'COMP9333', 'COMP9337', 'COMP9431', 'COMP6443', 'COMP6445', 'COMP6447',
                       'COMP6448', 'COMP6741', 'COMP6843', 'COMP6845', 'COMP9242', 'COMP9418', 'COMP9596',
                        'COMP6721', 'COMP9154', 'COMP9164', 'COMP9434', 'COMP9424', 'COMP9423']
+       course_codes = [e.upper() for e in course_codes]
        if(cid.upper() in course_codes):
            return True
        return False

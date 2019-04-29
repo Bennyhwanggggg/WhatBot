@@ -27,3 +27,4 @@ class AuthenticationError(enum.Enum):
 class ConsultationError(enum.Enum):
     INVALID_TIME = 'Sorry, course consultation cannot be booked at this time.'
     INVALID_COURSE = 'Sorry, I cannot help you with this course.'
+    INVALID_CANCEL = "There is no course consultation booked at this time"
