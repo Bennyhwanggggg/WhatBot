@@ -6,7 +6,7 @@
 """
 from database.DataBaseManager import DataBaseManager
 from utility_module.UtilityModule import UtilityModule
-from conf.Error import QueryError
+from conf.Error import QueryError, ConsultationError
 from conf.Response import FallbackResponse
 from conf.Logger import Logger
 import random
@@ -194,10 +194,8 @@ class SearchModule:
         response = self.utility_module.consultation_manager.delete_consultation(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
-        elif "no course" in response:
+        elif response == ConsultationError.INVALID_COURSE.value:
             return response
-        elif "Sorry" in response:
-           return response
         return "You have cancelled the booking at {} on {}".format(time, date)
 
     def respond_to_course_consultation_view(self, message):

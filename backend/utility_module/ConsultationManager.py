@@ -6,6 +6,7 @@ from database.DataBaseManager import DataBaseManager
 from utility_module.emailer.EmailSender import EmailSender
 import datetime
 from conf.Logger import Logger
+from conf.Error import ConsultationError
 
 logger = Logger(__name__).log
 
@@ -44,13 +45,13 @@ class ConsultationManager:
 
     def delete_consultation(self, cid, sid, time, date):
         if not self.check_course_exist(cid):
-           return “Sorry, I do not know how to help you with this course”
+           return ConsultationError.INVALID_COURSE.value
         check_empty = "Select * FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         query = "DELETE FROM consultation WHERE cid = %s and sid = %s and time = %s and date = %s"
         inputs = (cid.upper(), sid, time, date)
         data_exist = self.database_manager.execute_query(check_empty, inputs)
         if not data_exist:
-            return "There is no course consultation booked at this time"
+            return ConsultationError.INVALID_TIME.value
         self.emailer.send_confirm_cancelling(cid=cid, time=time, date=date, receiver='whatbot9900@gmail.com')
         return self.database_manager.execute_query(query, inputs)
 
@@ -169,11 +170,10 @@ class ConsultationManager:
         :return: success status
         :rtype: str
         """
+        if not self.check_course_exist(cid):
+            return ConsultationError.INVALID_COURSE.value
         is_weekday, feedback = self.check_weekday(date)
         time = self.round_time(time)
-        if not self.check_course_exist(cid):
-           return “Sorry, I do not know how to help you with this course”
-
         if is_weekday:
             try:
                 avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list

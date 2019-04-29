@@ -22,3 +22,8 @@ class UploadFileError(enum.Enum):
 
 class AuthenticationError(enum.Enum):
     INVALID_CREDENTIALS = 'Invalid username or password'
+
+
+class ConsultationError(enum.Enum):
+    INVALID_TIME = 'Sorry, course consultation cannot be booked at this time.'
+    INVALID_COURSE = 'Sorry, I cannot help you with this course.'
