@@ -241,12 +241,11 @@ class SearchModule:
 
     def respond_to_timetable_queries(self, message):
         cid = message.message
-        response = self.utility_module.course_timetable_finder(cid)
+        response = self.utility_module.course_timetable_finder.get_course_timetable(cid)
         if not len(response):
             return QueryError.NO_SUCH_COURSE.value
-        course, course_name = response[0], response[1].strip()
-        result = 'Timetable for {} - {} is:\n'.format(course, course_name)
-        result += '\n'.join(response[2:])
+        course, course_name, time= response[0][0], response[0][1], response[0][2]
+        result = 'Timetable for {} - {} is:{}'.format(course, course_name, time)
         return result
 
     def response_to_rating_queries(self, message):
