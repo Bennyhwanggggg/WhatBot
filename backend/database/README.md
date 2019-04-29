@@ -42,14 +42,41 @@ Database 1: postgres
                 domestic_std,
                 international_std)
     -| table 3: consultation:
-            --| Attributes:
-                    (cid,
-                     sid,
-                     time,
-                     date)
+        --| Attributes:
+                (cid,
+                 sid,
+                 time,
+                 date)
     -| table 4: users:
-            --| Attributes:
-                    (username,
-                     password,
-                     type)
+        --| Attributes:
+                (username,
+                 password,
+                 type)
+    -| table 5: announcement:
+        --| Attributes:
+                (cid,
+                 c_name,
+                 content,
+                 date)
+    -| table 6: classroom:
+        --| Attributes:
+                (cid,
+                 location)
+    -| table 7: coursetimetable:
+        --| Attributes:
+                (cid,
+                 c_name,
+                 time)
+    -| table 8: intent_data:
+        --| Attributes:
+                (query_text,
+                 intent,
+                 confidence,
+                 timestamp)
+    -| table 9: wam:
+        --| Attributes:
+                (sid,
+                 cid,
+                 mark,
+                 credit)
 ```
