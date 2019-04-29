@@ -169,6 +169,9 @@ class ConsultationManager:
         """
         is_weekday, feedback = self.check_weekday(date)
         time = self.round_time(time)
+        if(not self.check_course_exist(cid)):
+           return “Sorry there is no such a course.”
+
         if is_weekday:
             try:
                 avail_list = self.get_avail_time_slots(cid, date)  # return available time slot list
@@ -223,4 +226,16 @@ class ConsultationManager:
         """
         hour, mins, _ = time.split(":")
         return '{:02d}:00:00'.format(int(hour)+1 ) if int(mins) >= 30 else '{:02d}:00:00'.format(int(hour))
+
+    def check_course_exist(self, cid):
+       course_codes = [‘COMP9900’, ‘comp9321’, ‘COMP9945’, ‘COMP9101’, ‘COMP9041’, ‘COMP9331’, ‘COMP9311’,
+                        ‘COMP9414’, ‘COMP9841’, ‘COMP6451’, ‘COMP9024’, ‘COMP9021’, ‘COMP9020’, ‘COMP9322’,
+                        ‘COMP6714’, ‘COMP6771’, ‘COMP9153’, ‘COMP9313’, ‘COMP9322’, ‘COmp9417’, ‘COMP9444’,
+                        ‘COMP9517’, ‘COMP9201’, ‘COMP9102’, ‘COMP9315’, ‘COMP4121’, ‘COMP9323’, ‘COMP9318’,
+                        ‘COMP6441’, ‘comp9511’, ‘ComP9032’, ‘Comp4418’, ‘comP6324’, ‘CoMp9415’, ‘ComP4141’,
+                        ‘COmP6752’, ‘ComP9153’, ‘comP9211’, ‘comP9319’, ‘cOMP9336’, ‘comP6471’, ‘COMP9243’,
+                        ‘COMP9321’, ‘comp9900’, ‘COMP9444’, ‘COMP5752’, ‘comp9041’, ‘comp9331’, ‘comp9311’]
+       if(cid.upper() in course_codes):
+           return True
+       return False
 
