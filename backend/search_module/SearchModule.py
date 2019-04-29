@@ -196,7 +196,7 @@ class SearchModule:
             return QueryError.NOT_AVAILABLE.value
         elif "no course" in response:
             return response
-        elif “Sorry” in response:
+        elif "Sorry" in response:
            return response
         return "You have cancelled the booking at {} on {}".format(time, date)
 
