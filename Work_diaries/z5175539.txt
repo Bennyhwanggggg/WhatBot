@@ -47,3 +47,7 @@ Worked on the data analytic dashboard's frontend and backend. I looked at the gr
 for the frontend and studied how to use the react version of the library. At the end, we managed to finish
 the data analytic dashboard and also worked on debugging the response module and linking up all the modules 
 together to complete the software.
+
+Week 10
+This weeked mostly on cleaning the code and solving some small bugs. Also, wrote up lots of documentation
+and worked in the final report and planned the final demo. Finished up the project.
