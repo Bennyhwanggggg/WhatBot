@@ -58,7 +58,7 @@ Make the simple demo works:
 
 * Implemented data insight dashboard.
 * Writing the 20-Scenarios material.
-* Communicate with Dr.Ramadi about the details of follow-up chatbot conversation
+* Communicate with Dr.Hamadi about the details of follow-up chatbot conversation
 * Make the data tool generating data via statistics distribution and time series.
 
 
