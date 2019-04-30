@@ -5,9 +5,10 @@ This file includes instruction on how tutor can run the system.
 Setup, build and run instruction
 
 Prerequisites:
-- Python 3.5 or above version installed
-- npm 6 or above version installed
+- Python 3.5 or above version installed. If you do not have this, install instruction here: https://www.python.org/downloads/
+- npm 6 or above version installed. If you do not have this, install instruction here: https://www.npmjs.com/get-npm
 
+Build and Run:
 To run the whole system locally, a `Makefile` has being created. In this folder run:
 
 Make
