@@ -168,6 +168,7 @@ class SearchModule:
 
     def respond_to_course_study_level_queries(self, message):
         cid = message.message.upper()
+        cid = cid.upper()
         response = self.database_manager.get_course(cid)
         return '{} is a CSE course for postgraduate'.format(
             cid) if response else '{} is not a CSE postgraduate course'.format(cid)
@@ -183,6 +184,7 @@ class SearchModule:
     def respond_to_course_consultation_booking(self, message):
         cid, time, date = self.unpack_message(message.message)
         sid = message.username
+        cid = cid.upper()
         response = self.utility_module.consultation_manager.consultation_booking_query(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
@@ -192,6 +194,7 @@ class SearchModule:
     def respond_to_course_consultation_cancel(self, message):
         cid, time, date = self.unpack_message(message.message)
         sid = message.username
+        cid = cid.upper()
         response = self.utility_module.consultation_manager.delete_consultation(cid, sid, time, date)
         if not response:
             return QueryError.NOT_AVAILABLE.value
@@ -226,7 +229,7 @@ class SearchModule:
         return response
 
     def respond_to_announcement_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.utility_module.announcement_getter.get_announcement(cid)
         if not len(response):
             return QueryError.NO_DATA.value
@@ -240,7 +243,7 @@ class SearchModule:
         return result
 
     def respond_to_timetable_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.utility_module.course_timetable_finder.get_course_timetable(cid)
         if not len(response):
             return QueryError.NO_SUCH_COURSE.value
@@ -249,7 +252,7 @@ class SearchModule:
         return result
 
     def response_to_rating_queries(self, message):
-        cid = message.message
+        cid = message.message.upper()
         response = self.database_manager.get_rating(cid)
         result = "The rating of the course {} is {}/5".format(cid, response[0][0])
         return result
