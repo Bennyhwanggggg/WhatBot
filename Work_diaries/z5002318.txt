@@ -51,5 +51,19 @@ Make the simple demo works:
 
 * Implemented auto training in frontend.
 * design the version control mechanism to defend exception.
-* prototyping the system insight dashboard # TODO
+* prototyping the system insight dashboard
+* Build a data tool to tune the database
+
+## week9
+
+* Implemented data insight dashboard.
+* Writing the 20-Scenarios material.
+* Communicate with Dr.Hamadi about the details of follow-up chatbot conversation
+* Make the data tool generating data via statistics distribution and time series.
+
+
+## week10
+
+* Tune and typesettiing final report using LaTeX
+* Refine the data dashboard backend, make the 3D part more smoothy.
 
