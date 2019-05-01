@@ -12,14 +12,30 @@ Prerequisites:
 Build and Run:
 To run the whole system locally, a `Makefile` has being created. In this folder run:
 
+```
 Make
+```
 
 and you should see all the dependencies being installed.
 
-After all the dependencies are installed, you'll be directed to the login screen of WhatBot and
-the app should be running on:
+After all the dependencies are installed, after about 30 seconds environment setup and loading, you'll be directed to the login screen of WhatBot and the app should be running on:
 
 http://localhost:3000/login
+
+And then you can test all the chatbot features with following account:
+
+* Admin:
+
+    * Username: z0000000, Password: 0000000
+
+* Student: 
+
+    * Username: z1234567, Password: 123456
+
+    * Username: z8888888, Password: 123456
+
+    * Username: z9999999, Password: 9999999
+
 
 Alternatively, you can see the live deployed version on: https://whatbot9900.herokuapp.com/ 
 
