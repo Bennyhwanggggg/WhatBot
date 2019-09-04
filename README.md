@@ -1,6 +1,6 @@
 # WhatBot
 
-Live version [here](https://whatbot9900.herokuapp.com/) *Note: As the project is now completed, we have taken down the backend database so AWS RDS won't start charging us.  
+Live version [here](https://whatbot9900.herokuapp.com/) **Note: As the project is now completed, we have taken down the backend database so AWS RDS won't start charging us.**  
 
 WhatBot is a student-tutor support chatbot developed for Capstone Project of Master of IT at UNSW. This repository contains all the packages for the WhatBot software and it is managed as a mono-repo.  
 
