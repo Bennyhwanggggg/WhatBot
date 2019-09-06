@@ -1,8 +1,16 @@
 # WhatBot
 
-Live version [here](https://whatbot9900.herokuapp.com/). **Note: As the project is now completed, we have taken down the backend database so AWS RDS won't start charging us.**  
+Live version [here](https://whatbot9900.herokuapp.com/).  
+**Note: As the project is now completed, we have taken down the backend database so AWS RDS won't start charging us.**  
 
 WhatBot is a student-tutor support chatbot developed for Capstone Project of Master of IT at UNSW. This repository contains all the packages for the WhatBot software and it is managed as a mono-repo.  
+
+## About WhatBot
+WhatBot uses a client-server architecture. The frontend is developed using React/Redux with semantic-UI as the CSS engine. The backend composes of a Python Flask server, AWS RDS running PostgreSQL, AWS S3 and Google's Dialogflow to make the whole system work. The PostgreSQL database is used as the knowledge base while AWS S3 is used to store AI training file contents. Google's Dialogflow API is the backbone of WhatBot's chatbot capability.  
+
+The key difference between WhatBot and other chatbots are that it can be easily configured to train for different purposes. It provides AI traning capability such that user can simply upload text files of questions and answers that the Dialogflow agent can be quickly trained through WhatBot's interfaces.  
+
+Read more about WhatBot's capabilities and architectures in `Project_FinalReport.pdf`
 
 ## Setup, build and run
 
