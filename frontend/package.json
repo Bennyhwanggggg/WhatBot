@@ -7,7 +7,7 @@
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
     "echarts-gl": "^1.1.1",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-markdown": "^4.0.6",
