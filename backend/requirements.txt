@@ -8,7 +8,7 @@ Click==7.0
 dialogflow==0.5.2
 Django==2.2.13
 Flask==1.0.2
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 google-api-core==1.8.0
 google-auth==1.6.3
 googleapis-common-protos==1.5.8
